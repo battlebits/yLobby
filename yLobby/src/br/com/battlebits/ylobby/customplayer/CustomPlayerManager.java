@@ -16,6 +16,7 @@ import net.minecraft.server.v1_7_R4.WorldServer;
 
 public class CustomPlayerManager {
 
+	@SuppressWarnings("unused")
 	private JavaPlugin javaPlugin;
 	private MinecraftServer nmsServer;
 	private ArrayList<CustomPlayerNPC> customPlayerNPCs;

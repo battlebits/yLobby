@@ -66,6 +66,10 @@ public class MainListener implements Listener {
 
 	@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
 	public void onPlayerQuitListener(PlayerQuitEvent e) {
+		if (e.getPlayer().getAllowFlight()) {
+			e.getPlayer().setAllowFlight(false);
+			e.getPlayer().setFlying(false);
+		}
 		e.setQuitMessage("");
 	}
 

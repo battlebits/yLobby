@@ -6,6 +6,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import br.com.battlebits.ylobby.bungee.BungeeMessageReceiver;
 import br.com.battlebits.ylobby.bungee.BungeeMessageSender;
+import br.com.battlebits.ylobby.commands.FlyCommand;
 import br.com.battlebits.ylobby.commands.SpawnCommand;
 import br.com.battlebits.ylobby.detector.PlayerOutOfLobbyDetector;
 import br.com.battlebits.ylobby.listener.BountifulListener;
@@ -125,20 +126,13 @@ public class yLobbyPlugin extends JavaPlugin {
 		playerHideListener = new PlayerHideListener();
 		gameModsListener = new GameModsListener();
 
-		Bukkit.getPluginManager().registerEvents(gameModeSelectorListener, yLobby);
-		Bukkit.getPluginManager().registerEvents(lobbySelectorListener, yLobby);
-		Bukkit.getPluginManager().registerEvents(matchSelectorListener, yLobby);
-
-		Bukkit.getPluginManager().registerEvents(yourProfileListener, yLobby);
-		Bukkit.getPluginManager().registerEvents(profileRanksListener, yLobby);
+		zUtils.getListenerUtils().registerListeners(gameModeSelectorListener, lobbySelectorListener, matchSelectorListener, yourProfileListener,
+				profileRanksListener, bountifulListener, mainListener, playerHideListener, gameModsListener);
 
 		// Bukkit.getPluginManager().registerEvents(portalListener, yLobby);
-		Bukkit.getPluginManager().registerEvents(bountifulListener, yLobby);
-		Bukkit.getPluginManager().registerEvents(mainListener, yLobby);
-		Bukkit.getPluginManager().registerEvents(playerHideListener, yLobby);
-		Bukkit.getPluginManager().registerEvents(gameModsListener, yLobby);
 
 		zUtils.getCommandUtils().registerCommand(new SpawnCommand(), "spawn", "Use esse comando para ir ao Spawn do Lobby", "lobby", "hub");
+		zUtils.getCommandUtils().registerCommand(new FlyCommand(), "fly", "Use esse comando para ativar ou desativar seu fly", "voar");
 
 	}
 

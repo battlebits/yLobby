@@ -7,6 +7,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import br.com.battlebits.ylobby.bungee.BungeeMessageReceiver;
 import br.com.battlebits.ylobby.bungee.BungeeMessageSender;
 import br.com.battlebits.ylobby.commands.SpawnCommand;
+import br.com.battlebits.ylobby.detector.PlayerOutOfLobbyDetector;
 import br.com.battlebits.ylobby.listener.BountifulListener;
 import br.com.battlebits.ylobby.listener.GameModsListener;
 import br.com.battlebits.ylobby.listener.MainListener;
@@ -37,7 +38,7 @@ public class yLobbyPlugin extends JavaPlugin {
 
 	private zUtils zUtils;
 
-//	private MySQLConnection mySQLConnection;
+	// private MySQLConnection mySQLConnection;
 
 	private BungeeMessageReceiver bungeeMessageReceiver;
 	private BungeeMessageSender bungeeMessageSender;
@@ -59,14 +60,15 @@ public class yLobbyPlugin extends JavaPlugin {
 	private GameModeSelectorListener gameModeSelectorListener;
 	private MatchSelectorListener matchSelectorListener;
 
-//	private PortalPlayerDetector portalPlayerDetector;
+	// private PortalPlayerDetector portalPlayerDetector;
+	private PlayerOutOfLobbyDetector playerOutOfLobbyDetector;
 
 	private YourProfileInventory yourProfileInventory;
 	private YourProfileListener yourProfileListener;
 	private ProfileRanksInventory profileRanksInventory;
 	private ProfileRanksListener profileRanksListener;
 
-//	private PortalListener portalListener;
+	// private PortalListener portalListener;
 	private BountifulListener bountifulListener;
 	private GameModsListener gameModsListener;
 	private PlayerHideListener playerHideListener;
@@ -76,14 +78,14 @@ public class yLobbyPlugin extends JavaPlugin {
 	public void onEnable() {
 
 		yLobby = this;
-		
+
 		Bukkit.getWorlds().get(0).setAutoSave(false);
 
 		zUtils = new zUtils(this);
 
-//		mySQLConnection = new MySQLConnection();
-//		mySQLConnection.tryToConnect();
-//		mySQLConnection.createTables();
+		// mySQLConnection = new MySQLConnection();
+		// mySQLConnection.tryToConnect();
+		// mySQLConnection.createTables();
 
 		bungeeMessageReceiver = new BungeeMessageReceiver();
 		bungeeMessageSender = new BungeeMessageSender();
@@ -109,14 +111,15 @@ public class yLobbyPlugin extends JavaPlugin {
 		matchSelectorListener = new MatchSelectorListener();
 		lobbyItensManager = new LobbyItensManager();
 
-//		portalPlayerDetector = new PortalPlayerDetector();
+		// portalPlayerDetector = new PortalPlayerDetector();
+		playerOutOfLobbyDetector = new PlayerOutOfLobbyDetector();
 
 		yourProfileInventory = new YourProfileInventory();
 		yourProfileListener = new YourProfileListener();
 		profileRanksInventory = new ProfileRanksInventory();
 		profileRanksListener = new ProfileRanksListener();
 
-//		portalListener = new PortalListener();
+		// portalListener = new PortalListener();
 		bountifulListener = new BountifulListener();
 		mainListener = new MainListener();
 		playerHideListener = new PlayerHideListener();
@@ -129,7 +132,7 @@ public class yLobbyPlugin extends JavaPlugin {
 		Bukkit.getPluginManager().registerEvents(yourProfileListener, yLobby);
 		Bukkit.getPluginManager().registerEvents(profileRanksListener, yLobby);
 
-//		Bukkit.getPluginManager().registerEvents(portalListener, yLobby);
+		// Bukkit.getPluginManager().registerEvents(portalListener, yLobby);
 		Bukkit.getPluginManager().registerEvents(bountifulListener, yLobby);
 		Bukkit.getPluginManager().registerEvents(mainListener, yLobby);
 		Bukkit.getPluginManager().registerEvents(playerHideListener, yLobby);
@@ -144,7 +147,8 @@ public class yLobbyPlugin extends JavaPlugin {
 
 		bungeeMessageReceiver.stop();
 
-//		portalPlayerDetector.stop();
+		playerOutOfLobbyDetector.stop();
+		// portalPlayerDetector.stop();
 
 		matchSelectorManager.stop();
 		gameServerInfoManager.stop();
@@ -168,9 +172,9 @@ public class yLobbyPlugin extends JavaPlugin {
 		return bungeeMessageSender;
 	}
 
-//	public MySQLConnection getMySQLConnection() {
-//		return mySQLConnection;
-//	}
+	// public MySQLConnection getMySQLConnection() {
+	// return mySQLConnection;
+	// }
 
 	public BungeeManager getBungeeManager() {
 		return bungeeManager;

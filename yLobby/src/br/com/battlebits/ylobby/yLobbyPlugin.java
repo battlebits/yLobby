@@ -13,6 +13,7 @@ import br.com.battlebits.ylobby.listener.BountifulListener;
 import br.com.battlebits.ylobby.listener.GameModsListener;
 import br.com.battlebits.ylobby.listener.MainListener;
 import br.com.battlebits.ylobby.listener.PlayerHideListener;
+import br.com.battlebits.ylobby.listener.VipSlotsListener;
 import br.com.battlebits.ylobby.manager.BungeeManager;
 import br.com.battlebits.ylobby.manager.GameModsManager;
 import br.com.battlebits.ylobby.manager.GameServerInfoManager;
@@ -74,6 +75,7 @@ public class yLobbyPlugin extends JavaPlugin {
 	private GameModsListener gameModsListener;
 	private PlayerHideListener playerHideListener;
 	private MainListener mainListener;
+	private VipSlotsListener vipSlotsListener;
 
 	@Override
 	public void onEnable() {
@@ -121,13 +123,14 @@ public class yLobbyPlugin extends JavaPlugin {
 		profileRanksListener = new ProfileRanksListener();
 
 		// portalListener = new PortalListener();
+		vipSlotsListener = new VipSlotsListener();
 		bountifulListener = new BountifulListener();
 		mainListener = new MainListener();
 		playerHideListener = new PlayerHideListener();
 		gameModsListener = new GameModsListener();
 
 		zUtils.getListenerUtils().registerListeners(gameModeSelectorListener, lobbySelectorListener, matchSelectorListener, yourProfileListener,
-				profileRanksListener, bountifulListener, mainListener, playerHideListener, gameModsListener);
+				profileRanksListener, bountifulListener, mainListener, playerHideListener, gameModsListener, vipSlotsListener);
 
 		// Bukkit.getPluginManager().registerEvents(portalListener, yLobby);
 

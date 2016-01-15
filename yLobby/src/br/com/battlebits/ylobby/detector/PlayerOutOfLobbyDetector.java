@@ -18,7 +18,7 @@ public class PlayerOutOfLobbyDetector {
 	public PlayerOutOfLobbyDetector() {
 		message = new ArrayList<>();
 		message.add("§0");
-		message.add(yLobbyPlugin.getyLobby().getzUtils().getMessageUtils().centerChatMessage("§7Você não pode §c§lsair §7do §c§lLobby§7!"));
+		message.add(yLobbyPlugin.getyLobby().getzUtils().getMessageUtils().centerChatMessage("§7Você §c§lnao§7 pode §c§lsair §7do §c§lLobby§7!"));
 		message.add("§0");
 		detectorRunnable = new BukkitRunnable() {
 			@SuppressWarnings("deprecation")

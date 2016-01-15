@@ -154,7 +154,7 @@ public abstract class MatchSelector {
 		int i = 10;
 		try {
 			directConnectItemLore.set(directConnectItemLore.size() - 3,
-					"§7No §3§ltotal §7temos §3§l" + yLobbyPlugin.getyLobby().getPlayerCountManager().getFpOnlinePlayers() + " §r§7jogadores");
+					"§7No §3§ltotal §7temos §3§l" + getMatchsOnlinePlayers() + " §r§7jogadores");
 			directConnectItemMeta.setLore(directConnectItemLore);
 			directConnectItem.setItemMeta(directConnectItemMeta);
 			serverSelectorInventory.setItem(4, directConnectItem);

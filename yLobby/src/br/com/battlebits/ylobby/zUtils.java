@@ -4,13 +4,11 @@ import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 import java.net.URL;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
@@ -48,12 +46,9 @@ import com.google.common.collect.Table;
 
 import me.flame.utils.permissions.enums.Group;
 import me.flame.utils.tagmanager.enums.Tag;
-import net.minecraft.server.v1_7_R4.BiomeBase;
-import net.minecraft.server.v1_7_R4.BiomeMeta;
 import net.minecraft.server.v1_7_R4.ChatSerializer;
 import net.minecraft.server.v1_7_R4.Entity;
 import net.minecraft.server.v1_7_R4.EntityHuman;
-import net.minecraft.server.v1_7_R4.EntityInsentient;
 import net.minecraft.server.v1_7_R4.EntityLiving;
 import net.minecraft.server.v1_7_R4.EntityTypes;
 import net.minecraft.server.v1_7_R4.MinecraftServer;
@@ -665,48 +660,6 @@ public class zUtils {
 			field.setAccessible(true);
 			Map map = (Map) field.get(null);
 			map.put(key, value);
-		}
-
-		public void registerEntity(String name, int id, Class<? extends EntityInsentient> nmsClass, Class<? extends EntityInsentient> customClass) {
-			try {
-
-				List<Map<?, ?>> dataMaps = new ArrayList<Map<?, ?>>();
-				for (Field f : EntityTypes.class.getDeclaredFields()) {
-					if (f.getType().getSimpleName().equals(Map.class.getSimpleName())) {
-						f.setAccessible(true);
-						dataMaps.add((Map<?, ?>) f.get(null));
-					}
-				}
-				if (dataMaps.get(2).containsKey(id)) {
-					dataMaps.get(0).remove(name);
-					dataMaps.get(2).remove(id);
-				}
-				Method method = EntityTypes.class.getDeclaredMethod("a", Class.class, String.class, int.class);
-				method.setAccessible(true);
-				method.invoke(null, customClass, name, id);
-				for (Field f : BiomeBase.class.getDeclaredFields()) {
-					if (f.getType().getSimpleName().equals(BiomeBase.class.getSimpleName())) {
-						if (f.get(null) != null) {
-							for (Field list : BiomeBase.class.getDeclaredFields()) {
-								if (list.getType().getSimpleName().equals(List.class.getSimpleName())) {
-									list.setAccessible(true);
-									@SuppressWarnings("unchecked")
-									List<BiomeMeta> metaList = (List<BiomeMeta>) list.get(f.get(null));
-									for (BiomeMeta meta : metaList) {
-										Field clazz = BiomeMeta.class.getDeclaredFields()[0];
-										if (clazz.get(meta).equals(nmsClass)) {
-											clazz.set(meta, customClass);
-										}
-									}
-								}
-							}
-
-						}
-					}
-				}
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
 		}
 
 		public MinecraftServer getMinecraftServer() {

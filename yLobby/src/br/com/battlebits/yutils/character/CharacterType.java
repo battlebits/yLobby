@@ -1,5 +1,7 @@
 package br.com.battlebits.yutils.character;
 
+import org.bukkit.entity.EntityType;
+
 import br.com.battlebits.ylobby.yLobbyPlugin;
 import br.com.battlebits.yutils.character.types.BatCharacter;
 import br.com.battlebits.yutils.character.types.BlazeCharacter;
@@ -28,39 +30,103 @@ import br.com.battlebits.yutils.character.types.WitherCharacter;
 import br.com.battlebits.yutils.character.types.WitherSkeletonCharacter;
 import br.com.battlebits.yutils.character.types.WolfCharacter;
 import br.com.battlebits.yutils.character.types.ZombieCharacter;
+import net.minecraft.server.v1_7_R4.EntityInsentient;
 import net.minecraft.server.v1_7_R4.EntityLiving;
+import net.minecraft.server.v1_7_R4.World;
 
 public enum CharacterType {
 
-	BAT(BatCharacter.class, 65), BLAZE(BlazeCharacter.class, 61), CAVESPIDER(CaveSpiderCharacter.class, 59), CHICKEN(ChickenCharacter.class,
-			93), COW(CowCharacter.class, 92), CREEPER(CreeperCharacter.class, 50), ENDERMAN(EndermanCharacter.class, 58), HORSE(HorseCharacter.class,
-					100), IRONGOLEM(IronGolemCharacter.class, 99), MAGMACUBE(MagmaCubeCharacter.class, 62), MUSHROOMCOW(MushroomCowCharacter.class,
-							96), OCELOT(OcelotCharacter.class, 98), SHEEP(SheepCharacter.class, 91), SILVERFISH(SilverfishCharacter.class,
-									60), SKELETON(SkeletonCharacter.class, 51), SLIME(SlimeCharacter.class, 55), SNOWMAN(SnowmanCharacter.class,
-											97), SPIDER(SpiderCharacter.class, 52), SQUID(SquidCharacter.class, 94), PIG(PigCharacter.class,
-													90), PIGZOMBIE(PigZombieCharacter.class, 57), VILLAGER(VillagerCharacter.class, 120), WITCH(
-															WitchCharacter.class,
-															66), WITHER(WitherCharacter.class, 64), WITHERSKELETON(WitherSkeletonCharacter.class,
-																	51), WOLF(WolfCharacter.class, 95), ZOMBIE(ZombieCharacter.class, 36);
+	BAT(BatCharacter.class, EntityType.BAT), BLAZE(BlazeCharacter.class, EntityType.BLAZE), CAVESPIDER(CaveSpiderCharacter.class,
+			EntityType.CAVE_SPIDER), CHICKEN(ChickenCharacter.class, EntityType.CHICKEN), COW(CowCharacter.class, EntityType.COW), CREEPER(
+					CreeperCharacter.class, EntityType.CREEPER), ENDERMAN(EndermanCharacter.class, EntityType.ENDERMAN), HORSE(HorseCharacter.class,
+							EntityType.HORSE), IRONGOLEM(IronGolemCharacter.class, EntityType.IRON_GOLEM), MAGMACUBE(MagmaCubeCharacter.class,
+									EntityType.MAGMA_CUBE), MUSHROOMCOW(MushroomCowCharacter.class, EntityType.MUSHROOM_COW), OCELOT(
+											OcelotCharacter.class,
+											EntityType.OCELOT), SHEEP(SheepCharacter.class, EntityType.SHEEP), SILVERFISH(SilverfishCharacter.class,
+													EntityType.SILVERFISH), SKELETON(SkeletonCharacter.class, EntityType.SKELETON), SLIME(
+															SlimeCharacter.class, EntityType.SLIME), SNOWMAN(SnowmanCharacter.class,
+																	EntityType.SNOWMAN), SPIDER(SpiderCharacter.class, EntityType.SPIDER), SQUID(
+																			SquidCharacter.class,
+																			EntityType.SQUID), PIG(PigCharacter.class, EntityType.PIG), PIGZOMBIE(
+																					PigZombieCharacter.class,
+																					EntityType.PIG_ZOMBIE), VILLAGER(VillagerCharacter.class,
+																							EntityType.VILLAGER), WITCH(WitchCharacter.class,
+																									EntityType.WITCH), WITHER(WitherCharacter.class,
+																											EntityType.WITCH), WITHERSKELETON(
+																													WitherSkeletonCharacter.class,
+																													EntityType.SKELETON), WOLF(
+																															WolfCharacter.class,
+																															EntityType.WOLF), ZOMBIE(
+																																	ZombieCharacter.class,
+																																	EntityType.ZOMBIE);
 
-	private Class<? extends EntityLiving> entityclass;
-
-	private CharacterType(Class<? extends EntityLiving> eClass, int defaultID) {
+	@SuppressWarnings("deprecation")
+	private CharacterType(Class<? extends EntityInsentient> eClass, EntityType type) {
 		try {
-			yLobbyPlugin.getyLobby().getzUtils().getNMSUtils().registerCustomEntity(eClass, name() + "CHARACTER", defaultID);
+			yLobbyPlugin.getyLobby().getzUtils().getNMSUtils().registerCustomEntity(eClass, name().toUpperCase() + "CHARACTER", type.getTypeId());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		entityclass = eClass;
 	}
 
-	public EntityLiving getEntity() {
-		try {
-			return entityclass.newInstance();
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
+	public EntityLiving getEntity(World world) {
+		switch (this) {
+		case BAT:
+			return new BatCharacter(world);
+		case BLAZE:
+			return new BlazeCharacter(world);
+		case CAVESPIDER:
+			return new CaveSpiderCharacter(world);
+		case CHICKEN:
+			return new ChickenCharacter(world);
+		case COW:
+			return new CowCharacter(world);
+		case CREEPER:
+			return new CreeperCharacter(world);
+		case ENDERMAN:
+			return new EndermanCharacter(world);
+		case HORSE:
+			return new HorseCharacter(world);
+		case IRONGOLEM:
+			return new IronGolemCharacter(world);
+		case MAGMACUBE:
+			return new MagmaCubeCharacter(world);
+		case MUSHROOMCOW:
+			return new MushroomCowCharacter(world);
+		case OCELOT:
+			return new OcelotCharacter(world);
+		case SHEEP:
+			return new SheepCharacter(world);
+		case SILVERFISH:
+			return new SilverfishCharacter(world);
+		case SKELETON:
+			return new SkeletonCharacter(world);
+		case SLIME:
+			return new SlimeCharacter(world);
+		case SNOWMAN:
+			return new SnowmanCharacter(world);
+		case SPIDER:
+			return new SpiderCharacter(world);
+		case SQUID:
+			return new SquidCharacter(world);
+		case PIG:
+			return new PigCharacter(world);
+		case PIGZOMBIE:
+			return new PigZombieCharacter(world);
+		case VILLAGER:
+			return new VillagerCharacter(world);
+		case WITCH:
+			return new WitchCharacter(world);
+		case WITHER:
+			return new WitherCharacter(world);
+		case WITHERSKELETON:
+			return new WitherSkeletonCharacter(world);
+		case WOLF:
+			return new WolfCharacter(world);
+		case ZOMBIE:
+			return new ZombieCharacter(world);
 		}
+		return new VillagerCharacter(world);
 	}
 
 }

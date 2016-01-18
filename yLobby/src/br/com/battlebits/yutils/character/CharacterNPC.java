@@ -14,11 +14,10 @@ public class CharacterNPC {
 	private EntityLiving entity;
 
 	public CharacterNPC(CharacterType type, Location loc, ItemStack itemInHand) {
-		entity = type.getEntity();
-		yLobbyPlugin.getyLobby().getzUtils().getNMSUtils().setHeadYaw(entity, loc.getYaw());
+		entity = type.getEntity(yLobbyPlugin.getyLobby().getzUtils().getNMSUtils().getWorldServer(loc.getWorld()));
 		entity.setLocation(loc.getX(), loc.getY(), loc.getZ(), loc.getYaw(), loc.getPitch());
 		yLobbyPlugin.getyLobby().getzUtils().getNMSUtils().getWorldServer(loc.getWorld()).addEntity(entity, SpawnReason.CUSTOM);
-		entity.setInvisible(false);
+		yLobbyPlugin.getyLobby().getzUtils().getNMSUtils().setHeadYaw(entity, loc.getYaw());
 		entity.setEquipment(0, CraftItemStack.asNMSCopy(itemInHand));
 	}
 

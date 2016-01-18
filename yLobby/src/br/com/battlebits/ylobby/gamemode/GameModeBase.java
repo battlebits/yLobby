@@ -7,11 +7,13 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import br.com.battlebits.ylobby.yLobbyPlugin;
 import br.com.battlebits.yutils.character.CharacterNPC;
 import br.com.battlebits.yutils.character.CharacterType;
 import de.inventivegames.holograms.Hologram;
+import de.inventivegames.holograms.HologramAPI;
 
 public abstract class GameModeBase {
 
@@ -21,7 +23,7 @@ public abstract class GameModeBase {
 	private ItemMeta inventoryItemMeta;
 	private ArrayList<String> inventoryItemLore;
 	private CharacterNPC characterNPC;
-	private Hologram itemHologram;
+	private Hologram onlinePlayersHologram;
 
 	public GameModeBase(String servername, String serverdescription, Material iconmaterial, List<String> connectLines, Location npclocation,
 			CharacterType npcType) {
@@ -47,21 +49,24 @@ public abstract class GameModeBase {
 		}
 		characterNPC = new CharacterNPC(npcType,
 				yLobbyPlugin.getyLobby().getzUtils().getLocationUtils().lookAt(
-						yLobbyPlugin.getyLobby().getzUtils().getLocationUtils().getCenter(npclocation, false),
+						yLobbyPlugin.getyLobby().getzUtils().getLocationUtils().getCenter(npclocation.clone(), false),
 						yLobbyPlugin.getyLobby().getLocationManager().getSpawnLocation()),
 				inventoryitem);
-//		HologramAPI.createHologram(npclocation.clone().add(0, 2.5, 0), "Pirokao").spawn();
-//		itemHologram = HologramAPI.createWorldItemHologram(
-//				yLobbyPlugin.getyLobby().getzUtils().getLocationUtils().getCenter(npclocation.clone().add(0, 3, 0), false), inventoryitem);
-//		itemHologram.spawn();
+		if (!npclocation.getChunk().isLoaded()) {
+			npclocation.getChunk().load();
+		}
+		onlinePlayersHologram = HologramAPI.createWorldHologram(
+				yLobbyPlugin.getyLobby().getzUtils().getLocationUtils().getCenter(npclocation.clone().add(0, 2, 0), true),
+				"§b§l0 §bjogadores agora!");
+		onlinePlayersHologram.spawn();
+		if (!npclocation.getChunk().isLoaded()) {
+			npclocation.getChunk().load();
+		}
+		onlinePlayersHologram.addLineAbove("§9§l" + servername.toUpperCase());
 	}
 
 	public CharacterNPC getCharacterNPC() {
 		return characterNPC;
-	}
-
-	public Hologram getItemHologram() {
-		return itemHologram;
 	}
 
 	public String getServerName() {
@@ -73,14 +78,6 @@ public abstract class GameModeBase {
 	}
 
 	public void updateOnlinePlayersOnItem() {
-		// new BukkitRunnable() {
-		// @Override
-		// public void run() {
-		// playerNPC.getHologram().setText("§3§l" + getOnlinePlayers() + "
-		// §7jogadores");
-		//
-		// }
-		// }.runTask(yLobbyPlugin.getyLobby());
 		inventoryItemLore.set(inventoryItemLore.size() - (3 + substractLines), "§3§l" + getOnlinePlayers() + " §7jogadores online.");
 		inventoryItemMeta.setLore(inventoryItemLore);
 		inventoryitem.setItemMeta(inventoryItemMeta);

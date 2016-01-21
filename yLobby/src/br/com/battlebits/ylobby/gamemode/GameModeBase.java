@@ -56,7 +56,7 @@ public abstract class GameModeBase {
 		}
 		onlinePlayersHologram = HologramAPI.createWorldHologram(
 				yLobbyPlugin.getyLobby().getzUtils().getLocationUtils().getCenter(npclocation.clone().add(0, 2, 0), true),
-				"§b§l0 §bjogadores agora!");
+				/*"§b§l0 §bjogadores agora!"*/ "§b§lClique para conectar!");
 		onlinePlayersHologram.spawn();
 		if (!npclocation.getChunk().isLoaded()) {
 			npclocation.getChunk().load();

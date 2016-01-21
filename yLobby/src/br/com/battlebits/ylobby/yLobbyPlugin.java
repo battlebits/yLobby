@@ -62,7 +62,6 @@ public class yLobbyPlugin extends JavaPlugin {
 	private GameModeSelectorListener gameModeSelectorListener;
 	private MatchSelectorListener matchSelectorListener;
 
-	// private PortalPlayerDetector portalPlayerDetector;
 	private PlayerOutOfLobbyDetector playerOutOfLobbyDetector;
 
 	private YourProfileInventory yourProfileInventory;
@@ -70,7 +69,6 @@ public class yLobbyPlugin extends JavaPlugin {
 	private ProfileRanksInventory profileRanksInventory;
 	private ProfileRanksListener profileRanksListener;
 
-	// private PortalListener portalListener;
 	private BountifulListener bountifulListener;
 	private GameModsListener gameModsListener;
 	private PlayerHideListener playerHideListener;
@@ -114,7 +112,6 @@ public class yLobbyPlugin extends JavaPlugin {
 		matchSelectorListener = new MatchSelectorListener();
 		lobbyItensManager = new LobbyItensManager();
 
-		// portalPlayerDetector = new PortalPlayerDetector();
 		playerOutOfLobbyDetector = new PlayerOutOfLobbyDetector();
 
 		yourProfileInventory = new YourProfileInventory();
@@ -122,7 +119,6 @@ public class yLobbyPlugin extends JavaPlugin {
 		profileRanksInventory = new ProfileRanksInventory();
 		profileRanksListener = new ProfileRanksListener();
 
-		// portalListener = new PortalListener();
 		vipSlotsListener = new VipSlotsListener();
 		bountifulListener = new BountifulListener();
 		mainListener = new MainListener();
@@ -131,8 +127,8 @@ public class yLobbyPlugin extends JavaPlugin {
 
 		zUtils.getListenerUtils().registerListeners(gameModeSelectorListener, lobbySelectorListener, matchSelectorListener, yourProfileListener,
 				profileRanksListener, bountifulListener, mainListener, playerHideListener, gameModsListener, vipSlotsListener);
-
-		// Bukkit.getPluginManager().registerEvents(portalListener, yLobby);
+		
+		playerOutOfLobbyDetector.start();
 
 		zUtils.getCommandUtils().registerCommand(new SpawnCommand(), "spawn", "Use esse comando para ir ao Spawn do Lobby", "lobby", "hub");
 		zUtils.getCommandUtils().registerCommand(new FlyCommand(), "fly", "Use esse comando para ativar ou desativar seu fly", "voar");
@@ -145,7 +141,6 @@ public class yLobbyPlugin extends JavaPlugin {
 		bungeeMessageReceiver.stop();
 
 		playerOutOfLobbyDetector.stop();
-		// portalPlayerDetector.stop();
 
 		matchSelectorManager.stop();
 		gameServerInfoManager.stop();

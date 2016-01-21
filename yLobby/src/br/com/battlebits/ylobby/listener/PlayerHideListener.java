@@ -40,6 +40,7 @@ public class PlayerHideListener implements Listener {
 	@EventHandler(priority = EventPriority.MONITOR)
 	public void onPlayerQuitListener(PlayerQuitEvent e) {
 		uuidCooldown.remove(e.getPlayer().getUniqueId());
+		yLobbyPlugin.getyLobby().getPlayerHideManager().tryToRemoveFromLists(e.getPlayer().getUniqueId());
 	}
 
 	@EventHandler(priority = EventPriority.MONITOR)

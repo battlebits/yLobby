@@ -42,6 +42,7 @@ public class LobbyItensManager {
 		gameModeMeta.setLore(
 				yLobbyPlugin.getyLobby().getzUtils().getItemUtils().formatForLore("§7Clique aqui para ver os modos de jogo disponiveis!"));
 		gameModeItem.setItemMeta(gameModeMeta);
+		gameModeItem = yLobbyPlugin.getyLobby().getzUtils().getItemUtils().addGlow(gameModeItem);
 		parkourItem = new ItemStack(Material.FEATHER, 1);
 		ItemMeta parkourMeta = parkourItem.getItemMeta();
 		parkourMeta.setDisplayName("§b§lDiversão §7(Em Breve)");

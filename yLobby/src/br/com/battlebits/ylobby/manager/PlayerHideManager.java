@@ -84,4 +84,9 @@ public class PlayerHideManager {
 		hideOnlyNormal.clear();
 	}
 
+	public void tryToRemoveFromLists(UUID id) {
+		hideAllPlayers.remove(id);
+		hideOnlyNormal.remove(id);
+	}
+
 }

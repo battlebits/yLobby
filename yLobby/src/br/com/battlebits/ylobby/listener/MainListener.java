@@ -18,9 +18,9 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.weather.WeatherChangeEvent;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import br.com.battlebits.ylobby.yLobbyPlugin;
-import de.inventivegames.holograms.HologramAPI;
 
 public class MainListener implements Listener {
 
@@ -32,8 +32,13 @@ public class MainListener implements Listener {
 		e.getPlayer().teleport(yLobbyPlugin.getyLobby().getLocationManager().getSpawnLocation());
 		e.getPlayer().setFoodLevel(20);
 		e.getPlayer().setHealth(20);
+		new BukkitRunnable() {
+			@Override
+			public void run() {
+				e.getPlayer().setLevel(-10);
+			}
+		}.runTaskLaterAsynchronously(yLobbyPlugin.getyLobby(), 10L);
 		e.setJoinMessage("");
-		HologramAPI.createHologram(e.getPlayer().getLocation(), "Olá").spawn();
 	}
 
 	@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)

@@ -129,7 +129,6 @@ public class LobbySelector {
 					ItemStack stack = new ItemStack(Material.INK_SACK, 1);
 					ItemMeta meta = stack.getItemMeta();
 					ArrayList<String> lore = new ArrayList<>();
-					lore.add("§0");
 					lore.add("§3§l" + info.getOnlinePlayers() + " §7"
 							+ ((info.getOnlinePlayers() == 1) ? "jogador conectado" : "jogadores conectados"));
 					lore.add("§0");
@@ -154,7 +153,6 @@ public class LobbySelector {
 							lore.add("§b§lClique§r§b para §r§b§lconectar§r§b.");
 						}
 					}
-					lore.add("§0");
 					meta.setLore(lore);
 					stack.setItemMeta(meta);
 					selectorInventory.setItem(entry.getKey(), stack);

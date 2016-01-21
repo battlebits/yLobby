@@ -31,7 +31,6 @@ public abstract class GameModeBase {
 		inventoryItemMeta = inventoryitem.getItemMeta();
 		inventoryItemMeta.setDisplayName("§9§l" + servername);
 		inventoryItemLore = new ArrayList<>();
-		inventoryItemLore.add("§0");
 		inventoryItemLore.addAll(yLobbyPlugin.getyLobby().getzUtils().getItemUtils().formatForLore(serverdescription));
 		inventoryItemLore.add("§0");
 		inventoryItemLore.add("§b§30 §7jogadores online.");
@@ -39,7 +38,6 @@ public abstract class GameModeBase {
 		for (String s : connectLines) {
 			inventoryItemLore.add(s);
 		}
-		inventoryItemLore.add("§0");
 		inventoryItemMeta.setLore(inventoryItemLore);
 		inventoryitem.setItemMeta(inventoryItemMeta);
 		substractLines = connectLines.size();
@@ -77,7 +75,7 @@ public abstract class GameModeBase {
 	}
 
 	public void updateOnlinePlayersOnItem() {
-		inventoryItemLore.set(inventoryItemLore.size() - (3 + substractLines), "§3§l" + getOnlinePlayers() + " §7jogadores online.");
+		inventoryItemLore.set(inventoryItemLore.size() - (2 + substractLines), "§3§l" + getOnlinePlayers() + " §7jogadores online.");
 		inventoryItemMeta.setLore(inventoryItemLore);
 		inventoryitem.setItemMeta(inventoryItemMeta);
 	}

@@ -43,14 +43,14 @@ public abstract class MatchSelector {
 		directConnectItem = yLobbyPlugin.getyLobby().getzUtils().getItemUtils().addGlow(directConnectItem);
 		directConnectItemMeta = directConnectItem.getItemMeta();
 		directConnectItemMeta.setDisplayName("§9§l> §b§lPartida rapida §9§l<");
-		directConnectItemLore.addAll(Arrays.asList("§0", "§7Clique aqui para §b§lconectar ", "§7a um servidor §b§ldisponivel§7!", "§0",
-				"§7No §3§ltotal §7temos §3§l0 §r§7jogadores", "§7conectados nos servidores.", "§0"));
+		directConnectItemLore.addAll(Arrays.asList("§7Clique aqui para §b§lconectar ", "§7a um servidor §b§ldisponivel§7!", "§0",
+				"§7No §3§ltotal §7temos §3§l0 §r§7jogadores", "§7conectados nos servidores."));
 		directConnectItemMeta.setLore(directConnectItemLore);
 		directConnectItem.setItemMeta(directConnectItemMeta);
 		backToServerMenuItem = new ItemStack(Material.ARROW, 1);
 		ItemMeta backmeta = backToServerMenuItem.getItemMeta();
 		backmeta.setDisplayName("§9§lModos de Jogo");
-		backmeta.setLore(Arrays.asList("§0", "§7Clique aqui para voltar", "§7para o menu de Modos de Jogo.", "§0"));
+		backmeta.setLore(Arrays.asList("§7Clique aqui para voltar", "§7para o menu de Modos de Jogo."));
 		backToServerMenuItem.setItemMeta(backmeta);
 		serverRestartingMessage = new ArrayList<>();
 		serverRestartingMessage.add("§0");
@@ -153,8 +153,7 @@ public abstract class MatchSelector {
 	public void update() {
 		int i = 10;
 		try {
-			directConnectItemLore.set(directConnectItemLore.size() - 3,
-					"§7No §3§ltotal §7temos §3§l" + getMatchsOnlinePlayers() + " §r§7jogadores");
+			directConnectItemLore.set(directConnectItemLore.size() - 2, "§7No §3§ltotal §7temos §3§l" + getMatchsOnlinePlayers() + " §r§7jogadores");
 			directConnectItemMeta.setLore(directConnectItemLore);
 			directConnectItem.setItemMeta(directConnectItemMeta);
 			serverSelectorInventory.setItem(4, directConnectItem);
@@ -173,7 +172,6 @@ public abstract class MatchSelector {
 			ItemStack stack = new ItemStack(Material.INK_SACK, 1);
 			ItemMeta meta = stack.getItemMeta();
 			ArrayList<String> lore = new ArrayList<>();
-			lore.add("§0");
 			if (info.getTime() != 0 || info.getMotd().contains("progresso")) {
 				lore.add("§3§l" + info.getOnlinePlayers() + " §7" + ((info.getOnlinePlayers() == 1) ? "jogador conectado" : "jogadores conectados"));
 			}
@@ -236,7 +234,6 @@ public abstract class MatchSelector {
 					lore.add("§b§lClique§r§b para §r§b§lconectar§r§b.");
 				}
 			}
-			lore.add("§0");
 			meta.setLore(lore);
 			stack.setItemMeta(meta);
 			serverSelectorInventory.setItem(i, stack);

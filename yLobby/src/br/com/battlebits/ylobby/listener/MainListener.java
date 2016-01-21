@@ -20,6 +20,7 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.weather.WeatherChangeEvent;
 
 import br.com.battlebits.ylobby.yLobbyPlugin;
+import de.inventivegames.holograms.HologramAPI;
 
 public class MainListener implements Listener {
 
@@ -32,6 +33,7 @@ public class MainListener implements Listener {
 		e.getPlayer().setFoodLevel(20);
 		e.getPlayer().setHealth(20);
 		e.setJoinMessage("");
+		HologramAPI.createHologram(e.getPlayer().getLocation(), "Olá").spawn();
 	}
 
 	@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)

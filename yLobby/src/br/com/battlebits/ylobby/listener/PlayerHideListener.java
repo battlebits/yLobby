@@ -8,6 +8,7 @@ import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
@@ -45,7 +46,7 @@ public class PlayerHideListener implements Listener {
 
 	@EventHandler(priority = EventPriority.MONITOR)
 	public void onPlayerInteractListener(PlayerInteractEvent e) {
-		if (!e.isCancelled() || e.getAction().name().contains("AIR")) {
+		if (!e.isCancelled() || e.getAction() != Action.PHYSICAL) {
 			if (e.getItem() != null) {
 				if (e.getItem().getType() == Material.INK_SACK) {
 					if (e.getItem().hasItemMeta()) {

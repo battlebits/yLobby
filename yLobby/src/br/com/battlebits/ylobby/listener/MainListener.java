@@ -2,6 +2,7 @@ package br.com.battlebits.ylobby.listener;
 
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
+import org.bukkit.entity.Damageable;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -18,7 +19,6 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.weather.WeatherChangeEvent;
-import org.bukkit.scheduler.BukkitRunnable;
 
 import br.com.battlebits.ylobby.yLobbyPlugin;
 
@@ -28,16 +28,22 @@ public class MainListener implements Listener {
 	@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
 	public void onPlayerJoinListener(PlayerJoinEvent e) {
 		yLobbyPlugin.getyLobby().getLobbyItensManager().setItems(e.getPlayer());
-		e.getPlayer().setGameMode(GameMode.ADVENTURE);
+		if (e.getPlayer().getGameMode() != GameMode.ADVENTURE) {
+			e.getPlayer().setGameMode(GameMode.ADVENTURE);
+		}
+		if (e.getPlayer().getFoodLevel() != 20) {
+			e.getPlayer().setFoodLevel(20);
+		}
+		if (((Damageable) e.getPlayer()).getMaxHealth() != 2) {
+			e.getPlayer().setMaxHealth(2);
+		}
+		if (((Damageable) e.getPlayer()).getHealth() != 2) {
+			e.getPlayer().setHealth(2);
+		}
+		if (e.getPlayer().getLevel() != -10) {
+			e.getPlayer().setLevel(-10);
+		}
 		e.getPlayer().teleport(yLobbyPlugin.getyLobby().getLocationManager().getSpawnLocation());
-		e.getPlayer().setFoodLevel(20);
-		e.getPlayer().setHealth(20);
-		new BukkitRunnable() {
-			@Override
-			public void run() {
-				e.getPlayer().setLevel(-10);
-			}
-		}.runTaskLaterAsynchronously(yLobbyPlugin.getyLobby(), 10L);
 		e.setJoinMessage("");
 	}
 
@@ -95,8 +101,10 @@ public class MainListener implements Listener {
 
 	@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
 	public void onPlayerInteractListener(PlayerInteractEvent e) {
-		if (e.getAction() == Action.PHYSICAL) {
-			e.setCancelled(true);
+		if ((e.getAction() == Action.PHYSICAL || e.getAction() == Action.RIGHT_CLICK_BLOCK)) {
+			if (e.getPlayer().getGameMode() != GameMode.CREATIVE) {
+				e.setCancelled(true);
+			}
 		}
 	}
 

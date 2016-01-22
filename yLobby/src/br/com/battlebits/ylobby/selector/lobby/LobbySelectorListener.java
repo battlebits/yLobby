@@ -5,6 +5,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -30,7 +31,7 @@ public class LobbySelectorListener implements Listener {
 
 	@EventHandler(priority = EventPriority.MONITOR)
 	public void onPlayerInteractListener(PlayerInteractEvent e) {
-		if (!e.isCancelled() || e.getAction().name().contains("AIR")) {
+		if (!e.isCancelled() || e.getAction() != Action.PHYSICAL) {
 			if (e.getItem() != null) {
 				if (e.getItem().getType() == Material.NETHER_STAR) {
 					if (e.getItem().hasItemMeta()) {

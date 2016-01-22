@@ -19,6 +19,7 @@ public class CharacterNPC {
 		yLobbyPlugin.getyLobby().getzUtils().getNMSUtils().getWorldServer(loc.getWorld()).addEntity(entity, SpawnReason.CUSTOM);
 		yLobbyPlugin.getyLobby().getzUtils().getNMSUtils().setHeadYaw(entity, loc.getYaw());
 		entity.setEquipment(0, CraftItemStack.asNMSCopy(itemInHand));
+		entity.setInvisible(false);
 	}
 
 	public EntityLiving getNMSEntity() {

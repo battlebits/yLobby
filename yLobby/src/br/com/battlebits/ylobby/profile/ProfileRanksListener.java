@@ -70,8 +70,8 @@ public class ProfileRanksListener implements Listener {
 
 		buyYoutuber = new ArrayList<>();
 		buyYoutuber.add(new TextComponent("§0"));
-		TextComponent buyYoutuberText = new TextComponent(yLobbyPlugin.getyLobby().getzUtils().getMessageUtils()
-				.centerChatMessage("§7Saiba como ser §b§lYOUTUBER§7 em nosso Twitter!"));
+		TextComponent buyYoutuberText = new TextComponent(
+				yLobbyPlugin.getyLobby().getzUtils().getMessageUtils().centerChatMessage("§7Saiba como ser §b§lYOUTUBER§7 em nosso Twitter!"));
 		buyYoutuberText.setClickEvent(new ClickEvent(Action.OPEN_URL, "http://twitter.com/BattleBitsMC"));
 		buyYoutuber.add(buyYoutuberText);
 		buyYoutuber.add(new TextComponent("§0"));
@@ -84,7 +84,7 @@ public class ProfileRanksListener implements Listener {
 
 	@EventHandler(priority = EventPriority.MONITOR)
 	public void onPlayerInteractListener(PlayerInteractEvent e) {
-		if (!e.isCancelled() || e.getAction().name().contains("AIR")) {
+		if (!e.isCancelled() || e.getAction() != org.bukkit.event.block.Action.PHYSICAL) {
 			if (e.getItem() != null) {
 				if (e.getItem().getType() == Material.SKULL_ITEM) {
 					if (e.getItem().hasItemMeta()) {

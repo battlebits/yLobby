@@ -1,6 +1,8 @@
 package br.com.battlebits.ylobby;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Difficulty;
+import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -78,9 +80,12 @@ public class yLobbyPlugin extends JavaPlugin {
 	@Override
 	public void onEnable() {
 
+		getLogger().info("Habilitando plugin, por favor aguarde!");
+
 		yLobby = this;
 
 		Bukkit.getWorlds().get(0).setAutoSave(false);
+		Bukkit.getWorlds().get(0).setDifficulty(Difficulty.EASY);
 
 		zUtils = new zUtils(this);
 
@@ -127,16 +132,27 @@ public class yLobbyPlugin extends JavaPlugin {
 
 		zUtils.getListenerUtils().registerListeners(gameModeSelectorListener, lobbySelectorListener, matchSelectorListener, yourProfileListener,
 				profileRanksListener, bountifulListener, mainListener, playerHideListener, gameModsListener, vipSlotsListener);
-		
+
 		playerOutOfLobbyDetector.start();
 
 		zUtils.getCommandUtils().registerCommand(new SpawnCommand(), "spawn", "Use esse comando para ir ao Spawn do Lobby", "lobby", "hub");
 		zUtils.getCommandUtils().registerCommand(new FlyCommand(), "fly", "Use esse comando para ativar ou desativar seu fly", "voar");
 
+		getLogger().info("Plugin habilitado com sucesso!");
+
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
 	public void onDisable() {
+
+		getLogger().info("Finalizando plugin...");
+
+		if (Bukkit.getOnlinePlayers().length > 0) {
+			for (Player p : Bukkit.getOnlinePlayers()) {
+				p.kickPlayer("§cO servidor está reiniciando!");
+			}
+		}
 
 		bungeeMessageReceiver.stop();
 
@@ -153,6 +169,11 @@ public class yLobbyPlugin extends JavaPlugin {
 		lobbySelector.stop();
 
 		HandlerList.unregisterAll(yLobby);
+
+		getLogger().info("Plugin finalizado!");
+		getLogger().warning("Reiniciando servidor!");
+
+		Bukkit.shutdown();
 
 	}
 

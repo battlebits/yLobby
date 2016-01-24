@@ -45,6 +45,7 @@ public class MainListener implements Listener {
 		}
 		e.getPlayer().teleport(yLobbyPlugin.getyLobby().getLocationManager().getSpawnLocation());
 		e.setJoinMessage("");
+		yLobbyPlugin.getyLobby().getScoreboardManager().setupMainScoreboard(e.getPlayer());
 	}
 
 	@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)

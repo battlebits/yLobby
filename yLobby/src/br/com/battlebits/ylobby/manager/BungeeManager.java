@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import br.com.battlebits.ylobby.yLobbyPlugin;
@@ -17,6 +18,7 @@ public class BungeeManager {
 	private ArrayList<String> swservers;
 	private ArrayList<String> lobbyservers;
 	private String serverName;
+	private String lobbyID;
 
 	private BukkitRunnable getServersRunnable;
 
@@ -26,6 +28,7 @@ public class BungeeManager {
 		fpservers = new ArrayList<>();
 		swservers = new ArrayList<>();
 		lobbyservers = new ArrayList<>();
+		lobbyID = "#0";
 		getServersRunnable = new BukkitRunnable() {
 			@SuppressWarnings("deprecation")
 			@Override
@@ -55,6 +58,7 @@ public class BungeeManager {
 				lobbyservers.add(s);
 			}
 		}
+		lobbyservers.add("teste.battlebits.com.br");
 		yLobbyPlugin.getyLobby().getLogger().info("[BungeeManager] No total " + servers.size() + " servidores foram carregados!");
 		yLobbyPlugin.getyLobby().getLogger().info("[BungeeManager] " + hgservers.size() + " servidores de HG foram carregados!");
 		yLobbyPlugin.getyLobby().getLogger().info("[BungeeManager] " + fpservers.size() + " servidores de FPHG foram carregados!");
@@ -105,6 +109,18 @@ public class BungeeManager {
 
 	public void setServerName(String str) {
 		serverName = str;
+	}
+
+	@SuppressWarnings("deprecation")
+	public void setLobbyID(String lobbyID) {
+		this.lobbyID = lobbyID;
+		for(Player p : Bukkit.getOnlinePlayers()){
+			p.getScoreboard().getTeam("lobbyidteam").setSuffix("§e" + yLobbyPlugin.getyLobby().getBungeeManager().getLobbyID());
+		}
+	}
+
+	public String getLobbyID() {
+		return lobbyID;
 	}
 
 }

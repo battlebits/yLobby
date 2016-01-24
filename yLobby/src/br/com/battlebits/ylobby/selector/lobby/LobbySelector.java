@@ -62,12 +62,17 @@ public class LobbySelector {
 								+ 18 + ((yLobbyPlugin.getyLobby().getBungeeManager().getLobbyservers().size() / 7) * 2)),
 				"          §nEscolha o Lobby");
 		int i = 10;
+		int id = 0;
 		for (String ip : yLobbyPlugin.getyLobby().getBungeeManager().getLobbyservers()) {
 			if (i == 8 || i == 17 || i == 26 || i == 35 || i == 44) {
 				i = i + 2;
 			}
 			lobbyIds.put(i, ip);
 			i += 1;
+			id += 1;
+			if (ip.equals(yLobbyPlugin.getyLobby().getBungeeManager().getServerName())) {
+				yLobbyPlugin.getyLobby().getBungeeManager().setLobbyID("#" + id);
+			}
 		}
 		startInventoryUpdater();
 	}

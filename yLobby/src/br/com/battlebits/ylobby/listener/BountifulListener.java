@@ -53,6 +53,7 @@ public class BountifulListener implements Listener {
 					e.getPlayer().sendMessage(msg);
 				}
 				if (yLobbyPlugin.getyLobby().getzUtils().getPlayerUtils().isPlayerOn18(e.getPlayer())) {
+					yLobbyPlugin.getyLobby().getTabHeaderAndFooterManager().send(e.getPlayer());
 					yLobbyPlugin.getyLobby().getzUtils().getPlayerUtils().sendPacket(e.getPlayer(), joinTitle);
 					yLobbyPlugin.getyLobby().getzUtils().getPlayerUtils().sendPacket(e.getPlayer(), joinSubTitle);
 					yLobbyPlugin.getyLobby().getzUtils().getPlayerUtils().sendPacket(e.getPlayer(), joinActionTitle);

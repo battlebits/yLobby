@@ -24,6 +24,7 @@ import br.com.battlebits.ylobby.manager.LocationManager;
 import br.com.battlebits.ylobby.manager.MatchSelectorManager;
 import br.com.battlebits.ylobby.manager.PlayerCountManager;
 import br.com.battlebits.ylobby.manager.PlayerHideManager;
+import br.com.battlebits.ylobby.manager.ScoreboardManager;
 import br.com.battlebits.ylobby.manager.ServerInfoManager;
 import br.com.battlebits.ylobby.manager.TabHeaderAndFooterManager;
 import br.com.battlebits.ylobby.profile.ProfileRanksInventory;
@@ -35,6 +36,8 @@ import br.com.battlebits.ylobby.selector.gamemode.GameModeSelectorListener;
 import br.com.battlebits.ylobby.selector.lobby.LobbySelector;
 import br.com.battlebits.ylobby.selector.lobby.LobbySelectorListener;
 import br.com.battlebits.ylobby.selector.match.MatchSelectorListener;
+import br.com.battlebits.ylobby.updater.ScoreboardUpdater;
+import br.com.battlebits.ylobby.updater.TabAndHeaderUpdater;
 
 public class yLobbyPlugin extends JavaPlugin {
 
@@ -57,12 +60,16 @@ public class yLobbyPlugin extends JavaPlugin {
 	private PlayerHideManager playerHideManager;
 	private LobbyItensManager lobbyItensManager;
 	private LocationManager locationManager;
+	private ScoreboardManager scoreboardManager;
 
 	private LobbySelector lobbySelector;
 	private LobbySelectorListener lobbySelectorListener;
 	private GameModeSelector gameModeSelector;
 	private GameModeSelectorListener gameModeSelectorListener;
 	private MatchSelectorListener matchSelectorListener;
+
+	private ScoreboardUpdater scoreboardUpdater;
+	private TabAndHeaderUpdater tabAndHeaderUpdater;
 
 	private PlayerOutOfLobbyDetector playerOutOfLobbyDetector;
 
@@ -109,6 +116,7 @@ public class yLobbyPlugin extends JavaPlugin {
 		tabHeaderAndFooterManager = new TabHeaderAndFooterManager();
 		playerHideManager = new PlayerHideManager();
 		locationManager = new LocationManager();
+		scoreboardManager = new ScoreboardManager();
 
 		lobbySelector = new LobbySelector();
 		lobbySelectorListener = new LobbySelectorListener();
@@ -116,6 +124,9 @@ public class yLobbyPlugin extends JavaPlugin {
 		gameModeSelectorListener = new GameModeSelectorListener();
 		matchSelectorListener = new MatchSelectorListener();
 		lobbyItensManager = new LobbyItensManager();
+
+		scoreboardUpdater = new ScoreboardUpdater();
+		tabAndHeaderUpdater = new TabAndHeaderUpdater();
 
 		playerOutOfLobbyDetector = new PlayerOutOfLobbyDetector();
 
@@ -132,6 +143,9 @@ public class yLobbyPlugin extends JavaPlugin {
 
 		zUtils.getListenerUtils().registerListeners(gameModeSelectorListener, lobbySelectorListener, matchSelectorListener, yourProfileListener,
 				profileRanksListener, bountifulListener, mainListener, playerHideListener, gameModsListener, vipSlotsListener);
+
+		scoreboardUpdater.start();
+		tabAndHeaderUpdater.start();
 
 		playerOutOfLobbyDetector.start();
 
@@ -158,12 +172,14 @@ public class yLobbyPlugin extends JavaPlugin {
 
 		playerOutOfLobbyDetector.stop();
 
+		scoreboardUpdater.stop();
+		tabAndHeaderUpdater.stop();
+
 		matchSelectorManager.stop();
 		gameServerInfoManager.stop();
 		serverInfoManager.stop();
 
 		gameModsManager.stop();
-		tabHeaderAndFooterManager.stop();
 
 		gameModeSelector.stop();
 		lobbySelector.stop();
@@ -233,12 +249,20 @@ public class yLobbyPlugin extends JavaPlugin {
 		return locationManager;
 	}
 
+	public TabHeaderAndFooterManager getTabHeaderAndFooterManager() {
+		return tabHeaderAndFooterManager;
+	}
+
 	public YourProfileInventory getYourProfileInventory() {
 		return yourProfileInventory;
 	}
 
 	public ProfileRanksInventory getProfileRanksInventory() {
 		return profileRanksInventory;
+	}
+
+	public ScoreboardManager getScoreboardManager() {
+		return scoreboardManager;
 	}
 
 	public zUtils getzUtils() {

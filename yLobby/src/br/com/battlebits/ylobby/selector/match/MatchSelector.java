@@ -172,15 +172,17 @@ public abstract class MatchSelector {
 			ItemStack stack = new ItemStack(Material.INK_SACK, 1);
 			ItemMeta meta = stack.getItemMeta();
 			ArrayList<String> lore = new ArrayList<>();
-			if (info.getTime() != 0 || info.getMotd().contains("progresso")) {
-				lore.add("§3§l" + info.getOnlinePlayers() + " §7" + ((info.getOnlinePlayers() == 1) ? "jogador conectado" : "jogadores conectados"));
-			}
 			if (info.getTime() == 9999) {
 				stack.setAmount(yLobbyPlugin.getyLobby().getzUtils().getItemUtils().getItemAmount(info.getOnlinePlayers()));
 				stack.setDurability((short) 11);
 				meta.setDisplayName("§9§l> §e§l" + info.getIp() + " §9§l<");
 				lore.add("§7Aguardando §e§ljogadores §7para iniciar!");
 				lore.add("§7Precisa-se de mais §e§l" + (5 - info.getOnlinePlayers()) + "§7 jogadores!");
+				if (info.getOnlinePlayers() > 0) {
+					lore.add("§0");
+					lore.add("§3§l" + info.getOnlinePlayers() + " §7"
+							+ ((info.getOnlinePlayers() == 1) ? "jogador conectado" : "jogadores conectados"));
+				}
 				lore.add("§0");
 				lore.add("§b§lClique§r§b para §r§b§lconectar§r§b.");
 			} else if (info.getTime() == 0) {
@@ -191,6 +193,9 @@ public abstract class MatchSelector {
 						meta.setDisplayName("§9§l> §c§l" + info.getIp() + " §9§l<");
 						lore.add("§7A partida está em §c§lprogresso§7!");
 						lore.add("§7A partida iniciou com §c§l" + info.getMaxPlayers() + " §7jogadores.");
+						lore.add("§0");
+						lore.add("§3§l" + info.getOnlinePlayers() + " §7"
+								+ ((info.getOnlinePlayers() == 1) ? "jogador conectado" : "jogadores conectados"));
 						lore.add("§0");
 						lore.add("§b§lClique§r§b para §r§b§lespectar§r§b.");
 					} else {
@@ -223,16 +228,19 @@ public abstract class MatchSelector {
 					meta.setDisplayName("§9§l> §6§l" + info.getIp() + " §9§l<");
 					lore.add("§7A partida §6§linicia §r§7em §6§l" + yLobbyPlugin.getyLobby().getzUtils().getTimeUtils().formatTime(info.getTime())
 							+ "§r§7.");
-					lore.add("§0");
-					lore.add("§b§lClique§r§b para §r§b§lconectar§r§b.");
 				} else {
 					stack.setDurability((short) 10);
 					meta.setDisplayName("§9§l> §a§l" + info.getIp() + " §9§l<");
 					lore.add("§7A partida §a§linicia §r§7em §a§l" + yLobbyPlugin.getyLobby().getzUtils().getTimeUtils().formatTime(info.getTime())
 							+ "§r§7.");
-					lore.add("§0");
-					lore.add("§b§lClique§r§b para §r§b§lconectar§r§b.");
 				}
+				if (info.getOnlinePlayers() > 0) {
+					lore.add("§0");
+					lore.add("§3§l" + info.getOnlinePlayers() + " §7"
+							+ ((info.getOnlinePlayers() == 1) ? "jogador conectado" : "jogadores conectados"));
+				}
+				lore.add("§0");
+				lore.add("§b§lClique§r§b para §r§b§lconectar§r§b.");
 			}
 			meta.setLore(lore);
 			stack.setItemMeta(meta);

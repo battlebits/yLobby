@@ -41,7 +41,7 @@ public class YourProfileListener implements Listener {
 						if (e.getSlot() == 11) {
 							yLobbyPlugin.getyLobby().getProfileRanksInventory().open((Player) e.getWhoClicked());
 						} else if (e.getSlot() == 15) {
-							((Player) e.getWhoClicked()).sendMessage("§cEm manutencao!");
+							((Player) e.getWhoClicked()).sendMessage("§eEm desenvolvimento...");
 						}
 					}
 				}

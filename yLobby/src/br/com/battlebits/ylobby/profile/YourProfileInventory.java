@@ -44,9 +44,11 @@ public class YourProfileInventory {
 		SkullMeta mainMeta = (SkullMeta) mainItem.getItemMeta();
 		mainMeta.setOwner(name);
 		mainMeta.setDisplayName("§9§l" + name);
-		mainMeta.setLore(Arrays.asList("§0", "§7Grupo: §3§l" + Main.getPlugin().getPermissionManager().getPlayerGroup(p.getUniqueId()).name(),
-				"§7Fichas: §3§l" + account.getFichas(), "§7Moedas: §3§l" + account.getMoney(), "§7Liga: §3§l" + account.getLiga().name(),
-				"§7XP: §3§l" + account.getXp(),
+		mainMeta.setLore(Arrays.asList("§0",
+				"§7Rank: " + yLobbyPlugin.getyLobby().getzUtils().getTagUtils()
+						.getDefaultTag(Main.getPlugin().getPermissionManager().getPlayerGroup(p.getUniqueId())).getPrefix(),
+				"§7Liga: " + account.getLiga().getSymbol() + " " + account.getLiga().toString(), "§7XP: §b" + account.getXp(),
+				"§7Moedas: §b" + account.getMoney(), "§7Fichas: §b" + account.getFichas(),
 				"§0")); /**
 						 * "§b§lClique §bpara ver", "§bmais §b§lestatisticas§b."
 						 * , "§0"));

@@ -58,7 +58,6 @@ public class BungeeManager {
 				lobbyservers.add(s);
 			}
 		}
-		lobbyservers.add("teste.battlebits.com.br");
 		yLobbyPlugin.getyLobby().getLogger().info("[BungeeManager] No total " + servers.size() + " servidores foram carregados!");
 		yLobbyPlugin.getyLobby().getLogger().info("[BungeeManager] " + hgservers.size() + " servidores de HG foram carregados!");
 		yLobbyPlugin.getyLobby().getLogger().info("[BungeeManager] " + fpservers.size() + " servidores de FPHG foram carregados!");

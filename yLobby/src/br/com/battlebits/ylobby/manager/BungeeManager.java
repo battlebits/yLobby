@@ -28,7 +28,7 @@ public class BungeeManager {
 		fpservers = new ArrayList<>();
 		swservers = new ArrayList<>();
 		lobbyservers = new ArrayList<>();
-		lobbyID = "#0";
+		lobbyID = "#?";
 		getServersRunnable = new BukkitRunnable() {
 			@SuppressWarnings("deprecation")
 			@Override

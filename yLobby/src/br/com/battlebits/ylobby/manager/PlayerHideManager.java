@@ -9,14 +9,27 @@ import org.bukkit.entity.Player;
 import me.flame.utils.Main;
 import me.flame.utils.permissions.enums.Group;
 
-public class PlayerHideManager {
+public class PlayerHideManager implements ManagerBase {
 
 	private ArrayList<UUID> hideAllPlayers;
 	private ArrayList<UUID> hideOnlyNormal;
 
-	public PlayerHideManager() {
+	public void start() {
 		hideAllPlayers = new ArrayList<>();
 		hideOnlyNormal = new ArrayList<>();
+	}
+
+	@SuppressWarnings("deprecation")
+	public void stop() {
+		for (Player p : Bukkit.getOnlinePlayers()) {
+			for (Player show : Bukkit.getOnlinePlayers()) {
+				p.showPlayer(show);
+			}
+		}
+		hideAllPlayers.clear();
+		hideOnlyNormal.clear();
+		hideAllPlayers = null;
+		hideOnlyNormal = null;
 	}
 
 	public void playerJoin(Player p) {
@@ -71,17 +84,6 @@ public class PlayerHideManager {
 		for (Player show : Bukkit.getOnlinePlayers()) {
 			p.showPlayer(show);
 		}
-	}
-
-	@SuppressWarnings("deprecation")
-	public void stop() {
-		for (Player p : Bukkit.getOnlinePlayers()) {
-			for (Player show : Bukkit.getOnlinePlayers()) {
-				p.showPlayer(show);
-			}
-		}
-		hideAllPlayers.clear();
-		hideOnlyNormal.clear();
 	}
 
 	public void tryToRemoveFromLists(UUID id) {

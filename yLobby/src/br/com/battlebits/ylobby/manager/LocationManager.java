@@ -5,12 +5,16 @@ import org.bukkit.Location;
 
 import br.com.battlebits.ylobby.yLobbyPlugin;
 
-public class LocationManager {
+public class LocationManager implements ManagerBase {
 
 	private Location spawnLocation;
 
-	public LocationManager() {
+	public void start() {
 		spawnLocation = yLobbyPlugin.getyLobby().getzUtils().getLocationUtils().getCenter(Bukkit.getWorlds().get(0).getSpawnLocation(), false);
+	}
+
+	public void stop() {
+		spawnLocation = null;
 	}
 
 	public Location getSpawnLocation() {

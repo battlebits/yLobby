@@ -141,13 +141,19 @@ public class yLobbyPlugin extends JavaPlugin {
 		playerHideListener = new PlayerHideListener();
 		gameModsListener = new GameModsListener();
 
-		zUtils.getListenerUtils().registerListeners(gameModeSelectorListener, lobbySelectorListener, matchSelectorListener, yourProfileListener,
-				profileRanksListener, bountifulListener, mainListener, playerHideListener, gameModsListener, vipSlotsListener);
+		bungeeManager.start();
+		gameModsManager.start();
+		lobbyItensManager.start();
+		locationManager.start();
+		playerHideManager.start();
 
 		scoreboardUpdater.start();
 		tabAndHeaderUpdater.start();
 
 		playerOutOfLobbyDetector.start();
+
+		zUtils.getListenerUtils().registerListeners(gameModeSelectorListener, lobbySelectorListener, matchSelectorListener, yourProfileListener,
+				profileRanksListener, bountifulListener, mainListener, playerHideListener, gameModsListener, vipSlotsListener);
 
 		zUtils.getCommandUtils().registerCommand(new SpawnCommand(), "spawn", "Use esse comando para ir ao Spawn do Lobby", "lobby", "hub");
 		zUtils.getCommandUtils().registerCommand(new FlyCommand(), "fly", "Use esse comando para ativar ou desativar seu fly", "voar");
@@ -175,11 +181,15 @@ public class yLobbyPlugin extends JavaPlugin {
 		scoreboardUpdater.stop();
 		tabAndHeaderUpdater.stop();
 
+		bungeeManager.stop();
+		gameModsManager.stop();
+		locationManager.stop();
+		lobbyItensManager.stop();
+		playerHideManager.stop();
+
 		matchSelectorManager.stop();
 		gameServerInfoManager.stop();
 		serverInfoManager.stop();
-
-		gameModsManager.stop();
 
 		gameModeSelector.stop();
 		lobbySelector.stop();

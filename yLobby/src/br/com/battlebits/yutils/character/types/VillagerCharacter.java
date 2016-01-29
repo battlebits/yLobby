@@ -49,4 +49,8 @@ public class VillagerCharacter extends EntityVillager {
 		return false;
 	}
 
+	@Override
+	public void h() {
+	}
+	
 }

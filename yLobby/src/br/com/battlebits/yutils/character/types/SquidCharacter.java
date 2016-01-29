@@ -49,4 +49,8 @@ public class SquidCharacter extends EntitySquid {
 		return false;
 	}
 	
+	@Override
+	public void h() {
+	}
+	
 }

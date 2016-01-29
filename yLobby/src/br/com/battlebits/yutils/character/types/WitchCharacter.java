@@ -49,4 +49,8 @@ public class WitchCharacter extends EntityWitch {
 		return false;
 	}
 
+	@Override
+	public void h() {
+	}
+	
 }

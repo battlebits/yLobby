@@ -48,5 +48,9 @@ public class OcelotCharacter extends EntityOcelot {
 	public boolean isInvisible() {
 		return false;
 	}
+	
+	@Override
+	public void h() {
+	}
 
 }

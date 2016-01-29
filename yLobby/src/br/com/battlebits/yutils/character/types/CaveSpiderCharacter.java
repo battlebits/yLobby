@@ -49,4 +49,8 @@ public class CaveSpiderCharacter extends EntityCaveSpider {
 		return false;
 	}
 
+	@Override
+	public void h() {
+	}
+	
 }

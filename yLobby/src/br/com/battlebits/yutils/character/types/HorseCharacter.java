@@ -49,4 +49,8 @@ public class HorseCharacter extends EntityHorse {
 		return false;
 	}
 
+	@Override
+	public void h() {
+	}
+	
 }

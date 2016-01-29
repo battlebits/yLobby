@@ -49,4 +49,8 @@ public class CreeperCharacter extends EntityCreeper {
 		return false;
 	}
 
+	@Override
+	public void h() {
+	}
+	
 }

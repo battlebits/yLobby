@@ -48,5 +48,9 @@ public class PigCharacter extends EntityPig {
 	public boolean isInvisible() {
 		return false;
 	}
+	
+	@Override
+	public void h() {
+	}
 
 }

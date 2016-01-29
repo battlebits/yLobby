@@ -14,9 +14,14 @@ import br.com.battlebits.ylobby.gamemode.GameModeMatch;
 import br.com.battlebits.ylobby.gamemode.GameModeSimple;
 import br.com.battlebits.yutils.character.CharacterType;
 
-public class GameModsManager implements ManagerBase {
+public class GameModsManager {
 
 	private ArrayList<GameModeBase> gameModeBases;
+
+	public GameModsManager() {
+		gameModeBases = new ArrayList<>();
+		loadGameMods();
+	}
 
 	public void addGameMode(GameModeBase gameModeBase) {
 		gameModeBases.add(gameModeBase);
@@ -26,8 +31,7 @@ public class GameModsManager implements ManagerBase {
 		return gameModeBases;
 	}
 
-	public void start() {
-		gameModeBases = new ArrayList<>();
+	public void loadGameMods() {
 		addGameMode(new GameModeSimple("BattleCraft", "Servidor de KitPvP com sopa feito para todos lutarem com armaduras de ferro e tirar 1v1s",
 				Material.DIAMOND_SWORD, "battlecraft.com.br", new Location(Bukkit.getWorlds().get(0), 2, 65, 35), CharacterType.SKELETON));
 		addGameMode(new GameModeSimple("BattleCraft V2",
@@ -67,7 +71,6 @@ public class GameModsManager implements ManagerBase {
 			base.getCharacterNPC().remove();
 		}
 		gameModeBases.clear();
-		gameModeBases = null;
 	}
 
 }

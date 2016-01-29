@@ -48,4 +48,8 @@ public class ZombieCharacter extends EntityZombie {
 	public boolean isInvisible() {
 		return false;
 	}
+	
+	@Override
+	public void h() {
+	}
 }

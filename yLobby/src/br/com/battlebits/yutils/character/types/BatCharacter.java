@@ -49,4 +49,8 @@ public class BatCharacter extends EntityBat {
 		return false;
 	}
 
+	@Override
+	public void h() {
+	}
+	
 }

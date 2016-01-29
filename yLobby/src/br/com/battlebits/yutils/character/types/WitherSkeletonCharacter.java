@@ -50,4 +50,8 @@ public class WitherSkeletonCharacter extends EntitySkeleton {
 		return false;
 	}
 	
+	@Override
+	public void h() {
+	}
+	
 }

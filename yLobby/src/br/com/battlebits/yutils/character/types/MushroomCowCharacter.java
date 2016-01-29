@@ -48,4 +48,8 @@ public class MushroomCowCharacter extends EntityMushroomCow {
 	public boolean isInvisible() {
 		return false;
 	}
+	
+	@Override
+	public void h() {
+	}
 }

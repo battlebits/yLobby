@@ -9,27 +9,14 @@ import org.bukkit.entity.Player;
 import me.flame.utils.Main;
 import me.flame.utils.permissions.enums.Group;
 
-public class PlayerHideManager implements ManagerBase {
+public class PlayerHideManager {
 
 	private ArrayList<UUID> hideAllPlayers;
 	private ArrayList<UUID> hideOnlyNormal;
 
-	public void start() {
+	public PlayerHideManager() {
 		hideAllPlayers = new ArrayList<>();
 		hideOnlyNormal = new ArrayList<>();
-	}
-
-	@SuppressWarnings("deprecation")
-	public void stop() {
-		for (Player p : Bukkit.getOnlinePlayers()) {
-			for (Player show : Bukkit.getOnlinePlayers()) {
-				p.showPlayer(show);
-			}
-		}
-		hideAllPlayers.clear();
-		hideOnlyNormal.clear();
-		hideAllPlayers = null;
-		hideOnlyNormal = null;
 	}
 
 	public void playerJoin(Player p) {
@@ -43,6 +30,10 @@ public class PlayerHideManager implements ManagerBase {
 				hide.hidePlayer(p);
 			}
 		}
+	}
+	
+	public boolean isHiding(Player p){
+		return hideOnlyNormal.contains(p.getUniqueId());
 	}
 
 	@SuppressWarnings("deprecation")
@@ -84,6 +75,17 @@ public class PlayerHideManager implements ManagerBase {
 		for (Player show : Bukkit.getOnlinePlayers()) {
 			p.showPlayer(show);
 		}
+	}
+
+	@SuppressWarnings("deprecation")
+	public void stop() {
+		for (Player p : Bukkit.getOnlinePlayers()) {
+			for (Player show : Bukkit.getOnlinePlayers()) {
+				p.showPlayer(show);
+			}
+		}
+		hideAllPlayers.clear();
+		hideOnlyNormal.clear();
 	}
 
 	public void tryToRemoveFromLists(UUID id) {

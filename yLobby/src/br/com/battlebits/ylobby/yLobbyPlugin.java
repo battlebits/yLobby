@@ -8,8 +8,12 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import br.com.battlebits.ylobby.bungee.BungeeMessageReceiver;
 import br.com.battlebits.ylobby.bungee.BungeeMessageSender;
-import br.com.battlebits.ylobby.commands.FlyCommand;
-import br.com.battlebits.ylobby.commands.SpawnCommand;
+import br.com.battlebits.ylobby.command.FlyCommand;
+import br.com.battlebits.ylobby.command.GroupCommand;
+import br.com.battlebits.ylobby.command.PrefCommand;
+import br.com.battlebits.ylobby.command.ProfileCommand;
+import br.com.battlebits.ylobby.command.SpawnCommand;
+import br.com.battlebits.ylobby.command.TellCommand;
 import br.com.battlebits.ylobby.detector.PlayerOutOfLobbyDetector;
 import br.com.battlebits.ylobby.listener.BountifulListener;
 import br.com.battlebits.ylobby.listener.GameModsListener;
@@ -17,6 +21,7 @@ import br.com.battlebits.ylobby.listener.MainListener;
 import br.com.battlebits.ylobby.listener.PlayerHideListener;
 import br.com.battlebits.ylobby.listener.VipSlotsListener;
 import br.com.battlebits.ylobby.manager.BungeeManager;
+import br.com.battlebits.ylobby.manager.ChatManager;
 import br.com.battlebits.ylobby.manager.GameModsManager;
 import br.com.battlebits.ylobby.manager.GameServerInfoManager;
 import br.com.battlebits.ylobby.manager.LobbyItensManager;
@@ -27,6 +32,8 @@ import br.com.battlebits.ylobby.manager.PlayerHideManager;
 import br.com.battlebits.ylobby.manager.ScoreboardManager;
 import br.com.battlebits.ylobby.manager.ServerInfoManager;
 import br.com.battlebits.ylobby.manager.TabHeaderAndFooterManager;
+import br.com.battlebits.ylobby.profile.ProfileConfigurationInventory;
+import br.com.battlebits.ylobby.profile.ProfileConfigurationListener;
 import br.com.battlebits.ylobby.profile.ProfileRanksInventory;
 import br.com.battlebits.ylobby.profile.ProfileRanksListener;
 import br.com.battlebits.ylobby.profile.YourProfileInventory;
@@ -61,6 +68,7 @@ public class yLobbyPlugin extends JavaPlugin {
 	private LobbyItensManager lobbyItensManager;
 	private LocationManager locationManager;
 	private ScoreboardManager scoreboardManager;
+	private ChatManager chatManager;
 
 	private LobbySelector lobbySelector;
 	private LobbySelectorListener lobbySelectorListener;
@@ -77,12 +85,21 @@ public class yLobbyPlugin extends JavaPlugin {
 	private YourProfileListener yourProfileListener;
 	private ProfileRanksInventory profileRanksInventory;
 	private ProfileRanksListener profileRanksListener;
+	private ProfileConfigurationInventory profileConfigurationInventory;
+	private ProfileConfigurationListener profileConfigurationListener;
 
 	private BountifulListener bountifulListener;
 	private GameModsListener gameModsListener;
 	private PlayerHideListener playerHideListener;
 	private MainListener mainListener;
 	private VipSlotsListener vipSlotsListener;
+
+	private FlyCommand flyCommand;
+	private TellCommand tellCommand;
+	private SpawnCommand spawnCommand;
+	private PrefCommand prefCommand;
+	private ProfileCommand profileCommand;
+	private GroupCommand groupCommand;
 
 	@Override
 	public void onEnable() {
@@ -117,6 +134,7 @@ public class yLobbyPlugin extends JavaPlugin {
 		playerHideManager = new PlayerHideManager();
 		locationManager = new LocationManager();
 		scoreboardManager = new ScoreboardManager();
+		chatManager = new ChatManager();
 
 		lobbySelector = new LobbySelector();
 		lobbySelectorListener = new LobbySelectorListener();
@@ -134,6 +152,8 @@ public class yLobbyPlugin extends JavaPlugin {
 		yourProfileListener = new YourProfileListener();
 		profileRanksInventory = new ProfileRanksInventory();
 		profileRanksListener = new ProfileRanksListener();
+		profileConfigurationInventory = new ProfileConfigurationInventory();
+		profileConfigurationListener = new ProfileConfigurationListener();
 
 		vipSlotsListener = new VipSlotsListener();
 		bountifulListener = new BountifulListener();
@@ -141,22 +161,32 @@ public class yLobbyPlugin extends JavaPlugin {
 		playerHideListener = new PlayerHideListener();
 		gameModsListener = new GameModsListener();
 
-		bungeeManager.start();
-		gameModsManager.start();
-		lobbyItensManager.start();
-		locationManager.start();
-		playerHideManager.start();
+		tellCommand = new TellCommand();
+		spawnCommand = new SpawnCommand();
+		flyCommand = new FlyCommand();
+		prefCommand = new PrefCommand();
+		profileCommand = new ProfileCommand();
+		groupCommand = new GroupCommand();
+
+		zUtils.getListenerUtils().registerListeners(gameModeSelectorListener, lobbySelectorListener, matchSelectorListener, yourProfileListener,
+				profileRanksListener, profileConfigurationListener, bountifulListener, mainListener, playerHideListener, gameModsListener,
+				vipSlotsListener);
+
+		chatManager.start();
 
 		scoreboardUpdater.start();
 		tabAndHeaderUpdater.start();
 
 		playerOutOfLobbyDetector.start();
 
-		zUtils.getListenerUtils().registerListeners(gameModeSelectorListener, lobbySelectorListener, matchSelectorListener, yourProfileListener,
-				profileRanksListener, bountifulListener, mainListener, playerHideListener, gameModsListener, vipSlotsListener);
-
-		zUtils.getCommandUtils().registerCommand(new SpawnCommand(), "spawn", "Use esse comando para ir ao Spawn do Lobby", "lobby", "hub");
-		zUtils.getCommandUtils().registerCommand(new FlyCommand(), "fly", "Use esse comando para ativar ou desativar seu fly", "voar");
+		zUtils.getCommandUtils().registerCommand(spawnCommand, "spawn", "Comando para ir ao Spawn do Lobby", "lobby", "hub");
+		zUtils.getCommandUtils().registerCommand(flyCommand, "fly", "Comando para ativar ou desativar seu fly", "voar");
+		zUtils.getCommandUtils().registerCommand(tellCommand, "tell", "Comando para enviar mensagems privadas para jogadores", "pm", "w", "msg");
+		zUtils.getCommandUtils().registerCommand(tellCommand, "r", "Comando para responder mensagens privadas de jogadores", "responder");
+		zUtils.getCommandUtils().registerCommand(prefCommand, "pref", "Comando para abrir o menu de preferencias", "preferencias", "config",
+				"configs", "prefs", "configuracoes");
+		zUtils.getCommandUtils().registerCommand(profileCommand, "perfil", "Comando para abrir seu perfil", "eu", "meuperfil", "sobre");
+		zUtils.getCommandUtils().registerCommand(groupCommand, "grupo", "Comando para ver informacoes sobre seu grupo atual", "group", "meugrupo");
 
 		getLogger().info("Plugin habilitado com sucesso!");
 
@@ -181,15 +211,12 @@ public class yLobbyPlugin extends JavaPlugin {
 		scoreboardUpdater.stop();
 		tabAndHeaderUpdater.stop();
 
-		bungeeManager.stop();
-		gameModsManager.stop();
-		locationManager.stop();
-		lobbyItensManager.stop();
-		playerHideManager.stop();
-
+		chatManager.stop();
 		matchSelectorManager.stop();
 		gameServerInfoManager.stop();
 		serverInfoManager.stop();
+
+		gameModsManager.stop();
 
 		gameModeSelector.stop();
 		lobbySelector.stop();
@@ -273,6 +300,14 @@ public class yLobbyPlugin extends JavaPlugin {
 
 	public ScoreboardManager getScoreboardManager() {
 		return scoreboardManager;
+	}
+
+	public ChatManager getChatManager() {
+		return chatManager;
+	}
+
+	public ProfileConfigurationInventory getProfileConfigurationInventory() {
+		return profileConfigurationInventory;
 	}
 
 	public zUtils getzUtils() {

@@ -49,4 +49,8 @@ public class SnowmanCharacter extends EntitySnowman {
 		return false;
 	}
 	
+	@Override
+	public void h() {
+	}
+	
 }

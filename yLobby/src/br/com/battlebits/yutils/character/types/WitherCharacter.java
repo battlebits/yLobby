@@ -49,4 +49,8 @@ public class WitherCharacter extends EntityWither {
 		return false;
 	}
 	
+	@Override
+	public void h() {
+	}
+	
 }

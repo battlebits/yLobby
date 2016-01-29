@@ -48,4 +48,9 @@ public class EndermanCharacter extends EntityEnderman {
 	public boolean isInvisible() {
 		return false;
 	}
+	
+	@Override
+	public void h() {
+	}
+	
 }

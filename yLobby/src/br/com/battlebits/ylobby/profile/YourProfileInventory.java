@@ -18,6 +18,7 @@ public class YourProfileInventory {
 
 	private ItemStack ranksItem;
 	private ItemStack tagsItem;
+	private ItemStack configItem;
 
 	public YourProfileInventory() {
 		ranksItem = new ItemStack(Material.ENCHANTED_BOOK, 1);
@@ -33,6 +34,13 @@ public class YourProfileInventory {
 		tagsMeta.setLore(yLobbyPlugin.getyLobby().getzUtils().getItemUtils()
 				.formatForLore("§7Clique aqui para saber mais informacoes sobre todas as Tags existentes no servidor!"));
 		tagsItem.setItemMeta(tagsMeta);
+
+		configItem = new ItemStack(Material.REDSTONE_COMPARATOR, 1);
+		ItemMeta configMeta = configItem.getItemMeta();
+		configMeta.setDisplayName("§c§lPreferencias");
+		configMeta.setLore(
+				yLobbyPlugin.getyLobby().getzUtils().getItemUtils().formatForLore("§7Clique aqui para editar suas preferencias no servidor!"));
+		configItem.setItemMeta(configMeta);
 	}
 
 	public void open(Player p) {
@@ -56,7 +64,8 @@ public class YourProfileInventory {
 		mainItem.setItemMeta(mainMeta);
 		inv.setItem(11, ranksItem);
 		inv.setItem(13, mainItem);
-		inv.setItem(15, tagsItem);
+//		inv.setItem(15, tagsItem);
+		inv.setItem(15, configItem);
 
 		p.openInventory(inv);
 

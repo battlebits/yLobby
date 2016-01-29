@@ -1,4 +1,4 @@
-package br.com.battlebits.ylobby.commands;
+package br.com.battlebits.ylobby.command;
 
 import java.util.ArrayList;
 
@@ -20,8 +20,8 @@ public class FlyCommand implements CommandExecutor {
 	public FlyCommand() {
 		onlyForLights = new ArrayList<>();
 		onlyForLights.add("§0");
-		onlyForLights.add(yLobbyPlugin.getyLobby().getzUtils().getMessageUtils()
-				.centerChatMessage("§7Este comando é apenas para jogadores §a§lLIGHT §7ou superiores!"));
+		onlyForLights.add(yLobbyPlugin.getyLobby().getzUtils().getMessageUtils().centerChatMessage("§7O modo §e§lvoar §7so pode ser usado por um"));
+		onlyForLights.add(yLobbyPlugin.getyLobby().getzUtils().getMessageUtils().centerChatMessage("§7jogador com o grupo §a§lLIGHT §7ou superior!"));
 		onlyForLights.add("§0");
 		flyEnable = new ArrayList<>();
 		flyEnable.add("§0");

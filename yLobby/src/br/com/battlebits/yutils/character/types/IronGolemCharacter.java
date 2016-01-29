@@ -49,4 +49,8 @@ public class IronGolemCharacter extends EntityIronGolem {
 		return false;
 	}
 
+	@Override
+	public void h() {
+	}
+	
 }

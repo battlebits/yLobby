@@ -48,4 +48,9 @@ public class WolfCharacter extends EntityWolf {
 	public boolean isInvisible() {
 		return false;
 	}
+	
+	@Override
+	public void h() {
+	}
+	
 }

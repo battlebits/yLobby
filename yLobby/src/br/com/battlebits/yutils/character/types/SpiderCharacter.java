@@ -49,4 +49,8 @@ public class SpiderCharacter extends EntitySpider {
 		return false;
 	}
 	
+	@Override
+	public void h() {
+	}
+	
 }

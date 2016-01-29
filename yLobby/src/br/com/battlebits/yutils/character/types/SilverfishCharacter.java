@@ -49,4 +49,8 @@ public class SilverfishCharacter extends EntitySilverfish {
 		return false;
 	}
 	
+	@Override
+	public void h() {
+	}
+	
 }

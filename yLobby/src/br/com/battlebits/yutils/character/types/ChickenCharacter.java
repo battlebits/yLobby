@@ -49,4 +49,8 @@ public class ChickenCharacter extends EntityChicken {
 		return false;
 	}
 
+	@Override
+	public void h() {
+	}
+	
 }

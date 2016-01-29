@@ -34,7 +34,7 @@ public class SlimeCharacter extends EntitySlime {
 	@Override
 	public void makeSound(String s, float f, float f1) {
 	}
-	
+
 	@Override
 	public void setOnFire(int i) {
 	}
@@ -48,4 +48,9 @@ public class SlimeCharacter extends EntitySlime {
 	public boolean isInvisible() {
 		return false;
 	}
+
+	@Override
+	public void h() {
+	}
+
 }

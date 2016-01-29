@@ -48,4 +48,8 @@ public class MagmaCubeCharacter extends EntityMagmaCube {
 	public boolean isInvisible() {
 		return false;
 	}
+	
+	@Override
+	public void h() {
+	}
 }

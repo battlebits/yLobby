@@ -10,7 +10,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import br.com.battlebits.ylobby.yLobbyPlugin;
 import br.com.battlebits.ylobby.bungee.BungeeMessage;
 
-public class BungeeManager implements ManagerBase {
+public class BungeeManager {
 
 	private ArrayList<String> servers;
 	private ArrayList<String> hgservers;
@@ -19,10 +19,10 @@ public class BungeeManager implements ManagerBase {
 	private ArrayList<String> lobbyservers;
 	private String serverName;
 	private String lobbyID;
+
 	private BukkitRunnable getServersRunnable;
 
-	@Override
-	public void start() {
+	public BungeeManager() {
 		servers = new ArrayList<>();
 		hgservers = new ArrayList<>();
 		fpservers = new ArrayList<>();
@@ -42,32 +42,11 @@ public class BungeeManager implements ManagerBase {
 		getServersRunnable.runTaskTimerAsynchronously(yLobbyPlugin.getyLobby(), 1L, 20L);
 	}
 
-	@Override
-	public void stop() {
-		servers.clear();
-		hgservers.clear();
-		fpservers.clear();
-		swservers.clear();
-		lobbyservers.clear();
-		try {
-			if (getServersRunnable != null) {
-				getServersRunnable.cancel();
-			}
-		} catch (Exception e) {
-		}
-		servers = null;
-		hgservers = null;
-		fpservers = null;
-		swservers = null;
-		lobbyservers = null;
-		lobbyID = null;
-		getServersRunnable = null;
-	}
-
 	public void setServers(String str) {
 		servers.clear();
 		hgservers.clear();
 		fpservers.clear();
+		lobbyservers.clear();
 		for (String s : str.split(", ")) {
 			servers.add(s);
 			if (s.contains("battle-hg.com")) {
@@ -135,7 +114,7 @@ public class BungeeManager implements ManagerBase {
 	@SuppressWarnings("deprecation")
 	public void setLobbyID(String lobbyID) {
 		this.lobbyID = lobbyID;
-		for (Player p : Bukkit.getOnlinePlayers()) {
+		for(Player p : Bukkit.getOnlinePlayers()){
 			p.getScoreboard().getTeam("lobbyidteam").setSuffix("§e" + yLobbyPlugin.getyLobby().getBungeeManager().getLobbyID());
 		}
 	}

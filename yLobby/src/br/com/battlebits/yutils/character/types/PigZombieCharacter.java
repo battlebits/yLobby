@@ -52,5 +52,5 @@ public class PigZombieCharacter extends EntityPigZombie {
 	public boolean isInvisible() {
 		return false;
 	}
-
+	
 }

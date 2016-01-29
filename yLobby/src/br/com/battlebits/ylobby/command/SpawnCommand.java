@@ -1,4 +1,4 @@
-package br.com.battlebits.ylobby.commands;
+package br.com.battlebits.ylobby.command;
 
 import java.util.ArrayList;
 
@@ -16,9 +16,7 @@ public class SpawnCommand implements CommandExecutor {
 	public SpawnCommand() {
 		message = new ArrayList<>();
 		message.add("§0");
-		message.add("§0");
 		message.add(yLobbyPlugin.getyLobby().getzUtils().getMessageUtils().centerChatMessage("§7Você foi teleportado para o §e§lSPAWN§7!"));
-		message.add("§0");
 		message.add("§0");
 	}
 

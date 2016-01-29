@@ -49,4 +49,8 @@ public class SheepCharacter extends EntitySheep {
 		return false;
 	}
 
+	@Override
+	public void h() {
+	}
+	
 }

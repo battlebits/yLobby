@@ -62,10 +62,10 @@ public class MainListener implements Listener {
 				}
 			}
 		}.runTaskLaterAsynchronously(yLobbyPlugin.getyLobby(), 20L);
-		if (Main.getPlugin().getPermissionManager().hasGroupPermission(e.getPlayer().getUniqueId(), Group.LIGHT)) {
-			e.getPlayer().setAllowFlight(true);
-			e.getPlayer().setFlying(true);
-		}
+//		if (Main.getPlugin().getPermissionManager().hasGroupPermission(e.getPlayer().getUniqueId(), Group.LIGHT)) {
+//			e.getPlayer().setAllowFlight(true);
+//			e.getPlayer().setFlying(true);
+//		}
 		e.getPlayer().teleport(yLobbyPlugin.getyLobby().getLocationManager().getSpawnLocation());
 		e.setJoinMessage("");
 		yLobbyPlugin.getyLobby().getScoreboardManager().setupMainScoreboard(e.getPlayer());
@@ -74,23 +74,23 @@ public class MainListener implements Listener {
 		}
 	}
 
-	@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-	public void onVipExpire(IW4PostExpiredPlayerEvent e) {
-		for (IW4OrderProduct product : e.getExpiredPackages().values()) {
-			if (product.getProductName().toLowerCase().startsWith("vip")) {
-				Player p = Bukkit.getPlayer(e.getPlayer().getUUID());
-				if (p.getAllowFlight()) {
-					p.setAllowFlight(false);
-				}
-				yAddonsPlugin.getyAddons().getAccountManager().getAccount(p).removeCurrentGadget();
-				yAddonsPlugin.getyAddons().getAccountManager().getAccount(p).removeCurrentHat();
-				yAddonsPlugin.getyAddons().getAccountManager().getAccount(p).removeCurrentParticle();
-				yAddonsPlugin.getyAddons().getAccountManager().getAccount(p).removeCurrentPet();
-				yAddonsPlugin.getyAddons().getAccountManager().getAccount(p).removeCurrentMorph();
-				break;
-			}
-		}
-	}
+//	@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+//	public void onVipExpire(IW4PostExpiredPlayerEvent e) {
+//		for (IW4OrderProduct product : e.getExpiredPackages().values()) {
+//			if (product.getProductName().toLowerCase().startsWith("vip")) {
+//				Player p = Bukkit.getPlayer(e.getPlayer().getUUID());
+//				if (p.getAllowFlight()) {
+//					p.setAllowFlight(false);
+//				}
+//				yAddonsPlugin.getyAddons().getAccountManager().getAccount(p).removeCurrentGadget();
+//				yAddonsPlugin.getyAddons().getAccountManager().getAccount(p).removeCurrentHat();
+//				yAddonsPlugin.getyAddons().getAccountManager().getAccount(p).removeCurrentParticle();
+//				yAddonsPlugin.getyAddons().getAccountManager().getAccount(p).removeCurrentPet();
+//				yAddonsPlugin.getyAddons().getAccountManager().getAccount(p).removeCurrentMorph();
+//				break;
+//			}
+//		}
+//	}
 
 	@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
 	public void onFoodLevelChangeListener(FoodLevelChangeEvent e) {

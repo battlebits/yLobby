@@ -44,7 +44,7 @@ public class MySQLConnection {
 				"CREATE TABLE IF NOT EXISTS `parkour_records` (" + " `parkour_name` varchar(32) NOT NULL," + "  `player_uuid` varchar(36) NOT NULL, "
 						+ " `parkour_time` int(11) NOT NULL, " + "  `parkour_rank` varchar(8) NOT NULL " + ") ENGINE=InnoDB DEFAULT CHARSET=latin1;");
 	}
-	
+
 	public void tryToReconnect() {
 		stop();
 		tryToConnect();
@@ -56,7 +56,7 @@ public class MySQLConnection {
 				yLobbyPlugin.getyLobby().getLogger().info("[MySQLConnection] Fechando conexao com o Banco de Dados!");
 				if (!connection.isClosed()) {
 					connection.close();
-					yAddonsPlugin.getyAddons().getLogger().info("[MySQLConnection] Conexao com o Banco de Dados fechada!");
+					yLobbyPlugin.getyLobby().getLogger().info("[MySQLConnection] Conexao com o Banco de Dados fechada!");
 				}
 			} catch (Exception e) {
 				yLobbyPlugin.getyLobby().getLogger().warning("[MySQLConnection] Erro ao tentar fechar conexao com o Banco de Dados!");

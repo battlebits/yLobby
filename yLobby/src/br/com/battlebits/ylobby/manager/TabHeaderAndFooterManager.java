@@ -25,7 +25,7 @@ public class TabHeaderAndFooterManager {
 		headerBuilder.append("\n");
 		headerBuilder.append("§eTemos atualmente §f");
 		headerBuilder.append(yLobbyPlugin.getyLobby().getPlayerCountManager().getNetworkOnlinePlayers());
-		headerBuilder.append(" §ejogadores online em toda a nossa rede!");
+		headerBuilder.append(" §ejogadores online em toda a rede!");
 		StringBuilder footerBuilder = new StringBuilder();
 		footerBuilder.append("§bNick: §f");
 		footerBuilder.append(p.getName());

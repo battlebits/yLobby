@@ -1,5 +1,7 @@
 package br.com.battlebits.ylobby.listener;
 
+import java.util.UUID;
+
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
@@ -14,14 +16,18 @@ import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.weather.WeatherChangeEvent;
+import org.bukkit.potion.PotionEffect;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import br.com.battlebits.iw4.api.event.IW4PostExpiredPlayerEvent;
+import br.com.battlebits.iw4.object.IW4OrderProduct;
 import br.com.battlebits.yaddons.yAddonsPlugin;
 import br.com.battlebits.ylobby.yLobbyPlugin;
 import me.flame.utils.Main;
@@ -56,13 +62,34 @@ public class MainListener implements Listener {
 				}
 			}
 		}.runTaskLaterAsynchronously(yLobbyPlugin.getyLobby(), 20L);
-		if(Main.getPlugin().getPermissionManager().hasGroupPermission(e.getPlayer().getUniqueId(), Group.LIGHT)){
+		if (Main.getPlugin().getPermissionManager().hasGroupPermission(e.getPlayer().getUniqueId(), Group.LIGHT)) {
 			e.getPlayer().setAllowFlight(true);
 			e.getPlayer().setFlying(true);
 		}
 		e.getPlayer().teleport(yLobbyPlugin.getyLobby().getLocationManager().getSpawnLocation());
 		e.setJoinMessage("");
 		yLobbyPlugin.getyLobby().getScoreboardManager().setupMainScoreboard(e.getPlayer());
+		for (PotionEffect pot : e.getPlayer().getActivePotionEffects()) {
+			e.getPlayer().removePotionEffect(pot.getType());
+		}
+	}
+
+	@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+	public void onVipExpire(IW4PostExpiredPlayerEvent e) {
+		for (IW4OrderProduct product : e.getExpiredPackages().values()) {
+			if (product.getProductName().toLowerCase().startsWith("vip")) {
+				Player p = Bukkit.getPlayer(e.getPlayer().getUUID());
+				if (p.getAllowFlight()) {
+					p.setAllowFlight(false);
+				}
+				yAddonsPlugin.getyAddons().getAccountManager().getAccount(p).removeCurrentGadget();
+				yAddonsPlugin.getyAddons().getAccountManager().getAccount(p).removeCurrentHat();
+				yAddonsPlugin.getyAddons().getAccountManager().getAccount(p).removeCurrentParticle();
+				yAddonsPlugin.getyAddons().getAccountManager().getAccount(p).removeCurrentPet();
+				yAddonsPlugin.getyAddons().getAccountManager().getAccount(p).removeCurrentMorph();
+				break;
+			}
+		}
 	}
 
 	@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
@@ -158,6 +185,35 @@ public class MainListener implements Listener {
 			e.setCancelled(true);
 			e.getPlayer().sendMessage("§7Sistema de Lobby para a §6§lBattle§r§lBits §9§lNetwork §7versão "
 					+ yLobbyPlugin.getyLobby().getDescription().getVersion() + "!");
+		}
+	}
+
+	@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+	public void onAsyncPlayerChatListener(AsyncPlayerChatEvent e) {
+		if (!e.getMessage().startsWith("Damage Indicators")) {
+			if (yLobbyPlugin.getyLobby().getChatManager().isChatEnabled(e.getPlayer().getUniqueId())) {
+				if (!(e.getMessage().startsWith("@")
+						&& Main.getPlugin().getPermissionManager().hasGroupPermission(e.getPlayer().getUniqueId(), Group.MOD))) {
+					for (UUID id : yLobbyPlugin.getyLobby().getChatManager().getChatDisabledPlayers()) {
+						e.getRecipients().remove(Bukkit.getPlayer(id));
+					}
+				} else {
+					if (e.getMessage().length() > 1) {
+						String str = e.getMessage().substring(1, e.getMessage().length());
+						if (str.length() > 0) {
+							e.setMessage(str);
+						} else {
+							e.setCancelled(true);
+						}
+					} else {
+						e.setCancelled(true);
+					}
+				}
+			} else {
+				yLobbyPlugin.getyLobby().getChatManager().chatDisabledMessage(e.getPlayer());
+			}
+		} else {
+			e.setCancelled(true);
 		}
 	}
 

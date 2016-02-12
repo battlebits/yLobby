@@ -673,33 +673,33 @@ public class zUtils {
 
 	public class UUIDUtils {
 
-		private Cache<String, String> uuidName;
+//		private Cache<String, String> uuidName;
 
-		public UUIDUtils() {
-			uuidName = CacheBuilder.newBuilder().expireAfterWrite(1L, TimeUnit.HOURS).build(new CacheLoader<String, String>() {
-				@Override
-				public String load(String uuid) throws Exception {
-					return getNameFromMojang(uuid);
-				}
-			});
-		}
+//		public UUIDUtils() {
+//			uuidName = CacheBuilder.newBuilder().expireAfterWrite(1L, TimeUnit.HOURS).build(new CacheLoader<String, String>() {
+//				@Override
+//				public String load(String uuid) throws Exception {
+//					return getNameFromMojang(uuid);
+//				}
+//			});
+//		}
+//
+//		public String getNameByUUID(String uuid) {
+//			try {
+//				return uuidName.get(uuid.replace("-", ""));
+//			} catch (Exception e) {
+//				return getNameFromMojang(uuid);
+//			}
+//		}
 
-		public String getNameByUUID(String uuid) {
-			try {
-				return uuidName.get(uuid.replace("-", ""));
-			} catch (Exception e) {
-				return getNameFromMojang(uuid);
-			}
-		}
-
-		private String getNameFromMojang(String uuid) {
-			try {
-				return jsonUtils.getValue("name", jsonUtils
-						.getJSONObjectFromUrl(new URL("https://sessionserver.mojang.com/session/minecraft/profile/" + uuid.replace("-", ""))));
-			} catch (Exception e) {
-				return Bukkit.getPlayer(UUID.fromString(uuid)).getName();
-			}
-		}
+//		private String getNameFromMojang(String uuid) {
+//			try {
+//				return jsonUtils.getValue("name", jsonUtils
+//						.getJSONObjectFromUrl(new URL("https://sessionserver.mojang.com/session/minecraft/profile/" + uuid.replace("-", ""))));
+//			} catch (Exception e) {
+//				return Bukkit.getPlayer(UUID.fromString(uuid)).getName();
+//			}
+//		}
 
 	}
 

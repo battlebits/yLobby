@@ -80,18 +80,18 @@ public class TellCommand implements CommandExecutor {
 										}
 										msg = msg + args[i];
 									}
-									TextComponent toPlayer = new TextComponent("§7[eu -> " + t.getDisplayName() + "§7] §r" + msg);
+									TextComponent msgComponet = new TextComponent("§r" + msg);
+									TextComponent toPlayer = new TextComponent("§7[eu -> " + t.getDisplayName() + "§7] §r");
 									toPlayer.setClickEvent(new ClickEvent(Action.SUGGEST_COMMAND, "/tell " + t.getName() + " "));
 									toPlayer.setHoverEvent(new HoverEvent(net.md_5.bungee.api.chat.HoverEvent.Action.SHOW_TEXT, new BaseComponent[] {
 											new TextComponent("§7Clique para enviar outra mensagem para o jogador §b" + t.getName()) }));
-									p.spigot().sendMessage(toPlayer);
-									TextComponent toTarget = new TextComponent("§7[" + p.getDisplayName() + " §7-> eu] §r" + msg);
+									p.spigot().sendMessage(toPlayer, msgComponet);
+									TextComponent toTarget = new TextComponent("§7[" + p.getDisplayName() + " §7-> eu] §r");
 									toTarget.setClickEvent(new ClickEvent(Action.SUGGEST_COMMAND, "/responder "));
 									toTarget.setHoverEvent(new HoverEvent(net.md_5.bungee.api.chat.HoverEvent.Action.SHOW_TEXT,
 											new BaseComponent[] { new TextComponent("§7Clique para responder o jogador §b" + p.getName()) }));
-									t.spigot().sendMessage(toTarget);
-									yLobbyPlugin.getyLobby().getChatManager().lastTell.put(t.getUniqueId(), p.getUniqueId());
-									yLobbyPlugin.getyLobby().getChatManager().lastTell.put(p.getUniqueId(), t.getUniqueId());
+									t.spigot().sendMessage(toTarget, msgComponet);
+									yLobbyPlugin.getyLobby().getChatManager().setLastTell(p.getUniqueId(), t.getUniqueId());
 								} else {
 									for (String msg : disableTarget) {
 										p.sendMessage(msg);
@@ -119,9 +119,9 @@ public class TellCommand implements CommandExecutor {
 					}
 				}
 			} else if (cmd.getName().equalsIgnoreCase("r")) {
-				if (yLobbyPlugin.getyLobby().getChatManager().lastTell.containsKey(p.getUniqueId())) {
+				if (yLobbyPlugin.getyLobby().getChatManager().hasLastTell(p.getUniqueId())) {
 					if (args.length > 0) {
-						Player t = Bukkit.getPlayer(yLobbyPlugin.getyLobby().getChatManager().lastTell.get(p.getUniqueId()));
+						Player t = Bukkit.getPlayer(yLobbyPlugin.getyLobby().getChatManager().getLastTell(p.getUniqueId()));
 						if (t != null && t.isOnline()) {
 							if (!t.getName().equalsIgnoreCase(p.getName())) {
 								if (yLobbyPlugin.getyLobby().getChatManager().isTellEnabled(p.getUniqueId())) {
@@ -133,19 +133,19 @@ public class TellCommand implements CommandExecutor {
 											}
 											msg = msg + args[i];
 										}
-										TextComponent toPlayer = new TextComponent("§7[eu -> " + t.getDisplayName() + "§7] §r" + msg);
+										TextComponent msgComponet = new TextComponent("§r" + msg);
+										TextComponent toPlayer = new TextComponent("§7[eu -> " + t.getDisplayName() + "§7] §r");
 										toPlayer.setClickEvent(new ClickEvent(Action.SUGGEST_COMMAND, "/tell " + t.getName() + " "));
 										toPlayer.setHoverEvent(
 												new HoverEvent(net.md_5.bungee.api.chat.HoverEvent.Action.SHOW_TEXT, new BaseComponent[] {
 														new TextComponent("§7Clique para enviar outra mensagem para o jogador §b" + t.getName()) }));
-										p.spigot().sendMessage(toPlayer);
-										TextComponent toTarget = new TextComponent("§7[" + p.getDisplayName() + " §7-> eu] §r" + msg);
+										p.spigot().sendMessage(toPlayer, msgComponet);
+										TextComponent toTarget = new TextComponent("§7[" + p.getDisplayName() + " §7-> eu] §r");
 										toTarget.setClickEvent(new ClickEvent(Action.SUGGEST_COMMAND, "/responder "));
 										toTarget.setHoverEvent(new HoverEvent(net.md_5.bungee.api.chat.HoverEvent.Action.SHOW_TEXT,
 												new BaseComponent[] { new TextComponent("§7Clique para responder o jogador §b" + p.getName()) }));
-										t.spigot().sendMessage(toTarget);
-										yLobbyPlugin.getyLobby().getChatManager().lastTell.put(t.getUniqueId(), p.getUniqueId());
-										yLobbyPlugin.getyLobby().getChatManager().lastTell.put(p.getUniqueId(), t.getUniqueId());
+										t.spigot().sendMessage(toTarget, msgComponet);
+										yLobbyPlugin.getyLobby().getChatManager().setLastTell(p.getUniqueId(), t.getUniqueId());
 									} else {
 										for (String msg : disableTarget) {
 											p.sendMessage(msg);

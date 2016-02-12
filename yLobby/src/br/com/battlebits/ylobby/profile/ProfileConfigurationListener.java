@@ -22,6 +22,8 @@ public class ProfileConfigurationListener implements Listener {
 	private ArrayList<String> flyDisable;
 	private ArrayList<String> tellEnable;
 	private ArrayList<String> tellDisable;
+	private ArrayList<String> chatEnable;
+	private ArrayList<String> chatDisable;
 
 	public ProfileConfigurationListener() {
 		hideMessage = new ArrayList<>();
@@ -54,6 +56,15 @@ public class ProfileConfigurationListener implements Listener {
 		tellDisable
 				.add(yLobbyPlugin.getyLobby().getzUtils().getMessageUtils().centerChatMessage("§7Voce §e§ldesativou §7as §e§lmensagens privadas§7!"));
 		tellDisable.add("§0");
+		chatEnable = new ArrayList<>();
+		chatEnable.add("§0");
+		chatEnable.add(yLobbyPlugin.getyLobby().getzUtils().getMessageUtils().centerChatMessage("§7Voce §a§lativou §7o §a§lchat geral§7!"));
+		chatEnable.add("§0");
+		chatDisable = new ArrayList<>();
+		chatDisable.add("§0");
+		chatDisable
+				.add(yLobbyPlugin.getyLobby().getzUtils().getMessageUtils().centerChatMessage("§7Voce §e§ldesativou §7o §e§lchat geral§7!"));
+		chatDisable.add("§0");
 	}
 
 	@EventHandler(priority = EventPriority.MONITOR)
@@ -111,6 +122,19 @@ public class ProfileConfigurationListener implements Listener {
 								}
 							}
 							yLobbyPlugin.getyLobby().getProfileConfigurationInventory().setTellItens(e.getInventory(), p);
+						}  else if (e.getSlot() == 16 || e.getSlot() == 25) {
+							if (yLobbyPlugin.getyLobby().getChatManager().isChatEnabled(p.getUniqueId())) {
+								yLobbyPlugin.getyLobby().getChatManager().disableChat(p.getUniqueId());
+								for (String str : chatDisable) {
+									p.sendMessage(str);
+								}
+							} else {
+								yLobbyPlugin.getyLobby().getChatManager().enableChat(p.getUniqueId());
+								for (String str : chatEnable) {
+									p.sendMessage(str);
+								}
+							}
+							yLobbyPlugin.getyLobby().getProfileConfigurationInventory().setChatItens(e.getInventory(), p);
 						} else if (e.getSlot() == 31) {
 							yLobbyPlugin.getyLobby().getYourProfileInventory().open(p);
 						}

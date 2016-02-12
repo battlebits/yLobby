@@ -27,6 +27,10 @@ public class ProfileConfigurationInventory {
 	private ItemStack tellDisabledIcon;
 	private ItemStack tellEnabledItem;
 	private ItemStack tellDisabledItem;
+	private ItemStack chatEnabledIcon;
+	private ItemStack chatDisabledIcon;
+	private ItemStack chatEnabledItem;
+	private ItemStack chatDisabledItem;
 	private ItemStack backToProfile;
 
 	public ProfileConfigurationInventory() {
@@ -45,6 +49,11 @@ public class ProfileConfigurationInventory {
 		tellDisabledIcon = createDisabledIconItem(Material.BOOK, "Mensagens privadas");
 		tellEnabledItem = createEnabledItem("Mensagens privadas");
 		tellDisabledItem = createDisabledItem("Mensagens privadas");
+		chatEnabledIcon = createEnabledIconItem(Material.PAPER, "Chat geral");
+		chatEnabledIcon = yLobbyPlugin.getyLobby().getzUtils().getItemUtils().addGlow(chatEnabledIcon);
+		chatDisabledIcon = createDisabledIconItem(Material.PAPER, "Chat geral");
+		chatEnabledItem = createEnabledItem("Chat geral");
+		chatDisabledItem = createDisabledItem("Chat geral");
 		backToProfile = new ItemStack(Material.ARROW, 1);
 		ItemMeta backMeta = backToProfile.getItemMeta();
 		backMeta.setDisplayName("§5§lPerfil");
@@ -57,6 +66,7 @@ public class ProfileConfigurationInventory {
 		setHideItens(inv, p);
 		setFlyItens(inv, p);
 		setTellItens(inv, p);
+		setChatItens(inv, p);
 		inv.setItem(31, backToProfile);
 		p.openInventory(inv);
 	}
@@ -95,6 +105,16 @@ public class ProfileConfigurationInventory {
 		} else {
 			inv.setItem(14, tellDisabledIcon);
 			inv.setItem(23, tellDisabledItem);
+		}
+	}
+	
+	public void setChatItens(Inventory inv, Player p) {
+		if (yLobbyPlugin.getyLobby().getChatManager().isChatEnabled(p.getUniqueId())) {
+			inv.setItem(16, chatEnabledIcon);
+			inv.setItem(25, chatEnabledItem);
+		} else {
+			inv.setItem(16, chatDisabledIcon);
+			inv.setItem(25, chatDisabledItem);
 		}
 	}
 

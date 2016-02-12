@@ -71,6 +71,7 @@ public class ScoreboardManager {
 				board.getTeam("siteteam").setSuffix("§6bits.com.br");
 
 				obj.setDisplaySlot(DisplaySlot.SIDEBAR);
+								
 			}
 		}.runTaskAsynchronously(yLobbyPlugin.getyLobby());
 	}

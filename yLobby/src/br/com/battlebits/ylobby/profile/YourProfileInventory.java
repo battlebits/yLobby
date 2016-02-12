@@ -44,7 +44,7 @@ public class YourProfileInventory {
 	}
 
 	public void open(Player p) {
-		String name = yLobbyPlugin.getyLobby().getzUtils().getUUIDUtils().getNameByUUID(p.getUniqueId().toString());
+		String name = p.getName();
 		Account account = Main.getPlugin().getRankingManager().getAccount(p.getUniqueId());
 		Inventory inv = Bukkit.createInventory(null, 27, "              §nSeu Perfil");
 

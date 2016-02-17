@@ -26,8 +26,6 @@ import org.bukkit.event.weather.WeatherChangeEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import br.com.battlebits.iw4.api.event.IW4PostExpiredPlayerEvent;
-import br.com.battlebits.iw4.object.IW4OrderProduct;
 import br.com.battlebits.yaddons.yAddonsPlugin;
 import br.com.battlebits.ylobby.yLobbyPlugin;
 import me.flame.utils.Main;

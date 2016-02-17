@@ -21,9 +21,12 @@ public class GameModeSelectorListener implements Listener {
 			if (e.getInventory().getType() == InventoryType.CHEST) {
 				if (e.getCurrentItem() != null) {
 					if (e.getInventory().getTitle().equalsIgnoreCase("     §nEscolha o Modo de Jogo")) {
-						Player p = (Player) e.getWhoClicked();
-						yLobbyPlugin.getyLobby().getGameModeSelector().tryToConnect(p, e.getSlot(), (e.getAction() == InventoryAction.PICKUP_HALF));
-						e.setCancelled(true);
+						if (e.getClickedInventory() == e.getInventory()) {
+							Player p = (Player) e.getWhoClicked();
+							yLobbyPlugin.getyLobby().getGameModeSelector().tryToConnect(p, e.getSlot(),
+									(e.getAction() == InventoryAction.PICKUP_HALF));
+							e.setCancelled(true);
+						}
 					}
 				}
 			}
@@ -46,5 +49,5 @@ public class GameModeSelectorListener implements Listener {
 			}
 		}
 	}
-	
+
 }

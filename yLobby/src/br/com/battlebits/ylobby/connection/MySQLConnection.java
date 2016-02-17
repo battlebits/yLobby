@@ -8,7 +8,6 @@ import java.sql.Statement;
 
 import org.bukkit.scheduler.BukkitRunnable;
 
-import br.com.battlebits.yaddons.yAddonsPlugin;
 import br.com.battlebits.ylobby.yLobbyPlugin;
 
 public class MySQLConnection {

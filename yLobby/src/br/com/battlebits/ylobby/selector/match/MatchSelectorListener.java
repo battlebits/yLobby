@@ -31,20 +31,22 @@ public class MatchSelectorListener implements Listener {
 			if (e.getInventory().getType() == InventoryType.CHEST) {
 				if (e.getCurrentItem() != null) {
 					if (yLobbyPlugin.getyLobby().getMatchSelectorManager().isMatchSelector(e.getInventory().getTitle())) {
-						Player p = (Player) e.getWhoClicked();
-						MatchSelector matchSelector = yLobbyPlugin.getyLobby().getMatchSelectorManager()
-								.getMatchSelector(e.getInventory().getTitle());
-						if (e.getSlot() == 4) {
-							for (String msg : connectingDirect) {
-								p.sendMessage(msg);
+						if (e.getClickedInventory() == e.getInventory()) {
+							Player p = (Player) e.getWhoClicked();
+							MatchSelector matchSelector = yLobbyPlugin.getyLobby().getMatchSelectorManager()
+									.getMatchSelector(e.getInventory().getTitle());
+							if (e.getSlot() == 4) {
+								for (String msg : connectingDirect) {
+									p.sendMessage(msg);
+								}
+								matchSelector.directConnect(p);
+							} else if (e.getSlot() == e.getInventory().getSize() - 5) {
+								yLobbyPlugin.getyLobby().getGameModeSelector().open(p);
+							} else if (e.getCurrentItem().getType() == Material.INK_SACK) {
+								matchSelector.tryToConnect(p, ChatColor.stripColor(e.getCurrentItem().getItemMeta().getDisplayName()).split(" ")[1]);
 							}
-							matchSelector.directConnect(p);
-						} else if (e.getSlot() == e.getInventory().getSize() - 5) {
-							yLobbyPlugin.getyLobby().getGameModeSelector().open(p);
-						} else if (e.getCurrentItem().getType() == Material.INK_SACK) {
-							matchSelector.tryToConnect(p, ChatColor.stripColor(e.getCurrentItem().getItemMeta().getDisplayName()).split(" ")[1]);
+							e.setCancelled(true);
 						}
-						e.setCancelled(true);
 					}
 				}
 			}

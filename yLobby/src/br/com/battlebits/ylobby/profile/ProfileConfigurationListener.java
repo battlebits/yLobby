@@ -62,8 +62,7 @@ public class ProfileConfigurationListener implements Listener {
 		chatEnable.add("§0");
 		chatDisable = new ArrayList<>();
 		chatDisable.add("§0");
-		chatDisable
-				.add(yLobbyPlugin.getyLobby().getzUtils().getMessageUtils().centerChatMessage("§7Voce §e§ldesativou §7o §e§lchat geral§7!"));
+		chatDisable.add(yLobbyPlugin.getyLobby().getzUtils().getMessageUtils().centerChatMessage("§7Voce §e§ldesativou §7o §e§lchat geral§7!"));
 		chatDisable.add("§0");
 	}
 
@@ -75,68 +74,70 @@ public class ProfileConfigurationListener implements Listener {
 					if (e.getInventory().getTitle().equalsIgnoreCase("        §nSuas preferencias")) {
 						e.setCancelled(true);
 						Player p = (Player) e.getWhoClicked();
-						if (e.getSlot() == 10 || e.getSlot() == 19) {
-							if (yLobbyPlugin.getyLobby().getPlayerHideManager().isHiding(p)) {
-								yLobbyPlugin.getyLobby().getPlayerHideManager().showAllPlayers(p);
-								for (String msg : showMessage) {
-									p.sendMessage(msg);
+						if (e.getClickedInventory() == e.getInventory()) {
+							if (e.getSlot() == 10 || e.getSlot() == 19) {
+								if (yLobbyPlugin.getyLobby().getPlayerHideManager().isHiding(p)) {
+									yLobbyPlugin.getyLobby().getPlayerHideManager().showAllPlayers(p);
+									for (String msg : showMessage) {
+										p.sendMessage(msg);
+									}
+								} else {
+									yLobbyPlugin.getyLobby().getPlayerHideManager().hideOnlyNormal(p);
+									for (String msg : hideMessage) {
+										p.sendMessage(msg);
+									}
 								}
-							} else {
-								yLobbyPlugin.getyLobby().getPlayerHideManager().hideOnlyNormal(p);
-								for (String msg : hideMessage) {
-									p.sendMessage(msg);
-								}
-							}
-							yLobbyPlugin.getyLobby().getProfileConfigurationInventory().setHideItens(e.getInventory(), p);
-						} else if (e.getSlot() == 12 || e.getSlot() == 21) {
-							if (p.getAllowFlight()) {
-								p.setAllowFlight(false);
-								p.setFlying(false);
-								for (String str : flyDisable) {
-									p.sendMessage(str);
-								}
-							} else {
-								if (Main.getPlugin().getPermissionManager().hasGroupPermission(p.getUniqueId(), Group.LIGHT)) {
-									p.setAllowFlight(true);
-									p.setFlying(true);
-									for (String str : flyEnable) {
+								yLobbyPlugin.getyLobby().getProfileConfigurationInventory().setHideItens(e.getInventory(), p);
+							} else if (e.getSlot() == 12 || e.getSlot() == 21) {
+								if (p.getAllowFlight()) {
+									p.setAllowFlight(false);
+									p.setFlying(false);
+									for (String str : flyDisable) {
 										p.sendMessage(str);
 									}
 								} else {
-									for (String str : flyForLights) {
+									if (Main.getPlugin().getPermissionManager().hasGroupPermission(p.getUniqueId(), Group.LIGHT)) {
+										p.setAllowFlight(true);
+										p.setFlying(true);
+										for (String str : flyEnable) {
+											p.sendMessage(str);
+										}
+									} else {
+										for (String str : flyForLights) {
+											p.sendMessage(str);
+										}
+									}
+								}
+								yLobbyPlugin.getyLobby().getProfileConfigurationInventory().setFlyItens(e.getInventory(), p);
+							} else if (e.getSlot() == 14 || e.getSlot() == 23) {
+								if (yLobbyPlugin.getyLobby().getChatManager().isTellEnabled(p.getUniqueId())) {
+									yLobbyPlugin.getyLobby().getChatManager().disableTell(p.getUniqueId());
+									for (String str : tellDisable) {
+										p.sendMessage(str);
+									}
+								} else {
+									yLobbyPlugin.getyLobby().getChatManager().enableTell(p.getUniqueId());
+									for (String str : tellEnable) {
 										p.sendMessage(str);
 									}
 								}
+								yLobbyPlugin.getyLobby().getProfileConfigurationInventory().setTellItens(e.getInventory(), p);
+							} else if (e.getSlot() == 16 || e.getSlot() == 25) {
+								if (yLobbyPlugin.getyLobby().getChatManager().isChatEnabled(p.getUniqueId())) {
+									yLobbyPlugin.getyLobby().getChatManager().disableChat(p.getUniqueId());
+									for (String str : chatDisable) {
+										p.sendMessage(str);
+									}
+								} else {
+									yLobbyPlugin.getyLobby().getChatManager().enableChat(p.getUniqueId());
+									for (String str : chatEnable) {
+										p.sendMessage(str);
+									}
+								}
+								yLobbyPlugin.getyLobby().getProfileConfigurationInventory().setChatItens(e.getInventory(), p);
+							} else if (e.getSlot() == 31) {
+								yLobbyPlugin.getyLobby().getYourProfileInventory().open(p);
 							}
-							yLobbyPlugin.getyLobby().getProfileConfigurationInventory().setFlyItens(e.getInventory(), p);
-						} else if (e.getSlot() == 14 || e.getSlot() == 23) {
-							if (yLobbyPlugin.getyLobby().getChatManager().isTellEnabled(p.getUniqueId())) {
-								yLobbyPlugin.getyLobby().getChatManager().disableTell(p.getUniqueId());
-								for (String str : tellDisable) {
-									p.sendMessage(str);
-								}
-							} else {
-								yLobbyPlugin.getyLobby().getChatManager().enableTell(p.getUniqueId());
-								for (String str : tellEnable) {
-									p.sendMessage(str);
-								}
-							}
-							yLobbyPlugin.getyLobby().getProfileConfigurationInventory().setTellItens(e.getInventory(), p);
-						}  else if (e.getSlot() == 16 || e.getSlot() == 25) {
-							if (yLobbyPlugin.getyLobby().getChatManager().isChatEnabled(p.getUniqueId())) {
-								yLobbyPlugin.getyLobby().getChatManager().disableChat(p.getUniqueId());
-								for (String str : chatDisable) {
-									p.sendMessage(str);
-								}
-							} else {
-								yLobbyPlugin.getyLobby().getChatManager().enableChat(p.getUniqueId());
-								for (String str : chatEnable) {
-									p.sendMessage(str);
-								}
-							}
-							yLobbyPlugin.getyLobby().getProfileConfigurationInventory().setChatItens(e.getInventory(), p);
-						} else if (e.getSlot() == 31) {
-							yLobbyPlugin.getyLobby().getYourProfileInventory().open(p);
 						}
 					}
 				}

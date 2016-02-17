@@ -20,9 +20,11 @@ public class LobbySelectorListener implements Listener {
 			if (e.getInventory().getType() == InventoryType.CHEST) {
 				if (e.getCurrentItem() != null) {
 					if (e.getInventory().getTitle().equalsIgnoreCase("          §nEscolha o Lobby")) {
-						Player p = (Player) e.getWhoClicked();
-						yLobbyPlugin.getyLobby().getLobbySelector().tryToConnect(p, e.getSlot());
-						e.setCancelled(true);
+						if (e.getClickedInventory() == e.getInventory()) {
+							Player p = (Player) e.getWhoClicked();
+							yLobbyPlugin.getyLobby().getLobbySelector().tryToConnect(p, e.getSlot());
+							e.setCancelled(true);
+						}
 					}
 				}
 			}

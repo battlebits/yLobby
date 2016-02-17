@@ -106,120 +106,122 @@ public class ProfileRanksListener implements Listener {
 			if (e.getInventory().getType() == InventoryType.CHEST) {
 				if (e.getCurrentItem() != null) {
 					if (e.getInventory().getTitle().equalsIgnoreCase("       §nSobre o seu grupo atual")) {
-						Player p = (Player) e.getWhoClicked();
-						e.setCancelled(true);
-						if (e.getSlot() == 10) {
-							if (Main.getPlugin().getPermissionManager().getPlayerGroup(p) == Group.NORMAL) {
-								for (TextComponent msg : buyLight) {
-									p.spigot().sendMessage(msg);
-								}
-							} else if (Main.getPlugin().getPermissionManager().getPlayerGroup(p) == Group.LIGHT) {
-								if (e.getAction() == InventoryAction.PICKUP_HALF) {
-									for (TextComponent msg : buyPremium) {
+						if (e.getClickedInventory() == e.getInventory()) {
+							Player p = (Player) e.getWhoClicked();
+							e.setCancelled(true);
+							if (e.getSlot() == 10) {
+								if (Main.getPlugin().getPermissionManager().getPlayerGroup(p) == Group.NORMAL) {
+									for (TextComponent msg : buyLight) {
 										p.spigot().sendMessage(msg);
 									}
-								} else {
+								} else if (Main.getPlugin().getPermissionManager().getPlayerGroup(p) == Group.LIGHT) {
+									if (e.getAction() == InventoryAction.PICKUP_HALF) {
+										for (TextComponent msg : buyPremium) {
+											p.spigot().sendMessage(msg);
+										}
+									} else {
+										Main.getPlugin().getTagManager().addPlayerTag(p, Tag.LIGHT);
+										for (String msg : tagLight) {
+											p.sendMessage(msg);
+										}
+									}
+								} else if (Main.getPlugin().getPermissionManager().getPlayerGroup(p) == Group.PREMIUM) {
+									Main.getPlugin().getTagManager().addPlayerTag(p, Tag.LIGHT);
+									for (String msg : tagLight) {
+										p.sendMessage(msg);
+									}
+								} else if (Main.getPlugin().getPermissionManager().getPlayerGroup(p) == Group.ULTIMATE) {
+									Main.getPlugin().getTagManager().addPlayerTag(p, Tag.LIGHT);
+									for (String msg : tagLight) {
+										p.sendMessage(msg);
+									}
+								} else if (Main.getPlugin().getPermissionManager().getPlayerGroup(p) == Group.YOUTUBER) {
 									Main.getPlugin().getTagManager().addPlayerTag(p, Tag.LIGHT);
 									for (String msg : tagLight) {
 										p.sendMessage(msg);
 									}
 								}
-							} else if (Main.getPlugin().getPermissionManager().getPlayerGroup(p) == Group.PREMIUM) {
-								Main.getPlugin().getTagManager().addPlayerTag(p, Tag.LIGHT);
-								for (String msg : tagLight) {
-									p.sendMessage(msg);
-								}
-							} else if (Main.getPlugin().getPermissionManager().getPlayerGroup(p) == Group.ULTIMATE) {
-								Main.getPlugin().getTagManager().addPlayerTag(p, Tag.LIGHT);
-								for (String msg : tagLight) {
-									p.sendMessage(msg);
-								}
-							} else if (Main.getPlugin().getPermissionManager().getPlayerGroup(p) == Group.YOUTUBER) {
-								Main.getPlugin().getTagManager().addPlayerTag(p, Tag.LIGHT);
-								for (String msg : tagLight) {
-									p.sendMessage(msg);
-								}
-							}
-						} else if (e.getSlot() == 12) {
-							if (Main.getPlugin().getPermissionManager().getPlayerGroup(p) == Group.NORMAL) {
-								for (TextComponent msg : buyPremium) {
-									p.spigot().sendMessage(msg);
-								}
-							} else if (Main.getPlugin().getPermissionManager().getPlayerGroup(p) == Group.LIGHT) {
-								for (TextComponent msg : buyPremium) {
-									p.spigot().sendMessage(msg);
-								}
-							} else if (Main.getPlugin().getPermissionManager().getPlayerGroup(p) == Group.PREMIUM) {
-								if (e.getAction() == InventoryAction.PICKUP_HALF) {
-									for (TextComponent msg : buyUltimate) {
+							} else if (e.getSlot() == 12) {
+								if (Main.getPlugin().getPermissionManager().getPlayerGroup(p) == Group.NORMAL) {
+									for (TextComponent msg : buyPremium) {
 										p.spigot().sendMessage(msg);
 									}
-								} else {
+								} else if (Main.getPlugin().getPermissionManager().getPlayerGroup(p) == Group.LIGHT) {
+									for (TextComponent msg : buyPremium) {
+										p.spigot().sendMessage(msg);
+									}
+								} else if (Main.getPlugin().getPermissionManager().getPlayerGroup(p) == Group.PREMIUM) {
+									if (e.getAction() == InventoryAction.PICKUP_HALF) {
+										for (TextComponent msg : buyUltimate) {
+											p.spigot().sendMessage(msg);
+										}
+									} else {
+										Main.getPlugin().getTagManager().addPlayerTag(p, Tag.PREMIUM);
+										for (String msg : tagPremium) {
+											p.sendMessage(msg);
+										}
+									}
+								} else if (Main.getPlugin().getPermissionManager().getPlayerGroup(p) == Group.ULTIMATE) {
+									Main.getPlugin().getTagManager().addPlayerTag(p, Tag.PREMIUM);
+									for (String msg : tagPremium) {
+										p.sendMessage(msg);
+									}
+								} else if (Main.getPlugin().getPermissionManager().getPlayerGroup(p) == Group.YOUTUBER) {
 									Main.getPlugin().getTagManager().addPlayerTag(p, Tag.PREMIUM);
 									for (String msg : tagPremium) {
 										p.sendMessage(msg);
 									}
 								}
-							} else if (Main.getPlugin().getPermissionManager().getPlayerGroup(p) == Group.ULTIMATE) {
-								Main.getPlugin().getTagManager().addPlayerTag(p, Tag.PREMIUM);
-								for (String msg : tagPremium) {
-									p.sendMessage(msg);
+							} else if (e.getSlot() == 14) {
+								if (Main.getPlugin().getPermissionManager().getPlayerGroup(p) == Group.NORMAL) {
+									for (TextComponent msg : buyUltimate) {
+										p.spigot().sendMessage(msg);
+									}
+								} else if (Main.getPlugin().getPermissionManager().getPlayerGroup(p) == Group.LIGHT) {
+									for (TextComponent msg : buyUltimate) {
+										p.spigot().sendMessage(msg);
+									}
+								} else if (Main.getPlugin().getPermissionManager().getPlayerGroup(p) == Group.PREMIUM) {
+									for (TextComponent msg : buyUltimate) {
+										p.spigot().sendMessage(msg);
+									}
+								} else if (Main.getPlugin().getPermissionManager().getPlayerGroup(p) == Group.ULTIMATE) {
+									Main.getPlugin().getTagManager().addPlayerTag(p, Tag.ULTIMATE);
+									for (String msg : tagUltimate) {
+										p.sendMessage(msg);
+									}
+								} else if (Main.getPlugin().getPermissionManager().getPlayerGroup(p) == Group.YOUTUBER) {
+									Main.getPlugin().getTagManager().addPlayerTag(p, Tag.ULTIMATE);
+									for (String msg : tagUltimate) {
+										p.sendMessage(msg);
+									}
 								}
-							} else if (Main.getPlugin().getPermissionManager().getPlayerGroup(p) == Group.YOUTUBER) {
-								Main.getPlugin().getTagManager().addPlayerTag(p, Tag.PREMIUM);
-								for (String msg : tagPremium) {
-									p.sendMessage(msg);
+							} else if (e.getSlot() == 16) {
+								if (Main.getPlugin().getPermissionManager().getPlayerGroup(p) == Group.NORMAL) {
+									for (TextComponent msg : buyYoutuber) {
+										p.spigot().sendMessage(msg);
+									}
+								} else if (Main.getPlugin().getPermissionManager().getPlayerGroup(p) == Group.LIGHT) {
+									for (TextComponent msg : buyYoutuber) {
+										p.spigot().sendMessage(msg);
+									}
+								} else if (Main.getPlugin().getPermissionManager().getPlayerGroup(p) == Group.PREMIUM) {
+									for (TextComponent msg : buyYoutuber) {
+										p.spigot().sendMessage(msg);
+									}
+								} else if (Main.getPlugin().getPermissionManager().getPlayerGroup(p) == Group.ULTIMATE) {
+									for (TextComponent msg : buyYoutuber) {
+										p.spigot().sendMessage(msg);
+									}
+								} else if (Main.getPlugin().getPermissionManager().getPlayerGroup(p) == Group.YOUTUBER) {
+									Main.getPlugin().getTagManager().addPlayerTag(p, Tag.YOUTUBER);
+									for (String msg : tagYoutuber) {
+										p.sendMessage(msg);
+									}
 								}
+							} else if (e.getSlot() == 22) {
+								yLobbyPlugin.getyLobby().getYourProfileInventory().open(p);
 							}
-						} else if (e.getSlot() == 14) {
-							if (Main.getPlugin().getPermissionManager().getPlayerGroup(p) == Group.NORMAL) {
-								for (TextComponent msg : buyUltimate) {
-									p.spigot().sendMessage(msg);
-								}
-							} else if (Main.getPlugin().getPermissionManager().getPlayerGroup(p) == Group.LIGHT) {
-								for (TextComponent msg : buyUltimate) {
-									p.spigot().sendMessage(msg);
-								}
-							} else if (Main.getPlugin().getPermissionManager().getPlayerGroup(p) == Group.PREMIUM) {
-								for (TextComponent msg : buyUltimate) {
-									p.spigot().sendMessage(msg);
-								}
-							} else if (Main.getPlugin().getPermissionManager().getPlayerGroup(p) == Group.ULTIMATE) {
-								Main.getPlugin().getTagManager().addPlayerTag(p, Tag.ULTIMATE);
-								for (String msg : tagUltimate) {
-									p.sendMessage(msg);
-								}
-							} else if (Main.getPlugin().getPermissionManager().getPlayerGroup(p) == Group.YOUTUBER) {
-								Main.getPlugin().getTagManager().addPlayerTag(p, Tag.ULTIMATE);
-								for (String msg : tagUltimate) {
-									p.sendMessage(msg);
-								}
-							}
-						} else if (e.getSlot() == 16) {
-							if (Main.getPlugin().getPermissionManager().getPlayerGroup(p) == Group.NORMAL) {
-								for (TextComponent msg : buyYoutuber) {
-									p.spigot().sendMessage(msg);
-								}
-							} else if (Main.getPlugin().getPermissionManager().getPlayerGroup(p) == Group.LIGHT) {
-								for (TextComponent msg : buyYoutuber) {
-									p.spigot().sendMessage(msg);
-								}
-							} else if (Main.getPlugin().getPermissionManager().getPlayerGroup(p) == Group.PREMIUM) {
-								for (TextComponent msg : buyYoutuber) {
-									p.spigot().sendMessage(msg);
-								}
-							} else if (Main.getPlugin().getPermissionManager().getPlayerGroup(p) == Group.ULTIMATE) {
-								for (TextComponent msg : buyYoutuber) {
-									p.spigot().sendMessage(msg);
-								}
-							} else if (Main.getPlugin().getPermissionManager().getPlayerGroup(p) == Group.YOUTUBER) {
-								Main.getPlugin().getTagManager().addPlayerTag(p, Tag.YOUTUBER);
-								for (String msg : tagYoutuber) {
-									p.sendMessage(msg);
-								}
-							}
-						} else if (e.getSlot() == 22) {
-							yLobbyPlugin.getyLobby().getYourProfileInventory().open(p);
 						}
 					}
 				}

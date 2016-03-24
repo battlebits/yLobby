@@ -9,11 +9,13 @@ import org.bukkit.plugin.java.JavaPlugin;
 import br.com.battlebits.ylobby.bungee.BungeeMessageReceiver;
 import br.com.battlebits.ylobby.bungee.BungeeMessageSender;
 import br.com.battlebits.ylobby.command.FlyCommand;
+import br.com.battlebits.ylobby.command.ForumCommand;
 import br.com.battlebits.ylobby.command.GroupCommand;
 import br.com.battlebits.ylobby.command.PrefCommand;
 import br.com.battlebits.ylobby.command.ProfileCommand;
 import br.com.battlebits.ylobby.command.SpawnCommand;
 import br.com.battlebits.ylobby.command.TellCommand;
+import br.com.battlebits.ylobby.connection.MySQLConnection;
 import br.com.battlebits.ylobby.detector.PlayerOutOfLobbyDetector;
 import br.com.battlebits.ylobby.listener.BountifulListener;
 import br.com.battlebits.ylobby.listener.GameModsListener;
@@ -22,6 +24,7 @@ import br.com.battlebits.ylobby.listener.PlayerHideListener;
 import br.com.battlebits.ylobby.listener.VipSlotsListener;
 import br.com.battlebits.ylobby.manager.BungeeManager;
 import br.com.battlebits.ylobby.manager.ChatManager;
+import br.com.battlebits.ylobby.manager.ForumManager;
 import br.com.battlebits.ylobby.manager.GameModsManager;
 import br.com.battlebits.ylobby.manager.GameServerInfoManager;
 import br.com.battlebits.ylobby.manager.LobbyItensManager;
@@ -52,7 +55,7 @@ public class yLobbyPlugin extends JavaPlugin {
 
 	private zUtils zUtils;
 
-	// private MySQLConnection mySQLConnection;
+	private MySQLConnection mySQLConnection;
 
 	private BungeeMessageReceiver bungeeMessageReceiver;
 	private BungeeMessageSender bungeeMessageSender;
@@ -69,6 +72,7 @@ public class yLobbyPlugin extends JavaPlugin {
 	private LocationManager locationManager;
 	private ScoreboardManager scoreboardManager;
 	private ChatManager chatManager;
+	private ForumManager forumManager;
 
 	private LobbySelector lobbySelector;
 	private LobbySelectorListener lobbySelectorListener;
@@ -100,6 +104,7 @@ public class yLobbyPlugin extends JavaPlugin {
 	private PrefCommand prefCommand;
 	private ProfileCommand profileCommand;
 	private GroupCommand groupCommand;
+	private ForumCommand forumCommand;
 
 	@Override
 	public void onEnable() {
@@ -113,9 +118,9 @@ public class yLobbyPlugin extends JavaPlugin {
 
 		zUtils = new zUtils(this);
 
-		// mySQLConnection = new MySQLConnection();
-		// mySQLConnection.tryToConnect();
-		// mySQLConnection.createTables();
+		mySQLConnection = new MySQLConnection();
+		mySQLConnection.tryToConnect();
+		mySQLConnection.createTables();
 
 		bungeeMessageReceiver = new BungeeMessageReceiver();
 		bungeeMessageSender = new BungeeMessageSender();
@@ -135,6 +140,7 @@ public class yLobbyPlugin extends JavaPlugin {
 		locationManager = new LocationManager();
 		scoreboardManager = new ScoreboardManager();
 		chatManager = new ChatManager();
+		forumManager = new ForumManager();
 
 		lobbySelector = new LobbySelector();
 		lobbySelectorListener = new LobbySelectorListener();
@@ -167,6 +173,7 @@ public class yLobbyPlugin extends JavaPlugin {
 		prefCommand = new PrefCommand();
 		profileCommand = new ProfileCommand();
 		groupCommand = new GroupCommand();
+		forumCommand = new ForumCommand();
 
 		zUtils.getListenerUtils().registerListeners(gameModeSelectorListener, lobbySelectorListener, matchSelectorListener, yourProfileListener,
 				profileRanksListener, profileConfigurationListener, bountifulListener, mainListener, playerHideListener, gameModsListener,
@@ -187,6 +194,7 @@ public class yLobbyPlugin extends JavaPlugin {
 				"configs", "prefs", "configuracoes");
 		zUtils.getCommandUtils().registerCommand(profileCommand, "perfil", "Comando para abrir seu perfil", "eu", "meuperfil", "sobre");
 		zUtils.getCommandUtils().registerCommand(groupCommand, "grupo", "Comando para ver informacoes sobre seu grupo atual", "group", "meugrupo");
+		zUtils.getCommandUtils().registerCommand(forumCommand, "forum", "Comando debug", "f");
 
 		getLogger().info("Plugin habilitado com sucesso!");
 
@@ -203,6 +211,8 @@ public class yLobbyPlugin extends JavaPlugin {
 				p.kickPlayer("§cO servidor está reiniciando!");
 			}
 		}
+
+		mySQLConnection.stop();
 
 		bungeeMessageReceiver.stop();
 
@@ -238,9 +248,9 @@ public class yLobbyPlugin extends JavaPlugin {
 		return bungeeMessageSender;
 	}
 
-	// public MySQLConnection getMySQLConnection() {
-	// return mySQLConnection;
-	// }
+	public MySQLConnection getMySQLConnection() {
+		return mySQLConnection;
+	}
 
 	public BungeeManager getBungeeManager() {
 		return bungeeManager;
@@ -312,6 +322,10 @@ public class yLobbyPlugin extends JavaPlugin {
 
 	public zUtils getzUtils() {
 		return zUtils;
+	}
+
+	public ForumManager getForumManager() {
+		return forumManager;
 	}
 
 }

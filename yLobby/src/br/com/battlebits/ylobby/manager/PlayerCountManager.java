@@ -65,7 +65,7 @@ public class PlayerCountManager {
 					yLobbyPlugin.getyLobby().getBungeeMessageSender().tryToSendMessage(new BungeeMessage("SWCount"));
 				}
 			}
-		}.runTaskTimerAsynchronously(yLobbyPlugin.getyLobby(), 1L, 15L);
+		}.runTaskTimerAsynchronously(yLobbyPlugin.getyLobby(), 1L, 20L);
 	}
 
 }

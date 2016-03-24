@@ -106,9 +106,9 @@ public class ProfileRanksListener implements Listener {
 			if (e.getInventory().getType() == InventoryType.CHEST) {
 				if (e.getCurrentItem() != null) {
 					if (e.getInventory().getTitle().equalsIgnoreCase("       §nSobre o seu grupo atual")) {
+						e.setCancelled(true);
 						if (e.getClickedInventory() == e.getInventory()) {
 							Player p = (Player) e.getWhoClicked();
-							e.setCancelled(true);
 							if (e.getSlot() == 10) {
 								if (Main.getPlugin().getPermissionManager().getPlayerGroup(p) == Group.NORMAL) {
 									for (TextComponent msg : buyLight) {

@@ -8,7 +8,7 @@ import br.com.battlebits.ylobby.yLobbyPlugin;
 public class TabAndHeaderUpdater extends UpdaterBase {
 
 	public TabAndHeaderUpdater() {
-		super(10L, false);
+		super(30L, false);
 	}
 
 	@SuppressWarnings("deprecation")

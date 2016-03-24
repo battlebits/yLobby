@@ -12,6 +12,7 @@ import org.bukkit.inventory.meta.SkullMeta;
 
 import br.com.battlebits.ylobby.yLobbyPlugin;
 import me.flame.utils.Main;
+import me.flame.utils.permissions.enums.Group;
 import me.flame.utils.ranking.constructors.Account;
 
 public class YourProfileInventory {
@@ -53,8 +54,9 @@ public class YourProfileInventory {
 		mainMeta.setOwner(name);
 		mainMeta.setDisplayName("§9§l" + name);
 		mainMeta.setLore(Arrays.asList("§0",
-				"§7Rank: " + yLobbyPlugin.getyLobby().getzUtils().getTagUtils()
-						.getDefaultTag(Main.getPlugin().getPermissionManager().getPlayerGroup(p.getUniqueId())).getPrefix(),
+				"§7Rank: " + ((Main.getPlugin().getPermissionManager().getPlayerGroup(p.getUniqueId()) == Group.NORMAL) ? "§bNenhum"
+						: yLobbyPlugin.getyLobby().getzUtils().getTagUtils()
+								.getDefaultTag(Main.getPlugin().getPermissionManager().getPlayerGroup(p.getUniqueId())).getPrefix()),
 				"§7Liga: " + account.getLiga().getSymbol() + " " + account.getLiga().toString(), "§7XP: §b" + account.getXp(),
 				"§7Moedas: §b" + account.getMoney(), "§7Fichas: §b" + account.getFichas(),
 				"§0")); /**
@@ -64,7 +66,7 @@ public class YourProfileInventory {
 		mainItem.setItemMeta(mainMeta);
 		inv.setItem(11, ranksItem);
 		inv.setItem(13, mainItem);
-//		inv.setItem(15, tagsItem);
+		// inv.setItem(15, tagsItem);
 		inv.setItem(15, configItem);
 
 		p.openInventory(inv);

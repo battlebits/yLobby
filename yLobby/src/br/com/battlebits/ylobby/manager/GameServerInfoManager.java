@@ -50,7 +50,7 @@ public class GameServerInfoManager {
 				}
 			}
 		};
-		updaterRunnable.runTaskTimerAsynchronously(yLobbyPlugin.getyLobby(), 1L, 15L);
+		updaterRunnable.runTaskTimerAsynchronously(yLobbyPlugin.getyLobby(), 1L, 20L);
 	}
 
 }

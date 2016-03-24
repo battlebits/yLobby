@@ -8,6 +8,7 @@ import org.bukkit.scoreboard.Scoreboard;
 
 import br.com.battlebits.ylobby.yLobbyPlugin;
 import me.flame.utils.Main;
+import me.flame.utils.permissions.enums.Group;
 import me.flame.utils.ranking.constructors.Account;
 
 public class ScoreboardManager {
@@ -27,8 +28,12 @@ public class ScoreboardManager {
 				obj.getScore("§9").setScore(10);
 				board.registerNewTeam("rankteam").addEntry("§9");
 				board.getTeam("rankteam").setPrefix("§7Rank: ");
-				board.getTeam("rankteam").setSuffix(yLobbyPlugin.getyLobby().getzUtils().getTagUtils()
-						.getDefaultTag(Main.getPlugin().getPermissionManager().getPlayerGroup(p.getUniqueId())).getPrefix());
+				if (Main.getPlugin().getPermissionManager().getPlayerGroup(p.getUniqueId()) != Group.NORMAL) {
+					board.getTeam("rankteam").setSuffix(yLobbyPlugin.getyLobby().getzUtils().getTagUtils()
+							.getDefaultTag(Main.getPlugin().getPermissionManager().getPlayerGroup(p.getUniqueId())).getPrefix());
+				} else {
+					board.getTeam("rankteam").setSuffix("§bNenhum");
+				}
 
 				obj.getScore("§8").setScore(9);
 				board.registerNewTeam("ligateam").addEntry("§8");
@@ -71,7 +76,7 @@ public class ScoreboardManager {
 				board.getTeam("siteteam").setSuffix("§6bits.com.br");
 
 				obj.setDisplaySlot(DisplaySlot.SIDEBAR);
-								
+
 			}
 		}.runTaskAsynchronously(yLobbyPlugin.getyLobby());
 	}

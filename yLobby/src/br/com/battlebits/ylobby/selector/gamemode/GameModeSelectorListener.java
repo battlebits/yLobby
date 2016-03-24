@@ -25,8 +25,8 @@ public class GameModeSelectorListener implements Listener {
 							Player p = (Player) e.getWhoClicked();
 							yLobbyPlugin.getyLobby().getGameModeSelector().tryToConnect(p, e.getSlot(),
 									(e.getAction() == InventoryAction.PICKUP_HALF));
-							e.setCancelled(true);
 						}
+						e.setCancelled(true);
 					}
 				}
 			}

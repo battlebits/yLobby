@@ -11,7 +11,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
-import java.util.concurrent.TimeUnit;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -35,9 +34,6 @@ import org.bukkit.plugin.Plugin;
 import org.spigotmc.ProtocolInjector.PacketTabHeader;
 import org.spigotmc.ProtocolInjector.PacketTitle;
 
-import com.google.common.cache.Cache;
-import com.google.common.cache.CacheBuilder;
-import com.google.common.cache.CacheLoader;
 import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.Table;
 

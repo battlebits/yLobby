@@ -2,13 +2,14 @@ package br.com.battlebits.ylobby.updater;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.scoreboard.DisplaySlot;
 
 import br.com.battlebits.ylobby.yLobbyPlugin;
 
 public class ScoreboardUpdater extends UpdaterBase {
 
 	public ScoreboardUpdater() {
-		super(30L, false);
+		super(40L, false);
 	}
 
 	@SuppressWarnings("deprecation")
@@ -16,7 +17,9 @@ public class ScoreboardUpdater extends UpdaterBase {
 	public void update() {
 		if (Bukkit.getOnlinePlayers().length > 0) {
 			for (Player p : Bukkit.getOnlinePlayers()) {
-				yLobbyPlugin.getyLobby().getScoreboardManager().updateMainScoreboard(p);
+				if (p.getScoreboard().getObjective(DisplaySlot.SIDEBAR) != null) {
+					yLobbyPlugin.getyLobby().getScoreboardManager().updateMainScoreboard(p);
+				}
 			}
 		}
 	}

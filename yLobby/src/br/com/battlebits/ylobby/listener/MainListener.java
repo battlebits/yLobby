@@ -17,22 +17,33 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
+import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.event.player.AsyncPlayerPreLoginEvent.Result;
 import org.bukkit.event.weather.WeatherChangeEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import br.com.battlebits.yaddons.yAddonsPlugin;
 import br.com.battlebits.ylobby.yLobbyPlugin;
 import me.flame.utils.Main;
 import me.flame.utils.permissions.enums.Group;
 
 public class MainListener implements Listener {
 
+	@EventHandler
+	public void onAsyncPreLoginListener(AsyncPlayerPreLoginEvent e){
+		try{
+			yLobbyPlugin.getyLobby().getForumManager().loadForumID(e.getUniqueId());
+		} catch(Exception ex){
+			e.disallow(Result.KICK_OTHER, "§cOcorreu um erro ao carregar sua conta!");
+		}
+	}
+	
+	
 	@SuppressWarnings("deprecation")
 	@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
 	public void onPlayerJoinListener(PlayerJoinEvent e) {
@@ -129,6 +140,7 @@ public class MainListener implements Listener {
 			e.getPlayer().setFlying(false);
 		}
 		yLobbyPlugin.getyLobby().getChatManager().removeFromList(e.getPlayer().getUniqueId());
+		yLobbyPlugin.getyLobby().getForumManager().handleQuit(e.getPlayer().getUniqueId());
 		e.setQuitMessage("");
 	}
 
@@ -161,7 +173,7 @@ public class MainListener implements Listener {
 						if (e.getItem().getItemMeta().hasDisplayName()) {
 							if (e.getItem().getItemMeta().getDisplayName().equalsIgnoreCase("§a§lCosmeticos §7(Clique)")) {
 								if (Main.getPlugin().getPermissionManager().hasGroupPermission(e.getPlayer().getUniqueId(), Group.LIGHT)) {
-									yAddonsPlugin.getyAddons().getSelectorInventory().open(e.getPlayer());
+									e.getPlayer().sendMessage("§7Esse sistema está em fase de testes e desenvolvimento! Infelizmente ele foi desativado!");
 								} else {
 									e.getPlayer().sendMessage(
 											"§7Esse sistema está em fase de testes e desenvolvimento! Devido a isso, ele é apenas para jogadores com o grupo §a§lLIGHT §7ou superior!");

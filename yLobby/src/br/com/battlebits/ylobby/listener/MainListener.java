@@ -28,6 +28,7 @@ import org.bukkit.event.weather.WeatherChangeEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import br.com.battlebits.yaddons.yAddonsPlugin;
 import br.com.battlebits.ylobby.yLobbyPlugin;
 import me.flame.utils.Main;
 import me.flame.utils.permissions.enums.Group;
@@ -35,15 +36,14 @@ import me.flame.utils.permissions.enums.Group;
 public class MainListener implements Listener {
 
 	@EventHandler
-	public void onAsyncPreLoginListener(AsyncPlayerPreLoginEvent e){
-		try{
+	public void onAsyncPreLoginListener(AsyncPlayerPreLoginEvent e) {
+		try {
 			yLobbyPlugin.getyLobby().getForumManager().loadForumID(e.getUniqueId());
-		} catch(Exception ex){
+		} catch (Exception ex) {
 			e.disallow(Result.KICK_OTHER, "§cOcorreu um erro ao carregar sua conta!");
 		}
 	}
-	
-	
+
 	@SuppressWarnings("deprecation")
 	@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
 	public void onPlayerJoinListener(PlayerJoinEvent e) {
@@ -71,10 +71,12 @@ public class MainListener implements Listener {
 				}
 			}
 		}.runTaskLaterAsynchronously(yLobbyPlugin.getyLobby(), 20L);
-//		if (Main.getPlugin().getPermissionManager().hasGroupPermission(e.getPlayer().getUniqueId(), Group.LIGHT)) {
-//			e.getPlayer().setAllowFlight(true);
-//			e.getPlayer().setFlying(true);
-//		}
+		// if
+		// (Main.getPlugin().getPermissionManager().hasGroupPermission(e.getPlayer().getUniqueId(),
+		// Group.LIGHT)) {
+		// e.getPlayer().setAllowFlight(true);
+		// e.getPlayer().setFlying(true);
+		// }
 		e.getPlayer().teleport(yLobbyPlugin.getyLobby().getLocationManager().getSpawnLocation());
 		e.setJoinMessage("");
 		yLobbyPlugin.getyLobby().getScoreboardManager().setupMainScoreboard(e.getPlayer());
@@ -83,23 +85,23 @@ public class MainListener implements Listener {
 		}
 	}
 
-//	@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-//	public void onVipExpire(IW4PostExpiredPlayerEvent e) {
-//		for (IW4OrderProduct product : e.getExpiredPackages().values()) {
-//			if (product.getProductName().toLowerCase().startsWith("vip")) {
-//				Player p = Bukkit.getPlayer(e.getPlayer().getUUID());
-//				if (p.getAllowFlight()) {
-//					p.setAllowFlight(false);
-//				}
-//				yAddonsPlugin.getyAddons().getAccountManager().getAccount(p).removeCurrentGadget();
-//				yAddonsPlugin.getyAddons().getAccountManager().getAccount(p).removeCurrentHat();
-//				yAddonsPlugin.getyAddons().getAccountManager().getAccount(p).removeCurrentParticle();
-//				yAddonsPlugin.getyAddons().getAccountManager().getAccount(p).removeCurrentPet();
-//				yAddonsPlugin.getyAddons().getAccountManager().getAccount(p).removeCurrentMorph();
-//				break;
-//			}
-//		}
-//	}
+	// @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+	// public void onVipExpire(IW4PostExpiredPlayerEvent e) {
+	// for (IW4OrderProduct product : e.getExpiredPackages().values()) {
+	// if (product.getProductName().toLowerCase().startsWith("vip")) {
+	// Player p = Bukkit.getPlayer(e.getPlayer().getUUID());
+	// if (p.getAllowFlight()) {
+	// p.setAllowFlight(false);
+	// }
+	// yAddonsPlugin.getyAddons().getAccountManager().getAccount(p).removeCurrentGadget();
+	// yAddonsPlugin.getyAddons().getAccountManager().getAccount(p).removeCurrentHat();
+	// yAddonsPlugin.getyAddons().getAccountManager().getAccount(p).removeCurrentParticle();
+	// yAddonsPlugin.getyAddons().getAccountManager().getAccount(p).removeCurrentPet();
+	// yAddonsPlugin.getyAddons().getAccountManager().getAccount(p).removeCurrentMorph();
+	// break;
+	// }
+	// }
+	// }
 
 	@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
 	public void onFoodLevelChangeListener(FoodLevelChangeEvent e) {
@@ -173,10 +175,11 @@ public class MainListener implements Listener {
 						if (e.getItem().getItemMeta().hasDisplayName()) {
 							if (e.getItem().getItemMeta().getDisplayName().equalsIgnoreCase("§a§lCosmeticos §7(Clique)")) {
 								if (Main.getPlugin().getPermissionManager().hasGroupPermission(e.getPlayer().getUniqueId(), Group.LIGHT)) {
-									e.getPlayer().sendMessage("§7Esse sistema está em fase de testes e desenvolvimento! Infelizmente ele foi desativado!");
+									yAddonsPlugin.getyAddons().getSelectorInventory().open(e.getPlayer());
 								} else {
 									e.getPlayer().sendMessage(
 											"§7Esse sistema está em fase de testes e desenvolvimento! Devido a isso, ele é apenas para jogadores com o grupo §a§lLIGHT §7ou superior!");
+
 								}
 							}
 						}

@@ -194,7 +194,7 @@ public class yLobbyPlugin extends JavaPlugin {
 				"configs", "prefs", "configuracoes");
 		zUtils.getCommandUtils().registerCommand(profileCommand, "perfil", "Comando para abrir seu perfil", "eu", "meuperfil", "sobre");
 		zUtils.getCommandUtils().registerCommand(groupCommand, "grupo", "Comando para ver informacoes sobre seu grupo atual", "group", "meugrupo");
-		zUtils.getCommandUtils().registerCommand(forumCommand, "forum", "Comando debug", "f");
+//		zUtils.getCommandUtils().registerCommand(forumCommand, "forum", "Comando debug", "f");
 
 		getLogger().info("Plugin habilitado com sucesso!");
 

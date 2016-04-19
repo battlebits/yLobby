@@ -32,15 +32,18 @@ public class GameModsManager {
 	}
 
 	public void loadGameMods() {
-		addGameMode(new GameModeSimple("BattleCraft", "Servidor de KitPvP com sopa feito para todos lutarem com armaduras de ferro e tirar 1v1s",
-				Material.DIAMOND_SWORD, "battlecraft.com.br", new Location(Bukkit.getWorlds().get(0), 0, 65, 37), CharacterType.WITCH));
-		addGameMode(new GameModeSimple("BattleCraft V2ᴮᴱᵀᴬ",
-				"Novo servidor de KitPvP com sopa feito para todos usarem estrategias e lutarem sem armadura em um estilo mais Hardcore simulando o estilo do HG\\n\\n§e§lAgora com 1V1",
-				Material.WOOD_SWORD, "beta.battlecraft.com.br", new Location(Bukkit.getWorlds().get(0), 2, 65, 35), CharacterType.SKELETON));
-		addGameMode(new GameModeSimple("BattleCraft V2 FullIron",
-				"Novo servidor de KitPvP com sopa feito para todos lutarem com armaduras de ferro, batalhando com espadas com mais dano\\n\\n§e§lAgora com 1V1",
-				Material.GOLD_SWORD, "fulliron.beta.battlecraft.com.br", new Location(Bukkit.getWorlds().get(0), -1, 65, 35),
+		addGameMode(new GameModeSimple("BattleCraft FullIron",
+				"Novo servidor de KitPvP com sopa feito para todos lutarem com armaduras de ferro, batalhando com espadas com mais dano\\n\\n§5§lAgora com Void Challenge",
+				Material.DIAMOND_SWORD, "fulliron.beta.battlecraft.com.br", new Location(Bukkit.getWorlds().get(0), -1, 65, 35),
 				CharacterType.WITHERSKELETON));
+		// addGameMode(new GameModeSimple("BattleCraft", "Servidor de KitPvP com
+		// sopa feito para todos lutarem com armaduras de ferro e tirar 1v1s",
+		// Material.DIAMOND_SWORD, "battlecraft.com.br", new
+		// Location(Bukkit.getWorlds().get(0), 0, 65, 37),
+		// CharacterType.WITCH));
+		addGameMode(new GameModeSimple("BattleCraft HG",
+				"Novo servidor de KitPvP com sopa feito para todos usarem estrategias e lutarem sem armadura em um estilo mais Hardcore simulando o estilo do HG\\n\\n§5§lAgora com Void Challenge",
+				Material.WOOD_SWORD, "beta.battlecraft.com.br", new Location(Bukkit.getWorlds().get(0), 2, 65, 35), CharacterType.SKELETON));
 		addGameMode(new GameModeMatch("Battle-HG",
 				"Servidores de HungerGames.\\nSeja o ultimo sobrevivente em uma luta brutal com kits onde apenas um sera o campeao",
 				Material.MUSHROOM_SOUP, new Location(Bukkit.getWorlds().get(0), -34, 65, 0), CharacterType.BLAZE, new BungeeMessage("Hungergames")) {

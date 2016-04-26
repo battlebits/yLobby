@@ -15,7 +15,6 @@ import br.com.battlebits.ylobby.command.PrefCommand;
 import br.com.battlebits.ylobby.command.ProfileCommand;
 import br.com.battlebits.ylobby.command.SpawnCommand;
 import br.com.battlebits.ylobby.command.TellCommand;
-import br.com.battlebits.ylobby.connection.MySQLConnection;
 import br.com.battlebits.ylobby.detector.PlayerOutOfLobbyDetector;
 import br.com.battlebits.ylobby.listener.BountifulListener;
 import br.com.battlebits.ylobby.listener.GameModsListener;
@@ -55,7 +54,7 @@ public class yLobbyPlugin extends JavaPlugin {
 
 	private zUtils zUtils;
 
-	private MySQLConnection mySQLConnection;
+//	private MySQLConnection mySQLConnection;
 
 	private BungeeMessageReceiver bungeeMessageReceiver;
 	private BungeeMessageSender bungeeMessageSender;
@@ -118,9 +117,9 @@ public class yLobbyPlugin extends JavaPlugin {
 
 		zUtils = new zUtils(this);
 
-		mySQLConnection = new MySQLConnection();
-		mySQLConnection.tryToConnect();
-		mySQLConnection.createTables();
+//		mySQLConnection = new MySQLConnection();
+//		mySQLConnection.tryToConnect();
+//		mySQLConnection.createTables();
 
 		bungeeMessageReceiver = new BungeeMessageReceiver();
 		bungeeMessageSender = new BungeeMessageSender();
@@ -212,7 +211,7 @@ public class yLobbyPlugin extends JavaPlugin {
 			}
 		}
 
-		mySQLConnection.stop();
+//		mySQLConnection.stop();
 
 		bungeeMessageReceiver.stop();
 
@@ -248,9 +247,9 @@ public class yLobbyPlugin extends JavaPlugin {
 		return bungeeMessageSender;
 	}
 
-	public MySQLConnection getMySQLConnection() {
-		return mySQLConnection;
-	}
+//	public MySQLConnection getMySQLConnection() {
+//		return mySQLConnection;
+//	}
 
 	public BungeeManager getBungeeManager() {
 		return bungeeManager;

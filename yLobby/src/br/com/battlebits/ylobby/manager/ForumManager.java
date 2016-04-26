@@ -42,11 +42,11 @@ public class ForumManager {
 	}
 
 	public void loadForumID(UUID id) throws Exception {
-		Statement stmt = yLobbyPlugin.getyLobby().getMySQLConnection().getConnection().createStatement();
-		ResultSet rs = stmt.executeQuery("SELECT forumid FROM `uuid_forumid` WHERE `uuid` = '" + id.toString().replace("-", "") + "'");
-		if (rs.next()) {
-			forumID.put(id, rs.getString("forumid"));
-		}
+//		Statement stmt = yLobbyPlugin.getyLobby().getMySQLConnection().getConnection().createStatement();
+//		ResultSet rs = stmt.executeQuery("SELECT forumid FROM `uuid_forumid` WHERE `uuid` = '" + id.toString().replace("-", "") + "'");
+//		if (rs.next()) {
+//			forumID.put(id, rs.getString("forumid"));
+//		}
 	}
 
 	public void handleQuit(UUID id) {
@@ -126,8 +126,8 @@ public class ForumManager {
 						String msg = reader.readLine();
 						p.sendMessage(msg);
 						if (!msg.split("#")[0].isEmpty()) {
-							yLobbyPlugin.getyLobby().getMySQLConnection().sendUpdate("INSERT INTO `uuid_forumid` (`uuid`, `forumid`) VALUES ('"
-									+ p.getUniqueId().toString().replace("-", "") + "', '" + msg.split("#")[0] + "');");
+//							yLobbyPlugin.getyLobby().getMySQLConnection().sendUpdate("INSERT INTO `uuid_forumid` (`uuid`, `forumid`) VALUES ('"
+//									+ p.getUniqueId().toString().replace("-", "") + "', '" + msg.split("#")[0] + "');");
 							forumID.put(p.getUniqueId(), msg.split("#")[0]);
 						}
 						p.sendMessage("§0");

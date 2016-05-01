@@ -12,11 +12,11 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import br.com.battlebits.ycommon.common.BattlebitsAPI;
+import br.com.battlebits.ycommon.common.permissions.enums.Group;
 import br.com.battlebits.ylobby.yLobbyPlugin;
 import br.com.battlebits.ylobby.bungee.BungeeMessage;
 import br.com.battlebits.ylobby.server.GameServerInfo;
-import me.flame.utils.Main;
-import me.flame.utils.permissions.enums.Group;
 
 public abstract class MatchSelector {
 
@@ -106,7 +106,7 @@ public abstract class MatchSelector {
 		GameServerInfo info = yLobbyPlugin.getyLobby().getGameServerInfoManager().get(ip);
 		if (info.getTime() == 0) {
 			if (info.getMotd().contains("progresso")) {
-				if (Main.getPlugin().getPermissionManager().hasGroupPermission(p, Group.ULTIMATE)) {
+				if (BattlebitsAPI.getAccountCommon().getBattlePlayer(p.getUniqueId()).hasGroupPermission(Group.ULTIMATE)) {
 					p.sendMessage("§0");
 					p.sendMessage(yLobbyPlugin.getyLobby().getzUtils().getMessageUtils()
 							.centerChatMessage("§b§lConectando§7 ao servidor §9§l" + ip + "§7!"));
@@ -129,7 +129,7 @@ public abstract class MatchSelector {
 			p.sendPluginMessage(yLobbyPlugin.getyLobby(), "BungeeCord", new BungeeMessage("Connect", ip).getDataOutput().toByteArray());
 		} else {
 			if (info.getOnlinePlayers() >= 100) {
-				if (Main.getPlugin().getPermissionManager().hasGroupPermission(p, Group.LIGHT)) {
+				if (BattlebitsAPI.getAccountCommon().getBattlePlayer(p.getUniqueId()).hasGroupPermission(Group.LIGHT)) {
 					p.sendMessage("§0");
 					p.sendMessage(yLobbyPlugin.getyLobby().getzUtils().getMessageUtils()
 							.centerChatMessage("§6§lConectando§7 ao servidor §9§l" + ip + "§7!"));

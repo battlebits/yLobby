@@ -7,9 +7,9 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import br.com.battlebits.ycommon.common.BattlebitsAPI;
+import br.com.battlebits.ycommon.common.permissions.enums.Group;
 import br.com.battlebits.ylobby.yLobbyPlugin;
-import me.flame.utils.Main;
-import me.flame.utils.permissions.enums.Group;
 
 public class ProfileConfigurationInventory {
 
@@ -88,7 +88,7 @@ public class ProfileConfigurationInventory {
 			inv.setItem(12, flyEnabledIcon);
 			inv.setItem(21, flyEnabledItem);
 		} else {
-			if (Main.getPlugin().getPermissionManager().hasGroupPermission(p.getUniqueId(), Group.LIGHT)) {
+			if (BattlebitsAPI.getAccountCommon().getBattlePlayer(p.getUniqueId()).hasGroupPermission(Group.LIGHT)) {
 				inv.setItem(12, flyDisabledIcon);
 				inv.setItem(21, flyDisabledItem);
 			} else {

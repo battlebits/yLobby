@@ -9,13 +9,13 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import br.com.battlebits.ycommon.common.BattlebitsAPI;
+import br.com.battlebits.ycommon.common.permissions.enums.Group;
 import br.com.battlebits.ylobby.yLobbyPlugin;
 import br.com.battlebits.ylobby.gamemode.GameModeBase;
 import br.com.battlebits.ylobby.gamemode.GameModeMatch;
 import br.com.battlebits.ylobby.gamemode.GameModeSimple;
 import br.com.battlebits.ylobby.gamemode.GameModeType;
-import me.flame.utils.Main;
-import me.flame.utils.permissions.enums.Group;
 
 public class GameModeSelector {
 	private Inventory selectorInventory;
@@ -80,7 +80,7 @@ public class GameModeSelector {
 			if (gm.getGameModeType() == GameModeType.SIMPLE) {
 				GameModeSimple gamemmode = (GameModeSimple) gm;
 				if (gamemmode.getOnlinePlayers() >= gamemmode.getServerInfo().getMaxPlayers()) {
-					if (Main.getPlugin().getPermissionManager().hasGroupPermission(p, Group.LIGHT)) {
+					if (BattlebitsAPI.getAccountCommon().getBattlePlayer(p.getUniqueId()).hasGroupPermission(Group.LIGHT)) {
 						p.sendMessage("§0");
 						p.sendMessage(yLobbyPlugin.getyLobby().getzUtils().getMessageUtils()
 								.centerChatMessage("§9§lConectando §7ao §9§l" + gamemmode.getServerName() + "§7!"));

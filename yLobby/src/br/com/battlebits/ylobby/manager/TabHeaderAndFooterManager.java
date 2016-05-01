@@ -2,14 +2,14 @@ package br.com.battlebits.ylobby.manager;
 
 import org.bukkit.entity.Player;
 
+import br.com.battlebits.ycommon.common.BattlebitsAPI;
+import br.com.battlebits.ycommon.common.account.BattlePlayer;
 import br.com.battlebits.ylobby.yLobbyPlugin;
-import me.flame.utils.Main;
-import me.flame.utils.ranking.constructors.Account;
 
 public class TabHeaderAndFooterManager {
 
 	public void send(Player p) {
-		Account account = Main.getPlugin().getRankingManager().getAccount(p.getUniqueId());
+		BattlePlayer account = BattlebitsAPI.getAccountCommon().getBattlePlayer(p.getUniqueId());
 		StringBuilder headerBuilder = new StringBuilder();
 		headerBuilder.append("§6§lBATTLE§F§LBITS §E§LLOBBY");
 		headerBuilder.append("\n");

@@ -12,11 +12,11 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import br.com.battlebits.ycommon.common.BattlebitsAPI;
+import br.com.battlebits.ycommon.common.permissions.enums.Group;
 import br.com.battlebits.ylobby.yLobbyPlugin;
 import br.com.battlebits.ylobby.bungee.BungeeMessage;
 import br.com.battlebits.ylobby.server.ServerInfo;
-import me.flame.utils.Main;
-import me.flame.utils.permissions.enums.Group;
 
 public class LobbySelector {
 
@@ -102,7 +102,7 @@ public class LobbySelector {
 				}
 			} else {
 				if (info.getOnlinePlayers() >= 100) {
-					if (Main.getPlugin().getPermissionManager().hasGroupPermission(p, Group.LIGHT)) {
+					if (BattlebitsAPI.getAccountCommon().getBattlePlayer(p.getUniqueId()).hasGroupPermission(Group.LIGHT)) {
 						for (String msg : connectingMessage) {
 							p.sendMessage(msg);
 						}

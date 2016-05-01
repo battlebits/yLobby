@@ -6,9 +6,9 @@ import org.bukkit.scoreboard.DisplaySlot;
 import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Scoreboard;
 
+import br.com.battlebits.ycommon.common.BattlebitsAPI;
+import br.com.battlebits.ycommon.common.account.BattlePlayer;
 import br.com.battlebits.ylobby.yLobbyPlugin;
-import me.flame.utils.Main;
-import me.flame.utils.ranking.constructors.Account;
 
 public class ScoreboardManager {
 
@@ -17,7 +17,7 @@ public class ScoreboardManager {
 			@Override
 			public void run() {
 				Scoreboard board = p.getScoreboard();
-				Account account = Main.getPlugin().getRankingManager().getAccount(p.getUniqueId());
+				BattlePlayer account =BattlebitsAPI.getAccountCommon().getBattlePlayer(p.getUniqueId());
 				Objective obj = board.registerNewObjective("mainScoreboard", "dummy");
 
 				obj.setDisplayName("§6§LBATTLE§R§LBITS");
@@ -27,8 +27,7 @@ public class ScoreboardManager {
 				obj.getScore("§9").setScore(10);
 				board.registerNewTeam("rankteam").addEntry("§9");
 				board.getTeam("rankteam").setPrefix("§7Rank: ");
-				board.getTeam("rankteam").setSuffix(yLobbyPlugin.getyLobby().getzUtils().getTagUtils()
-						.getDefaultTag(Main.getPlugin().getPermissionManager().getPlayerGroup(p.getUniqueId())).getPrefix());
+				board.getTeam("rankteam").setSuffix(account.getTag().getPrefix(account.getLanguage()));
 
 				obj.getScore("§8").setScore(9);
 				board.registerNewTeam("ligateam").addEntry("§8");

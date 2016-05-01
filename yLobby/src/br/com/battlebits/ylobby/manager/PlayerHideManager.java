@@ -6,8 +6,8 @@ import java.util.UUID;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
-import me.flame.utils.Main;
-import me.flame.utils.permissions.enums.Group;
+import br.com.battlebits.ycommon.common.BattlebitsAPI;
+import br.com.battlebits.ycommon.common.permissions.enums.Group;
 
 public class PlayerHideManager {
 
@@ -24,7 +24,7 @@ public class PlayerHideManager {
 			Player hide = Bukkit.getPlayer(id);
 			hide.hidePlayer(p);
 		}
-		if (Main.getPlugin().getPermissionManager().getPlayerGroup(p) == Group.NORMAL) {
+		if (BattlebitsAPI.getAccountCommon().getBattlePlayer(p.getUniqueId()).getServerGroup() == Group.NORMAL) {
 			for (UUID id : hideOnlyNormal) {
 				Player hide = Bukkit.getPlayer(id);
 				hide.hidePlayer(p);
@@ -44,7 +44,7 @@ public class PlayerHideManager {
 		hideOnlyNormal.add(p.getUniqueId());
 		for (Player hide : Bukkit.getOnlinePlayers()) {
 			if (hide.getUniqueId() != p.getUniqueId()) {
-				if (Main.getPlugin().getPermissionManager().getPlayerGroup(hide) == Group.NORMAL) {
+				if (BattlebitsAPI.getAccountCommon().getBattlePlayer(p.getUniqueId()).getServerGroup() == Group.NORMAL) {
 					p.hidePlayer(hide);
 				}
 			}

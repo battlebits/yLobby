@@ -7,9 +7,9 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import br.com.battlebits.ycommon.common.BattlebitsAPI;
+import br.com.battlebits.ycommon.common.permissions.enums.Group;
 import br.com.battlebits.ylobby.yLobbyPlugin;
-import me.flame.utils.Main;
-import me.flame.utils.permissions.enums.Group;
 
 public class FlyCommand implements CommandExecutor {
 
@@ -37,7 +37,7 @@ public class FlyCommand implements CommandExecutor {
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 		if (sender instanceof Player) {
 			Player p = (Player) sender;
-			if (Main.getPlugin().getPermissionManager().hasGroupPermission(p, Group.LIGHT)) {
+			if (BattlebitsAPI.getAccountCommon().getBattlePlayer(p.getUniqueId()).hasGroupPermission(Group.LIGHT)) {
 				if (p.getAllowFlight()) {
 					p.setAllowFlight(false);
 					p.setFlying(false);

@@ -27,9 +27,9 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import br.com.battlebits.yaddons.yAddonsPlugin;
+import br.com.battlebits.ycommon.common.BattlebitsAPI;
+import br.com.battlebits.ycommon.common.permissions.enums.Group;
 import br.com.battlebits.ylobby.yLobbyPlugin;
-import me.flame.utils.Main;
-import me.flame.utils.permissions.enums.Group;
 
 public class MainListener implements Listener {
 
@@ -160,7 +160,7 @@ public class MainListener implements Listener {
 					if (e.getItem().hasItemMeta()) {
 						if (e.getItem().getItemMeta().hasDisplayName()) {
 							if (e.getItem().getItemMeta().getDisplayName().equalsIgnoreCase("§a§lCosmeticos §7(Clique)")) {
-								if (Main.getPlugin().getPermissionManager().hasGroupPermission(e.getPlayer().getUniqueId(), Group.LIGHT)) {
+								if (BattlebitsAPI.getAccountCommon().getBattlePlayer(e.getPlayer().getUniqueId()).hasGroupPermission(Group.LIGHT)) {
 									yAddonsPlugin.getyAddons().getSelectorInventory().open(e.getPlayer());
 								} else {
 									e.getPlayer().sendMessage(
@@ -191,7 +191,7 @@ public class MainListener implements Listener {
 		if (!e.getMessage().startsWith("Damage Indicators")) {
 			if (yLobbyPlugin.getyLobby().getChatManager().isChatEnabled(e.getPlayer().getUniqueId())) {
 				if (!(e.getMessage().startsWith("@")
-						&& Main.getPlugin().getPermissionManager().hasGroupPermission(e.getPlayer().getUniqueId(), Group.MOD))) {
+						&& BattlebitsAPI.getAccountCommon().getBattlePlayer(e.getPlayer().getUniqueId()).hasGroupPermission(Group.MOD))) {
 					for (UUID id : yLobbyPlugin.getyLobby().getChatManager().getChatDisabledPlayers()) {
 						e.getRecipients().remove(Bukkit.getPlayer(id));
 					}

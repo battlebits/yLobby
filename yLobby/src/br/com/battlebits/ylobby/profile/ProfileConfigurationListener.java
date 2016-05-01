@@ -9,9 +9,9 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
 
+import br.com.battlebits.ycommon.common.BattlebitsAPI;
+import br.com.battlebits.ycommon.common.permissions.enums.Group;
 import br.com.battlebits.ylobby.yLobbyPlugin;
-import me.flame.utils.Main;
-import me.flame.utils.permissions.enums.Group;
 
 public class ProfileConfigurationListener implements Listener {
 
@@ -96,7 +96,7 @@ public class ProfileConfigurationListener implements Listener {
 										p.sendMessage(str);
 									}
 								} else {
-									if (Main.getPlugin().getPermissionManager().hasGroupPermission(p.getUniqueId(), Group.LIGHT)) {
+									if (BattlebitsAPI.getAccountCommon().getBattlePlayer(p.getUniqueId()).hasGroupPermission(Group.LIGHT)) {
 										p.setAllowFlight(true);
 										p.setFlying(true);
 										for (String str : flyEnable) {

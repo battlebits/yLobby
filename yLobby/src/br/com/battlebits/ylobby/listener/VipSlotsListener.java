@@ -7,8 +7,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerLoginEvent;
 import org.bukkit.event.player.PlayerLoginEvent.Result;
 
-import me.flame.utils.Main;
-import me.flame.utils.permissions.enums.Group;
+import br.com.battlebits.ycommon.common.BattlebitsAPI;
+import br.com.battlebits.ycommon.common.permissions.enums.Group;
 
 public class VipSlotsListener implements Listener {
 
@@ -16,7 +16,7 @@ public class VipSlotsListener implements Listener {
 	@EventHandler(priority = EventPriority.MONITOR)
 	public void onPlayerPreLoginListener(PlayerLoginEvent e) {
 		if (e.getResult() == Result.KICK_FULL) {
-			if (Main.getPlugin().getPermissionManager().hasGroupPermission(e.getPlayer(), Group.LIGHT)) {
+			if (BattlebitsAPI.getAccountCommon().getBattlePlayer(e.getPlayer().getUniqueId()).hasGroupPermission(Group.LIGHT)) {
 				if ((Bukkit.getOnlinePlayers().length + 1) <= 120) {
 					e.allow();
 				} else {

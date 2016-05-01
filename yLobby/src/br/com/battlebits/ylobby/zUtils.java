@@ -11,7 +11,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
-import java.util.concurrent.TimeUnit;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -35,14 +34,11 @@ import org.bukkit.plugin.Plugin;
 import org.spigotmc.ProtocolInjector.PacketTabHeader;
 import org.spigotmc.ProtocolInjector.PacketTitle;
 
-import com.google.common.cache.Cache;
-import com.google.common.cache.CacheBuilder;
-import com.google.common.cache.CacheLoader;
 import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.Table;
 
-import me.flame.utils.permissions.enums.Group;
-import me.flame.utils.tagmanager.enums.Tag;
+import br.com.battlebits.ycommon.common.permissions.enums.Group;
+import br.com.battlebits.ycommon.common.tag.Tag;
 import net.minecraft.server.v1_7_R4.ChatSerializer;
 import net.minecraft.server.v1_7_R4.Entity;
 import net.minecraft.server.v1_7_R4.EntityHuman;

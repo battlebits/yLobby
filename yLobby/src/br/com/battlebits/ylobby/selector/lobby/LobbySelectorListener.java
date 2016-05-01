@@ -23,8 +23,8 @@ public class LobbySelectorListener implements Listener {
 						if (e.getClickedInventory() == e.getInventory()) {
 							Player p = (Player) e.getWhoClicked();
 							yLobbyPlugin.getyLobby().getLobbySelector().tryToConnect(p, e.getSlot());
-							e.setCancelled(true);
 						}
+						e.setCancelled(true);
 					}
 				}
 			}

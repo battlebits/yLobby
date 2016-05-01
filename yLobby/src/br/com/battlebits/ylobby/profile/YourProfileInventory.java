@@ -49,6 +49,7 @@ public class YourProfileInventory {
 		SkullMeta mainMeta = (SkullMeta) mainItem.getItemMeta();
 		mainMeta.setOwner(name);
 		mainMeta.setDisplayName("§9§l" + name);
+
 		mainMeta.setLore(Arrays.asList("§0", //
 				"§7Rank: " + account.getTag().getPrefix(account.getLanguage()), //
 				"§7Liga: " + account.getLiga().getSymbol() + " " + account.getLiga().toString(), //
@@ -59,6 +60,7 @@ public class YourProfileInventory {
 		/**
 		 * "§b§lClique §bpara ver", "§bmais §b§lestatisticas§b." , "§0"));
 		 */
+
 		mainItem.setItemMeta(mainMeta);
 		inv.setItem(11, ranksItem);
 		inv.setItem(13, mainItem);

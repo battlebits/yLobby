@@ -168,9 +168,7 @@ public class yLobbyPlugin extends JavaPlugin {
 		profileCommand = new ProfileCommand();
 		groupCommand = new GroupCommand();
 
-		zUtils.getListenerUtils().registerListeners(gameModeSelectorListener, lobbySelectorListener, matchSelectorListener, yourProfileListener,
-				profileRanksListener, profileConfigurationListener, bountifulListener, mainListener, playerHideListener, gameModsListener,
-				vipSlotsListener);
+		zUtils.getListenerUtils().registerListeners(gameModeSelectorListener, lobbySelectorListener, matchSelectorListener, yourProfileListener, profileRanksListener, profileConfigurationListener, bountifulListener, mainListener, playerHideListener, gameModsListener, vipSlotsListener);
 
 		chatManager.start();
 
@@ -183,10 +181,11 @@ public class yLobbyPlugin extends JavaPlugin {
 		zUtils.getCommandUtils().registerCommand(flyCommand, "fly", "Comando para ativar ou desativar seu fly", "voar");
 		zUtils.getCommandUtils().registerCommand(tellCommand, "tell", "Comando para enviar mensagems privadas para jogadores", "pm", "w", "msg");
 		zUtils.getCommandUtils().registerCommand(tellCommand, "r", "Comando para responder mensagens privadas de jogadores", "responder");
-		zUtils.getCommandUtils().registerCommand(prefCommand, "pref", "Comando para abrir o menu de preferencias", "preferencias", "config",
-				"configs", "prefs", "configuracoes");
+		zUtils.getCommandUtils().registerCommand(prefCommand, "pref", "Comando para abrir o menu de preferencias", "preferencias", "config", "configs", "prefs", "configuracoes");
 		zUtils.getCommandUtils().registerCommand(profileCommand, "perfil", "Comando para abrir seu perfil", "eu", "meuperfil", "sobre");
 		zUtils.getCommandUtils().registerCommand(groupCommand, "grupo", "Comando para ver informacoes sobre seu grupo atual", "group", "meugrupo");
+		// zUtils.getCommandUtils().registerCommand(forumCommand, "forum",
+		// "Comando debug", "f");
 
 		getLogger().info("Plugin habilitado com sucesso!");
 
@@ -203,6 +202,8 @@ public class yLobbyPlugin extends JavaPlugin {
 				p.kickPlayer("§cO servidor está reiniciando!");
 			}
 		}
+
+		// mySQLConnection.stop();
 
 		bungeeMessageReceiver.stop();
 

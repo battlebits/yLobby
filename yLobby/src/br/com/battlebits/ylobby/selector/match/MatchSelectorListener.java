@@ -45,8 +45,8 @@ public class MatchSelectorListener implements Listener {
 							} else if (e.getCurrentItem().getType() == Material.INK_SACK) {
 								matchSelector.tryToConnect(p, ChatColor.stripColor(e.getCurrentItem().getItemMeta().getDisplayName()).split(" ")[1]);
 							}
-							e.setCancelled(true);
 						}
+						e.setCancelled(true);
 					}
 				}
 			}

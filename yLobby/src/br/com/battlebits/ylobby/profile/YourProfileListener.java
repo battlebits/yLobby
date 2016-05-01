@@ -38,13 +38,13 @@ public class YourProfileListener implements Listener {
 				if (e.getCurrentItem() != null) {
 					if (e.getInventory().getTitle().equalsIgnoreCase("              §nSeu Perfil")) {
 						if (e.getClickedInventory() == e.getInventory()) {
-							e.setCancelled(true);
 							if (e.getSlot() == 11) {
 								yLobbyPlugin.getyLobby().getProfileRanksInventory().open((Player) e.getWhoClicked());
 							} else if (e.getSlot() == 15) {
 								yLobbyPlugin.getyLobby().getProfileConfigurationInventory().open((Player) e.getWhoClicked());
 							}
 						}
+						e.setCancelled(true);
 					}
 				}
 			}

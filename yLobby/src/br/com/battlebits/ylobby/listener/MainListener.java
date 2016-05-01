@@ -60,10 +60,12 @@ public class MainListener implements Listener {
 				}
 			}
 		}.runTaskLaterAsynchronously(yLobbyPlugin.getyLobby(), 20L);
-//		if (Main.getPlugin().getPermissionManager().hasGroupPermission(e.getPlayer().getUniqueId(), Group.LIGHT)) {
-//			e.getPlayer().setAllowFlight(true);
-//			e.getPlayer().setFlying(true);
-//		}
+		// if
+		// (Main.getPlugin().getPermissionManager().hasGroupPermission(e.getPlayer().getUniqueId(),
+		// Group.LIGHT)) {
+		// e.getPlayer().setAllowFlight(true);
+		// e.getPlayer().setFlying(true);
+		// }
 		e.getPlayer().teleport(yLobbyPlugin.getyLobby().getLocationManager().getSpawnLocation());
 		e.setJoinMessage("");
 		yLobbyPlugin.getyLobby().getScoreboardManager().setupMainScoreboard(e.getPlayer());
@@ -72,23 +74,23 @@ public class MainListener implements Listener {
 		}
 	}
 
-//	@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-//	public void onVipExpire(IW4PostExpiredPlayerEvent e) {
-//		for (IW4OrderProduct product : e.getExpiredPackages().values()) {
-//			if (product.getProductName().toLowerCase().startsWith("vip")) {
-//				Player p = Bukkit.getPlayer(e.getPlayer().getUUID());
-//				if (p.getAllowFlight()) {
-//					p.setAllowFlight(false);
-//				}
-//				yAddonsPlugin.getyAddons().getAccountManager().getAccount(p).removeCurrentGadget();
-//				yAddonsPlugin.getyAddons().getAccountManager().getAccount(p).removeCurrentHat();
-//				yAddonsPlugin.getyAddons().getAccountManager().getAccount(p).removeCurrentParticle();
-//				yAddonsPlugin.getyAddons().getAccountManager().getAccount(p).removeCurrentPet();
-//				yAddonsPlugin.getyAddons().getAccountManager().getAccount(p).removeCurrentMorph();
-//				break;
-//			}
-//		}
-//	}
+	// @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+	// public void onVipExpire(IW4PostExpiredPlayerEvent e) {
+	// for (IW4OrderProduct product : e.getExpiredPackages().values()) {
+	// if (product.getProductName().toLowerCase().startsWith("vip")) {
+	// Player p = Bukkit.getPlayer(e.getPlayer().getUUID());
+	// if (p.getAllowFlight()) {
+	// p.setAllowFlight(false);
+	// }
+	// yAddonsPlugin.getyAddons().getAccountManager().getAccount(p).removeCurrentGadget();
+	// yAddonsPlugin.getyAddons().getAccountManager().getAccount(p).removeCurrentHat();
+	// yAddonsPlugin.getyAddons().getAccountManager().getAccount(p).removeCurrentParticle();
+	// yAddonsPlugin.getyAddons().getAccountManager().getAccount(p).removeCurrentPet();
+	// yAddonsPlugin.getyAddons().getAccountManager().getAccount(p).removeCurrentMorph();
+	// break;
+	// }
+	// }
+	// }
 
 	@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
 	public void onFoodLevelChangeListener(FoodLevelChangeEvent e) {
@@ -163,8 +165,8 @@ public class MainListener implements Listener {
 								if (BattlebitsAPI.getAccountCommon().getBattlePlayer(e.getPlayer().getUniqueId()).hasGroupPermission(Group.LIGHT)) {
 									yAddonsPlugin.getyAddons().getSelectorInventory().open(e.getPlayer());
 								} else {
-									e.getPlayer().sendMessage(
-											"§7Esse sistema está em fase de testes e desenvolvimento! Devido a isso, ele é apenas para jogadores com o grupo §a§lLIGHT §7ou superior!");
+									e.getPlayer().sendMessage("§7Esse sistema está em fase de testes e desenvolvimento! Devido a isso, ele é apenas para jogadores com o grupo §a§lLIGHT §7ou superior!");
+
 								}
 							}
 						}
@@ -176,13 +178,9 @@ public class MainListener implements Listener {
 
 	@EventHandler
 	public void PlayerCommandPreprocessListener(PlayerCommandPreprocessEvent e) {
-		if (e.getMessage().toLowerCase().startsWith("/ver") || e.getMessage().toLowerCase().startsWith("/version")
-				|| e.getMessage().toLowerCase().startsWith("/help") || e.getMessage().toLowerCase().startsWith("/?")
-				|| e.getMessage().toLowerCase().startsWith("/icanhasbukkit") || e.getMessage().toLowerCase().startsWith("/pl")
-				|| e.getMessage().toLowerCase().startsWith("/plugins")) {
+		if (e.getMessage().toLowerCase().startsWith("/ver") || e.getMessage().toLowerCase().startsWith("/version") || e.getMessage().toLowerCase().startsWith("/help") || e.getMessage().toLowerCase().startsWith("/?") || e.getMessage().toLowerCase().startsWith("/icanhasbukkit") || e.getMessage().toLowerCase().startsWith("/pl") || e.getMessage().toLowerCase().startsWith("/plugins")) {
 			e.setCancelled(true);
-			e.getPlayer().sendMessage("§7Sistema de Lobby para a §6§lBattle§r§lBits §9§lNetwork §7versão "
-					+ yLobbyPlugin.getyLobby().getDescription().getVersion() + "!");
+			e.getPlayer().sendMessage("§7Sistema de Lobby para a §6§lBattle§r§lBits §9§lNetwork §7versão " + yLobbyPlugin.getyLobby().getDescription().getVersion() + "!");
 		}
 	}
 
@@ -190,8 +188,7 @@ public class MainListener implements Listener {
 	public void onAsyncPlayerChatListener(AsyncPlayerChatEvent e) {
 		if (!e.getMessage().startsWith("Damage Indicators")) {
 			if (yLobbyPlugin.getyLobby().getChatManager().isChatEnabled(e.getPlayer().getUniqueId())) {
-				if (!(e.getMessage().startsWith("@")
-						&& BattlebitsAPI.getAccountCommon().getBattlePlayer(e.getPlayer().getUniqueId()).hasGroupPermission(Group.MOD))) {
+				if (!(e.getMessage().startsWith("@") && BattlebitsAPI.getAccountCommon().getBattlePlayer(e.getPlayer().getUniqueId()).hasGroupPermission(Group.MOD))) {
 					for (UUID id : yLobbyPlugin.getyLobby().getChatManager().getChatDisabledPlayers()) {
 						e.getRecipients().remove(Bukkit.getPlayer(id));
 					}

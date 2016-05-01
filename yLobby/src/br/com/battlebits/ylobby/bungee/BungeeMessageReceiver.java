@@ -50,6 +50,7 @@ public class BungeeMessageReceiver implements PluginMessageListener {
 							yLobbyPlugin.getyLobby().getServerInfoManager().get(server).setMaxPlayers(input.readInt());
 						}
 					}
+					input = null;
 					messages.remove(message);
 				}
 

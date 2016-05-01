@@ -44,7 +44,7 @@ public class MatchSelectorManager {
 				}
 			}
 		};
-		updaterRunnable.runTaskTimerAsynchronously(yLobbyPlugin.getyLobby(), 15l, 15L);
+		updaterRunnable.runTaskTimerAsynchronously(yLobbyPlugin.getyLobby(), 15l, 30L);
 	}
 
 	public boolean isMatchSelector(String title) {

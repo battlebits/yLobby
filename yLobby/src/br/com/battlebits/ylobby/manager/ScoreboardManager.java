@@ -8,6 +8,7 @@ import org.bukkit.scoreboard.Scoreboard;
 
 import br.com.battlebits.ycommon.common.BattlebitsAPI;
 import br.com.battlebits.ycommon.common.account.BattlePlayer;
+import br.com.battlebits.ycommon.common.tag.Tag;
 import br.com.battlebits.ylobby.yLobbyPlugin;
 
 public class ScoreboardManager {
@@ -17,7 +18,7 @@ public class ScoreboardManager {
 			@Override
 			public void run() {
 				Scoreboard board = p.getScoreboard();
-				BattlePlayer account =BattlebitsAPI.getAccountCommon().getBattlePlayer(p.getUniqueId());
+				BattlePlayer account = BattlebitsAPI.getAccountCommon().getBattlePlayer(p.getUniqueId());
 				Objective obj = board.registerNewObjective("mainScoreboard", "dummy");
 
 				obj.setDisplayName("§6§LBATTLE§R§LBITS");
@@ -27,7 +28,7 @@ public class ScoreboardManager {
 				obj.getScore("§9").setScore(10);
 				board.registerNewTeam("rankteam").addEntry("§9");
 				board.getTeam("rankteam").setPrefix("§7Rank: ");
-				board.getTeam("rankteam").setSuffix(account.getTag().getPrefix(account.getLanguage()));
+				board.getTeam("rankteam").setSuffix(Tag.valueOf(account.getServerGroup().toString()).getPrefix(account.getLanguage()));
 
 				obj.getScore("§8").setScore(9);
 				board.registerNewTeam("ligateam").addEntry("§8");

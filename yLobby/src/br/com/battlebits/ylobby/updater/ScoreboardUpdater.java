@@ -15,7 +15,7 @@ public class ScoreboardUpdater extends UpdaterBase {
 	@SuppressWarnings("deprecation")
 	@Override
 	public void update() {
-		if (Bukkit.getOnlinePlayers().length > 0) {
+		if (Bukkit.getOnlinePlayers().size() > 0) {
 			for (Player p : Bukkit.getOnlinePlayers()) {
 				if (p.getScoreboard().getObjective(DisplaySlot.SIDEBAR) != null) {
 					yLobbyPlugin.getyLobby().getScoreboardManager().updateMainScoreboard(p);

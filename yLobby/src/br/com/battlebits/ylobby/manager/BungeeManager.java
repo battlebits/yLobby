@@ -30,10 +30,9 @@ public class BungeeManager {
 		lobbyservers = new ArrayList<>();
 		lobbyID = "#?";
 		getServersRunnable = new BukkitRunnable() {
-			@SuppressWarnings("deprecation")
 			@Override
 			public void run() {
-				if (Bukkit.getOnlinePlayers().length > 0) {
+				if (Bukkit.getOnlinePlayers().size() > 0) {
 					yLobbyPlugin.getyLobby().getBungeeMessageSender().tryToSendMessage(new BungeeMessage("GetServer"));
 					yLobbyPlugin.getyLobby().getBungeeMessageSender().tryToSendMessage(new BungeeMessage("GetServers"));
 				}

@@ -197,7 +197,7 @@ public class yLobbyPlugin extends JavaPlugin {
 
 		getLogger().info("Finalizando plugin...");
 
-		if (Bukkit.getOnlinePlayers().length > 0) {
+		if (Bukkit.getOnlinePlayers().size() > 0) {
 			for (Player p : Bukkit.getOnlinePlayers()) {
 				p.kickPlayer("§cO servidor está reiniciando!");
 			}

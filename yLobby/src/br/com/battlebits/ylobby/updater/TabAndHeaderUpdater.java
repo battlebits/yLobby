@@ -14,7 +14,7 @@ public class TabAndHeaderUpdater extends UpdaterBase {
 	@SuppressWarnings("deprecation")
 	@Override
 	public void update() {
-		if (Bukkit.getOnlinePlayers().length > 0) {
+		if (Bukkit.getOnlinePlayers().size() > 0) {
 			for (Player p : Bukkit.getOnlinePlayers()) {
 				if (yLobbyPlugin.getyLobby().getzUtils().getPlayerUtils().isPlayerOn18(p)) {
 					yLobbyPlugin.getyLobby().getTabHeaderAndFooterManager().send(p);

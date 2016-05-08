@@ -58,7 +58,7 @@ public class PlayerCountManager {
 		new BukkitRunnable() {
 			@Override
 			public void run() {
-				if (Bukkit.getOnlinePlayers().length > 0) {
+				if (Bukkit.getOnlinePlayers().size() > 0) {
 					yLobbyPlugin.getyLobby().getBungeeMessageSender().tryToSendMessage(new BungeeMessage("NetworkCount"));
 					yLobbyPlugin.getyLobby().getBungeeMessageSender().tryToSendMessage(new BungeeMessage("HGCount"));
 					yLobbyPlugin.getyLobby().getBungeeMessageSender().tryToSendMessage(new BungeeMessage("FPCount"));

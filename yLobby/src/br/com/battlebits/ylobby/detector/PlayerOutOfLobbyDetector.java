@@ -20,13 +20,11 @@ public class PlayerOutOfLobbyDetector extends DetectorBase {
 		message.add("§0");
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
 	public void detect() {
-		if (Bukkit.getOnlinePlayers().length > 0) {
+		if (Bukkit.getOnlinePlayers().size() > 0) {
 			for (Player p : Bukkit.getOnlinePlayers()) {
-				if ((p.getLocation().distance(yLobbyPlugin.getyLobby().getLocationManager().getSpawnLocation()) >= 120 || p.getLocation().getY() >= 220
-						|| (p.getLocation().getY() <= 5)) && p.getGameMode() != GameMode.CREATIVE) {
+				if ((p.getLocation().distance(yLobbyPlugin.getyLobby().getLocationManager().getSpawnLocation()) >= 120 || p.getLocation().getY() >= 220 || (p.getLocation().getY() <= 5)) && p.getGameMode() != GameMode.CREATIVE) {
 					p.teleport(yLobbyPlugin.getyLobby().getLocationManager().getSpawnLocation());
 					for (String msg : message) {
 						p.sendMessage(msg);

@@ -17,7 +17,7 @@ public class VipSlotsListener implements Listener {
 	public void onPlayerPreLoginListener(PlayerLoginEvent e) {
 		if (e.getResult() == Result.KICK_FULL) {
 			if (BattlebitsAPI.getAccountCommon().getBattlePlayer(e.getPlayer().getUniqueId()).hasGroupPermission(Group.LIGHT)) {
-				if ((Bukkit.getOnlinePlayers().length + 1) <= 120) {
+				if ((Bukkit.getOnlinePlayers().size() + 1) <= 120) {
 					e.allow();
 				} else {
 					e.disallow(Result.KICK_FULL, "§cInfelizmente, nosso servidor está sobrecarregado! D:\nTente novamente mais tarde!");

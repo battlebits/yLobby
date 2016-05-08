@@ -6,10 +6,9 @@ import br.com.battlebits.ylobby.yLobbyPlugin;
 
 public class BungeeMessageSender {
 
-	@SuppressWarnings("deprecation")
 	public void tryToSendMessage(BungeeMessage message) {
-		if (Bukkit.getOnlinePlayers().length > 0) {
-			Bukkit.getOnlinePlayers()[0].sendPluginMessage(yLobbyPlugin.getyLobby(), "BungeeCord", message.getDataOutput().toByteArray());
+		if (Bukkit.getOnlinePlayers().size() > 0) {
+			Bukkit.getOnlinePlayers().iterator().next().sendPluginMessage(yLobbyPlugin.getyLobby(), "BungeeCord", message.getDataOutput().toByteArray());
 		}
 	}
 

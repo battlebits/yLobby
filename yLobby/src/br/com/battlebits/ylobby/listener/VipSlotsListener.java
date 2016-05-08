@@ -12,7 +12,6 @@ import br.com.battlebits.ycommon.common.permissions.enums.Group;
 
 public class VipSlotsListener implements Listener {
 
-	@SuppressWarnings("deprecation")
 	@EventHandler(priority = EventPriority.MONITOR)
 	public void onPlayerPreLoginListener(PlayerLoginEvent e) {
 		if (e.getResult() == Result.KICK_FULL) {

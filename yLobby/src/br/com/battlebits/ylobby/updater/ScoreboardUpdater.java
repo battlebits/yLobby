@@ -12,7 +12,6 @@ public class ScoreboardUpdater extends UpdaterBase {
 		super(40L, false);
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
 	public void update() {
 		if (Bukkit.getOnlinePlayers().size() > 0) {

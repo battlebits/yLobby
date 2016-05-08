@@ -11,7 +11,6 @@ public class TabAndHeaderUpdater extends UpdaterBase {
 		super(30L, false);
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
 	public void update() {
 		if (Bukkit.getOnlinePlayers().size() > 0) {

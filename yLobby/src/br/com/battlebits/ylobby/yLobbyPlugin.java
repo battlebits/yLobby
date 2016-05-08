@@ -191,7 +191,6 @@ public class yLobbyPlugin extends JavaPlugin {
 
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
 	public void onDisable() {
 

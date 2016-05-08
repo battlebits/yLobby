@@ -53,7 +53,6 @@ public class PlayerCountManager {
 		swOnlinePlayers = i;
 	}
 
-	@SuppressWarnings("deprecation")
 	public void startPlayerCountUpdater() {
 		new BukkitRunnable() {
 			@Override

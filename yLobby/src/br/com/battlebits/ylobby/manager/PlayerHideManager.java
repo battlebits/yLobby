@@ -36,7 +36,6 @@ public class PlayerHideManager {
 		return hideOnlyNormal.contains(p.getUniqueId());
 	}
 
-	@SuppressWarnings("deprecation")
 	public void hideOnlyNormal(Player p) {
 		if (hideAllPlayers.contains(p.getUniqueId())) {
 			hideAllPlayers.remove(p.getUniqueId());
@@ -51,7 +50,6 @@ public class PlayerHideManager {
 		}
 	}
 
-	@SuppressWarnings("deprecation")
 	public void hideAllPlayers(Player p) {
 		if (hideOnlyNormal.contains(p.getUniqueId())) {
 			hideOnlyNormal.remove(p.getUniqueId());
@@ -64,7 +62,6 @@ public class PlayerHideManager {
 		}
 	}
 
-	@SuppressWarnings("deprecation")
 	public void showAllPlayers(Player p) {
 		if (hideOnlyNormal.contains(p.getUniqueId())) {
 			hideOnlyNormal.remove(p.getUniqueId());
@@ -77,7 +74,6 @@ public class PlayerHideManager {
 		}
 	}
 
-	@SuppressWarnings("deprecation")
 	public void stop() {
 		for (Player p : Bukkit.getOnlinePlayers()) {
 			for (Player show : Bukkit.getOnlinePlayers()) {

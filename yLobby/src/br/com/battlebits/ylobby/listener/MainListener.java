@@ -33,7 +33,6 @@ import br.com.battlebits.ylobby.yLobbyPlugin;
 
 public class MainListener implements Listener {
 
-	@SuppressWarnings("deprecation")
 	@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
 	public void onPlayerJoinListener(PlayerJoinEvent e) {
 		yLobbyPlugin.getyLobby().getLobbyItensManager().setItems(e.getPlayer());

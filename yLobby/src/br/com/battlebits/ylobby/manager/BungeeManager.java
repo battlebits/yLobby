@@ -110,7 +110,6 @@ public class BungeeManager {
 		serverName = str;
 	}
 
-	@SuppressWarnings("deprecation")
 	public void setLobbyID(String lobbyID) {
 		this.lobbyID = lobbyID;
 		for(Player p : Bukkit.getOnlinePlayers()){

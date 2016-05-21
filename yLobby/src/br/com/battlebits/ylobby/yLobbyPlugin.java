@@ -27,6 +27,7 @@ import br.com.battlebits.ylobby.manager.GameServerInfoManager;
 import br.com.battlebits.ylobby.manager.LobbyItensManager;
 import br.com.battlebits.ylobby.manager.LocationManager;
 import br.com.battlebits.ylobby.manager.MatchSelectorManager;
+import br.com.battlebits.ylobby.manager.MultiSelectorManager;
 import br.com.battlebits.ylobby.manager.PlayerCountManager;
 import br.com.battlebits.ylobby.manager.PlayerHideManager;
 import br.com.battlebits.ylobby.manager.ScoreboardManager;
@@ -43,6 +44,7 @@ import br.com.battlebits.ylobby.selector.gamemode.GameModeSelectorListener;
 import br.com.battlebits.ylobby.selector.lobby.LobbySelector;
 import br.com.battlebits.ylobby.selector.lobby.LobbySelectorListener;
 import br.com.battlebits.ylobby.selector.match.MatchSelectorListener;
+import br.com.battlebits.ylobby.selector.multi.MultiSelectorListener;
 import br.com.battlebits.ylobby.updater.ScoreboardUpdater;
 import br.com.battlebits.ylobby.updater.TabAndHeaderUpdater;
 
@@ -58,6 +60,7 @@ public class yLobbyPlugin extends JavaPlugin {
 	private BungeeMessageSender bungeeMessageSender;
 
 	private MatchSelectorManager matchSelectorManager;
+	private MultiSelectorManager multiSelectorManager;
 	private BungeeManager bungeeManager;
 	private GameServerInfoManager gameServerInfoManager;
 	private ServerInfoManager serverInfoManager;
@@ -75,6 +78,7 @@ public class yLobbyPlugin extends JavaPlugin {
 	private GameModeSelector gameModeSelector;
 	private GameModeSelectorListener gameModeSelectorListener;
 	private MatchSelectorListener matchSelectorListener;
+	private MultiSelectorListener multiSelectorListener;
 
 	private ScoreboardUpdater scoreboardUpdater;
 	private TabAndHeaderUpdater tabAndHeaderUpdater;
@@ -124,6 +128,7 @@ public class yLobbyPlugin extends JavaPlugin {
 		Bukkit.getMessenger().registerOutgoingPluginChannel(yLobby, "BungeeCord");
 
 		matchSelectorManager = new MatchSelectorManager();
+		multiSelectorManager = new MultiSelectorManager();
 		bungeeManager = new BungeeManager();
 		gameServerInfoManager = new GameServerInfoManager();
 		serverInfoManager = new ServerInfoManager();
@@ -141,6 +146,7 @@ public class yLobbyPlugin extends JavaPlugin {
 		gameModeSelector = new GameModeSelector();
 		gameModeSelectorListener = new GameModeSelectorListener();
 		matchSelectorListener = new MatchSelectorListener();
+		multiSelectorListener = new MultiSelectorListener();
 		lobbyItensManager = new LobbyItensManager();
 
 		scoreboardUpdater = new ScoreboardUpdater();
@@ -168,7 +174,7 @@ public class yLobbyPlugin extends JavaPlugin {
 		profileCommand = new ProfileCommand();
 		groupCommand = new GroupCommand();
 
-		zUtils.getListenerUtils().registerListeners(gameModeSelectorListener, lobbySelectorListener, matchSelectorListener, yourProfileListener, profileRanksListener, profileConfigurationListener, bountifulListener, mainListener, playerHideListener, gameModsListener, vipSlotsListener);
+		zUtils.getListenerUtils().registerListeners(gameModeSelectorListener, lobbySelectorListener, matchSelectorListener, multiSelectorListener, yourProfileListener, profileRanksListener, profileConfigurationListener, bountifulListener, mainListener, playerHideListener, gameModsListener, vipSlotsListener);
 
 		chatManager.start();
 
@@ -213,6 +219,7 @@ public class yLobbyPlugin extends JavaPlugin {
 
 		chatManager.stop();
 		matchSelectorManager.stop();
+		multiSelectorManager.stop();
 		gameServerInfoManager.stop();
 		serverInfoManager.stop();
 
@@ -272,6 +279,10 @@ public class yLobbyPlugin extends JavaPlugin {
 
 	public MatchSelectorManager getMatchSelectorManager() {
 		return matchSelectorManager;
+	}
+	
+	public MultiSelectorManager getMultiSelectorManager() {
+		return multiSelectorManager;
 	}
 
 	public PlayerHideManager getPlayerHideManager() {

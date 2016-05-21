@@ -29,6 +29,10 @@ public class GameServerInfoManager {
 		ipGameInfo.put(ip, new GameServerInfo(ip));
 	}
 
+	public void removeServer(String ip) {
+		ipGameInfo.remove(ip);
+	}
+
 	public GameServerInfo get(String ip) {
 		return ipGameInfo.get(ip);
 	}

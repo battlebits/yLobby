@@ -52,20 +52,17 @@ public class PlayerHideListener implements Listener {
 					if (e.getItem().hasItemMeta()) {
 						if (e.getItem().getItemMeta().hasDisplayName()) {
 							if (e.getItem().getItemMeta().getDisplayName().contains("Jogadores")) {
-								if (!uuidCooldown.containsKey(e.getPlayer().getUniqueId())
-										|| System.currentTimeMillis() >= uuidCooldown.get(e.getPlayer().getUniqueId())) {
+								if (!uuidCooldown.containsKey(e.getPlayer().getUniqueId()) || System.currentTimeMillis() >= uuidCooldown.get(e.getPlayer().getUniqueId())) {
 									if (e.getItem().getItemMeta().getDisplayName().equalsIgnoreCase("§a§lMostrar Jogadores §7(Clique)")) {
 										yLobbyPlugin.getyLobby().getPlayerHideManager().showAllPlayers(e.getPlayer());
-										e.getPlayer().getInventory()
-												.setItemInHand(yLobbyPlugin.getyLobby().getLobbyItensManager().getHidePlayersItem());
+										e.getPlayer().getInventory().setItemInHand(yLobbyPlugin.getyLobby().getLobbyItensManager().getHidePlayersItem());
 										for (String msg : showMessage) {
 											e.getPlayer().sendMessage(msg);
 										}
 										e.setCancelled(true);
 									} else if (e.getItem().getItemMeta().getDisplayName().equalsIgnoreCase("§e§lEsconder Jogadores §7(Clique)")) {
 										yLobbyPlugin.getyLobby().getPlayerHideManager().hideOnlyNormal(e.getPlayer());
-										e.getPlayer().getInventory()
-												.setItemInHand(yLobbyPlugin.getyLobby().getLobbyItensManager().getShowPlayersItem());
+										e.getPlayer().getInventory().setItemInHand(yLobbyPlugin.getyLobby().getLobbyItensManager().getShowPlayersItem());
 										for (String msg : hideMessage) {
 											e.getPlayer().sendMessage(msg);
 										}
@@ -74,13 +71,7 @@ public class PlayerHideListener implements Listener {
 									uuidCooldown.put(e.getPlayer().getUniqueId(), System.currentTimeMillis() + 5000);
 								} else {
 									e.getPlayer().sendMessage("§0");
-									e.getPlayer()
-											.sendMessage(yLobbyPlugin.getyLobby().getzUtils().getMessageUtils()
-													.centerChatMessage("§c§lAguarde §7"
-															+ yLobbyPlugin.getyLobby().getzUtils().getTimeUtils()
-																	.formatTime((int) (((uuidCooldown.get(e.getPlayer().getUniqueId())
-																			- System.currentTimeMillis()) / 1000)) + 1)
-													+ "§7 para usar isso §c§lnovamente§7!"));
+									e.getPlayer().sendMessage(yLobbyPlugin.getyLobby().getzUtils().getMessageUtils().centerChatMessage("§c§lAguarde §7" + yLobbyPlugin.getyLobby().getzUtils().getTimeUtils().formatTime((int) (((uuidCooldown.get(e.getPlayer().getUniqueId()) - System.currentTimeMillis()) / 1000)) + 1) + "§7 para usar isso §c§lnovamente§7!"));
 									e.getPlayer().sendMessage("§0");
 									e.setCancelled(true);
 								}

@@ -27,14 +27,10 @@ public class BountifulListener implements Listener {
 		playerJoinMessage.add("§0");
 		playerJoinMessage.add(yLobbyPlugin.getyLobby().getzUtils().getMessageUtils().centerChatMessage("§6§lBATTLE§F§LBITS"));
 		playerJoinMessage.add("§0");
-		playerJoinMessage.add(
-				yLobbyPlugin.getyLobby().getzUtils().getMessageUtils().centerChatMessage("§7Seja bem-vindo ao nosso §e§lLobby§7! Aqui você pode se"));
-		playerJoinMessage.add(yLobbyPlugin.getyLobby().getzUtils().getMessageUtils()
-				.centerChatMessage("§7conectar aos todos os nossos §e§lmodos de jogo§7 também"));
-		playerJoinMessage.add(yLobbyPlugin.getyLobby().getzUtils().getMessageUtils()
-				.centerChatMessage("§7pode se §e§ldivertir§7 enquanto espera para §7jogar! Para obter"));
-		playerJoinMessage.add(yLobbyPlugin.getyLobby().getzUtils().getMessageUtils()
-				.centerChatMessage("§7maiores informações sobre o servidor acesse nosso §e§lsite§7!"));
+		playerJoinMessage.add(yLobbyPlugin.getyLobby().getzUtils().getMessageUtils().centerChatMessage("§7Seja bem-vindo ao nosso §e§lLobby§7! Aqui você pode se"));
+		playerJoinMessage.add(yLobbyPlugin.getyLobby().getzUtils().getMessageUtils().centerChatMessage("§7conectar aos todos os nossos §e§lmodos de jogo§7 também"));
+		playerJoinMessage.add(yLobbyPlugin.getyLobby().getzUtils().getMessageUtils().centerChatMessage("§7pode se §e§ldivertir§7 enquanto espera para §7jogar! Para obter"));
+		playerJoinMessage.add(yLobbyPlugin.getyLobby().getzUtils().getMessageUtils().centerChatMessage("§7maiores informações sobre o servidor acesse nosso §e§lsite§7!"));
 		playerJoinMessage.add("§0");
 		playerJoinMessage.add(yLobbyPlugin.getyLobby().getzUtils().getMessageUtils().centerChatMessage("§6§lwww.battlebits.com.br"));
 		playerJoinMessage.add("§0");

@@ -12,18 +12,18 @@ import br.com.battlebits.ylobby.yLobbyPlugin;
 import br.com.battlebits.ylobby.bungee.BungeeMessage;
 import br.com.battlebits.yutils.character.CharacterType;
 
-public abstract class GameModeMatch extends GameModeBase {
+public abstract class GameModeMulti extends GameModeBase {
 
 	private BungeeMessage connectBungeeMessage;
 
-	public GameModeMatch(final String servername, String serverdescription, Material iconmaterial, Location npclocation, CharacterType characterType, final BungeeMessage connectMessage) {
+	public GameModeMulti(final String servername, String serverdescription, Material iconmaterial, Location npclocation, CharacterType characterType, final BungeeMessage connectMessage) {
 		super(servername, serverdescription, iconmaterial, Arrays.asList("§b§lClique esquerdo §bpara ", "§b§lconectar §ba um §b§lservidor§b.", "§0", "§e§lClique direito §epara ver", "§e§ltodos §eos §e§lservidores§e."), npclocation, characterType);
 		connectBungeeMessage = connectMessage;
 		new BukkitRunnable() {
 			@Override
 			public void run() {
 				getCharacterNPC().getBukkitEntity().setMetadata("GM_CONNECT", new FixedMetadataValue(yLobbyPlugin.getyLobby(), connectMessage.getMessageArgs()));
-				getCharacterNPC().getBukkitEntity().setMetadata("GM_TYPE", new FixedMetadataValue(yLobbyPlugin.getyLobby(), "MATCH"));
+				getCharacterNPC().getBukkitEntity().setMetadata("GM_TYPE", new FixedMetadataValue(yLobbyPlugin.getyLobby(), "MULTI"));
 				getCharacterNPC().getBukkitEntity().setMetadata("GM_NAME", new FixedMetadataValue(yLobbyPlugin.getyLobby(), servername));
 			}
 		}.runTask(yLobbyPlugin.getyLobby());

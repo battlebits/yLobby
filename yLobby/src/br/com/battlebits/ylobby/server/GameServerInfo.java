@@ -1,20 +1,32 @@
 package br.com.battlebits.ylobby.server;
 
+import br.com.battlebits.ycommon.bungee.servers.HungerGamesServer.HungerGamesState;
+
 public class GameServerInfo extends ServerInfo implements Comparable<GameServerInfo> {
 
 	private int time;
-	
+	private HungerGamesState state;
+
 	public GameServerInfo(String serverip) {
 		super(serverip);
 		time = 9999;
+		state = HungerGamesState.WAITING;
 	}
-	
+
 	public int getTime() {
 		return time;
 	}
-	
+
 	public void setTime(int time) {
 		this.time = time;
+	}
+
+	public HungerGamesState getState() {
+		return state;
+	}
+
+	public void setState(HungerGamesState state) {
+		this.state = state;
 	}
 
 	@Override
@@ -43,8 +55,7 @@ public class GameServerInfo extends ServerInfo implements Comparable<GameServerI
 			return -1;
 		} else if (o.getTime() == 9999 && getTime() == 0) {
 			return 1;
-		} else if ((getTime() == 0 && getMotd().toLowerCase().contains("progresso"))
-				&& (o.getTime() == 0 && o.getMotd().toLowerCase().contains("progresso"))) {
+		} else if ((getTime() == 0 && isInProgress()) && (o.getTime() == 0 && isInProgress())) {
 			if (getOnlinePlayers() < o.getOnlinePlayers()) {
 				return 1;
 			} else if (getOnlinePlayers() > o.getOnlinePlayers()) {
@@ -52,8 +63,7 @@ public class GameServerInfo extends ServerInfo implements Comparable<GameServerI
 			} else {
 				return 0;
 			}
-		} else if ((o.getTime() == 0 && o.getMotd().toLowerCase().contains("progresso"))
-				&& (getTime() == 0 && getMotd().toLowerCase().contains("progresso"))) {
+		} else if ((o.getTime() == 0 && isInProgress()) && (getTime() == 0 && isInProgress())) {
 			if (o.getOnlinePlayers() < getOnlinePlayers()) {
 				return 1;
 			} else if (o.getOnlinePlayers() > getOnlinePlayers()) {
@@ -61,11 +71,9 @@ public class GameServerInfo extends ServerInfo implements Comparable<GameServerI
 			} else {
 				return 0;
 			}
-		} else if ((getTime() == 0 && getMotd().toLowerCase().contains("progresso"))
-				&& (o.getTime() == 0 && !o.getMotd().toLowerCase().contains("progresso"))) {
+		} else if ((getTime() == 0 && isInProgress()) && (o.getTime() == 0 && !isInProgress())) {
 			return -1;
-		} else if ((o.getTime() == 0 && !o.getMotd().toLowerCase().contains("progresso"))
-				&& (getTime() == 0 && getMotd().toLowerCase().contains("progresso"))) {
+		} else if ((o.getTime() == 0 && !isInProgress()) && (getTime() == 0 && isInProgress())) {
 			return 1;
 		} else if ((getTime() != 9999 && getTime() != 0) && (o.getTime() != 9999 && o.getTime() != 0)) {
 			if (getTime() < o.getTime()) {
@@ -86,6 +94,10 @@ public class GameServerInfo extends ServerInfo implements Comparable<GameServerI
 		} else {
 			return 0;
 		}
+	}
+
+	public boolean isInProgress() {
+		return state == HungerGamesState.GAMETIME || state == HungerGamesState.INVENCIBILITY;
 	}
 
 }

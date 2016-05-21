@@ -12,6 +12,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import br.com.battlebits.ycommon.bungee.servers.HungerGamesServer.HungerGamesState;
 import br.com.battlebits.ycommon.common.BattlebitsAPI;
 import br.com.battlebits.ycommon.common.permissions.enums.Group;
 import br.com.battlebits.ylobby.yLobbyPlugin;
@@ -43,8 +44,7 @@ public abstract class MatchSelector {
 		directConnectItem = yLobbyPlugin.getyLobby().getzUtils().getItemUtils().addGlow(directConnectItem);
 		directConnectItemMeta = directConnectItem.getItemMeta();
 		directConnectItemMeta.setDisplayName("§9§l> §b§lPartida rapida §9§l<");
-		directConnectItemLore.addAll(Arrays.asList("§7Clique aqui para §b§lconectar ", "§7a um servidor §b§ldisponivel§7!", "§0",
-				"§7No §3§ltotal §7temos §3§l0 §r§7jogadores", "§7conectados nos servidores."));
+		directConnectItemLore.addAll(Arrays.asList("§7Clique aqui para §b§lconectar ", "§7a um servidor §b§ldisponivel§7!", "§0", "§7No §3§ltotal §7temos §3§l0 §r§7jogadores", "§7conectados nos servidores."));
 		directConnectItemMeta.setLore(directConnectItemLore);
 		directConnectItem.setItemMeta(directConnectItemMeta);
 		backToServerMenuItem = new ItemStack(Material.ARROW, 1);
@@ -54,27 +54,20 @@ public abstract class MatchSelector {
 		backToServerMenuItem.setItemMeta(backmeta);
 		serverRestartingMessage = new ArrayList<>();
 		serverRestartingMessage.add("§0");
-		serverRestartingMessage.add(yLobbyPlugin.getyLobby().getzUtils().getMessageUtils()
-				.centerChatMessage("§7Este servidor está §8§lREINICIANDO §7aguarde para §b§lconectar§7!"));
+		serverRestartingMessage.add(yLobbyPlugin.getyLobby().getzUtils().getMessageUtils().centerChatMessage("§7Este servidor está §8§lREINICIANDO §7aguarde para §b§lconectar§7!"));
 		serverRestartingMessage.add("§0");
 		needToBeUltimateToSpectate = new ArrayList<>();
 		needToBeUltimateToSpectate.add("§0");
-		needToBeUltimateToSpectate.add(yLobbyPlugin.getyLobby().getzUtils().getMessageUtils()
-				.centerChatMessage("§7Você precisa ser §D§LULTIMATE§7 ou superior para §b§lespectar§7!"));
-		needToBeUltimateToSpectate
-				.add(yLobbyPlugin.getyLobby().getzUtils().getMessageUtils().centerChatMessage("§7Compre em nosso site §6§lwww.battlebits.com.br§7!"));
+		needToBeUltimateToSpectate.add(yLobbyPlugin.getyLobby().getzUtils().getMessageUtils().centerChatMessage("§7Você precisa ser §D§LULTIMATE§7 ou superior para §b§lespectar§7!"));
+		needToBeUltimateToSpectate.add(yLobbyPlugin.getyLobby().getzUtils().getMessageUtils().centerChatMessage("§7Compre em nosso site §6§lwww.battlebits.com.br§7!"));
 		needToBeUltimateToSpectate.add("§0");
 		needToBeLightToJoinFull = new ArrayList<>();
 		needToBeLightToJoinFull.add("§0");
-		needToBeLightToJoinFull
-				.add(yLobbyPlugin.getyLobby().getzUtils().getMessageUtils().centerChatMessage("§7Você precisa ser §a§lLIGHT§7 ou superior para"));
-		needToBeLightToJoinFull
-				.add(yLobbyPlugin.getyLobby().getzUtils().getMessageUtils().centerChatMessage("§6§lentrar§7 com o§6§l servidor cheio§7!"));
-		needToBeLightToJoinFull
-				.add(yLobbyPlugin.getyLobby().getzUtils().getMessageUtils().centerChatMessage("§7Compre em nosso site §6§lwww.battlebits.com.br§7!"));
+		needToBeLightToJoinFull.add(yLobbyPlugin.getyLobby().getzUtils().getMessageUtils().centerChatMessage("§7Você precisa ser §a§lLIGHT§7 ou superior para"));
+		needToBeLightToJoinFull.add(yLobbyPlugin.getyLobby().getzUtils().getMessageUtils().centerChatMessage("§6§lentrar§7 com o§6§l servidor cheio§7!"));
+		needToBeLightToJoinFull.add(yLobbyPlugin.getyLobby().getzUtils().getMessageUtils().centerChatMessage("§7Compre em nosso site §6§lwww.battlebits.com.br§7!"));
 		needToBeLightToJoinFull.add("§0");
-		serverSelectorInventory = Bukkit.createInventory(null, yLobbyPlugin.getyLobby().getzUtils().getInventoryUtils()
-				.getInventorySizeForItens(selectorServers.size() + 18 + ((selectorServers.size() / 7) * 2)), inventoryTitle);
+		serverSelectorInventory = Bukkit.createInventory(null, yLobbyPlugin.getyLobby().getzUtils().getInventoryUtils().getInventorySizeForItens(selectorServers.size() + 18 + ((selectorServers.size() / 7) * 2)), inventoryTitle);
 		serverSelectorInventory.setItem(4, directConnectItem);
 		serverSelectorInventory.setItem(serverSelectorInventory.getSize() - 5, backToServerMenuItem);
 	}
@@ -104,35 +97,23 @@ public abstract class MatchSelector {
 
 	public void tryToConnect(Player p, String ip) {
 		GameServerInfo info = yLobbyPlugin.getyLobby().getGameServerInfoManager().get(ip);
-		if (info.getTime() == 0) {
-			if (info.getMotd().contains("progresso")) {
-				if (BattlebitsAPI.getAccountCommon().getBattlePlayer(p.getUniqueId()).hasGroupPermission(Group.ULTIMATE)) {
-					p.sendMessage("§0");
-					p.sendMessage(yLobbyPlugin.getyLobby().getzUtils().getMessageUtils()
-							.centerChatMessage("§b§lConectando§7 ao servidor §9§l" + ip + "§7!"));
-					p.sendMessage("§0");
-					p.sendPluginMessage(yLobbyPlugin.getyLobby(), "BungeeCord", new BungeeMessage("Connect", ip).getDataOutput().toByteArray());
-				} else {
-					for (String msg : needToBeUltimateToSpectate) {
-						p.sendMessage(msg);
-					}
-				}
+		if (info.isInProgress()) {
+			if (BattlebitsAPI.getAccountCommon().getBattlePlayer(p.getUniqueId()).hasGroupPermission(Group.ULTIMATE)) {
+				p.sendMessage("§0");
+				p.sendMessage(yLobbyPlugin.getyLobby().getzUtils().getMessageUtils().centerChatMessage("§b§lConectando§7 ao servidor §9§l" + ip + "§7!"));
+				p.sendMessage("§0");
+				p.sendPluginMessage(yLobbyPlugin.getyLobby(), "BungeeCord", new BungeeMessage("Connect", ip).getDataOutput().toByteArray());
 			} else {
-				for (String msg : serverRestartingMessage) {
+				for (String msg : needToBeUltimateToSpectate) {
 					p.sendMessage(msg);
 				}
 			}
-		} else if (info.getTime() == 9999) {
-			p.sendMessage("§0");
-			p.sendMessage(yLobbyPlugin.getyLobby().getzUtils().getMessageUtils().centerChatMessage("§e§lConectando§7 ao servidor §9§l" + ip + "§7!"));
-			p.sendMessage("§0");
-			p.sendPluginMessage(yLobbyPlugin.getyLobby(), "BungeeCord", new BungeeMessage("Connect", ip).getDataOutput().toByteArray());
+
 		} else {
 			if (info.getOnlinePlayers() >= 100) {
 				if (BattlebitsAPI.getAccountCommon().getBattlePlayer(p.getUniqueId()).hasGroupPermission(Group.LIGHT)) {
 					p.sendMessage("§0");
-					p.sendMessage(yLobbyPlugin.getyLobby().getzUtils().getMessageUtils()
-							.centerChatMessage("§6§lConectando§7 ao servidor §9§l" + ip + "§7!"));
+					p.sendMessage(yLobbyPlugin.getyLobby().getzUtils().getMessageUtils().centerChatMessage("§6§lConectando§7 ao servidor §9§l" + ip + "§7!"));
 					p.sendMessage("§0");
 					p.sendPluginMessage(yLobbyPlugin.getyLobby(), "BungeeCord", new BungeeMessage("Connect", ip).getDataOutput().toByteArray());
 				} else {
@@ -142,12 +123,12 @@ public abstract class MatchSelector {
 				}
 			} else {
 				p.sendMessage("§0");
-				p.sendMessage(
-						yLobbyPlugin.getyLobby().getzUtils().getMessageUtils().centerChatMessage("§a§lConectando§7 ao servidor §9§l" + ip + "§7!"));
+				p.sendMessage(yLobbyPlugin.getyLobby().getzUtils().getMessageUtils().centerChatMessage("§a§lConectando§7 ao servidor §9§l" + ip + "§7!"));
 				p.sendMessage("§0");
 				p.sendPluginMessage(yLobbyPlugin.getyLobby(), "BungeeCord", new BungeeMessage("Connect", ip).getDataOutput().toByteArray());
 			}
 		}
+
 	}
 
 	public void update() {
@@ -172,7 +153,7 @@ public abstract class MatchSelector {
 			ItemStack stack = new ItemStack(Material.INK_SACK, 1);
 			ItemMeta meta = stack.getItemMeta();
 			ArrayList<String> lore = new ArrayList<>();
-			if (info.getTime() == 9999) {
+			if (info.getState() == HungerGamesState.WAITING) {
 				stack.setAmount(yLobbyPlugin.getyLobby().getzUtils().getItemUtils().getItemAmount(info.getOnlinePlayers()));
 				stack.setDurability((short) 11);
 				meta.setDisplayName("§9§l> §e§l" + info.getIp() + " §9§l<");
@@ -180,13 +161,12 @@ public abstract class MatchSelector {
 				lore.add("§7Precisa-se de mais §e§l" + (5 - info.getOnlinePlayers()) + "§7 jogadores!");
 				if (info.getOnlinePlayers() > 0) {
 					lore.add("§0");
-					lore.add("§3§l" + info.getOnlinePlayers() + " §7"
-							+ ((info.getOnlinePlayers() == 1) ? "jogador conectado" : "jogadores conectados"));
+					lore.add("§3§l" + info.getOnlinePlayers() + " §7" + ((info.getOnlinePlayers() == 1) ? "jogador conectado" : "jogadores conectados"));
 				}
 				lore.add("§0");
 				lore.add("§b§lClique§r§b para §r§b§lconectar§r§b.");
-			} else if (info.getTime() == 0) {
-				if (info.getMotd().contains("progresso")) {
+			} else if (info.isInProgress()) {
+				if (info.isInProgress()) {
 					if (info.getOnlinePlayers() > 1) {
 						stack.setAmount(yLobbyPlugin.getyLobby().getzUtils().getItemUtils().getItemAmount(info.getOnlinePlayers()));
 						stack.setDurability((short) 1);
@@ -194,8 +174,7 @@ public abstract class MatchSelector {
 						lore.add("§7A partida está em §c§lprogresso§7!");
 						lore.add("§7A partida iniciou com §c§l" + info.getMaxPlayers() + " §7jogadores.");
 						lore.add("§0");
-						lore.add("§3§l" + info.getOnlinePlayers() + " §7"
-								+ ((info.getOnlinePlayers() == 1) ? "jogador conectado" : "jogadores conectados"));
+						lore.add("§3§l" + info.getOnlinePlayers() + " §7" + ((info.getOnlinePlayers() == 1) ? "jogador conectado" : "jogadores conectados"));
 						lore.add("§0");
 						lore.add("§b§lClique§r§b para §r§b§lespectar§r§b.");
 					} else {
@@ -226,18 +205,15 @@ public abstract class MatchSelector {
 				if (info.getOnlinePlayers() >= maxPlayersServer) {
 					stack.setDurability((short) 14);
 					meta.setDisplayName("§9§l> §6§l" + info.getIp() + " §9§l<");
-					lore.add("§7A partida §6§linicia §r§7em §6§l" + yLobbyPlugin.getyLobby().getzUtils().getTimeUtils().formatTime(info.getTime())
-							+ "§r§7.");
+					lore.add("§7A partida §6§linicia §r§7em §6§l" + yLobbyPlugin.getyLobby().getzUtils().getTimeUtils().formatTime(info.getTime()) + "§r§7.");
 				} else {
 					stack.setDurability((short) 10);
 					meta.setDisplayName("§9§l> §a§l" + info.getIp() + " §9§l<");
-					lore.add("§7A partida §a§linicia §r§7em §a§l" + yLobbyPlugin.getyLobby().getzUtils().getTimeUtils().formatTime(info.getTime())
-							+ "§r§7.");
+					lore.add("§7A partida §a§linicia §r§7em §a§l" + yLobbyPlugin.getyLobby().getzUtils().getTimeUtils().formatTime(info.getTime()) + "§r§7.");
 				}
 				if (info.getOnlinePlayers() > 0) {
 					lore.add("§0");
-					lore.add("§3§l" + info.getOnlinePlayers() + " §7"
-							+ ((info.getOnlinePlayers() == 1) ? "jogador conectado" : "jogadores conectados"));
+					lore.add("§3§l" + info.getOnlinePlayers() + " §7" + ((info.getOnlinePlayers() == 1) ? "jogador conectado" : "jogadores conectados"));
 				}
 				lore.add("§0");
 				lore.add("§b§lClique§r§b para §r§b§lconectar§r§b.");

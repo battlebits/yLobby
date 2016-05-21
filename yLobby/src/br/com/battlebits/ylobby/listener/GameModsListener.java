@@ -23,20 +23,14 @@ public class GameModsListener implements Listener {
 					String name = (String) e.getRightClicked().getMetadata("GM_NAME").get(0).value();
 					if (type.equalsIgnoreCase("SIMPLE")) {
 						e.getPlayer().sendMessage("§0");
-						e.getPlayer().sendMessage(yLobbyPlugin.getyLobby().getzUtils().getMessageUtils()
-								.centerChatMessage("§9§lConectando §7ao servidor §9§l" + name + "§7!"));
+						e.getPlayer().sendMessage(yLobbyPlugin.getyLobby().getzUtils().getMessageUtils().centerChatMessage("§9§lConectando §7ao servidor §9§l" + name + "§7!"));
 						e.getPlayer().sendMessage("§0");
-						e.getPlayer().sendPluginMessage(yLobbyPlugin.getyLobby(), "BungeeCord",
-								new BungeeMessage(((String) e.getRightClicked().getMetadata("GM_CONNECT").get(0).value()).split("#")).getDataOutput()
-										.toByteArray());
+						e.getPlayer().sendPluginMessage(yLobbyPlugin.getyLobby(), "BungeeCord", new BungeeMessage(((String) e.getRightClicked().getMetadata("GM_CONNECT").get(0).value()).split("#")).getDataOutput().toByteArray());
 					} else if (type.equalsIgnoreCase("MATCH")) {
 						e.getPlayer().sendMessage("§0");
-						e.getPlayer().sendMessage(yLobbyPlugin.getyLobby().getzUtils().getMessageUtils()
-								.centerChatMessage("§9§lConectando §7ao §9§l" + name + "§7!"));
+						e.getPlayer().sendMessage(yLobbyPlugin.getyLobby().getzUtils().getMessageUtils().centerChatMessage("§9§lConectando §7ao §9§l" + name + "§7!"));
 						e.getPlayer().sendMessage("§0");
-						e.getPlayer().sendPluginMessage(yLobbyPlugin.getyLobby(), "BungeeCord",
-								new BungeeMessage(((String) e.getRightClicked().getMetadata("GM_CONNECT").get(0).value()).split("#")).getDataOutput()
-										.toByteArray());
+						e.getPlayer().sendPluginMessage(yLobbyPlugin.getyLobby(), "BungeeCord", new BungeeMessage(((String) e.getRightClicked().getMetadata("GM_CONNECT").get(0).value()).split("#")).getDataOutput().toByteArray());
 					}
 				}
 			}.runTaskAsynchronously(yLobbyPlugin.getyLobby());
@@ -55,20 +49,14 @@ public class GameModsListener implements Listener {
 						String name = (String) e.getEntity().getMetadata("GM_NAME").get(0).value();
 						if (type.equalsIgnoreCase("SIMPLE")) {
 							p.sendMessage("§0");
-							p.sendMessage(yLobbyPlugin.getyLobby().getzUtils().getMessageUtils()
-									.centerChatMessage("§9§lConectando §7ao servidor §9§l" + name + "§7!"));
+							p.sendMessage(yLobbyPlugin.getyLobby().getzUtils().getMessageUtils().centerChatMessage("§9§lConectando §7ao servidor §9§l" + name + "§7!"));
 							p.sendMessage("§0");
-							p.sendPluginMessage(yLobbyPlugin.getyLobby(), "BungeeCord",
-									new BungeeMessage(((String) e.getEntity().getMetadata("GM_CONNECT").get(0).value()).split("#")).getDataOutput()
-											.toByteArray());
+							p.sendPluginMessage(yLobbyPlugin.getyLobby(), "BungeeCord", new BungeeMessage(((String) e.getEntity().getMetadata("GM_CONNECT").get(0).value()).split("#")).getDataOutput().toByteArray());
 						} else if (type.equalsIgnoreCase("MATCH")) {
 							p.sendMessage("§0");
-							p.sendMessage(yLobbyPlugin.getyLobby().getzUtils().getMessageUtils()
-									.centerChatMessage("§9§lConectando §7ao §9§l" + name + "§7!"));
+							p.sendMessage(yLobbyPlugin.getyLobby().getzUtils().getMessageUtils().centerChatMessage("§9§lConectando §7ao §9§l" + name + "§7!"));
 							p.sendMessage("§0");
-							p.sendPluginMessage(yLobbyPlugin.getyLobby(), "BungeeCord",
-									new BungeeMessage(((String) e.getEntity().getMetadata("GM_CONNECT").get(0).value()).split("#")).getDataOutput()
-											.toByteArray());
+							p.sendPluginMessage(yLobbyPlugin.getyLobby(), "BungeeCord", new BungeeMessage(((String) e.getEntity().getMetadata("GM_CONNECT").get(0).value()).split("#")).getDataOutput().toByteArray());
 						}
 					}
 				}.runTaskAsynchronously(yLobbyPlugin.getyLobby());

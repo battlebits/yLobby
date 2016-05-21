@@ -9,6 +9,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import com.google.common.io.ByteArrayDataInput;
 import com.google.common.io.ByteStreams;
 
+import br.com.battlebits.ycommon.bungee.servers.HungerGamesServer.HungerGamesState;
 import br.com.battlebits.ylobby.yLobbyPlugin;
 
 public class BungeeMessageReceiver implements PluginMessageListener {
@@ -31,23 +32,26 @@ public class BungeeMessageReceiver implements PluginMessageListener {
 						yLobbyPlugin.getyLobby().getPlayerCountManager().setHgOnlinePlayers(input.readInt());
 					} else if (subchannel.equals("FPCount")) {
 						yLobbyPlugin.getyLobby().getPlayerCountManager().setFpOnlinePlayers(input.readInt());
-					} else if (subchannel.equals("SWCount")) {
-						yLobbyPlugin.getyLobby().getPlayerCountManager().setSwOnlinePlayers(input.readInt());
 					} else if (subchannel.equals("GetServers")) {
 						yLobbyPlugin.getyLobby().getBungeeManager().setServers(input.readUTF());
-					} else if (subchannel.equals("GetServer")) {
-						yLobbyPlugin.getyLobby().getBungeeManager().setServerName(input.readUTF());
+					} else if (subchannel.equals("AddServer")) {
+						yLobbyPlugin.getyLobby().getBungeeManager().addServer(input.readUTF());
+					} else if (subchannel.equals("RemoveServer")) {
+						yLobbyPlugin.getyLobby().getBungeeManager().removeServer(input.readUTF());
 					} else if (subchannel.equals("ServerInfo")) {
 						String server = input.readUTF();
+						int online = input.readInt();
+						int max = input.readInt();
+						int time = input.readInt();
+						HungerGamesState state = HungerGamesState.valueOf(input.readUTF());
 						if (yLobbyPlugin.getyLobby().getGameServerInfoManager().isRegistred(server)) {
-							yLobbyPlugin.getyLobby().getGameServerInfoManager().get(server).setMotd(input.readUTF());
-							yLobbyPlugin.getyLobby().getGameServerInfoManager().get(server).setOnlinePlayers(input.readInt());
-							yLobbyPlugin.getyLobby().getGameServerInfoManager().get(server).setMaxPlayers(input.readInt());
-							yLobbyPlugin.getyLobby().getGameServerInfoManager().get(server).setTime(input.readInt());
+							yLobbyPlugin.getyLobby().getGameServerInfoManager().get(server).setOnlinePlayers(online);
+							yLobbyPlugin.getyLobby().getGameServerInfoManager().get(server).setMaxPlayers(max);
+							yLobbyPlugin.getyLobby().getGameServerInfoManager().get(server).setTime(time);
+							yLobbyPlugin.getyLobby().getGameServerInfoManager().get(server).setState(state);
 						} else if (yLobbyPlugin.getyLobby().getServerInfoManager().isRegistred(server)) {
-							yLobbyPlugin.getyLobby().getServerInfoManager().get(server).setMotd(input.readUTF());
-							yLobbyPlugin.getyLobby().getServerInfoManager().get(server).setOnlinePlayers(input.readInt());
-							yLobbyPlugin.getyLobby().getServerInfoManager().get(server).setMaxPlayers(input.readInt());
+							yLobbyPlugin.getyLobby().getServerInfoManager().get(server).setOnlinePlayers(online);
+							yLobbyPlugin.getyLobby().getServerInfoManager().get(server).setMaxPlayers(max);
 						}
 					}
 					input = null;
@@ -71,8 +75,7 @@ public class BungeeMessageReceiver implements PluginMessageListener {
 		if (channel.equals("BungeeCord")) {
 			messages.add(message);
 		} else {
-			yLobbyPlugin.getyLobby().getLogger()
-					.warning("AVISO: O jogador " + p.getName() + " enviou uma PluginMessage sem ser pelo canal BungeeCord!");
+			yLobbyPlugin.getyLobby().getLogger().warning("AVISO: O jogador " + p.getName() + " enviou uma PluginMessage sem ser pelo canal BungeeCord!");
 		}
 
 	}

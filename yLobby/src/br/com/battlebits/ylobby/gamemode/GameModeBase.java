@@ -24,8 +24,7 @@ public abstract class GameModeBase {
 	private CharacterNPC characterNPC;
 	private Hologram onlinePlayersHologram;
 
-	public GameModeBase(String servername, String serverdescription, Material iconmaterial, List<String> connectLines, Location npclocation,
-			CharacterType npcType) {
+	public GameModeBase(String servername, String serverdescription, Material iconmaterial, List<String> connectLines, Location npclocation, CharacterType npcType) {
 		name = servername;
 		inventoryitem = new ItemStack(iconmaterial, 1);
 		inventoryItemMeta = inventoryitem.getItemMeta();
@@ -44,17 +43,11 @@ public abstract class GameModeBase {
 		if (!npclocation.getChunk().isLoaded()) {
 			npclocation.getChunk().load();
 		}
-		characterNPC = new CharacterNPC(npcType,
-				yLobbyPlugin.getyLobby().getzUtils().getLocationUtils().lookAt(
-						yLobbyPlugin.getyLobby().getzUtils().getLocationUtils().getCenter(npclocation.clone(), false),
-						yLobbyPlugin.getyLobby().getLocationManager().getSpawnLocation()),
-				inventoryitem);
+		characterNPC = new CharacterNPC(npcType, yLobbyPlugin.getyLobby().getzUtils().getLocationUtils().lookAt(yLobbyPlugin.getyLobby().getzUtils().getLocationUtils().getCenter(npclocation.clone(), false), yLobbyPlugin.getyLobby().getLocationManager().getSpawnLocation()), inventoryitem);
 		if (!npclocation.getChunk().isLoaded()) {
 			npclocation.getChunk().load();
 		}
-		onlinePlayersHologram = HologramAPI.createWorldHologram(
-				yLobbyPlugin.getyLobby().getzUtils().getLocationUtils().getCenter(npclocation.clone().add(0, 2, 0), true),
-				/*"§b§l0 §bjogadores agora!"*/ "§b§lClique para conectar!");
+		onlinePlayersHologram = HologramAPI.createWorldHologram(yLobbyPlugin.getyLobby().getzUtils().getLocationUtils().getCenter(npclocation.clone().add(0, 2, 0), true), /* "§b§l0 §bjogadores agora!" */ "§b§lClique para conectar!");
 		onlinePlayersHologram.spawn();
 		if (!npclocation.getChunk().isLoaded()) {
 			npclocation.getChunk().load();
@@ -87,6 +80,8 @@ public abstract class GameModeBase {
 			return GameModeType.SIMPLE;
 		} else if (this instanceof GameModeMatch) {
 			return GameModeType.MATCH;
+		} else if (this instanceof GameModeMulti) {
+			return GameModeType.MULTI;
 		} else {
 			return GameModeType.UNKNOW;
 		}

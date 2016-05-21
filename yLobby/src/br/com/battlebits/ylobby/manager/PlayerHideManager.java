@@ -43,7 +43,7 @@ public class PlayerHideManager {
 		hideOnlyNormal.add(p.getUniqueId());
 		for (Player hide : Bukkit.getOnlinePlayers()) {
 			if (hide.getUniqueId() != p.getUniqueId()) {
-				if (BattlebitsAPI.getAccountCommon().getBattlePlayer(p.getUniqueId()).getServerGroup() == Group.NORMAL) {
+				if (BattlebitsAPI.getAccountCommon().getBattlePlayer(hide.getUniqueId()).getServerGroup() == Group.NORMAL) {
 					p.hidePlayer(hide);
 				}
 			}

@@ -12,6 +12,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import br.com.battlebits.ycommon.bukkit.BukkitMain;
 import br.com.battlebits.ycommon.common.BattlebitsAPI;
 import br.com.battlebits.ycommon.common.permissions.enums.Group;
 import br.com.battlebits.ylobby.yLobbyPlugin;
@@ -32,17 +33,13 @@ public class LobbySelector {
 		lobbyIds = new HashMap<>();
 		serverRestartingMessage = new ArrayList<>();
 		serverRestartingMessage.add("§0");
-		serverRestartingMessage.add(yLobbyPlugin.getyLobby().getzUtils().getMessageUtils()
-				.centerChatMessage("§7Este servidor está §8§lREINICIANDO§7! Aguarde para §b§lconectar§7!"));
+		serverRestartingMessage.add(yLobbyPlugin.getyLobby().getzUtils().getMessageUtils().centerChatMessage("§7Este servidor está §8§lREINICIANDO§7! Aguarde para §b§lconectar§7!"));
 		serverRestartingMessage.add("§0");
 		needToBeLightToJoinFull = new ArrayList<>();
 		needToBeLightToJoinFull.add("§0");
-		needToBeLightToJoinFull
-				.add(yLobbyPlugin.getyLobby().getzUtils().getMessageUtils().centerChatMessage("§7Você precisa ser §a§lLIGHT§7 ou superior para"));
-		needToBeLightToJoinFull
-				.add(yLobbyPlugin.getyLobby().getzUtils().getMessageUtils().centerChatMessage("§6§lconectar§7 com o§6§l servidor cheio§7!"));
-		needToBeLightToJoinFull
-				.add(yLobbyPlugin.getyLobby().getzUtils().getMessageUtils().centerChatMessage("§7Compre em nosso site §6§lwww.battlebits.com.br§7!"));
+		needToBeLightToJoinFull.add(yLobbyPlugin.getyLobby().getzUtils().getMessageUtils().centerChatMessage("§7Você precisa ser §a§lLIGHT§7 ou superior para"));
+		needToBeLightToJoinFull.add(yLobbyPlugin.getyLobby().getzUtils().getMessageUtils().centerChatMessage("§6§lconectar§7 com o§6§l servidor cheio§7!"));
+		needToBeLightToJoinFull.add(yLobbyPlugin.getyLobby().getzUtils().getMessageUtils().centerChatMessage("§7Compre em nosso site §6§lwww.battlebits.com.br§7!"));
 		needToBeLightToJoinFull.add("§0");
 		connectingMessage = new ArrayList<>();
 		connectingMessage.add("§0");
@@ -50,17 +47,12 @@ public class LobbySelector {
 		connectingMessage.add("§0");
 		connectedMessage = new ArrayList<>();
 		connectedMessage.add("§0");
-		connectedMessage
-				.add(yLobbyPlugin.getyLobby().getzUtils().getMessageUtils().centerChatMessage("§7Você já está §a§lconectado§7 a esse §a§lLobby§7!"));
+		connectedMessage.add(yLobbyPlugin.getyLobby().getzUtils().getMessageUtils().centerChatMessage("§7Você já está §a§lconectado§7 a esse §a§lLobby§7!"));
 		connectedMessage.add("§0");
 	}
 
 	public void start() {
-		selectorInventory = Bukkit.createInventory(null,
-				yLobbyPlugin.getyLobby()
-						.getzUtils().getInventoryUtils().getInventorySizeForItens(yLobbyPlugin.getyLobby().getBungeeManager().getLobbyservers().size()
-								+ 18 + ((yLobbyPlugin.getyLobby().getBungeeManager().getLobbyservers().size() / 7) * 2)),
-				"          §nEscolha o Lobby");
+		selectorInventory = Bukkit.createInventory(null, yLobbyPlugin.getyLobby().getzUtils().getInventoryUtils().getInventorySizeForItens(yLobbyPlugin.getyLobby().getBungeeManager().getLobbyservers().size() + 18 + ((yLobbyPlugin.getyLobby().getBungeeManager().getLobbyservers().size() / 7) * 2)), "          §nEscolha o Lobby");
 		int i = 10;
 		int id = 0;
 		for (String ip : yLobbyPlugin.getyLobby().getBungeeManager().getLobbyservers()) {
@@ -70,7 +62,7 @@ public class LobbySelector {
 			lobbyIds.put(i, ip);
 			i += 1;
 			id += 1;
-			if (ip.equals(yLobbyPlugin.getyLobby().getBungeeManager().getServerName())) {
+			if (ip.equals(BukkitMain.getServerHostName())) {
 				yLobbyPlugin.getyLobby().getBungeeManager().setLobbyID("#" + id);
 			}
 		}
@@ -96,7 +88,7 @@ public class LobbySelector {
 	public void tryToConnect(Player p, int i) {
 		if (lobbyIds.containsKey(i)) {
 			ServerInfo info = yLobbyPlugin.getyLobby().getServerInfoManager().get(lobbyIds.get(i));
-			if (info.getIp().equalsIgnoreCase(yLobbyPlugin.getyLobby().getBungeeManager().getServerName())) {
+			if (info.getIp().equalsIgnoreCase(BukkitMain.getServerHostName())) {
 				for (String msg : connectedMessage) {
 					p.sendMessage(msg);
 				}
@@ -106,8 +98,7 @@ public class LobbySelector {
 						for (String msg : connectingMessage) {
 							p.sendMessage(msg);
 						}
-						p.sendPluginMessage(yLobbyPlugin.getyLobby(), "BungeeCord",
-								new BungeeMessage("Connect", info.getIp()).getDataOutput().toByteArray());
+						p.sendPluginMessage(yLobbyPlugin.getyLobby(), "BungeeCord", new BungeeMessage("Connect", info.getIp()).getDataOutput().toByteArray());
 					} else {
 						for (String msg : needToBeLightToJoinFull) {
 							p.sendMessage(msg);
@@ -117,8 +108,7 @@ public class LobbySelector {
 					for (String msg : connectingMessage) {
 						p.sendMessage(msg);
 					}
-					p.sendPluginMessage(yLobbyPlugin.getyLobby(), "BungeeCord",
-							new BungeeMessage("Connect", info.getIp()).getDataOutput().toByteArray());
+					p.sendPluginMessage(yLobbyPlugin.getyLobby(), "BungeeCord", new BungeeMessage("Connect", info.getIp()).getDataOutput().toByteArray());
 				}
 			}
 		}
@@ -134,10 +124,9 @@ public class LobbySelector {
 					ItemStack stack = new ItemStack(Material.INK_SACK, 1);
 					ItemMeta meta = stack.getItemMeta();
 					ArrayList<String> lore = new ArrayList<>();
-					lore.add("§3§l" + info.getOnlinePlayers() + " §7"
-							+ ((info.getOnlinePlayers() == 1) ? "jogador conectado" : "jogadores conectados"));
+					lore.add("§3§l" + info.getOnlinePlayers() + " §7" + ((info.getOnlinePlayers() == 1) ? "jogador conectado" : "jogadores conectados"));
 					lore.add("§0");
-					if (info.getIp().equalsIgnoreCase(yLobbyPlugin.getyLobby().getBungeeManager().getServerName())) {
+					if (info.getIp().equalsIgnoreCase(BukkitMain.getServerHostName())) {
 						stack.setAmount(id);
 						stack.setDurability((short) 10);
 						meta.setDisplayName("§9§l> §a§lLobby " + id + " §9§l<");

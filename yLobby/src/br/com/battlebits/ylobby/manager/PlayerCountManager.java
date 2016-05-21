@@ -11,14 +11,32 @@ public class PlayerCountManager {
 	private int networkOnlinePlayers;
 	private int hgOnlinePlayers;
 	private int fpOnlinePlayers;
-	private int swOnlinePlayers;
+	private int fullIronOnlinePlayers;
+	private int simulatorOnlinePlayers;
 
 	public PlayerCountManager() {
 		networkOnlinePlayers = 0;
 		hgOnlinePlayers = 0;
 		fpOnlinePlayers = 0;
-		swOnlinePlayers = 0;
+		fullIronOnlinePlayers = 0;
+		simulatorOnlinePlayers = 0;
 		startPlayerCountUpdater();
+	}
+
+	public int getFullIronOnlinePlayers() {
+		return fullIronOnlinePlayers;
+	}
+
+	public void setFullIronOnlinePlayers(int fullIronOnlinePlayers) {
+		this.fullIronOnlinePlayers = fullIronOnlinePlayers;
+	}
+
+	public int getSimulatorOnlinePlayers() {
+		return simulatorOnlinePlayers;
+	}
+
+	public void setSimulatorOnlinePlayers(int simulatorOnlinePlayers) {
+		this.simulatorOnlinePlayers = simulatorOnlinePlayers;
 	}
 
 	public int getNetworkOnlinePlayers() {
@@ -45,14 +63,6 @@ public class PlayerCountManager {
 		fpOnlinePlayers = i;
 	}
 
-	public int getSwOnlinePlayers() {
-		return swOnlinePlayers;
-	}
-
-	public void setSwOnlinePlayers(int i) {
-		swOnlinePlayers = i;
-	}
-
 	public void startPlayerCountUpdater() {
 		new BukkitRunnable() {
 			@Override
@@ -61,7 +71,8 @@ public class PlayerCountManager {
 					yLobbyPlugin.getyLobby().getBungeeMessageSender().tryToSendMessage(new BungeeMessage("NetworkCount"));
 					yLobbyPlugin.getyLobby().getBungeeMessageSender().tryToSendMessage(new BungeeMessage("HGCount"));
 					yLobbyPlugin.getyLobby().getBungeeMessageSender().tryToSendMessage(new BungeeMessage("FPCount"));
-					yLobbyPlugin.getyLobby().getBungeeMessageSender().tryToSendMessage(new BungeeMessage("SWCount"));
+					yLobbyPlugin.getyLobby().getBungeeMessageSender().tryToSendMessage(new BungeeMessage("SimulatorCount"));
+					yLobbyPlugin.getyLobby().getBungeeMessageSender().tryToSendMessage(new BungeeMessage("FullironCount"));
 				}
 			}
 		}.runTaskTimerAsynchronously(yLobbyPlugin.getyLobby(), 1L, 20L);

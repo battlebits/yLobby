@@ -13,27 +13,17 @@ import br.com.battlebits.ylobby.bungee.BungeeMessage;
 public class BungeeManager {
 
 	private ArrayList<String> servers;
-	private ArrayList<String> hgservers;
-	private ArrayList<String> fpservers;
-	private ArrayList<String> swservers;
-	private ArrayList<String> lobbyservers;
-	private String serverName;
 	private String lobbyID;
 
 	private BukkitRunnable getServersRunnable;
 
 	public BungeeManager() {
 		servers = new ArrayList<>();
-		hgservers = new ArrayList<>();
-		fpservers = new ArrayList<>();
-		swservers = new ArrayList<>();
-		lobbyservers = new ArrayList<>();
 		lobbyID = "#?";
 		getServersRunnable = new BukkitRunnable() {
 			@Override
 			public void run() {
 				if (Bukkit.getOnlinePlayers().size() > 0) {
-					yLobbyPlugin.getyLobby().getBungeeMessageSender().tryToSendMessage(new BungeeMessage("GetServer"));
 					yLobbyPlugin.getyLobby().getBungeeMessageSender().tryToSendMessage(new BungeeMessage("GetServers"));
 				}
 			}
@@ -43,43 +33,68 @@ public class BungeeManager {
 
 	public void setServers(String str) {
 		servers.clear();
-		hgservers.clear();
-		fpservers.clear();
-		lobbyservers.clear();
 		for (String s : str.split(", ")) {
 			servers.add(s);
-			if (s.contains("battle-hg.com")) {
-				if (s.contains("fp")) {
-					fpservers.add(s);
-				} else {
-					hgservers.add(s);
-				}
-			} else if (s.contains("lobby")) {
-				lobbyservers.add(s);
-			}
 		}
 		yLobbyPlugin.getyLobby().getLogger().info("[BungeeManager] No total " + servers.size() + " servidores foram carregados!");
-		yLobbyPlugin.getyLobby().getLogger().info("[BungeeManager] " + hgservers.size() + " servidores de HG foram carregados!");
-		yLobbyPlugin.getyLobby().getLogger().info("[BungeeManager] " + fpservers.size() + " servidores de FPHG foram carregados!");
-		yLobbyPlugin.getyLobby().getLogger().info("[BungeeManager] " + lobbyservers.size() + " servidores Lobby foram carregados!");
-		Collections.sort(fpservers);
-		Collections.sort(hgservers);
-		Collections.sort(lobbyservers);
-		for (String ip : hgservers) {
+		yLobbyPlugin.getyLobby().getLogger().info("[BungeeManager] " + getHGServers().size() + " servidores de HG foram carregados!");
+		yLobbyPlugin.getyLobby().getLogger().info("[BungeeManager] " + getFairPlayServers().size() + " servidores de FPHG foram carregados!");
+		yLobbyPlugin.getyLobby().getLogger().info("[BungeeManager] " + getLobbyservers().size() + " servidores Lobby foram carregados!");
+
+		for (String ip : getHGServers()) {
 			yLobbyPlugin.getyLobby().getGameServerInfoManager().addServer(ip);
 		}
-		for (String ip : fpservers) {
+		for (String ip : getFairPlayServers()) {
 			yLobbyPlugin.getyLobby().getGameServerInfoManager().addServer(ip);
 		}
-		for (String ip : lobbyservers) {
+		for (String ip : getLobbyservers()) {
 			yLobbyPlugin.getyLobby().getServerInfoManager().addServer(ip);
 		}
+		for (String ip : getFullIronServers()) {
+			yLobbyPlugin.getyLobby().getServerInfoManager().addServer(ip);
+		}
+		for (String ip : getSimulatorServers()) {
+			yLobbyPlugin.getyLobby().getServerInfoManager().addServer(ip);
+		}
+
 		yLobbyPlugin.getyLobby().getLobbySelector().start();
 		yLobbyPlugin.getyLobby().getGameModeSelector().start();
+		yLobbyPlugin.getyLobby().getMultiSelectorManager().loadSelectors();
 		yLobbyPlugin.getyLobby().getMatchSelectorManager().loadSelectors();
 		if (getServersRunnable != null) {
 			getServersRunnable.cancel();
 		}
+	}
+
+	public void addServer(String s) {
+		servers.add(s);
+
+		if (s.contains("battle-hg.com")) {
+			yLobbyPlugin.getyLobby().getGameServerInfoManager().addServer(s);
+		} else {
+			yLobbyPlugin.getyLobby().getServerInfoManager().addServer(s);
+		}
+		reloadServers();
+	}
+
+	public void removeServer(String str) {
+		servers.remove(str);
+		yLobbyPlugin.getyLobby().getServerInfoManager().removeServer(str);
+		yLobbyPlugin.getyLobby().getGameServerInfoManager().removeServer(str);
+		reloadServers();
+	}
+
+	public void reloadServers() {
+
+		yLobbyPlugin.getyLobby().getLobbySelector().stop();
+		yLobbyPlugin.getyLobby().getGameModeSelector().stop();
+		yLobbyPlugin.getyLobby().getMultiSelectorManager().stop();
+		yLobbyPlugin.getyLobby().getMatchSelectorManager().stop();
+
+		yLobbyPlugin.getyLobby().getLobbySelector().start();
+		yLobbyPlugin.getyLobby().getGameModeSelector().start();
+		yLobbyPlugin.getyLobby().getMultiSelectorManager().loadSelectors();
+		yLobbyPlugin.getyLobby().getMatchSelectorManager().loadSelectors();
 	}
 
 	public ArrayList<String> getServers() {
@@ -87,33 +102,79 @@ public class BungeeManager {
 	}
 
 	public ArrayList<String> getHGServers() {
-		return hgservers;
+		ArrayList<String> serverList = new ArrayList<>();
+		for (String server : servers) {
+			if (server.contains("battle-hg.com")) {
+				if (!server.contains("fp")) {
+					serverList.add(server);
+				}
+			}
+		}
+		Collections.sort(serverList);
+		return serverList;
+	}
+
+	public ArrayList<String> getFullIronServers() {
+		ArrayList<String> serverList = new ArrayList<>();
+		for (String server : servers) {
+			if (server.contains("fulliron.pvp")) {
+				serverList.add(server);
+			}
+		}
+		Collections.sort(serverList);
+		return serverList;
+	}
+
+	public ArrayList<String> getSimulatorServers() {
+		ArrayList<String> serverList = new ArrayList<>();
+		for (String server : servers) {
+			if (server.contains("simulator.pvp")) {
+				serverList.add(server);
+			}
+		}
+		Collections.sort(serverList);
+		return serverList;
 	}
 
 	public ArrayList<String> getFairPlayServers() {
-		return fpservers;
+		ArrayList<String> serverList = new ArrayList<>();
+		for (String server : servers) {
+			if (server.contains("battle-hg.com")) {
+				if (server.contains("fp")) {
+					serverList.add(server);
+				}
+			}
+		}
+		Collections.sort(serverList);
+		return serverList;
 	}
 
 	public ArrayList<String> getLobbyservers() {
-		return lobbyservers;
+		ArrayList<String> serverList = new ArrayList<>();
+		for (String server : servers) {
+			if (server.contains("lobby")) {
+				serverList.add(server);
+			}
+		}
+		Collections.sort(serverList);
+		return serverList;
 	}
 
 	public ArrayList<String> getSwservers() {
-		return swservers;
-	}
-
-	public String getServerName() {
-		return serverName;
-	}
-
-	public void setServerName(String str) {
-		serverName = str;
+		ArrayList<String> serverList = new ArrayList<>();
+		for (String server : servers) {
+			if (server.contains("sw")) {
+				serverList.add(server);
+			}
+		}
+		Collections.sort(serverList);
+		return serverList;
 	}
 
 	public void setLobbyID(String lobbyID) {
 		this.lobbyID = lobbyID;
-		for(Player p : Bukkit.getOnlinePlayers()){
-			p.getScoreboard().getTeam("lobbyidteam").setSuffix("§e" + yLobbyPlugin.getyLobby().getBungeeManager().getLobbyID());
+		for (Player p : Bukkit.getOnlinePlayers()) {
+			p.getScoreboard().getTeam("lobbyidteam").setSuffix("§e" + getLobbyID());
 		}
 	}
 

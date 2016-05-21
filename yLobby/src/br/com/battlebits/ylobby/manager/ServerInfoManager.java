@@ -30,6 +30,10 @@ public class ServerInfoManager {
 		ipInfo.put(ip, new GameServerInfo(ip));
 	}
 
+	public void removeServer(String ip) {
+		ipInfo.remove(ip);
+	}
+
 	public ServerInfo get(String ip) {
 		return ipInfo.get(ip);
 	}

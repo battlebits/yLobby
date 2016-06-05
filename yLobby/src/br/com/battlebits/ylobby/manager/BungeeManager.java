@@ -67,6 +67,9 @@ public class BungeeManager {
 	}
 
 	public void addServer(String s) {
+		if (servers.contains(s))
+			return;
+
 		servers.add(s);
 
 		if (s.contains("battle-hg.com")) {

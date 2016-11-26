@@ -10,6 +10,7 @@ public class PlayerCountManager {
 
 	private int networkOnlinePlayers;
 	private int hgOnlinePlayers;
+	private int doubleKitOnlinePlayers;
 	private int fpOnlinePlayers;
 	private int fullIronOnlinePlayers;
 	private int simulatorOnlinePlayers;
@@ -20,6 +21,7 @@ public class PlayerCountManager {
 		fpOnlinePlayers = 0;
 		fullIronOnlinePlayers = 0;
 		simulatorOnlinePlayers = 0;
+		doubleKitOnlinePlayers = 0;
 		startPlayerCountUpdater();
 	}
 
@@ -63,6 +65,14 @@ public class PlayerCountManager {
 		fpOnlinePlayers = i;
 	}
 
+	public int getDoubleKitOnlinePlayers() {
+		return doubleKitOnlinePlayers;
+	}
+
+	public void setDoubleKitOnlinePlayers(int doubleKitOnlinePlayers) {
+		this.doubleKitOnlinePlayers = doubleKitOnlinePlayers;
+	}
+
 	public void startPlayerCountUpdater() {
 		new BukkitRunnable() {
 			@Override
@@ -73,6 +83,7 @@ public class PlayerCountManager {
 					yLobbyPlugin.getyLobby().getBungeeMessageSender().tryToSendMessage(new BungeeMessage("FPCount"));
 					yLobbyPlugin.getyLobby().getBungeeMessageSender().tryToSendMessage(new BungeeMessage("SimulatorCount"));
 					yLobbyPlugin.getyLobby().getBungeeMessageSender().tryToSendMessage(new BungeeMessage("FullironCount"));
+					yLobbyPlugin.getyLobby().getBungeeMessageSender().tryToSendMessage(new BungeeMessage("DoubleKitHGCount"));
 				}
 			}
 		}.runTaskTimerAsynchronously(yLobbyPlugin.getyLobby(), 1L, 20L);

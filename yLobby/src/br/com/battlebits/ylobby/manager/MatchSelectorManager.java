@@ -12,6 +12,7 @@ public class MatchSelectorManager {
 
 	private HashMap<String, MatchSelector> matchSelectorNames;
 	private MatchSelector hardcoreGamesSelector;
+	private MatchSelector doubleKitHGSelector;
 	private MatchSelector fairPlaySelector;
 	private BukkitRunnable updaterRunnable;
 
@@ -20,16 +21,21 @@ public class MatchSelectorManager {
 	}
 
 	public void loadSelectors() {
-		hardcoreGamesSelector = new MatchSelector(yLobbyPlugin.getyLobby().getBungeeManager().getHGServers(), 100, "     §nServidores do Battle-HG",
-				new BungeeMessage("HungerGames")) {
+		hardcoreGamesSelector = new MatchSelector(yLobbyPlugin.getyLobby().getBungeeManager().getHGServers(), 100, "     §nServidores do Battle-HG", new BungeeMessage("HungerGames")) {
 			@Override
 			public int getMatchsOnlinePlayers() {
 				return yLobbyPlugin.getyLobby().getPlayerCountManager().getHgOnlinePlayers();
 			}
 		};
 		addMacthSelector(hardcoreGamesSelector);
-		fairPlaySelector = new MatchSelector(yLobbyPlugin.getyLobby().getBungeeManager().getFairPlayServers(), 100, "    §nServidores do FairPlayHG",
-				new BungeeMessage("Fairplayhg")) {
+		doubleKitHGSelector = new MatchSelector(yLobbyPlugin.getyLobby().getBungeeManager().getDoubleKitServers(), 100, "    §nServidores do DoubleKit-HG", new BungeeMessage("DoubleKitHungergames")) {
+			@Override
+			public int getMatchsOnlinePlayers() {
+				return yLobbyPlugin.getyLobby().getPlayerCountManager().getDoubleKitOnlinePlayers();
+			}
+		};
+		addMacthSelector(doubleKitHGSelector);
+		fairPlaySelector = new MatchSelector(yLobbyPlugin.getyLobby().getBungeeManager().getFairPlayServers(), 100, "    §nServidores do FairPlayHG", new BungeeMessage("Fairplayhg")) {
 			@Override
 			public int getMatchsOnlinePlayers() {
 				return yLobbyPlugin.getyLobby().getPlayerCountManager().getFpOnlinePlayers();
@@ -57,6 +63,10 @@ public class MatchSelectorManager {
 
 	public void addMacthSelector(MatchSelector selector) {
 		matchSelectorNames.put(selector.getInventoryTitle(), selector);
+	}
+
+	public MatchSelector getDoubleKitHgSelector() {
+		return doubleKitHGSelector;
 	}
 
 	public MatchSelector getHardcoreGamesSelector() {

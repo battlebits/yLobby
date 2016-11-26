@@ -119,12 +119,7 @@ public class GameModeSelector {
 				for (Entry<Integer, GameModeBase> entry : serverIds.entrySet()) {
 					GameModeBase gameModeBase = (GameModeBase) entry.getValue();
 					gameModeBase.updateOnlinePlayersOnItem();
-					selectorInventory
-					.setItem(
-							entry
-							.getKey(), 
-							gameModeBase
-							.getInventoryItem());
+					selectorInventory.setItem(entry.getKey(), gameModeBase.getInventoryItem());
 				}
 			}
 		};

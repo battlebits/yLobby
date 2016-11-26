@@ -27,12 +27,18 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import br.com.battlebits.yaddons.yAddonsPlugin;
+import br.com.battlebits.ycommon.bukkit.event.ram.RamOutOfLimitEvent;
 import br.com.battlebits.ycommon.common.BattlebitsAPI;
 import br.com.battlebits.ycommon.common.permissions.enums.Group;
 import br.com.battlebits.ylobby.yLobbyPlugin;
 
 public class MainListener implements Listener {
 
+	@EventHandler
+	public void onRam(RamOutOfLimitEvent event) {
+		Bukkit.shutdown();
+	}
+	
 	@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
 	public void onPlayerJoinListener(PlayerJoinEvent e) {
 		yLobbyPlugin.getyLobby().getLobbyItensManager().setItems(e.getPlayer());

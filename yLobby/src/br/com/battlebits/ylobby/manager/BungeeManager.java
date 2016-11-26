@@ -40,11 +40,15 @@ public class BungeeManager {
 		yLobbyPlugin.getyLobby().getLogger().info("[BungeeManager] " + getHGServers().size() + " servidores de HG foram carregados!");
 		yLobbyPlugin.getyLobby().getLogger().info("[BungeeManager] " + getFairPlayServers().size() + " servidores de FPHG foram carregados!");
 		yLobbyPlugin.getyLobby().getLogger().info("[BungeeManager] " + getLobbyservers().size() + " servidores Lobby foram carregados!");
+		yLobbyPlugin.getyLobby().getLogger().info("[BungeeManager] " + getDoubleKitServers().size() + " servidores Double Kit HG foram carregados!");
 
 		for (String ip : getHGServers()) {
 			yLobbyPlugin.getyLobby().getGameServerInfoManager().addServer(ip);
 		}
 		for (String ip : getFairPlayServers()) {
+			yLobbyPlugin.getyLobby().getGameServerInfoManager().addServer(ip);
+		}
+		for (String ip : getDoubleKitServers()) {
 			yLobbyPlugin.getyLobby().getGameServerInfoManager().addServer(ip);
 		}
 		for (String ip : getLobbyservers()) {
@@ -109,7 +113,9 @@ public class BungeeManager {
 		for (String server : servers) {
 			if (server.contains("battle-hg.com")) {
 				if (!server.contains("fp")) {
-					serverList.add(server);
+					if (!server.contains("doublekit")) {
+						serverList.add(server);
+					}
 				}
 			}
 		}
@@ -144,6 +150,19 @@ public class BungeeManager {
 		for (String server : servers) {
 			if (server.contains("battle-hg.com")) {
 				if (server.contains("fp")) {
+					serverList.add(server);
+				}
+			}
+		}
+		Collections.sort(serverList);
+		return serverList;
+	}
+	
+	public ArrayList<String> getDoubleKitServers() {
+		ArrayList<String> serverList = new ArrayList<>();
+		for (String server : servers) {
+			if (server.contains("battle-hg.com")) {
+				if (server.contains("doublekit")) {
 					serverList.add(server);
 				}
 			}

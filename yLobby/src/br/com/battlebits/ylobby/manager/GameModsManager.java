@@ -63,7 +63,7 @@ public class GameModsManager {
 		// Material.DIAMOND_SWORD, "battlecraft.com.br", new
 		// Location(Bukkit.getWorlds().get(0), 0, 65, 37),
 		// CharacterType.WITCH));
-		addGameMode(new GameModeMatch("Battle-HG", "Servidores de HungerGames.\\nSeja o ultimo sobrevivente em uma luta brutal com kits onde apenas um sera o campeao", Material.MUSHROOM_SOUP, new Location(Bukkit.getWorlds().get(0), 8, 14, 8), CharacterType.BLAZE, new BungeeMessage("Hungergames")) {
+		addGameMode(new GameModeMatch("Battle-HG", "Servidores de HungerGames.\\nSeja o ultimo sobrevivente em uma luta brutal com kits onde apenas um sera o campeao", Material.MUSHROOM_SOUP, new Location(Bukkit.getWorlds().get(0), -8, 14, -8), CharacterType.BLAZE, new BungeeMessage("Hungergames")) {
 			@Override
 			public int getOnlinePlayers() {
 				return yLobbyPlugin.getyLobby().getPlayerCountManager().getHgOnlinePlayers();
@@ -72,6 +72,18 @@ public class GameModsManager {
 			@Override
 			public void onRightClick(Player p) {
 				yLobbyPlugin.getyLobby().getMatchSelectorManager().getHardcoreGamesSelector().open(p);
+			}
+		});
+
+		addGameMode(new GameModeMatch("Battle-HG DoubleKit", "Servidores de HardcoreGames.\\nSeja o ultimo sobrevivente em uma luta brutal com kits onde apenas um sera o campeao", Material.RED_MUSHROOM, new Location(Bukkit.getWorlds().get(0), 0, 14, -12), CharacterType.CREEPER, new BungeeMessage("DoubleKitHungergames")) {
+			@Override
+			public int getOnlinePlayers() {
+				return yLobbyPlugin.getyLobby().getPlayerCountManager().getDoubleKitOnlinePlayers();
+			}
+
+			@Override
+			public void onRightClick(Player p) {
+				yLobbyPlugin.getyLobby().getMatchSelectorManager().getDoubleKitHgSelector().open(p);
 			}
 		});
 		// addGameMode(new GameModeMatch("FairPlayHG", "Jogue o HungerGames

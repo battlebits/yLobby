@@ -38,11 +38,15 @@ public class BungeeManager {
 		}
 		yLobbyPlugin.getyLobby().getLogger().info("[BungeeManager] No total " + servers.size() + " servidores foram carregados!");
 		yLobbyPlugin.getyLobby().getLogger().info("[BungeeManager] " + getHGServers().size() + " servidores de HG foram carregados!");
+		yLobbyPlugin.getyLobby().getLogger().info("[BungeeManager] " + getCustomHGServers().size() + " servidores de CustomHG foram carregados!");
 		yLobbyPlugin.getyLobby().getLogger().info("[BungeeManager] " + getFairPlayServers().size() + " servidores de FPHG foram carregados!");
 		yLobbyPlugin.getyLobby().getLogger().info("[BungeeManager] " + getLobbyservers().size() + " servidores Lobby foram carregados!");
 		yLobbyPlugin.getyLobby().getLogger().info("[BungeeManager] " + getDoubleKitServers().size() + " servidores Double Kit HG foram carregados!");
 
 		for (String ip : getHGServers()) {
+			yLobbyPlugin.getyLobby().getGameServerInfoManager().addServer(ip);
+		}
+		for (String ip : getCustomHGServers()) {
 			yLobbyPlugin.getyLobby().getGameServerInfoManager().addServer(ip);
 		}
 		for (String ip : getFairPlayServers()) {
@@ -114,9 +118,22 @@ public class BungeeManager {
 			if (server.contains("battle-hg.com")) {
 				if (!server.contains("fp")) {
 					if (!server.contains("doublekit")) {
-						serverList.add(server);
+						if (!server.contains("custom")) {
+							serverList.add(server);
+						}
 					}
 				}
+			}
+		}
+		Collections.sort(serverList);
+		return serverList;
+	}
+
+	public ArrayList<String> getCustomHGServers() {
+		ArrayList<String> serverList = new ArrayList<>();
+		for (String server : servers) {
+			if (server.contains("custom.battle-hg.com")) {
+				serverList.add(server);
 			}
 		}
 		Collections.sort(serverList);
@@ -157,7 +174,7 @@ public class BungeeManager {
 		Collections.sort(serverList);
 		return serverList;
 	}
-	
+
 	public ArrayList<String> getDoubleKitServers() {
 		ArrayList<String> serverList = new ArrayList<>();
 		for (String server : servers) {

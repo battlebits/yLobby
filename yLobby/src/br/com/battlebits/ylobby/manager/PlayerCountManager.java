@@ -10,6 +10,7 @@ public class PlayerCountManager {
 
 	private int networkOnlinePlayers;
 	private int hgOnlinePlayers;
+	private int customHgOnlinePlayers;
 	private int doubleKitOnlinePlayers;
 	private int fpOnlinePlayers;
 	private int fullIronOnlinePlayers;
@@ -18,6 +19,7 @@ public class PlayerCountManager {
 	public PlayerCountManager() {
 		networkOnlinePlayers = 0;
 		hgOnlinePlayers = 0;
+		customHgOnlinePlayers = 0;
 		fpOnlinePlayers = 0;
 		fullIronOnlinePlayers = 0;
 		simulatorOnlinePlayers = 0;
@@ -56,6 +58,13 @@ public class PlayerCountManager {
 	public void setHgOnlinePlayers(int i) {
 		hgOnlinePlayers = i;
 	}
+	
+	public int getCustomHgOnlinePlayers() {
+		return customHgOnlinePlayers;
+	}
+	public void setCustomHgOnlinePlayers(int customHgOnlinePlayers) {
+		this.customHgOnlinePlayers = customHgOnlinePlayers;
+	}
 
 	public int getFpOnlinePlayers() {
 		return fpOnlinePlayers;
@@ -84,6 +93,7 @@ public class PlayerCountManager {
 					yLobbyPlugin.getyLobby().getBungeeMessageSender().tryToSendMessage(new BungeeMessage("SimulatorCount"));
 					yLobbyPlugin.getyLobby().getBungeeMessageSender().tryToSendMessage(new BungeeMessage("FullironCount"));
 					yLobbyPlugin.getyLobby().getBungeeMessageSender().tryToSendMessage(new BungeeMessage("DoubleKitHGCount"));
+					yLobbyPlugin.getyLobby().getBungeeMessageSender().tryToSendMessage(new BungeeMessage("CustomHGCount"));
 				}
 			}
 		}.runTaskTimerAsynchronously(yLobbyPlugin.getyLobby(), 1L, 20L);

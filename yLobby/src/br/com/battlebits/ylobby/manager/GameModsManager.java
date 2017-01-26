@@ -74,6 +74,18 @@ public class GameModsManager {
 				yLobbyPlugin.getyLobby().getMatchSelectorManager().getHardcoreGamesSelector().open(p);
 			}
 		});
+		
+		addGameMode(new GameModeMatch("CustomHG", "Servidores de HungerGames.\\nSeja o ultimo sobrevivente em uma luta brutal com kits onde apenas um sera o campeao", Material.WORKBENCH, new Location(Bukkit.getWorlds().get(0), 0, 14, 12), CharacterType.WITCH, new BungeeMessage("CustomHungergames")) {
+			@Override
+			public int getOnlinePlayers() {
+				return yLobbyPlugin.getyLobby().getPlayerCountManager().getCustomHgOnlinePlayers();
+			}
+
+			@Override
+			public void onRightClick(Player p) {
+				yLobbyPlugin.getyLobby().getMatchSelectorManager().getCustomHGSelector().open(p);
+			}
+		});
 
 		addGameMode(new GameModeMatch("Battle-HG DoubleKit", "Servidores de HardcoreGames.\\nSeja o ultimo sobrevivente em uma luta brutal com kits onde apenas um sera o campeao", Material.RED_MUSHROOM, new Location(Bukkit.getWorlds().get(0), 0, 14, -12), CharacterType.CREEPER, new BungeeMessage("DoubleKitHungergames")) {
 			@Override

@@ -12,6 +12,7 @@ public class MatchSelectorManager {
 
 	private HashMap<String, MatchSelector> matchSelectorNames;
 	private MatchSelector hardcoreGamesSelector;
+	private MatchSelector customHGSelector;
 	private MatchSelector doubleKitHGSelector;
 	private MatchSelector fairPlaySelector;
 	private BukkitRunnable updaterRunnable;
@@ -28,6 +29,15 @@ public class MatchSelectorManager {
 			}
 		};
 		addMacthSelector(hardcoreGamesSelector);
+		
+		customHGSelector = new MatchSelector(yLobbyPlugin.getyLobby().getBungeeManager().getCustomHGServers(), 100, "     §nServidores do CustomHG", new BungeeMessage("CustomHungergames")) {
+			@Override
+			public int getMatchsOnlinePlayers() {
+				return yLobbyPlugin.getyLobby().getPlayerCountManager().getCustomHgOnlinePlayers();
+			}
+		};
+		addMacthSelector(customHGSelector);
+		
 		doubleKitHGSelector = new MatchSelector(yLobbyPlugin.getyLobby().getBungeeManager().getDoubleKitServers(), 100, "    §nServidores do DoubleKit-HG", new BungeeMessage("DoubleKitHungergames")) {
 			@Override
 			public int getMatchsOnlinePlayers() {
@@ -71,6 +81,10 @@ public class MatchSelectorManager {
 
 	public MatchSelector getHardcoreGamesSelector() {
 		return hardcoreGamesSelector;
+	}
+	
+	public MatchSelector getCustomHGSelector() {
+		return customHGSelector;
 	}
 
 	public MatchSelector getFairPlaySelector() {

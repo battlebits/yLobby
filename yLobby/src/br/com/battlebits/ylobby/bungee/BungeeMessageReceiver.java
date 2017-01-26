@@ -30,6 +30,8 @@ public class BungeeMessageReceiver implements PluginMessageListener {
 						yLobbyPlugin.getyLobby().getPlayerCountManager().setNetworkOnlinePlayers(input.readInt());
 					} else if (subchannel.equals("HGCount")) {
 						yLobbyPlugin.getyLobby().getPlayerCountManager().setHgOnlinePlayers(input.readInt());
+					} else if (subchannel.equals("CustomHGCount")) {
+						yLobbyPlugin.getyLobby().getPlayerCountManager().setCustomHgOnlinePlayers(input.readInt());
 					} else if (subchannel.equals("FPCount")) {
 						yLobbyPlugin.getyLobby().getPlayerCountManager().setFpOnlinePlayers(input.readInt());
 					} else if (subchannel.equals("SimulatorCount")) {

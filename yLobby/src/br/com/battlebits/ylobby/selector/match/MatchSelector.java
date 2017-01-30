@@ -58,24 +58,18 @@ public abstract class MatchSelector {
 		backToServerMenuItem.setItemMeta(backmeta);
 		serverRestartingMessage = new ArrayList<>();
 		serverRestartingMessage.add("§0");
-		serverRestartingMessage.add(LobbyUtils.getMessageUtils()
-				.centerChatMessage("§7Este servidor está §8§lREINICIANDO §7aguarde para §b§lconectar§7!"));
+		serverRestartingMessage.add("§7Este servidor está §8§lREINICIANDO §7aguarde para §b§lconectar§7!");
 		serverRestartingMessage.add("§0");
 		needToBeUltimateToSpectate = new ArrayList<>();
 		needToBeUltimateToSpectate.add("§0");
-		needToBeUltimateToSpectate.add(LobbyUtils.getMessageUtils()
-				.centerChatMessage("§7Você precisa ser §D§LULTIMATE§7 ou superior para §b§lespectar§7!"));
-		needToBeUltimateToSpectate.add(
-				LobbyUtils.getMessageUtils().centerChatMessage("§7Compre em nosso site §6§lwww.battlebits.com.br§7!"));
+		needToBeUltimateToSpectate.add("§7Você precisa ser §D§LULTIMATE§7 ou superior para §b§lespectar§7!");
+		needToBeUltimateToSpectate.add("§7Compre em nosso site §6§lwww.battlebits.com.br§7!");
 		needToBeUltimateToSpectate.add("§0");
 		needToBeLightToJoinFull = new ArrayList<>();
 		needToBeLightToJoinFull.add("§0");
-		needToBeLightToJoinFull
-				.add(LobbyUtils.getMessageUtils().centerChatMessage("§7Você precisa ser §a§lLIGHT§7 ou superior para"));
-		needToBeLightToJoinFull
-				.add(LobbyUtils.getMessageUtils().centerChatMessage("§6§lentrar§7 com o§6§l servidor cheio§7!"));
-		needToBeLightToJoinFull.add(
-				LobbyUtils.getMessageUtils().centerChatMessage("§7Compre em nosso site §6§lwww.battlebits.com.br§7!"));
+		needToBeLightToJoinFull.add("§7Você precisa ser §a§lLIGHT§7 ou superior para");
+		needToBeLightToJoinFull.add("§6§lentrar§7 com o§6§l servidor cheio§7!");
+		needToBeLightToJoinFull.add("§7Compre em nosso site §6§lwww.battlebits.com.br§7!");
 		needToBeLightToJoinFull.add("§0");
 		serverSelectorInventory = Bukkit.createInventory(null, LobbyUtils.getInventoryUtils().getInventorySizeForItens(
 				selectorServers.size() + 18 + ((selectorServers.size() / 7) * 2)), inventoryTitle);
@@ -111,8 +105,7 @@ public abstract class MatchSelector {
 		if (info.isInProgress()) {
 			if (BattlebitsAPI.getAccountCommon().getBattlePlayer(p.getUniqueId()).hasGroupPermission(Group.ULTIMATE)) {
 				p.sendMessage("§0");
-				p.sendMessage(LobbyUtils.getMessageUtils()
-						.centerChatMessage("§b§lConectando§7 ao servidor §9§l" + ip + "§7!"));
+				p.sendMessage("§b§lConectando§7 ao servidor §9§l" + ip + "§7!");
 				p.sendMessage("§0");
 				p.sendPluginMessage(yLobbyPlugin.getyLobby(), "BungeeCord",
 						new BungeeMessage("Connect", ip).getDataOutput().toByteArray());
@@ -126,8 +119,7 @@ public abstract class MatchSelector {
 			if (info.getOnlinePlayers() >= 100) {
 				if (BattlebitsAPI.getAccountCommon().getBattlePlayer(p.getUniqueId()).hasGroupPermission(Group.LIGHT)) {
 					p.sendMessage("§0");
-					p.sendMessage(LobbyUtils.getMessageUtils()
-							.centerChatMessage("§6§lConectando§7 ao servidor §9§l" + ip + "§7!"));
+					p.sendMessage("§6§lConectando§7 ao servidor §9§l" + ip + "§7!");
 					p.sendMessage("§0");
 					p.sendPluginMessage(yLobbyPlugin.getyLobby(), "BungeeCord",
 							new BungeeMessage("Connect", ip).getDataOutput().toByteArray());
@@ -138,8 +130,7 @@ public abstract class MatchSelector {
 				}
 			} else {
 				p.sendMessage("§0");
-				p.sendMessage(LobbyUtils.getMessageUtils()
-						.centerChatMessage("§a§lConectando§7 ao servidor §9§l" + ip + "§7!"));
+				p.sendMessage("§a§lConectando§7 ao servidor §9§l" + ip + "§7!");
 				p.sendMessage("§0");
 				p.sendPluginMessage(yLobbyPlugin.getyLobby(), "BungeeCord",
 						new BungeeMessage("Connect", ip).getDataOutput().toByteArray());

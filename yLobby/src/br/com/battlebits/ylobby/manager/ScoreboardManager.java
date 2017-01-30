@@ -33,7 +33,7 @@ public class ScoreboardManager {
 
 				obj.getScore("§8").setScore(9);
 				board.registerNewTeam("ligateam").addEntry("§8");
-				board.getTeam("ligateam").setPrefix("§7Liga: ");
+				board.getTeam("ligateam").setPrefix("§7§%league%§: ");
 				board.getTeam("ligateam")
 						.setSuffix(account.getLeague().getSymbol() + " " + account.getLeague().toString());
 
@@ -44,12 +44,12 @@ public class ScoreboardManager {
 
 				obj.getScore("§6").setScore(7);
 				board.registerNewTeam("moedasteam").addEntry("§6");
-				board.getTeam("moedasteam").setPrefix("§7Moedas: ");
+				board.getTeam("moedasteam").setPrefix("§7§%coins%§: ");
 				board.getTeam("moedasteam").setSuffix("§b" + account.getMoney());
 
 				obj.getScore("§5").setScore(6);
 				board.registerNewTeam("fichasteam").addEntry("§5");
-				board.getTeam("fichasteam").setPrefix("§7Fichas: ");
+				board.getTeam("fichasteam").setPrefix("§7§%tickets%§: ");
 				board.getTeam("fichasteam").setSuffix("§b" + account.getFichas());
 
 				obj.getScore("§4").setScore(5);
@@ -58,7 +58,7 @@ public class ScoreboardManager {
 				board.registerNewTeam("onlineteam").addEntry("§3");
 				board.getTeam("onlineteam").setPrefix("§7Online: ");
 				board.getTeam("onlineteam").setSuffix("§e"
-						+ yLobbyPlugin.getyLobby().getPlayerCountManager().getNetworkOnlinePlayers() + " jogadores");
+						+ yLobbyPlugin.getyLobby().getPlayerCountManager().getNetworkOnlinePlayers() + " §%players%§");
 
 				obj.getScore("§2").setScore(3);
 				board.registerNewTeam("lobbyidteam").addEntry("§2");
@@ -82,7 +82,7 @@ public class ScoreboardManager {
 		Scoreboard board = p.getScoreboard();
 
 		board.getTeam("onlineteam").setSuffix(
-				"§e" + yLobbyPlugin.getyLobby().getPlayerCountManager().getNetworkOnlinePlayers() + " jogadores");
+				"§e" + yLobbyPlugin.getyLobby().getPlayerCountManager().getNetworkOnlinePlayers() + " §%players%§");
 	}
 
 }

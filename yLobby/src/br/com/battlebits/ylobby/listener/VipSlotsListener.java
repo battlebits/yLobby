@@ -20,8 +20,7 @@ public class VipSlotsListener implements Listener {
 				if ((Bukkit.getOnlinePlayers().size() + 1) <= 100) {
 					e.allow();
 				} else {
-					e.disallow(Result.KICK_FULL,
-							"§cInfelizmente, nosso servidor está sobrecarregado! D:\nTente novamente mais tarde!");
+					e.disallow(Result.KICK_FULL, "Server Full");
 				}
 			} else {
 				e.disallow(Result.KICK_FULL, "§cNosso servidor está cheio, desculpe!");

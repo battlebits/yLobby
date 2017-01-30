@@ -8,7 +8,6 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import br.com.battlebits.ylobby.LobbyUtils;
 import br.com.battlebits.ylobby.yLobbyPlugin;
 import br.com.battlebits.ylobby.bungee.BungeeMessage;
 
@@ -21,17 +20,14 @@ public class GameModsListener implements Listener {
 				@Override
 				public void run() {
 					String type = (String) e.getRightClicked().getMetadata("GM_TYPE").get(0).value();
-					String name = (String) e.getRightClicked().getMetadata("GM_NAME").get(0).value();
 					if (type.equalsIgnoreCase("SIMPLE")) {
-						e.getPlayer().sendMessage("§0");
-						e.getPlayer().sendMessage(LobbyUtils.getMessageUtils().centerChatMessage("§9§lConectando §7ao servidor §9§l" + name + "§7!"));
-						e.getPlayer().sendMessage("§0");
-						e.getPlayer().sendPluginMessage(yLobbyPlugin.getyLobby(), "BungeeCord", new BungeeMessage(((String) e.getRightClicked().getMetadata("GM_CONNECT").get(0).value()).split("#")).getDataOutput().toByteArray());
-					} else if (type.equalsIgnoreCase("MATCH")) {
-						e.getPlayer().sendMessage("§0");
-						e.getPlayer().sendMessage(LobbyUtils.getMessageUtils().centerChatMessage("§9§lConectando §7ao §9§l" + name + "§7!"));
-						e.getPlayer().sendMessage("§0");
-						e.getPlayer().sendPluginMessage(yLobbyPlugin.getyLobby(), "BungeeCord", new BungeeMessage(((String) e.getRightClicked().getMetadata("GM_CONNECT").get(0).value()).split("#")).getDataOutput().toByteArray());
+						e.getPlayer().sendPluginMessage(yLobbyPlugin.getyLobby(), "BungeeCord", new BungeeMessage(
+								((String) e.getRightClicked().getMetadata("GM_CONNECT").get(0).value()).split("#"))
+										.getDataOutput().toByteArray());
+					} else if (type.equalsIgnoreCase("MATCH") || type.equalsIgnoreCase("MULTI")) {
+						e.getPlayer().sendPluginMessage(yLobbyPlugin.getyLobby(), "BungeeCord", new BungeeMessage(
+								((String) e.getRightClicked().getMetadata("GM_CONNECT").get(0).value()).split("#"))
+										.getDataOutput().toByteArray());
 					}
 				}
 			}.runTaskAsynchronously(yLobbyPlugin.getyLobby());
@@ -47,17 +43,14 @@ public class GameModsListener implements Listener {
 					public void run() {
 						Player p = (Player) e.getDamager();
 						String type = (String) e.getEntity().getMetadata("GM_TYPE").get(0).value();
-						String name = (String) e.getEntity().getMetadata("GM_NAME").get(0).value();
 						if (type.equalsIgnoreCase("SIMPLE")) {
-							p.sendMessage("§0");
-							p.sendMessage(LobbyUtils.getMessageUtils().centerChatMessage("§9§lConectando §7ao servidor §9§l" + name + "§7!"));
-							p.sendMessage("§0");
-							p.sendPluginMessage(yLobbyPlugin.getyLobby(), "BungeeCord", new BungeeMessage(((String) e.getEntity().getMetadata("GM_CONNECT").get(0).value()).split("#")).getDataOutput().toByteArray());
-						} else if (type.equalsIgnoreCase("MATCH")) {
-							p.sendMessage("§0");
-							p.sendMessage(LobbyUtils.getMessageUtils().centerChatMessage("§9§lConectando §7ao §9§l" + name + "§7!"));
-							p.sendMessage("§0");
-							p.sendPluginMessage(yLobbyPlugin.getyLobby(), "BungeeCord", new BungeeMessage(((String) e.getEntity().getMetadata("GM_CONNECT").get(0).value()).split("#")).getDataOutput().toByteArray());
+							p.sendPluginMessage(yLobbyPlugin.getyLobby(), "BungeeCord", new BungeeMessage(
+									((String) e.getEntity().getMetadata("GM_CONNECT").get(0).value()).split("#"))
+											.getDataOutput().toByteArray());
+						} else if (type.equalsIgnoreCase("MATCH") || type.equalsIgnoreCase("MULTI")) {
+							p.sendPluginMessage(yLobbyPlugin.getyLobby(), "BungeeCord", new BungeeMessage(
+									((String) e.getEntity().getMetadata("GM_CONNECT").get(0).value()).split("#"))
+											.getDataOutput().toByteArray());
 						}
 					}
 				}.runTaskAsynchronously(yLobbyPlugin.getyLobby());

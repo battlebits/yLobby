@@ -40,7 +40,6 @@ import br.com.battlebits.ylobby.selector.lobby.LobbySelector;
 import br.com.battlebits.ylobby.selector.lobby.LobbySelectorListener;
 import br.com.battlebits.ylobby.selector.match.MatchSelectorListener;
 import br.com.battlebits.ylobby.selector.multi.MultiSelectorListener;
-import br.com.battlebits.ylobby.updater.ScoreboardUpdater;
 import br.com.battlebits.ylobby.updater.TabAndHeaderUpdater;
 
 public class yLobbyPlugin extends JavaPlugin {
@@ -72,7 +71,6 @@ public class yLobbyPlugin extends JavaPlugin {
 	private MatchSelectorListener matchSelectorListener;
 	private MultiSelectorListener multiSelectorListener;
 
-	private ScoreboardUpdater scoreboardUpdater;
 	private TabAndHeaderUpdater tabAndHeaderUpdater;
 
 	private PlayerOutOfLobbyDetector playerOutOfLobbyDetector;
@@ -133,7 +131,6 @@ public class yLobbyPlugin extends JavaPlugin {
 		multiSelectorListener = new MultiSelectorListener();
 		lobbyItensManager = new LobbyItensManager();
 
-		scoreboardUpdater = new ScoreboardUpdater();
 		tabAndHeaderUpdater = new TabAndHeaderUpdater();
 
 		playerOutOfLobbyDetector = new PlayerOutOfLobbyDetector();
@@ -158,7 +155,6 @@ public class yLobbyPlugin extends JavaPlugin {
 
 		chatManager.start();
 
-		scoreboardUpdater.start();
 		tabAndHeaderUpdater.start();
 
 		playerOutOfLobbyDetector.start();
@@ -185,7 +181,6 @@ public class yLobbyPlugin extends JavaPlugin {
 
 		playerOutOfLobbyDetector.stop();
 
-		scoreboardUpdater.stop();
 		tabAndHeaderUpdater.stop();
 
 		chatManager.stop();

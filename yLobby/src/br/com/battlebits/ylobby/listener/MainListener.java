@@ -4,7 +4,6 @@ import java.util.UUID;
 
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
-import org.bukkit.Material;
 import org.bukkit.entity.Damageable;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -57,13 +56,7 @@ public class MainListener implements Listener {
 					e.getPlayer().setExp(-100F);
 				}
 			}
-		}.runTaskLaterAsynchronously(yLobbyPlugin.getyLobby(), 20L);
-		// if
-		// (Main.getPlugin().getPermissionManager().hasGroupPermission(e.getPlayer().getUniqueId(),
-		// Group.LIGHT)) {
-		// e.getPlayer().setAllowFlight(true);
-		// e.getPlayer().setFlying(true);
-		// }
+		}.runTaskLater(yLobbyPlugin.getyLobby(), 20L);
 		e.getPlayer().teleport(yLobbyPlugin.getyLobby().getLocationManager().getSpawnLocation());
 		e.setJoinMessage("");
 		yLobbyPlugin.getyLobby().getScoreboardManager().setupMainScoreboard(e.getPlayer());
@@ -71,24 +64,6 @@ public class MainListener implements Listener {
 			e.getPlayer().removePotionEffect(pot.getType());
 		}
 	}
-
-	// @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-	// public void onVipExpire(IW4PostExpiredPlayerEvent e) {
-	// for (IW4OrderProduct product : e.getExpiredPackages().values()) {
-	// if (product.getProductName().toLowerCase().startsWith("vip")) {
-	// Player p = Bukkit.getPlayer(e.getPlayer().getUUID());
-	// if (p.getAllowFlight()) {
-	// p.setAllowFlight(false);
-	// }
-	// yAddonsPlugin.getyAddons().getAccountManager().getAccount(p).removeCurrentGadget();
-	// yAddonsPlugin.getyAddons().getAccountManager().getAccount(p).removeCurrentHat();
-	// yAddonsPlugin.getyAddons().getAccountManager().getAccount(p).removeCurrentParticle();
-	// yAddonsPlugin.getyAddons().getAccountManager().getAccount(p).removeCurrentPet();
-	// yAddonsPlugin.getyAddons().getAccountManager().getAccount(p).removeCurrentMorph();
-	// break;
-	// }
-	// }
-	// }
 
 	@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
 	public void onFoodLevelChangeListener(FoodLevelChangeEvent e) {
@@ -138,42 +113,11 @@ public class MainListener implements Listener {
 		Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "weather clear 100000000");
 	}
 
-	// @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-	// public void onEntitySpawnListener(EntitySpawnEvent e) {
-	// e.setCancelled(true);
-	// }
-
 	@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
 	public void onPlayerInteractListener(PlayerInteractEvent e) {
 		if ((e.getAction() == Action.PHYSICAL || e.getAction() == Action.RIGHT_CLICK_BLOCK)) {
 			if (e.getPlayer().getGameMode() != GameMode.CREATIVE) {
 				e.setCancelled(true);
-			}
-		}
-	}
-
-	@EventHandler(priority = EventPriority.MONITOR)
-	public void openCosmetics(PlayerInteractEvent e) {
-		if (!e.isCancelled() || e.getAction() != Action.PHYSICAL) {
-			if (e.getItem() != null) {
-				if (e.getItem().getType() == Material.ENDER_CHEST) {
-					if (e.getItem().hasItemMeta()) {
-						if (e.getItem().getItemMeta().hasDisplayName()) {
-							if (e.getItem().getItemMeta().getDisplayName()
-									.equalsIgnoreCase("§a§lCosmeticos §7(Clique)")) {
-								if (BattlebitsAPI.getAccountCommon().getBattlePlayer(e.getPlayer().getUniqueId())
-										.hasGroupPermission(Group.LIGHT)) {
-									// TODO
-									// yAddonsPlugin.getyAddons().getSelectorInventory().open(e.getPlayer());
-								} else {
-									e.getPlayer().sendMessage(
-											"§7Esse sistema está em fase de testes e desenvolvimento! Devido a isso, ele é apenas para jogadores com o grupo §a§lLIGHT §7ou superior!");
-
-								}
-							}
-						}
-					}
-				}
 			}
 		}
 	}

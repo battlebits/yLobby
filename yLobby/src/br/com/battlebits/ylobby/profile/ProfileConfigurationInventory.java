@@ -74,11 +74,23 @@ public class ProfileConfigurationInventory {
 		if (yLobbyPlugin.getyLobby().getPlayerHideManager().isHiding(p)) {
 			inv.setItem(10, hideDisabledIcon);
 			inv.setItem(19, hideDisabledItem);
-			p.getInventory().setItem(6, yLobbyPlugin.getyLobby().getLobbyItensManager().getShowPlayersItem());
+			ItemStack item = yLobbyPlugin.getyLobby().getLobbyItensManager().getHideItem();
+			ItemMeta meta = item.getItemMeta();
+			meta.setDisplayName("§%hide-players-item%§ §7(§%click%§)");
+			meta.setLore(StringLoreUtils.formatForLore("§%hide-players-item-lore%§"));
+			item.setItemMeta(meta);
+			p.getInventory().setItem(6, item);
+			item.setDurability((short) 10);
 		} else {
 			inv.setItem(10, hideEnabledIcon);
 			inv.setItem(19, hideEnabledItem);
-			p.getInventory().setItem(6, yLobbyPlugin.getyLobby().getLobbyItensManager().getHidePlayersItem());
+			ItemStack item = yLobbyPlugin.getyLobby().getLobbyItensManager().getHideItem();
+			ItemMeta meta = item.getItemMeta();
+			meta.setDisplayName("§%show-players-item%§ §7(§%click%§)");
+			meta.setLore(StringLoreUtils.formatForLore("§%show-players-item-lore%§"));
+			item.setItemMeta(meta);
+			p.getInventory().setItem(6, item);
+			item.setDurability((short) 8);
 		}
 	}
 

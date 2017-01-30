@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.UUID;
 
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.event.EventHandler;
@@ -29,8 +28,6 @@ public class LobbyUtils {
 	private static ListenerUtils listenerUtils = new ListenerUtils();
 	@Getter
 	private static LocationUtils locationUtils = new LocationUtils();
-	@Getter
-	private static MessageUtils messageUtils = new MessageUtils();
 	@Getter
 	private static TimeUtils timeUtils = new TimeUtils();
 
@@ -105,7 +102,7 @@ public class LobbyUtils {
 					return timeUtils.formatTime(i);
 				}
 			}
-			return "1 segundo";
+			return "1 §%second%§";
 		}
 
 		private Long getLongTime(UUID id, String key) {
@@ -201,48 +198,6 @@ public class LobbyUtils {
 
 	}
 
-	public static class MessageUtils {
-
-		public String centerChatMessage(String message) {
-			if (message == null || message.equals("")) {
-				return "§0";
-			} else {
-				message = ChatColor.translateAlternateColorCodes('&', message);
-				int messagePxSize = 0;
-				boolean previousCode = false;
-				boolean isBold = false;
-				for (char c : message.toCharArray()) {
-					if (c == '§') {
-						previousCode = true;
-						continue;
-					} else if (previousCode == true) {
-						previousCode = false;
-						if (c == 'l' || c == 'L') {
-							isBold = true;
-							continue;
-						} else
-							isBold = false;
-					} else {
-						DefaultFontInfo dFI = DefaultFontInfo.getDefaultFontInfo(c);
-						messagePxSize += isBold ? dFI.getBoldLength() : dFI.getLength();
-						messagePxSize++;
-					}
-				}
-				int halvedMessageSize = messagePxSize / 2;
-				int toCompensate = 160 - halvedMessageSize;
-				int spaceLength = DefaultFontInfo.SPACE.getLength() + 1;
-				int compensated = 0;
-				StringBuilder sb = new StringBuilder();
-				while (compensated < toCompensate) {
-					sb.append(" ");
-					compensated += spaceLength;
-				}
-				return (sb.toString() + message);
-			}
-		}
-
-	}
-
 	public static class TimeUtils {
 
 		public String milisecondsToTime(int ms) {
@@ -278,28 +233,28 @@ public class LobbyUtils {
 				int s = i % 60;
 				if (m > 0) {
 					if (m == 1) {
-						str = "1 minuto";
+						str = "1 §%minute%§";
 					} else {
-						str = m + " minutos";
+						str = m + " §%minute%§s";
 					}
 				}
 				if (s > 0) {
 					if (s == 1) {
 						if (str.isEmpty()) {
-							str = "1 segundo";
+							str = "1 §%second%§";
 						} else {
-							str = str + " e 1 segundo";
+							str = str + " §%and%§ 1 §%second%§";
 						}
 					} else if (str.isEmpty()) {
-						str = s + " segundos";
+						str = s + " §%second%§s";
 					} else {
-						str = str + " e " + s + " segundos";
+						str = str + " §%and%§ " + s + " §%second%§s";
 					}
 				}
 			} else if (i == 1) {
-				str = "1 segundo";
+				str = "1 §%second%§";
 			} else {
-				str = i + " segundos";
+				str = i + " §%second%§s";
 			}
 			return str;
 		}

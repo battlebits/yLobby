@@ -30,30 +30,30 @@ public class TabAndHeaderUpdater extends UpdaterBase {
 		headerBuilder.append("§6§lBATTLE§F§LBITS §E§LLOBBY");
 		headerBuilder.append("\n");
 		headerBuilder.append("          ");
-		headerBuilder.append("§eMoedas: §f");
+		headerBuilder.append("§%coins%§: §f");
 		headerBuilder.append(account.getMoney());
 		headerBuilder.append(" §1- ");
-		headerBuilder.append("§eFichas: §f");
+		headerBuilder.append("§e§%tickets%§: §f");
 		headerBuilder.append(account.getFichas());
 		headerBuilder.append(" §1- ");
 		headerBuilder.append("§ePing: §f");
 		headerBuilder.append(PingAPI.getPing(p));
 		headerBuilder.append("\n");
-		headerBuilder.append("§eTemos atualmente §f");
+		headerBuilder.append("§e§%we-have%§ §f");
 		headerBuilder.append(yLobbyPlugin.getyLobby().getPlayerCountManager().getNetworkOnlinePlayers());
-		headerBuilder.append(" §ejogadores online em toda a rede!");
+		headerBuilder.append(" §e§%players-online%§!");
 		StringBuilder footerBuilder = new StringBuilder();
 		footerBuilder.append("§bNick: §f");
 		footerBuilder.append(p.getName());
 		footerBuilder.append(" §1- ");
-		footerBuilder.append("§bLiga: §F");
+		footerBuilder.append("§b§%league%§: §F");
 		footerBuilder.append(account.getLeague());
 		footerBuilder.append(" §1- ");
 		footerBuilder.append("§bXP: §f");
 		footerBuilder.append(account.getXp());
 		footerBuilder.append("\n");
-		footerBuilder.append("§bMais informacoes em: §f");
-		footerBuilder.append("www.battlebits.com.br");
+		footerBuilder.append("§b§%more-information%§: §f");
+		footerBuilder.append(BattlebitsAPI.WEBSITE);
 		TabListAPI.setHeaderAndFooter(p, headerBuilder.toString(), footerBuilder.toString());
 	}
 

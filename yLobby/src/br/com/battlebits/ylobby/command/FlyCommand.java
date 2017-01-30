@@ -2,16 +2,22 @@ package br.com.battlebits.ylobby.command;
 
 import java.util.ArrayList;
 
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
-import org.bukkit.command.CommandSender;
+import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.event.block.Action;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.scoreboard.Scoreboard;
 
 import br.com.battlebits.commons.BattlebitsAPI;
+import br.com.battlebits.commons.api.item.ActionItemStack;
+import br.com.battlebits.commons.api.item.ActionItemStack.InteractHandler;
+import br.com.battlebits.commons.bukkit.command.BukkitCommandArgs;
+import br.com.battlebits.commons.core.command.CommandClass;
+import br.com.battlebits.commons.core.command.CommandFramework.Command;
 import br.com.battlebits.commons.core.permission.Group;
-import br.com.battlebits.ylobby.LobbyUtils;
 
-public class FlyCommand implements CommandExecutor {
+public class FlyCommand implements CommandClass {
 
 	private ArrayList<String> onlyForLights;
 	private ArrayList<String> flyEnable;
@@ -20,23 +26,22 @@ public class FlyCommand implements CommandExecutor {
 	public FlyCommand() {
 		onlyForLights = new ArrayList<>();
 		onlyForLights.add("§0");
-		onlyForLights.add(LobbyUtils.getMessageUtils().centerChatMessage("§7O modo §e§lvoar §7so pode ser usado por um"));
-		onlyForLights.add(LobbyUtils.getMessageUtils().centerChatMessage("§7jogador com o grupo §a§lLIGHT §7ou superior!"));
+		onlyForLights.add("§%command-fly-vip%§");
 		onlyForLights.add("§0");
 		flyEnable = new ArrayList<>();
 		flyEnable.add("§0");
-		flyEnable.add(LobbyUtils.getMessageUtils().centerChatMessage("§7Seu §a§lfly §7foi §a§lativado§7!"));
+		flyEnable.add("§%command-fly-enabled%§");
 		flyEnable.add("§0");
 		flyDisable = new ArrayList<>();
 		flyDisable.add("§0");
-		flyDisable.add(LobbyUtils.getMessageUtils().centerChatMessage("§7Seu §e§lfly §7foi §e§ldesativado§7!"));
+		flyDisable.add("§%command-fly-disabled%§");
 		flyDisable.add("§0");
 	}
 
-	@Override
-	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-		if (sender instanceof Player) {
-			Player p = (Player) sender;
+	@Command(name = "fly")
+	public void onCommand(BukkitCommandArgs cmdArgs) {
+		if (cmdArgs.isPlayer()) {
+			Player p = cmdArgs.getPlayer();
 			if (BattlebitsAPI.getAccountCommon().getBattlePlayer(p.getUniqueId()).hasGroupPermission(Group.LIGHT)) {
 				if (p.getAllowFlight()) {
 					p.setAllowFlight(false);
@@ -57,9 +62,33 @@ public class FlyCommand implements CommandExecutor {
 				}
 			}
 		} else {
-			sender.sendMessage("§c§lComando apenas para jogadores.");
+			cmdArgs.getSender().sendMessage("§c§lComando apenas para jogadores.");
 		}
-		return false;
+	}
+
+	@Command(name = "updatescoreboard")
+	public void scoreboard(BukkitCommandArgs args) {
+		if (args.isPlayer()) {
+			Player p = args.getPlayer();
+			Scoreboard board = p.getScoreboard();
+			p.setScoreboard(Bukkit.getScoreboardManager().getNewScoreboard());
+			p.setScoreboard(board);
+		}
+	}
+
+	@Command(name = "giveitem")
+	public void giveItem(BukkitCommandArgs args) {
+		if (args.isPlayer()) {
+			Player p = args.getPlayer();
+			p.getInventory().addItem(new ActionItemStack(new ItemStack(Material.STONE), new InteractHandler() {
+
+				@Override
+				public boolean onInteract(Player player, ItemStack item, Action action) {
+					player.sendMessage("Interact!");
+					return false;
+				}
+			}).getItemStack());
+		}
 	}
 
 }

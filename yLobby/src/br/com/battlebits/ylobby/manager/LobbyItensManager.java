@@ -2,15 +2,28 @@ package br.com.battlebits.ylobby.manager;
 
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.event.block.Action;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
 
+import br.com.battlebits.commons.BattlebitsAPI;
+import br.com.battlebits.commons.api.item.ActionItemStack;
+import br.com.battlebits.commons.api.item.ActionItemStack.InteractHandler;
 import br.com.battlebits.commons.api.item.ItemBuilder;
+import br.com.battlebits.commons.core.account.BattlePlayer;
+import br.com.battlebits.commons.core.permission.Group;
+import br.com.battlebits.commons.core.translate.T;
+import br.com.battlebits.commons.util.string.StringLoreUtils;
+import br.com.battlebits.ylobby.LobbyUtils;
+import br.com.battlebits.ylobby.yLobbyPlugin;
+import br.com.battlebits.ylobby.listener.PlayerHideListener;
+import lombok.Getter;
 
 public class LobbyItensManager {
 
-	private ItemStack showPlayersItem;
-	private ItemStack hidePlayersItem;
+	@Getter
+	private ItemStack hideItem;
 	private ItemStack lobbyItem;
 	private ItemStack gameModeItem;
 	private ItemStack parkourItem;
@@ -19,23 +32,104 @@ public class LobbyItensManager {
 	private ItemStack cosmeticsItem;
 
 	public LobbyItensManager() {
-		showPlayersItem = new ItemBuilder().type(Material.INK_SACK).durability(10)
-				.name("§a§lMostrar Jogadores §7(Clique)").lore("§7Clique aqui para mostrar todos os jogadores").build();
+		hideItem = new ActionItemStack(new ItemBuilder().type(Material.INK_SACK).durability(10)
+				.name("§%hide-players-item%§ §7(§%click%§)").lore("§%hide-players-item-lore%§").build(),
+				new InteractHandler() {
 
-		hidePlayersItem = new ItemBuilder().type(Material.INK_SACK).durability(8)
-				.name("§e§lEsconder Jogadores §7(Clique)").lore("§7Clique aqui para esconder todos os jogadores")
-				.build();
-		lobbyItem = new ItemBuilder().type(Material.NETHER_STAR).name("§5§lLobbys §7(Clique)")
-				.lore("§7Clique aqui para ver e trocar entre de Lobby").build();
-		gameModeItem = new ItemBuilder().type(Material.COMPASS).name("§9§lModos de Jogo §7(Clique)")
-				.lore("§7Clique aqui para ver os modos de jogo disponiveis!").glow().build();
-		parkourItem = new ItemBuilder().type(Material.FEATHER).name("§b§lDiversão §7(Em Breve)")
-				.lore("§7Clique aqui para ver os modos de jogo disponiveis!").build();
-		profileItem = new ItemBuilder().type(Material.SKULL_ITEM).durability(3).name("§6§lPerfil §7(Clique)")
-				.lore("§7Clique aqui para ver o seu perfil!").build();
+					@Override
+					public boolean onInteract(Player player, ItemStack item, Action action) {
+						if (!PlayerHideListener.getUuidCooldown().containsKey(player.getUniqueId())
+								|| System.currentTimeMillis() >= PlayerHideListener.getUuidCooldown()
+										.get(player.getUniqueId())) {
+							if (yLobbyPlugin.getyLobby().getPlayerHideManager().isHiding(player)) {
+								yLobbyPlugin.getyLobby().getPlayerHideManager().showAllPlayers(player);
+								player.sendMessage("§0");
+								player.sendMessage("§%players-showed%§");
+								player.sendMessage("§0");
+								ItemMeta meta = item.getItemMeta();
+								meta.setDisplayName("§%hide-players-item%§ §7(§%click%§)");
+								meta.setLore(StringLoreUtils.formatForLore("§%hide-players-item-lore%§"));
+								item.setItemMeta(meta);
+								item.setDurability((short) 10);
+								player.setItemInHand(item);
+							} else {
+								yLobbyPlugin.getyLobby().getPlayerHideManager().hideAllPlayers(player);
+								player.sendMessage("§0");
+								player.sendMessage("§%players-hided%§");
+								player.sendMessage("§0");
+								item.getItemMeta().setDisplayName("§%show-players-item%§ §7(§%click%§)");
+								ItemMeta meta = item.getItemMeta();
+								meta.setDisplayName("§%show-players-item%§ §7(§%click%§)");
+								meta.setLore(StringLoreUtils.formatForLore("§%show-players-item-lore%§"));
+								item.setItemMeta(meta);
+								item.setDurability((short) 8);
+								player.setItemInHand(item);
+							}
+							PlayerHideListener.getUuidCooldown().put(player.getUniqueId(),
+									System.currentTimeMillis() + 5000);
+						} else {
+							String replace = LobbyUtils.getTimeUtils()
+									.formatTime((int) (((PlayerHideListener.getUuidCooldown().get(player.getUniqueId())
+											- System.currentTimeMillis()) / 1000)) + 1);
+							player.sendMessage("§0");
+							player.sendMessage(T.t(BattlePlayer.getLanguage(player.getUniqueId()), "cooldown-wait",
+									new String[] { "%time%", replace }));
+							player.sendMessage("§0");
+						}
+						return false;
+					}
+				}).getItemStack();
+		lobbyItem = new ActionItemStack(new ItemBuilder().type(Material.NETHER_STAR).name("§5§lLobbys §7(§%click%§)")
+				.lore("§%lobbys-item-lore%§").build(), new InteractHandler() {
+
+					@Override
+					public boolean onInteract(Player player, ItemStack item, Action action) {
+						yLobbyPlugin.getyLobby().getLobbySelector().open(player);
+						return false;
+					}
+				}).getItemStack();
+		gameModeItem = new ActionItemStack(new ItemBuilder().type(Material.COMPASS)
+				.name("§%gamemode-item%§ §7(§%click%§)").lore("§%gamemode-item-lore%§").glow().build(),
+				new InteractHandler() {
+
+					@Override
+					public boolean onInteract(Player player, ItemStack item, Action action) {
+						yLobbyPlugin.getyLobby().getGameModeSelector().open(player);
+						return false;
+					}
+				}).getItemStack();
+		parkourItem = new ActionItemStack(new ItemBuilder().type(Material.FEATHER).name("§%fun-item%§ §7(Em Breve)")
+				.lore("§%fun-item-lore%§").build(), new InteractHandler() {
+					@Override
+					public boolean onInteract(Player player, ItemStack item, Action action) {
+						return false;
+					}
+				}).getItemStack();
+		profileItem = new ActionItemStack(new ItemBuilder().type(Material.SKULL_ITEM).durability(3)
+				.name("§%prefile-item%§ §7(§%click%§)").lore("§%prefile-item-lore%§").build(), new InteractHandler() {
+
+					@Override
+					public boolean onInteract(Player player, ItemStack item, Action action) {
+						yLobbyPlugin.getyLobby().getYourProfileInventory().open(player);
+						return false;
+					}
+				}).getItemStack();
 		profileMeta = (SkullMeta) profileItem.getItemMeta();
-		cosmeticsItem = new ItemBuilder().type(Material.ENDER_CHEST).name("§a§lCosmeticos §7(Clique)")
-				.lore("§7Clique aqui para abrir o menu de Cosmeticos.").build();
+		cosmeticsItem = new ActionItemStack(new ItemBuilder().type(Material.ENDER_CHEST)
+				.name("§%cosmetics-item%§ §7(Clique)").lore("§%cosmetics-item-lore%§").build(), new InteractHandler() {
+
+					@Override
+					public boolean onInteract(Player player, ItemStack item, Action action) {
+						if (BattlebitsAPI.getAccountCommon().getBattlePlayer(player.getUniqueId())
+								.hasGroupPermission(Group.LIGHT)) {
+							// TODO
+							// yAddonsPlugin.getyAddons().getSelectorInventory().open(e.getPlayer());
+						} else {
+							player.sendMessage("§%system-not-online%§");
+						}
+						return false;
+					}
+				}).getItemStack();
 	}
 
 	public void setItems(Player p) {
@@ -46,34 +140,10 @@ public class LobbyItensManager {
 		profileItem.setItemMeta(profileMeta);
 		p.getInventory().setItem(1, profileItem);
 		p.getInventory().setItem(3, cosmeticsItem);
-		p.getInventory().setItem(6, hidePlayersItem);
+		p.getInventory().setItem(6, hideItem);
 		p.getInventory().setItem(7, parkourItem);
 		p.getInventory().setItem(8, lobbyItem);
 		p.getInventory().setHeldItemSlot(0);
-	}
-
-	public ItemStack getHidePlayersItem() {
-		return hidePlayersItem;
-	}
-
-	public ItemStack getShowPlayersItem() {
-		return showPlayersItem;
-	}
-
-	public ItemStack getLobbyItem() {
-		return lobbyItem;
-	}
-
-	public ItemStack getGameModeItem() {
-		return gameModeItem;
-	}
-
-	public ItemStack getParkourItem() {
-		return parkourItem;
-	}
-
-	public ItemStack getProfileItem() {
-		return profileItem;
 	}
 
 }

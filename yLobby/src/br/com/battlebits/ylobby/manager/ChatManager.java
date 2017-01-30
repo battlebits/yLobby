@@ -6,8 +6,6 @@ import java.util.UUID;
 
 import org.bukkit.entity.Player;
 
-import br.com.battlebits.ylobby.LobbyUtils;
-
 public class ChatManager implements ManagerBase {
 
 	private ArrayList<UUID> tellDisabled;
@@ -22,7 +20,7 @@ public class ChatManager implements ManagerBase {
 		chatDisabledMessage = new ArrayList<>();
 		chatDisabledMessage.add("§0");
 		chatDisabledMessage
-				.add(LobbyUtils.getMessageUtils().centerChatMessage("§7Seu §c§lchat §7esta §c§ldesabilitado§7!"));
+				.add("§7Seu §c§lchat §7esta §c§ldesabilitado§7!");
 		chatDisabledMessage.add("§0");
 	}
 

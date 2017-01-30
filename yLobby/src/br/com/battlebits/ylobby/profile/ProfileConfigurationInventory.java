@@ -25,14 +25,7 @@ public class ProfileConfigurationInventory {
 	private ItemStack hideDisabledIcon;
 	private ItemStack hideEnabledItem;
 	private ItemStack hideDisabledItem;
-	private ItemStack tellEnabledIcon;
-	private ItemStack tellDisabledIcon;
-	private ItemStack tellEnabledItem;
-	private ItemStack tellDisabledItem;
 	private ItemStack chatEnabledIcon;
-	private ItemStack chatDisabledIcon;
-	private ItemStack chatEnabledItem;
-	private ItemStack chatDisabledItem;
 	private ItemStack backToProfile;
 
 	public ProfileConfigurationInventory() {
@@ -47,15 +40,8 @@ public class ProfileConfigurationInventory {
 		hideDisabledIcon = createDisabledIconItem(Material.ENDER_PEARL, "Mostrar jogadores");
 		hideEnabledItem = createEnabledItem("Mostrar jogadores");
 		hideDisabledItem = createDisabledItem("Mostrar jogadores");
-		tellEnabledIcon = createEnabledIconItem(Material.BOOK_AND_QUILL, "Mensagens privadas");
-		tellDisabledIcon = createDisabledIconItem(Material.BOOK, "Mensagens privadas");
-		tellEnabledItem = createEnabledItem("Mensagens privadas");
-		tellDisabledItem = createDisabledItem("Mensagens privadas");
 		chatEnabledIcon = createEnabledIconItem(Material.PAPER, "Chat geral");
 		chatEnabledIcon = ItemBuilder.glow(chatEnabledIcon);
-		chatDisabledIcon = createDisabledIconItem(Material.PAPER, "Chat geral");
-		chatEnabledItem = createEnabledItem("Chat geral");
-		chatDisabledItem = createDisabledItem("Chat geral");
 		backToProfile = new ItemBuilder().type(Material.ARROW).name("§5§lPerfil")
 				.lore("Clique aqui para voltar ao seu perfil.").build();
 	}
@@ -64,8 +50,6 @@ public class ProfileConfigurationInventory {
 		Inventory inv = Bukkit.createInventory(null, 36, "        §nSuas preferencias");
 		setHideItens(inv, p);
 		setFlyItens(inv, p);
-		setTellItens(inv, p);
-		setChatItens(inv, p);
 		inv.setItem(31, backToProfile);
 		p.openInventory(inv);
 	}
@@ -106,26 +90,6 @@ public class ProfileConfigurationInventory {
 				inv.setItem(12, flyForLightIcon);
 				inv.setItem(21, flyForLightItem);
 			}
-		}
-	}
-
-	public void setTellItens(Inventory inv, Player p) {
-		if (yLobbyPlugin.getyLobby().getChatManager().isTellEnabled(p.getUniqueId())) {
-			inv.setItem(14, tellEnabledIcon);
-			inv.setItem(23, tellEnabledItem);
-		} else {
-			inv.setItem(14, tellDisabledIcon);
-			inv.setItem(23, tellDisabledItem);
-		}
-	}
-
-	public void setChatItens(Inventory inv, Player p) {
-		if (yLobbyPlugin.getyLobby().getChatManager().isChatEnabled(p.getUniqueId())) {
-			inv.setItem(16, chatEnabledIcon);
-			inv.setItem(25, chatEnabledItem);
-		} else {
-			inv.setItem(16, chatDisabledIcon);
-			inv.setItem(25, chatDisabledItem);
 		}
 	}
 

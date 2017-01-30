@@ -15,9 +15,7 @@ import br.com.battlebits.ylobby.listener.BountifulListener;
 import br.com.battlebits.ylobby.listener.GameModsListener;
 import br.com.battlebits.ylobby.listener.MainListener;
 import br.com.battlebits.ylobby.listener.PlayerHideListener;
-import br.com.battlebits.ylobby.listener.VipSlotsListener;
 import br.com.battlebits.ylobby.manager.BungeeManager;
-import br.com.battlebits.ylobby.manager.ChatManager;
 import br.com.battlebits.ylobby.manager.GameModsManager;
 import br.com.battlebits.ylobby.manager.GameServerInfoManager;
 import br.com.battlebits.ylobby.manager.LobbyItensManager;
@@ -62,7 +60,6 @@ public class yLobbyPlugin extends JavaPlugin {
 	private LobbyItensManager lobbyItensManager;
 	private LocationManager locationManager;
 	private ScoreboardManager scoreboardManager;
-	private ChatManager chatManager;
 
 	private LobbySelector lobbySelector;
 	private LobbySelectorListener lobbySelectorListener;
@@ -86,7 +83,6 @@ public class yLobbyPlugin extends JavaPlugin {
 	private GameModsListener gameModsListener;
 	private PlayerHideListener playerHideListener;
 	private MainListener mainListener;
-	private VipSlotsListener vipSlotsListener;
 
 	@Override
 	public void onEnable() {
@@ -121,7 +117,6 @@ public class yLobbyPlugin extends JavaPlugin {
 		playerHideManager = new PlayerHideManager();
 		locationManager = new LocationManager();
 		scoreboardManager = new ScoreboardManager();
-		chatManager = new ChatManager();
 
 		lobbySelector = new LobbySelector();
 		lobbySelectorListener = new LobbySelectorListener();
@@ -142,7 +137,6 @@ public class yLobbyPlugin extends JavaPlugin {
 		profileConfigurationInventory = new ProfileConfigurationInventory();
 		profileConfigurationListener = new ProfileConfigurationListener();
 
-		vipSlotsListener = new VipSlotsListener();
 		bountifulListener = new BountifulListener();
 		mainListener = new MainListener();
 		playerHideListener = new PlayerHideListener();
@@ -150,10 +144,7 @@ public class yLobbyPlugin extends JavaPlugin {
 
 		LobbyUtils.getListenerUtils().registerListeners(this, gameModeSelectorListener, lobbySelectorListener,
 				matchSelectorListener, multiSelectorListener, yourProfileListener, profileRanksListener,
-				profileConfigurationListener, bountifulListener, mainListener, playerHideListener, gameModsListener,
-				vipSlotsListener);
-
-		chatManager.start();
+				profileConfigurationListener, bountifulListener, mainListener, playerHideListener, gameModsListener);
 
 		tabAndHeaderUpdater.start();
 
@@ -183,7 +174,6 @@ public class yLobbyPlugin extends JavaPlugin {
 
 		tabAndHeaderUpdater.stop();
 
-		chatManager.stop();
 		matchSelectorManager.stop();
 		multiSelectorManager.stop();
 		gameServerInfoManager.stop();
@@ -273,10 +263,6 @@ public class yLobbyPlugin extends JavaPlugin {
 
 	public ScoreboardManager getScoreboardManager() {
 		return scoreboardManager;
-	}
-
-	public ChatManager getChatManager() {
-		return chatManager;
 	}
 
 	public ProfileConfigurationInventory getProfileConfigurationInventory() {

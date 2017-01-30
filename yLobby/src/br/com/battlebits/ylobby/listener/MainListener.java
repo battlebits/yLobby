@@ -1,7 +1,5 @@
 package br.com.battlebits.ylobby.listener;
 
-import java.util.UUID;
-
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Damageable;
@@ -15,7 +13,6 @@ import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
-import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -25,8 +22,6 @@ import org.bukkit.event.weather.WeatherChangeEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import br.com.battlebits.commons.BattlebitsAPI;
-import br.com.battlebits.commons.core.permission.Group;
 import br.com.battlebits.ylobby.yLobbyPlugin;
 
 public class MainListener implements Listener {
@@ -103,7 +98,6 @@ public class MainListener implements Listener {
 			e.getPlayer().setAllowFlight(false);
 			e.getPlayer().setFlying(false);
 		}
-		yLobbyPlugin.getyLobby().getChatManager().removeFromList(e.getPlayer().getUniqueId());
 		e.setQuitMessage("");
 	}
 
@@ -133,35 +127,6 @@ public class MainListener implements Listener {
 			// e.getPlayer().sendMessage("§7Sistema de Lobby para a
 			// §6§lBattle§r§lBits §9§lNetwork §7versão " +
 			// yLobbyPlugin.getyLobby().getDescription().getVersion() + "!");
-		}
-	}
-
-	@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-	public void onAsyncPlayerChatListener(AsyncPlayerChatEvent e) {
-		if (!e.getMessage().startsWith("Damage Indicators")) {
-			if (yLobbyPlugin.getyLobby().getChatManager().isChatEnabled(e.getPlayer().getUniqueId())) {
-				if (!(e.getMessage().startsWith("@") && BattlebitsAPI.getAccountCommon()
-						.getBattlePlayer(e.getPlayer().getUniqueId()).hasGroupPermission(Group.MOD))) {
-					for (UUID id : yLobbyPlugin.getyLobby().getChatManager().getChatDisabledPlayers()) {
-						e.getRecipients().remove(Bukkit.getPlayer(id));
-					}
-				} else {
-					if (e.getMessage().length() > 1) {
-						String str = e.getMessage().substring(1, e.getMessage().length());
-						if (str.length() > 0) {
-							e.setMessage(str);
-						} else {
-							e.setCancelled(true);
-						}
-					} else {
-						e.setCancelled(true);
-					}
-				}
-			} else {
-				yLobbyPlugin.getyLobby().getChatManager().chatDisabledMessage(e.getPlayer());
-			}
-		} else {
-			e.setCancelled(true);
 		}
 	}
 

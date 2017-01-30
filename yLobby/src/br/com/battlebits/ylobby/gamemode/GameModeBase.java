@@ -19,6 +19,7 @@ import lombok.Getter;
 import net.citizensnpcs.api.CitizensAPI;
 import net.citizensnpcs.api.npc.NPC;
 import net.citizensnpcs.trait.Gravity;
+import net.md_5.bungee.api.ChatColor;
 
 public abstract class GameModeBase {
 
@@ -37,7 +38,7 @@ public abstract class GameModeBase {
 		inventoryItemMeta = inventoryitem.getItemMeta();
 		inventoryItemMeta.setDisplayName("§9§l" + servername);
 		inventoryItemLore = new ArrayList<>();
-		inventoryItemLore.addAll(StringLoreUtils.formatForLore(serverdescription));
+		inventoryItemLore.addAll(StringLoreUtils.formatForLore(ChatColor.GRAY + serverdescription));
 		inventoryItemLore.add("§0");
 		inventoryItemLore.add("§b§30 §7jogadores online.");
 		inventoryItemLore.add("§0");

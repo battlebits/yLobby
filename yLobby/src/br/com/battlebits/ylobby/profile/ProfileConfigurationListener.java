@@ -112,33 +112,7 @@ public class ProfileConfigurationListener implements Listener {
 								yLobbyPlugin.getyLobby().getProfileConfigurationInventory()
 										.setFlyItens(e.getInventory(), p);
 							} else if (e.getSlot() == 14 || e.getSlot() == 23) {
-								if (yLobbyPlugin.getyLobby().getChatManager().isTellEnabled(p.getUniqueId())) {
-									yLobbyPlugin.getyLobby().getChatManager().disableTell(p.getUniqueId());
-									for (String str : tellDisable) {
-										p.sendMessage(str);
-									}
-								} else {
-									yLobbyPlugin.getyLobby().getChatManager().enableTell(p.getUniqueId());
-									for (String str : tellEnable) {
-										p.sendMessage(str);
-									}
-								}
-								yLobbyPlugin.getyLobby().getProfileConfigurationInventory()
-										.setTellItens(e.getInventory(), p);
 							} else if (e.getSlot() == 16 || e.getSlot() == 25) {
-								if (yLobbyPlugin.getyLobby().getChatManager().isChatEnabled(p.getUniqueId())) {
-									yLobbyPlugin.getyLobby().getChatManager().disableChat(p.getUniqueId());
-									for (String str : chatDisable) {
-										p.sendMessage(str);
-									}
-								} else {
-									yLobbyPlugin.getyLobby().getChatManager().enableChat(p.getUniqueId());
-									for (String str : chatEnable) {
-										p.sendMessage(str);
-									}
-								}
-								yLobbyPlugin.getyLobby().getProfileConfigurationInventory()
-										.setChatItens(e.getInventory(), p);
 							} else if (e.getSlot() == 31) {
 								yLobbyPlugin.getyLobby().getYourProfileInventory().open(p);
 							}

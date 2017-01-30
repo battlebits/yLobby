@@ -110,7 +110,7 @@ public class MainListener implements Listener {
 	@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
 	public void onWeatherChangeListener(WeatherChangeEvent e) {
 		e.setCancelled(true);
-		Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "weather clear 100000000");
+		Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "weather clear 1000000");
 	}
 
 	@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)

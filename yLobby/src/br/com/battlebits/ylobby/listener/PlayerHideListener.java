@@ -9,6 +9,10 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;
 
+import br.com.battlebits.commons.bukkit.event.vanish.PlayerHideToPlayerEvent;
+import br.com.battlebits.commons.bukkit.event.vanish.PlayerShowToPlayerEvent;
+import br.com.battlebits.commons.core.account.BattlePlayer;
+import br.com.battlebits.commons.core.permission.Group;
 import br.com.battlebits.ylobby.yLobbyPlugin;
 import lombok.Getter;
 
@@ -36,6 +40,18 @@ public class PlayerHideListener implements Listener {
 		yLobbyPlugin.getyLobby().getPlayerHideManager().tryToRemoveFromLists(e.getPlayer().getUniqueId());
 	}
 
-		// TODO User PlayerHideToPlayerEvent
+	@EventHandler
+	public void onVanish(PlayerHideToPlayerEvent event) {
+		
+	}
+
+	@EventHandler
+	public void onVanish(PlayerShowToPlayerEvent event) {
+		if (yLobbyPlugin.getyLobby().getPlayerHideManager().isHiding(event.getToPlayer())) {
+			if (!BattlePlayer.getPlayer(event.getPlayer().getUniqueId()).hasGroupPermission(Group.LIGHT)) {
+				event.setCancelled(true);
+			}
+		}
+	}
 
 }

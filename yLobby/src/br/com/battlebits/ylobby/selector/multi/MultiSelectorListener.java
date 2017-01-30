@@ -10,6 +10,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
 
+import br.com.battlebits.ylobby.LobbyUtils;
 import br.com.battlebits.ylobby.yLobbyPlugin;
 import net.md_5.bungee.api.ChatColor;
 
@@ -20,7 +21,7 @@ public class MultiSelectorListener implements Listener {
 	public MultiSelectorListener() {
 		connectingDirect = new ArrayList<>();
 		connectingDirect.add("§0");
-		connectingDirect.add(yLobbyPlugin.getyLobby().getzUtils().getMessageUtils().centerChatMessage("§7Tentando conectar a um servidor §a§ldisponivel§7!"));
+		connectingDirect.add(LobbyUtils.getMessageUtils().centerChatMessage("§7Tentando conectar a um servidor §a§ldisponivel§7!"));
 		connectingDirect.add("§0");
 	}
 

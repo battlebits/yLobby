@@ -6,9 +6,9 @@ import org.bukkit.scoreboard.DisplaySlot;
 import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Scoreboard;
 
-import br.com.battlebits.ycommon.common.BattlebitsAPI;
-import br.com.battlebits.ycommon.common.account.BattlePlayer;
-import br.com.battlebits.ycommon.common.tag.Tag;
+import br.com.battlebits.commons.BattlebitsAPI;
+import br.com.battlebits.commons.core.account.BattlePlayer;
+import br.com.battlebits.commons.core.account.Tag;
 import br.com.battlebits.ylobby.yLobbyPlugin;
 
 public class ScoreboardManager {
@@ -28,12 +28,14 @@ public class ScoreboardManager {
 				obj.getScore("§9").setScore(10);
 				board.registerNewTeam("rankteam").addEntry("§9");
 				board.getTeam("rankteam").setPrefix("§7Rank: ");
-				board.getTeam("rankteam").setSuffix(Tag.valueOf(account.getServerGroup().toString()).getPrefix(account.getLanguage()));
+				board.getTeam("rankteam")
+						.setSuffix(Tag.valueOf(account.getServerGroup().toString()).getPrefix(account.getLanguage()));
 
 				obj.getScore("§8").setScore(9);
 				board.registerNewTeam("ligateam").addEntry("§8");
 				board.getTeam("ligateam").setPrefix("§7Liga: ");
-				board.getTeam("ligateam").setSuffix(account.getLiga().getSymbol() + " " + account.getLiga().toString());
+				board.getTeam("ligateam")
+						.setSuffix(account.getLeague().getSymbol() + " " + account.getLeague().toString());
 
 				obj.getScore("§7").setScore(8);
 				board.registerNewTeam("xpteam").addEntry("§7");
@@ -55,8 +57,8 @@ public class ScoreboardManager {
 				obj.getScore("§3").setScore(4);
 				board.registerNewTeam("onlineteam").addEntry("§3");
 				board.getTeam("onlineteam").setPrefix("§7Online: ");
-				board.getTeam("onlineteam")
-						.setSuffix("§e" + yLobbyPlugin.getyLobby().getPlayerCountManager().getNetworkOnlinePlayers() + " jogadores");
+				board.getTeam("onlineteam").setSuffix("§e"
+						+ yLobbyPlugin.getyLobby().getPlayerCountManager().getNetworkOnlinePlayers() + " jogadores");
 
 				obj.getScore("§2").setScore(3);
 				board.registerNewTeam("lobbyidteam").addEntry("§2");
@@ -79,7 +81,8 @@ public class ScoreboardManager {
 	public void updateMainScoreboard(Player p) {
 		Scoreboard board = p.getScoreboard();
 
-		board.getTeam("onlineteam").setSuffix("§e" + yLobbyPlugin.getyLobby().getPlayerCountManager().getNetworkOnlinePlayers() + " jogadores");
+		board.getTeam("onlineteam").setSuffix(
+				"§e" + yLobbyPlugin.getyLobby().getPlayerCountManager().getNetworkOnlinePlayers() + " jogadores");
 	}
 
 }

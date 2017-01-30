@@ -4,5 +4,5 @@ author: zViitoor
 name: yLobby
 website: www.battlebits.com.br
 description: Plugin do Lobby da BattleBits Network.
-depend: [yCommon]
-loadbefore: [yCommon, yAddons]
+depend: [Commons, HolographicDisplays, Citizens]
+loadbefore: [Commons, HolographicDisplays, Citizens]

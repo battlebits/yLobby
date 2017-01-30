@@ -7,8 +7,10 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import br.com.battlebits.ycommon.common.BattlebitsAPI;
-import br.com.battlebits.ycommon.common.permissions.enums.Group;
+import br.com.battlebits.commons.BattlebitsAPI;
+import br.com.battlebits.commons.api.item.ItemBuilder;
+import br.com.battlebits.commons.core.permission.Group;
+import br.com.battlebits.commons.util.string.StringLoreUtils;
 import br.com.battlebits.ylobby.yLobbyPlugin;
 
 public class ProfileConfigurationInventory {
@@ -35,7 +37,7 @@ public class ProfileConfigurationInventory {
 
 	public ProfileConfigurationInventory() {
 		flyEnabledIcon = createEnabledIconItem(Material.FEATHER, "Modo voar");
-		flyEnabledIcon = yLobbyPlugin.getyLobby().getzUtils().getItemUtils().addGlow(flyEnabledIcon);
+		flyEnabledIcon = ItemBuilder.glow(flyEnabledIcon);
 		flyDisabledIcon = createDisabledIconItem(Material.FEATHER, "Modo voar");
 		flyForLightIcon = createForLightIconItem(Material.FEATHER, "Modo voar");
 		flyEnabledItem = createEnabledItem("Modo voar");
@@ -50,15 +52,12 @@ public class ProfileConfigurationInventory {
 		tellEnabledItem = createEnabledItem("Mensagens privadas");
 		tellDisabledItem = createDisabledItem("Mensagens privadas");
 		chatEnabledIcon = createEnabledIconItem(Material.PAPER, "Chat geral");
-		chatEnabledIcon = yLobbyPlugin.getyLobby().getzUtils().getItemUtils().addGlow(chatEnabledIcon);
+		chatEnabledIcon = ItemBuilder.glow(chatEnabledIcon);
 		chatDisabledIcon = createDisabledIconItem(Material.PAPER, "Chat geral");
 		chatEnabledItem = createEnabledItem("Chat geral");
 		chatDisabledItem = createDisabledItem("Chat geral");
-		backToProfile = new ItemStack(Material.ARROW, 1);
-		ItemMeta backMeta = backToProfile.getItemMeta();
-		backMeta.setDisplayName("§5§lPerfil");
-		backMeta.setLore(yLobbyPlugin.getyLobby().getzUtils().getItemUtils().formatForLore("Clique aqui para voltar ao seu perfil."));
-		backToProfile.setItemMeta(backMeta);
+		backToProfile = new ItemBuilder().type(Material.ARROW).name("§5§lPerfil")
+				.lore("Clique aqui para voltar ao seu perfil.").build();
 	}
 
 	public void open(Player p) {
@@ -107,7 +106,7 @@ public class ProfileConfigurationInventory {
 			inv.setItem(23, tellDisabledItem);
 		}
 	}
-	
+
 	public void setChatItens(Inventory inv, Player p) {
 		if (yLobbyPlugin.getyLobby().getChatManager().isChatEnabled(p.getUniqueId())) {
 			inv.setItem(16, chatEnabledIcon);
@@ -122,8 +121,8 @@ public class ProfileConfigurationInventory {
 		ItemStack stack = new ItemStack(mat, 1);
 		ItemMeta meta = stack.getItemMeta();
 		meta.setDisplayName("§a§l" + name);
-		meta.setLore(yLobbyPlugin.getyLobby().getzUtils().getItemUtils()
-				.formatForLore("§7Está atualmente §a§lativado.\\n§7Clique aqui para §e§ldesativar§7."));
+		meta.setLore(
+				StringLoreUtils.getLore(30, "§7Está atualmente §a§lativado.\\n§7Clique aqui para §e§ldesativar§7."));
 		stack.setItemMeta(meta);
 		return stack;
 	}
@@ -132,8 +131,8 @@ public class ProfileConfigurationInventory {
 		ItemStack stack = new ItemStack(mat, 1);
 		ItemMeta meta = stack.getItemMeta();
 		meta.setDisplayName("§c§l" + name);
-		meta.setLore(yLobbyPlugin.getyLobby().getzUtils().getItemUtils()
-				.formatForLore("§7Está atualmente §e§ldesativado.\\n§7Clique aqui para §a§lativar§7."));
+		meta.setLore(
+				StringLoreUtils.getLore(30, "§7Está atualmente §e§ldesativado.\\n§7Clique aqui para §a§lativar§7."));
 		stack.setItemMeta(meta);
 		return stack;
 	}
@@ -142,8 +141,8 @@ public class ProfileConfigurationInventory {
 		ItemStack stack = new ItemStack(mat, 1);
 		ItemMeta meta = stack.getItemMeta();
 		meta.setDisplayName("§e§l" + name);
-		meta.setLore(yLobbyPlugin.getyLobby().getzUtils().getItemUtils()
-				.formatForLore("§7Para §a§lativar §7e necessario que voce seja §a§lLIGHT§7 ou superior!"));
+		meta.setLore(
+				StringLoreUtils.getLore(30, "§7Para §a§lativar §7e necessario que voce seja §a§lLIGHT§7 ou superior!"));
 		stack.setItemMeta(meta);
 		return stack;
 	}
@@ -152,8 +151,8 @@ public class ProfileConfigurationInventory {
 		ItemStack stack = new ItemStack(Material.STAINED_GLASS_PANE, 1, (short) 5);
 		ItemMeta meta = stack.getItemMeta();
 		meta.setDisplayName("§a§l" + name);
-		meta.setLore(yLobbyPlugin.getyLobby().getzUtils().getItemUtils()
-				.formatForLore("§7Está atualmente §a§lativado.\\n§7Clique aqui para §e§ldesativar§7."));
+		meta.setLore(
+				StringLoreUtils.getLore(30, "§7Está atualmente §a§lativado.\\n§7Clique aqui para §e§ldesativar§7."));
 		stack.setItemMeta(meta);
 		return stack;
 	}
@@ -162,8 +161,8 @@ public class ProfileConfigurationInventory {
 		ItemStack stack = new ItemStack(Material.STAINED_GLASS_PANE, 1, (short) 8);
 		ItemMeta meta = stack.getItemMeta();
 		meta.setDisplayName("§c§l" + name);
-		meta.setLore(yLobbyPlugin.getyLobby().getzUtils().getItemUtils()
-				.formatForLore("§7Está atualmente §e§ldesativado.\\n§7Clique aqui para §a§lativar§7."));
+		meta.setLore(
+				StringLoreUtils.getLore(30, "§7Está atualmente §e§ldesativado.\\n§7Clique aqui para §a§lativar§7."));
 		stack.setItemMeta(meta);
 		return stack;
 	}
@@ -172,8 +171,8 @@ public class ProfileConfigurationInventory {
 		ItemStack stack = new ItemStack(Material.STAINED_GLASS_PANE, 1, (short) 4);
 		ItemMeta meta = stack.getItemMeta();
 		meta.setDisplayName("§e§l" + name);
-		meta.setLore(yLobbyPlugin.getyLobby().getzUtils().getItemUtils()
-				.formatForLore("§7Para §a§lativar §7e necessario que voce seja §a§lLIGHT§7 ou superior!"));
+		meta.setLore(
+				StringLoreUtils.getLore(30, "§7Para §a§lativar §7e necessario que voce seja §a§lLIGHT§7 ou superior!"));
 		stack.setItemMeta(meta);
 		return stack;
 	}

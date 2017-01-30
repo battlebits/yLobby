@@ -4,23 +4,25 @@ import java.util.Arrays;
 
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import br.com.battlebits.ylobby.LobbyUtils;
 import br.com.battlebits.ylobby.yLobbyPlugin;
 import br.com.battlebits.ylobby.bungee.BungeeMessage;
 import br.com.battlebits.ylobby.server.ServerInfo;
-import br.com.battlebits.yutils.character.CharacterType;
 
 public class GameModeSimple extends GameModeBase {
 
 	private String bungeeId;
 	private BungeeMessage connectMessage;
 
-	public GameModeSimple(final String servername, String serverdescription, Material iconmaterial, String serverbungeeid, Location npclocation,
-			CharacterType characterType) {
-		super(servername, serverdescription, iconmaterial, Arrays.asList("§b§lClique §bpara §b§lconectar§b."), npclocation, characterType);
+	public GameModeSimple(final String servername, String serverdescription, Material iconmaterial,
+			String serverbungeeid, Location npclocation, EntityType type) {
+		super(servername, serverdescription, iconmaterial, Arrays.asList("§b§lClique §bpara §b§lconectar§b."),
+				npclocation, type);
 		bungeeId = serverbungeeid;
 		if (!yLobbyPlugin.getyLobby().getServerInfoManager().isRegistred(bungeeId)) {
 			yLobbyPlugin.getyLobby().getServerInfoManager().addServer(bungeeId);
@@ -29,10 +31,16 @@ public class GameModeSimple extends GameModeBase {
 		new BukkitRunnable() {
 			@Override
 			public void run() {
-				getCharacterNPC().getBukkitEntity().setMetadata("GM_CONNECT",
+				if (!getCharacterNPC().isSpawned()) {
+					getCharacterNPC().spawn(LobbyUtils.getLocationUtils().getCenter(npclocation, true));
+					return;
+				}
+				getCharacterNPC().getEntity().setMetadata("GM_CONNECT",
 						new FixedMetadataValue(yLobbyPlugin.getyLobby(), connectMessage.getMessageArgs()));
-				getCharacterNPC().getBukkitEntity().setMetadata("GM_TYPE", new FixedMetadataValue(yLobbyPlugin.getyLobby(), "SIMPLE"));
-				getCharacterNPC().getBukkitEntity().setMetadata("GM_NAME", new FixedMetadataValue(yLobbyPlugin.getyLobby(), servername));
+				getCharacterNPC().getEntity().setMetadata("GM_TYPE",
+						new FixedMetadataValue(yLobbyPlugin.getyLobby(), "SIMPLE"));
+				getCharacterNPC().getEntity().setMetadata("GM_NAME",
+						new FixedMetadataValue(yLobbyPlugin.getyLobby(), servername));
 			}
 		}.runTask(yLobbyPlugin.getyLobby());
 	}

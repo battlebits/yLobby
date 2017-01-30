@@ -6,14 +6,10 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import br.com.battlebits.commons.bukkit.command.BukkitCommandFramework;
+import br.com.battlebits.commons.core.command.CommandLoader;
 import br.com.battlebits.ylobby.bungee.BungeeMessageReceiver;
 import br.com.battlebits.ylobby.bungee.BungeeMessageSender;
-import br.com.battlebits.ylobby.command.FlyCommand;
-import br.com.battlebits.ylobby.command.GroupCommand;
-import br.com.battlebits.ylobby.command.PrefCommand;
-import br.com.battlebits.ylobby.command.ProfileCommand;
-import br.com.battlebits.ylobby.command.SpawnCommand;
-import br.com.battlebits.ylobby.command.TellCommand;
 import br.com.battlebits.ylobby.detector.PlayerOutOfLobbyDetector;
 import br.com.battlebits.ylobby.listener.BountifulListener;
 import br.com.battlebits.ylobby.listener.GameModsListener;
@@ -32,7 +28,6 @@ import br.com.battlebits.ylobby.manager.PlayerCountManager;
 import br.com.battlebits.ylobby.manager.PlayerHideManager;
 import br.com.battlebits.ylobby.manager.ScoreboardManager;
 import br.com.battlebits.ylobby.manager.ServerInfoManager;
-import br.com.battlebits.ylobby.manager.TabHeaderAndFooterManager;
 import br.com.battlebits.ylobby.profile.ProfileConfigurationInventory;
 import br.com.battlebits.ylobby.profile.ProfileConfigurationListener;
 import br.com.battlebits.ylobby.profile.ProfileRanksInventory;
@@ -52,8 +47,6 @@ public class yLobbyPlugin extends JavaPlugin {
 
 	private static yLobbyPlugin yLobby;
 
-	private zUtils zUtils;
-
 	// private MySQLConnection mySQLConnection;
 
 	private BungeeMessageReceiver bungeeMessageReceiver;
@@ -66,7 +59,6 @@ public class yLobbyPlugin extends JavaPlugin {
 	private ServerInfoManager serverInfoManager;
 	private PlayerCountManager playerCountManager;
 	private GameModsManager gameModsManager;
-	private TabHeaderAndFooterManager tabHeaderAndFooterManager;
 	private PlayerHideManager playerHideManager;
 	private LobbyItensManager lobbyItensManager;
 	private LocationManager locationManager;
@@ -98,13 +90,6 @@ public class yLobbyPlugin extends JavaPlugin {
 	private MainListener mainListener;
 	private VipSlotsListener vipSlotsListener;
 
-	private FlyCommand flyCommand;
-	private TellCommand tellCommand;
-	private SpawnCommand spawnCommand;
-	private PrefCommand prefCommand;
-	private ProfileCommand profileCommand;
-	private GroupCommand groupCommand;
-
 	@Override
 	public void onEnable() {
 
@@ -115,7 +100,7 @@ public class yLobbyPlugin extends JavaPlugin {
 		Bukkit.getWorlds().get(0).setAutoSave(false);
 		Bukkit.getWorlds().get(0).setDifficulty(Difficulty.EASY);
 
-		zUtils = new zUtils(this);
+		LobbyUtils.registerListener(this);
 
 		// mySQLConnection = new MySQLConnection();
 		// mySQLConnection.tryToConnect();
@@ -135,7 +120,6 @@ public class yLobbyPlugin extends JavaPlugin {
 		playerCountManager = new PlayerCountManager();
 		locationManager = new LocationManager();
 		gameModsManager = new GameModsManager();
-		tabHeaderAndFooterManager = new TabHeaderAndFooterManager();
 		playerHideManager = new PlayerHideManager();
 		locationManager = new LocationManager();
 		scoreboardManager = new ScoreboardManager();
@@ -167,14 +151,10 @@ public class yLobbyPlugin extends JavaPlugin {
 		playerHideListener = new PlayerHideListener();
 		gameModsListener = new GameModsListener();
 
-		tellCommand = new TellCommand();
-		spawnCommand = new SpawnCommand();
-		flyCommand = new FlyCommand();
-		prefCommand = new PrefCommand();
-		profileCommand = new ProfileCommand();
-		groupCommand = new GroupCommand();
-
-		zUtils.getListenerUtils().registerListeners(gameModeSelectorListener, lobbySelectorListener, matchSelectorListener, multiSelectorListener, yourProfileListener, profileRanksListener, profileConfigurationListener, bountifulListener, mainListener, playerHideListener, gameModsListener, vipSlotsListener);
+		LobbyUtils.getListenerUtils().registerListeners(this, gameModeSelectorListener, lobbySelectorListener,
+				matchSelectorListener, multiSelectorListener, yourProfileListener, profileRanksListener,
+				profileConfigurationListener, bountifulListener, mainListener, playerHideListener, gameModsListener,
+				vipSlotsListener);
 
 		chatManager.start();
 
@@ -183,18 +163,9 @@ public class yLobbyPlugin extends JavaPlugin {
 
 		playerOutOfLobbyDetector.start();
 
-		zUtils.getCommandUtils().registerCommand(spawnCommand, "spawn", "Comando para ir ao Spawn do Lobby", "lobby", "hub");
-		zUtils.getCommandUtils().registerCommand(flyCommand, "fly", "Comando para ativar ou desativar seu fly", "voar");
-		zUtils.getCommandUtils().registerCommand(tellCommand, "tell", "Comando para enviar mensagems privadas para jogadores", "pm", "w", "msg");
-		zUtils.getCommandUtils().registerCommand(tellCommand, "r", "Comando para responder mensagens privadas de jogadores", "responder");
-		zUtils.getCommandUtils().registerCommand(prefCommand, "pref", "Comando para abrir o menu de preferencias", "preferencias", "config", "configs", "prefs", "configuracoes");
-		zUtils.getCommandUtils().registerCommand(profileCommand, "perfil", "Comando para abrir seu perfil", "eu", "meuperfil", "sobre");
-		zUtils.getCommandUtils().registerCommand(groupCommand, "grupo", "Comando para ver informacoes sobre seu grupo atual", "group", "meugrupo");
-		// zUtils.getCommandUtils().registerCommand(forumCommand, "forum",
-		// "Comando debug", "f");
+		new CommandLoader(new BukkitCommandFramework(this)).loadCommandsFromPackage("br.com.battlebits.ylobby.command");
 
 		getLogger().info("Plugin habilitado com sucesso!");
-
 	}
 
 	@Override
@@ -280,7 +251,7 @@ public class yLobbyPlugin extends JavaPlugin {
 	public MatchSelectorManager getMatchSelectorManager() {
 		return matchSelectorManager;
 	}
-	
+
 	public MultiSelectorManager getMultiSelectorManager() {
 		return multiSelectorManager;
 	}
@@ -295,10 +266,6 @@ public class yLobbyPlugin extends JavaPlugin {
 
 	public LocationManager getLocationManager() {
 		return locationManager;
-	}
-
-	public TabHeaderAndFooterManager getTabHeaderAndFooterManager() {
-		return tabHeaderAndFooterManager;
 	}
 
 	public YourProfileInventory getYourProfileInventory() {
@@ -319,10 +286,6 @@ public class yLobbyPlugin extends JavaPlugin {
 
 	public ProfileConfigurationInventory getProfileConfigurationInventory() {
 		return profileConfigurationInventory;
-	}
-
-	public zUtils getzUtils() {
-		return zUtils;
 	}
 
 }

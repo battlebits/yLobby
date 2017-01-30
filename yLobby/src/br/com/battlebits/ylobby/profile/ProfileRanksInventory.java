@@ -7,9 +7,9 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import br.com.battlebits.ycommon.common.BattlebitsAPI;
-import br.com.battlebits.ycommon.common.permissions.enums.Group;
-import br.com.battlebits.ylobby.yLobbyPlugin;
+import br.com.battlebits.commons.BattlebitsAPI;
+import br.com.battlebits.commons.core.permission.Group;
+import br.com.battlebits.commons.util.string.StringLoreUtils;
 
 public class ProfileRanksInventory {
 
@@ -37,72 +37,119 @@ public class ProfileRanksInventory {
 		currentLight = new ItemStack(Material.INK_SACK, 1, (short) 10);
 		ItemMeta cLightMeta = currentLight.getItemMeta();
 		cLightMeta.setDisplayName("§a§lLIGHT");
-		cLightMeta.setLore(yLobbyPlugin.getyLobby().getzUtils().getItemUtils().formatForLore("Vantagens em toda a Network:" + "\\n- Slots reservados em todos os servidores da rede BattleBits" + "\\n- Tag §averde §7e prefixo §a§lLIGHT §7no seu nome (Ex: §a§lLIGHT §aExemplo§7)" + "\\n" + "\\n§3§lEsquerdo§3 para usar esta §3§lTAG" + "\\n§b§lDireito§b para comprar um §b§lUPGRADE" + "\\n" + "\\n§9Seu §9§lGRUPO §9atual é §9§leste§9!"));
+		cLightMeta.setLore(StringLoreUtils.getLore(30,
+				"Vantagens em toda a Network:" + "\\n- Slots reservados em todos os servidores da rede BattleBits"
+						+ "\\n- Tag §averde §7e prefixo §a§lLIGHT §7no seu nome (Ex: §a§lLIGHT §aExemplo§7)" + "\\n"
+						+ "\\n§3§lEsquerdo§3 para usar esta §3§lTAG" + "\\n§b§lDireito§b para comprar um §b§lUPGRADE"
+						+ "\\n" + "\\n§9Seu §9§lGRUPO §9atual é §9§leste§9!"));
 		currentLight.setItemMeta(cLightMeta);
 		noLight = new ItemStack(Material.INK_SACK, 1, (short) 8);
 		ItemMeta nLightMeta = currentLight.getItemMeta();
 		nLightMeta.setDisplayName("§a§lLIGHT");
-		nLightMeta.setLore(yLobbyPlugin.getyLobby().getzUtils().getItemUtils().formatForLore("Vantagens em toda a Network:" + "\\n- Slots reservados em todos os servidores da rede BattleBits" + "\\n- Tag §averde §7e prefixo §a§lLIGHT §7no seu nome (Ex: §a§lLIGHT §aExemplo§7)" + "\\n" + "\\n§b§lClique§b para §b§lcomprar§b este §b§lRANK"));
+		nLightMeta.setLore(StringLoreUtils.getLore(30,
+				"Vantagens em toda a Network:" + "\\n- Slots reservados em todos os servidores da rede BattleBits"
+						+ "\\n- Tag §averde §7e prefixo §a§lLIGHT §7no seu nome (Ex: §a§lLIGHT §aExemplo§7)" + "\\n"
+						+ "\\n§b§lClique§b para §b§lcomprar§b este §b§lRANK"));
 		noLight.setItemMeta(nLightMeta);
 		hasLight = new ItemStack(Material.INK_SACK, 1, (short) 10);
 		ItemMeta hLightMeta = hasLight.getItemMeta();
 		hLightMeta.setDisplayName("§a§lLIGHT");
-		hLightMeta.setLore(yLobbyPlugin.getyLobby().getzUtils().getItemUtils().formatForLore("Vantagens em toda a Network:" + "\\n- Slots reservados em todos os servidores da rede BattleBits" + "\\n- Tag §averde §7e prefixo §a§lLIGHT §7no seu nome (Ex: §a§lLIGHT §aExemplo§7)" + "\\n" + "\\n§3§lClique§3 para usar esta §3§lTAG" + "\\n" + "\\n§9Seu §9§lGRUPO §9atual é §9§lsuperior§9!"));
+		hLightMeta.setLore(StringLoreUtils.getLore(30,
+				"Vantagens em toda a Network:" + "\\n- Slots reservados em todos os servidores da rede BattleBits"
+						+ "\\n- Tag §averde §7e prefixo §a§lLIGHT §7no seu nome (Ex: §a§lLIGHT §aExemplo§7)" + "\\n"
+						+ "\\n§3§lClique§3 para usar esta §3§lTAG" + "\\n"
+						+ "\\n§9Seu §9§lGRUPO §9atual é §9§lsuperior§9!"));
 		hasLight.setItemMeta(hLightMeta);
 
 		currentPremium = new ItemStack(Material.INK_SACK, 1, (short) 14);
 		ItemMeta cPremiumMeta = currentLight.getItemMeta();
 		cPremiumMeta.setDisplayName("§6§lPREMIUM");
-		cPremiumMeta.setLore(yLobbyPlugin.getyLobby().getzUtils().getItemUtils().formatForLore("Vantagens em toda a Network:" + "\\n- Slots reservados em todos os servidores da rede BattleBits" + "\\n- Tag §6dourada §7e prefixo §6§lPREMIUM §7no seu nome (Ex: §6§lPREMIUM §6Exemplo§7)" + "\\n" + "\\n§3§lEsquerdo§3 para usar esta §3§lTAG" + "\\n§b§lDireito§b para comprar um §b§lUPGRADE" + "\\n" + "\\n§9Seu §9§lGRUPO §9atual é §9§leste§9!"));
+		cPremiumMeta.setLore(StringLoreUtils.getLore(30,
+				"Vantagens em toda a Network:" + "\\n- Slots reservados em todos os servidores da rede BattleBits"
+						+ "\\n- Tag §6dourada §7e prefixo §6§lPREMIUM §7no seu nome (Ex: §6§lPREMIUM §6Exemplo§7)"
+						+ "\\n" + "\\n§3§lEsquerdo§3 para usar esta §3§lTAG"
+						+ "\\n§b§lDireito§b para comprar um §b§lUPGRADE" + "\\n"
+						+ "\\n§9Seu §9§lGRUPO §9atual é §9§leste§9!"));
 		currentPremium.setItemMeta(cPremiumMeta);
 		noPremium = new ItemStack(Material.INK_SACK, 1, (short) 8);
 		ItemMeta nPremiumMeta = currentLight.getItemMeta();
 		nPremiumMeta.setDisplayName("§6§lPREMIUM");
-		nPremiumMeta.setLore(yLobbyPlugin.getyLobby().getzUtils().getItemUtils().formatForLore("Vantagens em toda a Network:" + "\\n- Slots reservados em todos os servidores da rede BattleBits" + "\\n- Tag §6dourada §7e prefixo §6§lPREMIUM §7no seu nome (Ex: §6§lPREMIUM §6Exemplo§7)" + "\\n" + "\\n§b§lClique§b para §b§lcomprar§b este §b§lRANK"));
+		nPremiumMeta.setLore(StringLoreUtils.getLore(30,
+				"Vantagens em toda a Network:" + "\\n- Slots reservados em todos os servidores da rede BattleBits"
+						+ "\\n- Tag §6dourada §7e prefixo §6§lPREMIUM §7no seu nome (Ex: §6§lPREMIUM §6Exemplo§7)"
+						+ "\\n" + "\\n§b§lClique§b para §b§lcomprar§b este §b§lRANK"));
 		noPremium.setItemMeta(nPremiumMeta);
 		hasPremium = new ItemStack(Material.INK_SACK, 1, (short) 14);
 		ItemMeta hPremiumMeta = hasLight.getItemMeta();
 		hPremiumMeta.setDisplayName("§6§lPREMIUM");
-		hPremiumMeta.setLore(yLobbyPlugin.getyLobby().getzUtils().getItemUtils().formatForLore("Vantagens em toda a Network:" + "\\n- Slots reservados em todos os servidores da rede BattleBits" + "\\n- Tag §6dourada §7e prefixo §6§lPREMIUM §7no seu nome (Ex: §6§lPREMIUM §6Exemplo§7)" + "\\n" + "\\n§3§lClique§3 para usar esta §3§lTAG" + "\\n" + "\\n§9Seu §9§lGRUPO §9atual é §9§lsuperior§9!"));
+		hPremiumMeta.setLore(StringLoreUtils.getLore(30,
+				"Vantagens em toda a Network:" + "\\n- Slots reservados em todos os servidores da rede BattleBits"
+						+ "\\n- Tag §6dourada §7e prefixo §6§lPREMIUM §7no seu nome (Ex: §6§lPREMIUM §6Exemplo§7)"
+						+ "\\n" + "\\n§3§lClique§3 para usar esta §3§lTAG" + "\\n"
+						+ "\\n§9Seu §9§lGRUPO §9atual é §9§lsuperior§9!"));
 		hasPremium.setItemMeta(hPremiumMeta);
 
 		currentUltimate = new ItemStack(Material.INK_SACK, 1, (short) 13);
 		ItemMeta cUltimateMeta = currentUltimate.getItemMeta();
 		cUltimateMeta.setDisplayName("§d§lULTIMATE");
-		cUltimateMeta.setLore(yLobbyPlugin.getyLobby().getzUtils().getItemUtils().formatForLore("Vantagens em toda a Network:" + "\\n- Slots reservados em todos os servidores da rede BattleBits" + "\\n- Tag §drosa §7e prefixo §d§lULTIMATE §7no seu nome (Ex: §d§lULTIMATE §dExemplo§7)" + "\\n- §3Double §3§lXP §7e §3Double §3§lMoney" + "\\n" + "\\n§3§lClique§3 para usar esta §3§lTAG" + "\\n" + "\\n§9Seu §9§lGRUPO §9atual é §9§leste§9!"));
+		cUltimateMeta.setLore(StringLoreUtils.getLore(30,
+				"Vantagens em toda a Network:" + "\\n- Slots reservados em todos os servidores da rede BattleBits"
+						+ "\\n- Tag §drosa §7e prefixo §d§lULTIMATE §7no seu nome (Ex: §d§lULTIMATE §dExemplo§7)"
+						+ "\\n- §3Double §3§lXP §7e §3Double §3§lMoney" + "\\n"
+						+ "\\n§3§lClique§3 para usar esta §3§lTAG" + "\\n"
+						+ "\\n§9Seu §9§lGRUPO §9atual é §9§leste§9!"));
 		currentUltimate.setItemMeta(cUltimateMeta);
 		noUltimate = new ItemStack(Material.INK_SACK, 1, (short) 8);
 		ItemMeta nUltimateMeta = noUltimate.getItemMeta();
 		nUltimateMeta.setDisplayName("§d§lULTIMATE");
-		nUltimateMeta.setLore(yLobbyPlugin.getyLobby().getzUtils().getItemUtils().formatForLore("Vantagens em toda a Network:" + "\\n- Slots reservados em todos os servidores da rede BattleBits" + "\\n- Tag §drosa §7e prefixo §d§lULTIMATE §7no seu nome (Ex: §d§lULTIMATE §dExemplo§7)" + "\\n- §3Double §3§lXP §7e §3Double §3§lMoney" + "\\n" + "\\n§b§lClique§b para §b§lcomprar§b este §b§lRANK"));
+		nUltimateMeta.setLore(StringLoreUtils.getLore(30,
+				"Vantagens em toda a Network:" + "\\n- Slots reservados em todos os servidores da rede BattleBits"
+						+ "\\n- Tag §drosa §7e prefixo §d§lULTIMATE §7no seu nome (Ex: §d§lULTIMATE §dExemplo§7)"
+						+ "\\n- §3Double §3§lXP §7e §3Double §3§lMoney" + "\\n"
+						+ "\\n§b§lClique§b para §b§lcomprar§b este §b§lRANK"));
 		noUltimate.setItemMeta(nUltimateMeta);
 		hasUltimate = new ItemStack(Material.INK_SACK, 1, (short) 13);
 		ItemMeta hUltimateMeta = hasUltimate.getItemMeta();
 		hUltimateMeta.setDisplayName("§d§lULTIMATE");
-		hUltimateMeta.setLore(yLobbyPlugin.getyLobby().getzUtils().getItemUtils().formatForLore("Vantagens em toda a Network:" + "\\n- Slots reservados em todos os servidores da rede BattleBits" + "\\n- Tag §drosa §7e prefixo §d§lULTIMATE §7no seu nome (Ex: §d§lULTIMATE §dExemplo§7)" + "\\n- §3Double §3§lXP §7e §3Double §3§lMoney" + "\\n" + "\\n§3§lClique§3 para usar esta §3§lTAG" + "\\n" + "\\n§9Seu §9§lGRUPO §9atual é §9§lsuperior§9!"));
+		hUltimateMeta.setLore(StringLoreUtils.getLore(30,
+				"Vantagens em toda a Network:" + "\\n- Slots reservados em todos os servidores da rede BattleBits"
+						+ "\\n- Tag §drosa §7e prefixo §d§lULTIMATE §7no seu nome (Ex: §d§lULTIMATE §dExemplo§7)"
+						+ "\\n- §3Double §3§lXP §7e §3Double §3§lMoney" + "\\n"
+						+ "\\n§3§lClique§3 para usar esta §3§lTAG" + "\\n"
+						+ "\\n§9Seu §9§lGRUPO §9atual é §9§lsuperior§9!"));
 		hasUltimate.setItemMeta(hUltimateMeta);
 
 		currentYoutuber = new ItemStack(Material.INK_SACK, 1, (short) 12);
 		ItemMeta cYoutuberMeta = currentYoutuber.getItemMeta();
 		cYoutuberMeta.setDisplayName("§b§lYOUTUBER");
-		cYoutuberMeta.setLore(yLobbyPlugin.getyLobby().getzUtils().getItemUtils().formatForLore("Vantagens em toda a Network:" + "\\n- Slots reservados em todos os servidores da rede BattleBits" + "\\n- Tag §bazul §7e prefixo §b§lYOUTUBER §7no seu nome (Ex: §b§lYOUTUBER §bExemplo§7)" + "\\n- §3Double §3§lXP §7e §3Double §3§lMoney" + "\\n" + "\\n§3§lClique§3 para usar esta §3§lTAG" + "\\n" + "\\n§9Seu §9§lGRUPO §9atual é §9§leste§9!"));
+		cYoutuberMeta.setLore(StringLoreUtils.getLore(30,
+				"Vantagens em toda a Network:" + "\\n- Slots reservados em todos os servidores da rede BattleBits"
+						+ "\\n- Tag §bazul §7e prefixo §b§lYOUTUBER §7no seu nome (Ex: §b§lYOUTUBER §bExemplo§7)"
+						+ "\\n- §3Double §3§lXP §7e §3Double §3§lMoney" + "\\n"
+						+ "\\n§3§lClique§3 para usar esta §3§lTAG" + "\\n"
+						+ "\\n§9Seu §9§lGRUPO §9atual é §9§leste§9!"));
 		currentYoutuber.setItemMeta(cYoutuberMeta);
 		noYoutuber = new ItemStack(Material.INK_SACK, 1, (short) 8);
 		ItemMeta nYoutuberMeta = noYoutuber.getItemMeta();
 		nYoutuberMeta.setDisplayName("§b§lYOUTUBER");
-		nYoutuberMeta.setLore(yLobbyPlugin.getyLobby().getzUtils().getItemUtils().formatForLore("Vantagens em toda a Network:" + "\\n- Slots reservados em todos os servidores da rede BattleBits" + "\\n- Tag §bazul §7e prefixo §b§lYOUTUBER §7no seu nome (Ex: §b§lYOUTUBER §bExemplo§7)" + "\\n- §3Double §3§lXP §7e §3Double §3§lMoney" + "\\n" + "\\n§b§lClique§b para ver nosso §b§lTwitter§b!"));
+		nYoutuberMeta.setLore(StringLoreUtils.getLore(30,
+				"Vantagens em toda a Network:" + "\\n- Slots reservados em todos os servidores da rede BattleBits"
+						+ "\\n- Tag §bazul §7e prefixo §b§lYOUTUBER §7no seu nome (Ex: §b§lYOUTUBER §bExemplo§7)"
+						+ "\\n- §3Double §3§lXP §7e §3Double §3§lMoney" + "\\n"
+						+ "\\n§b§lClique§b para ver nosso §b§lTwitter§b!"));
 		noYoutuber.setItemMeta(nYoutuberMeta);
 
 		currentStaff = new ItemStack(Material.INK_SACK, 1, (short) 11);
 		ItemMeta cStaffMeta = currentYoutuber.getItemMeta();
 		cStaffMeta.setDisplayName("§e§lSTAFF");
-		cStaffMeta.setLore(yLobbyPlugin.getyLobby().getzUtils().getItemUtils().formatForLore("Voce atualmente faz parte da equipe do BattleBits Network! Nao importa o que voce seja builder ou admin, voce merece estar onde voce esta :D"));
+		cStaffMeta.setLore(StringLoreUtils.getLore(30,
+				"Voce atualmente faz parte da equipe do BattleBits Network! Nao importa o que voce seja builder ou admin, voce merece estar onde voce esta :D"));
 		currentStaff.setItemMeta(cStaffMeta);
 
 		backToProfile = new ItemStack(Material.ARROW, 1);
 		ItemMeta backMeta = backToProfile.getItemMeta();
 		backMeta.setDisplayName("§5§lPerfil");
-		backMeta.setLore(yLobbyPlugin.getyLobby().getzUtils().getItemUtils().formatForLore("Clique aqui para voltar ao seu perfil."));
+		backMeta.setLore(StringLoreUtils.getLore(30, "Clique aqui para voltar ao seu perfil."));
 		backToProfile.setItemMeta(backMeta);
 
 		normalInventory = Bukkit.createInventory(null, 27, "       §nSobre o seu grupo atual");

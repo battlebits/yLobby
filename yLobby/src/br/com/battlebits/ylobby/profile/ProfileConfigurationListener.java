@@ -9,8 +9,9 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
 
-import br.com.battlebits.ycommon.common.BattlebitsAPI;
-import br.com.battlebits.ycommon.common.permissions.enums.Group;
+import br.com.battlebits.commons.BattlebitsAPI;
+import br.com.battlebits.commons.core.permission.Group;
+import br.com.battlebits.ylobby.LobbyUtils;
 import br.com.battlebits.ylobby.yLobbyPlugin;
 
 public class ProfileConfigurationListener implements Listener {
@@ -28,41 +29,41 @@ public class ProfileConfigurationListener implements Listener {
 	public ProfileConfigurationListener() {
 		hideMessage = new ArrayList<>();
 		hideMessage.add("§0");
-		hideMessage.add(yLobbyPlugin.getyLobby().getzUtils().getMessageUtils().centerChatMessage("§7Você §e§lescondeu §7todos os §e§ljogadores§7!"));
+		hideMessage.add(LobbyUtils.getMessageUtils().centerChatMessage("§7Você §e§lescondeu §7todos os §e§ljogadores§7!"));
 		hideMessage.add("§0");
 		showMessage = new ArrayList<>();
 		showMessage.add("§0");
-		showMessage.add(yLobbyPlugin.getyLobby().getzUtils().getMessageUtils().centerChatMessage("§7Você deixou todos os §a§ljogadores visiveis§7!"));
+		showMessage.add(LobbyUtils.getMessageUtils().centerChatMessage("§7Você deixou todos os §a§ljogadores visiveis§7!"));
 		showMessage.add("§0");
 		flyForLights = new ArrayList<>();
 		flyForLights.add("§0");
-		flyForLights.add(yLobbyPlugin.getyLobby().getzUtils().getMessageUtils().centerChatMessage("§7O modo §e§lvoar §7so pode ser usado por um"));
-		flyForLights.add(yLobbyPlugin.getyLobby().getzUtils().getMessageUtils().centerChatMessage("§7jogador com o grupo §a§lLIGHT §7ou superior!"));
+		flyForLights.add(LobbyUtils.getMessageUtils().centerChatMessage("§7O modo §e§lvoar §7so pode ser usado por um"));
+		flyForLights.add(LobbyUtils.getMessageUtils().centerChatMessage("§7jogador com o grupo §a§lLIGHT §7ou superior!"));
 		flyForLights.add("§0");
 		flyEnable = new ArrayList<>();
 		flyEnable.add("§0");
-		flyEnable.add(yLobbyPlugin.getyLobby().getzUtils().getMessageUtils().centerChatMessage("§7Seu §a§lfly §7foi §a§lativado§7!"));
+		flyEnable.add(LobbyUtils.getMessageUtils().centerChatMessage("§7Seu §a§lfly §7foi §a§lativado§7!"));
 		flyEnable.add("§0");
 		flyDisable = new ArrayList<>();
 		flyDisable.add("§0");
-		flyDisable.add(yLobbyPlugin.getyLobby().getzUtils().getMessageUtils().centerChatMessage("§7Seu §e§lfly §7foi §e§ldesativado§7!"));
+		flyDisable.add(LobbyUtils.getMessageUtils().centerChatMessage("§7Seu §e§lfly §7foi §e§ldesativado§7!"));
 		flyDisable.add("§0");
 		tellEnable = new ArrayList<>();
 		tellEnable.add("§0");
-		tellEnable.add(yLobbyPlugin.getyLobby().getzUtils().getMessageUtils().centerChatMessage("§7Voce §a§lativou §7as §a§lmensagens privadas§7!"));
+		tellEnable.add(LobbyUtils.getMessageUtils().centerChatMessage("§7Voce §a§lativou §7as §a§lmensagens privadas§7!"));
 		tellEnable.add("§0");
 		tellDisable = new ArrayList<>();
 		tellDisable.add("§0");
 		tellDisable
-				.add(yLobbyPlugin.getyLobby().getzUtils().getMessageUtils().centerChatMessage("§7Voce §e§ldesativou §7as §e§lmensagens privadas§7!"));
+				.add(LobbyUtils.getMessageUtils().centerChatMessage("§7Voce §e§ldesativou §7as §e§lmensagens privadas§7!"));
 		tellDisable.add("§0");
 		chatEnable = new ArrayList<>();
 		chatEnable.add("§0");
-		chatEnable.add(yLobbyPlugin.getyLobby().getzUtils().getMessageUtils().centerChatMessage("§7Voce §a§lativou §7o §a§lchat geral§7!"));
+		chatEnable.add(LobbyUtils.getMessageUtils().centerChatMessage("§7Voce §a§lativou §7o §a§lchat geral§7!"));
 		chatEnable.add("§0");
 		chatDisable = new ArrayList<>();
 		chatDisable.add("§0");
-		chatDisable.add(yLobbyPlugin.getyLobby().getzUtils().getMessageUtils().centerChatMessage("§7Voce §e§ldesativou §7o §e§lchat geral§7!"));
+		chatDisable.add(LobbyUtils.getMessageUtils().centerChatMessage("§7Voce §e§ldesativou §7o §e§lchat geral§7!"));
 		chatDisable.add("§0");
 	}
 

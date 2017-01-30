@@ -7,9 +7,9 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import br.com.battlebits.ycommon.common.BattlebitsAPI;
-import br.com.battlebits.ycommon.common.permissions.enums.Group;
-import br.com.battlebits.ylobby.yLobbyPlugin;
+import br.com.battlebits.commons.BattlebitsAPI;
+import br.com.battlebits.commons.core.permission.Group;
+import br.com.battlebits.ylobby.LobbyUtils;
 
 public class FlyCommand implements CommandExecutor {
 
@@ -20,16 +20,16 @@ public class FlyCommand implements CommandExecutor {
 	public FlyCommand() {
 		onlyForLights = new ArrayList<>();
 		onlyForLights.add("§0");
-		onlyForLights.add(yLobbyPlugin.getyLobby().getzUtils().getMessageUtils().centerChatMessage("§7O modo §e§lvoar §7so pode ser usado por um"));
-		onlyForLights.add(yLobbyPlugin.getyLobby().getzUtils().getMessageUtils().centerChatMessage("§7jogador com o grupo §a§lLIGHT §7ou superior!"));
+		onlyForLights.add(LobbyUtils.getMessageUtils().centerChatMessage("§7O modo §e§lvoar §7so pode ser usado por um"));
+		onlyForLights.add(LobbyUtils.getMessageUtils().centerChatMessage("§7jogador com o grupo §a§lLIGHT §7ou superior!"));
 		onlyForLights.add("§0");
 		flyEnable = new ArrayList<>();
 		flyEnable.add("§0");
-		flyEnable.add(yLobbyPlugin.getyLobby().getzUtils().getMessageUtils().centerChatMessage("§7Seu §a§lfly §7foi §a§lativado§7!"));
+		flyEnable.add(LobbyUtils.getMessageUtils().centerChatMessage("§7Seu §a§lfly §7foi §a§lativado§7!"));
 		flyEnable.add("§0");
 		flyDisable = new ArrayList<>();
 		flyDisable.add("§0");
-		flyDisable.add(yLobbyPlugin.getyLobby().getzUtils().getMessageUtils().centerChatMessage("§7Seu §e§lfly §7foi §e§ldesativado§7!"));
+		flyDisable.add(LobbyUtils.getMessageUtils().centerChatMessage("§7Seu §e§lfly §7foi §e§ldesativado§7!"));
 		flyDisable.add("§0");
 	}
 

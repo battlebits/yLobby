@@ -7,6 +7,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import br.com.battlebits.ylobby.LobbyUtils;
 import br.com.battlebits.ylobby.yLobbyPlugin;
 
 public class PrefCommand implements CommandExecutor {
@@ -16,7 +17,7 @@ public class PrefCommand implements CommandExecutor {
 	public PrefCommand() {
 		message = new ArrayList<>();
 		message.add("§0");
-		message.add(yLobbyPlugin.getyLobby().getzUtils().getMessageUtils().centerChatMessage("§7Abrindo §9§lmenu §7de §9§lpreferencias§7!"));
+		message.add(LobbyUtils.getMessageUtils().centerChatMessage("§7Abrindo §9§lmenu §7de §9§lpreferencias§7!"));
 		message.add("§0");
 	}
 

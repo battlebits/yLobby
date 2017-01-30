@@ -5,14 +5,20 @@ import java.util.List;
 
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.entity.EntityType;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import com.gmail.filoghost.holographicdisplays.api.Hologram;
+import com.gmail.filoghost.holographicdisplays.api.HologramsAPI;
+
+import br.com.battlebits.commons.util.string.StringLoreUtils;
+import br.com.battlebits.ylobby.LobbyUtils;
 import br.com.battlebits.ylobby.yLobbyPlugin;
-import br.com.battlebits.yutils.character.CharacterNPC;
-import br.com.battlebits.yutils.character.CharacterType;
-import de.inventivegames.holograms.Hologram;
-import de.inventivegames.holograms.HologramAPI;
+import lombok.Getter;
+import net.citizensnpcs.api.CitizensAPI;
+import net.citizensnpcs.api.npc.NPC;
+import net.citizensnpcs.trait.Gravity;
 
 public abstract class GameModeBase {
 
@@ -21,16 +27,17 @@ public abstract class GameModeBase {
 	private int substractLines;
 	private ItemMeta inventoryItemMeta;
 	private ArrayList<String> inventoryItemLore;
-	private CharacterNPC characterNPC;
-	private Hologram onlinePlayersHologram;
+	@Getter
+	private NPC characterNPC;
 
-	public GameModeBase(String servername, String serverdescription, Material iconmaterial, List<String> connectLines, Location npclocation, CharacterType npcType) {
+	public GameModeBase(String servername, String serverdescription, Material iconmaterial, List<String> connectLines,
+			Location npclocation, EntityType type) {
 		name = servername;
 		inventoryitem = new ItemStack(iconmaterial, 1);
 		inventoryItemMeta = inventoryitem.getItemMeta();
 		inventoryItemMeta.setDisplayName("§9§l" + servername);
 		inventoryItemLore = new ArrayList<>();
-		inventoryItemLore.addAll(yLobbyPlugin.getyLobby().getzUtils().getItemUtils().formatForLore(serverdescription));
+		inventoryItemLore.addAll(StringLoreUtils.formatForLore(serverdescription));
 		inventoryItemLore.add("§0");
 		inventoryItemLore.add("§b§30 §7jogadores online.");
 		inventoryItemLore.add("§0");
@@ -40,23 +47,28 @@ public abstract class GameModeBase {
 		inventoryItemMeta.setLore(inventoryItemLore);
 		inventoryitem.setItemMeta(inventoryItemMeta);
 		substractLines = connectLines.size();
+		characterNPC = CitizensAPI.getNPCRegistry().createNPC(type, servername);
+		characterNPC.data().set(NPC.NAMEPLATE_VISIBLE_METADATA, false);
+		characterNPC.data().set(NPC.AMBIENT_SOUND_METADATA, "");
+		characterNPC.data().set(NPC.HURT_SOUND_METADATA, "");
+		characterNPC.data().set(NPC.DEATH_SOUND_METADATA, "");
+		Gravity gravity = characterNPC.getTrait(Gravity.class);
+		if (gravity != null)
+			gravity.gravitate(true);
+		characterNPC.setProtected(true);
 		if (!npclocation.getChunk().isLoaded()) {
 			npclocation.getChunk().load();
 		}
-		characterNPC = new CharacterNPC(npcType, yLobbyPlugin.getyLobby().getzUtils().getLocationUtils().lookAt(yLobbyPlugin.getyLobby().getzUtils().getLocationUtils().getCenter(npclocation.clone(), false), yLobbyPlugin.getyLobby().getLocationManager().getSpawnLocation()), inventoryitem);
+		characterNPC.spawn(LobbyUtils.getLocationUtils().lookAt(
+				LobbyUtils.getLocationUtils().getCenter(npclocation.clone(), false),
+				yLobbyPlugin.getyLobby().getLocationManager().getSpawnLocation()));
+		Hologram holo = HologramsAPI.createHologram(yLobbyPlugin.getyLobby(),
+				LobbyUtils.getLocationUtils().getCenter(npclocation.clone().add(0, 2.54, 0), false));
+		holo.appendTextLine("§9§l" + servername.toUpperCase());
+		holo.appendTextLine("§b§lClique para conectar!");
 		if (!npclocation.getChunk().isLoaded()) {
 			npclocation.getChunk().load();
 		}
-		onlinePlayersHologram = HologramAPI.createWorldHologram(yLobbyPlugin.getyLobby().getzUtils().getLocationUtils().getCenter(npclocation.clone().add(0, 2, 0), true), /* "§b§l0 §bjogadores agora!" */ "§b§lClique para conectar!");
-		onlinePlayersHologram.spawn();
-		if (!npclocation.getChunk().isLoaded()) {
-			npclocation.getChunk().load();
-		}
-		onlinePlayersHologram.addLineAbove("§9§l" + servername.toUpperCase());
-	}
-
-	public CharacterNPC getCharacterNPC() {
-		return characterNPC;
 	}
 
 	public String getServerName() {
@@ -68,7 +80,8 @@ public abstract class GameModeBase {
 	}
 
 	public void updateOnlinePlayersOnItem() {
-		inventoryItemLore.set(inventoryItemLore.size() - (2 + substractLines), "§3§l" + getOnlinePlayers() + " §7jogadores online.");
+		inventoryItemLore.set(inventoryItemLore.size() - (2 + substractLines),
+				"§3§l" + getOnlinePlayers() + " §7jogadores online.");
 		inventoryItemMeta.setLore(inventoryItemLore);
 		inventoryitem.setItemMeta(inventoryItemMeta);
 	}

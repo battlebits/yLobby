@@ -1,6 +1,6 @@
 package br.com.battlebits.ylobby.server;
 
-import br.com.battlebits.ycommon.bungee.servers.HungerGamesServer.HungerGamesState;
+import br.com.battlebits.commons.bungee.loadbalancer.server.HungerGamesServer.HungerGamesState;
 
 public class GameServerInfo extends ServerInfo implements Comparable<GameServerInfo> {
 

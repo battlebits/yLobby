@@ -10,9 +10,9 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
 
-import br.com.battlebits.ycommon.common.BattlebitsAPI;
-import br.com.battlebits.ycommon.common.account.BattlePlayer;
-import br.com.battlebits.ylobby.yLobbyPlugin;
+import br.com.battlebits.commons.BattlebitsAPI;
+import br.com.battlebits.commons.core.account.BattlePlayer;
+import br.com.battlebits.commons.util.string.StringLoreUtils;
 
 public class YourProfileInventory {
 
@@ -24,19 +24,21 @@ public class YourProfileInventory {
 		ranksItem = new ItemStack(Material.ENCHANTED_BOOK, 1);
 		ItemMeta ranksMeta = ranksItem.getItemMeta();
 		ranksMeta.setDisplayName("§e§lInformacoes do seu Grupo");
-		ranksMeta.setLore(yLobbyPlugin.getyLobby().getzUtils().getItemUtils().formatForLore("§7Clique aqui para saber mais informacoes sobre o seu e os demais grupos do servidor!"));
+		ranksMeta.setLore(StringLoreUtils.getLore(30,
+				"§7Clique aqui para saber mais informacoes sobre o seu e os demais grupos do servidor!"));
 		ranksItem.setItemMeta(ranksMeta);
 
 		tagsItem = new ItemStack(Material.NAME_TAG, 1);
 		ItemMeta tagsMeta = tagsItem.getItemMeta();
 		tagsMeta.setDisplayName("§5§lTags disponiveis no servidor");
-		tagsMeta.setLore(yLobbyPlugin.getyLobby().getzUtils().getItemUtils().formatForLore("§7Clique aqui para saber mais informacoes sobre todas as Tags existentes no servidor!"));
+		tagsMeta.setLore(StringLoreUtils.getLore(30,
+				"§7Clique aqui para saber mais informacoes sobre todas as Tags existentes no servidor!"));
 		tagsItem.setItemMeta(tagsMeta);
 
 		configItem = new ItemStack(Material.REDSTONE_COMPARATOR, 1);
 		ItemMeta configMeta = configItem.getItemMeta();
 		configMeta.setDisplayName("§c§lPreferencias");
-		configMeta.setLore(yLobbyPlugin.getyLobby().getzUtils().getItemUtils().formatForLore("§7Clique aqui para editar suas preferencias no servidor!"));
+		configMeta.setLore(StringLoreUtils.getLore(30, "§7Clique aqui para editar suas preferencias no servidor!"));
 		configItem.setItemMeta(configMeta);
 	}
 
@@ -52,7 +54,7 @@ public class YourProfileInventory {
 
 		mainMeta.setLore(Arrays.asList("§0", //
 				"§7Rank: " + account.getTag().getPrefix(account.getLanguage()), //
-				"§7Liga: " + account.getLiga().getSymbol() + " " + account.getLiga().toString(), //
+				"§7Liga: " + account.getLeague().getSymbol() + " " + account.getLeague().toString(), //
 				"§7XP: §b" + account.getXp(), //
 				"§7Moedas: §b" + account.getMoney(), //
 				"§7Fichas: §b" + account.getFichas(), //

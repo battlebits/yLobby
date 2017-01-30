@@ -6,8 +6,8 @@ import java.util.UUID;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
-import br.com.battlebits.ycommon.common.BattlebitsAPI;
-import br.com.battlebits.ycommon.common.permissions.enums.Group;
+import br.com.battlebits.commons.BattlebitsAPI;
+import br.com.battlebits.commons.core.permission.Group;
 
 public class PlayerHideManager {
 

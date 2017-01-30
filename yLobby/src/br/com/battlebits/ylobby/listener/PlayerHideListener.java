@@ -13,6 +13,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
+import br.com.battlebits.ylobby.LobbyUtils;
 import br.com.battlebits.ylobby.yLobbyPlugin;
 
 public class PlayerHideListener implements Listener {
@@ -24,11 +25,11 @@ public class PlayerHideListener implements Listener {
 	public PlayerHideListener() {
 		hideMessage = new ArrayList<>();
 		hideMessage.add("§0");
-		hideMessage.add(yLobbyPlugin.getyLobby().getzUtils().getMessageUtils().centerChatMessage("§7Você §e§lescondeu §7todos os §e§ljogadores§7!"));
+		hideMessage.add(LobbyUtils.getMessageUtils().centerChatMessage("§7Você §e§lescondeu §7todos os §e§ljogadores§7!"));
 		hideMessage.add("§0");
 		showMessage = new ArrayList<>();
 		showMessage.add("§0");
-		showMessage.add(yLobbyPlugin.getyLobby().getzUtils().getMessageUtils().centerChatMessage("§7Você deixou todos os §a§ljogadores visiveis§7!"));
+		showMessage.add(LobbyUtils.getMessageUtils().centerChatMessage("§7Você deixou todos os §a§ljogadores visiveis§7!"));
 		showMessage.add("§0");
 		uuidCooldown = new HashMap<>();
 	}
@@ -71,7 +72,7 @@ public class PlayerHideListener implements Listener {
 									uuidCooldown.put(e.getPlayer().getUniqueId(), System.currentTimeMillis() + 5000);
 								} else {
 									e.getPlayer().sendMessage("§0");
-									e.getPlayer().sendMessage(yLobbyPlugin.getyLobby().getzUtils().getMessageUtils().centerChatMessage("§c§lAguarde §7" + yLobbyPlugin.getyLobby().getzUtils().getTimeUtils().formatTime((int) (((uuidCooldown.get(e.getPlayer().getUniqueId()) - System.currentTimeMillis()) / 1000)) + 1) + "§7 para usar isso §c§lnovamente§7!"));
+									e.getPlayer().sendMessage(LobbyUtils.getMessageUtils().centerChatMessage("§c§lAguarde §7" + LobbyUtils.getTimeUtils().formatTime((int) (((uuidCooldown.get(e.getPlayer().getUniqueId()) - System.currentTimeMillis()) / 1000)) + 1) + "§7 para usar isso §c§lnovamente§7!"));
 									e.getPlayer().sendMessage("§0");
 									e.setCancelled(true);
 								}

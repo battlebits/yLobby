@@ -12,10 +12,11 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.PlayerInteractEvent;
 
-import br.com.battlebits.ycommon.common.BattlebitsAPI;
-import br.com.battlebits.ycommon.common.account.BattlePlayer;
-import br.com.battlebits.ycommon.common.permissions.enums.Group;
-import br.com.battlebits.ycommon.common.tag.Tag;
+import br.com.battlebits.commons.BattlebitsAPI;
+import br.com.battlebits.commons.core.account.BattlePlayer;
+import br.com.battlebits.commons.core.account.Tag;
+import br.com.battlebits.commons.core.permission.Group;
+import br.com.battlebits.ylobby.LobbyUtils;
 import br.com.battlebits.ylobby.yLobbyPlugin;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.ClickEvent.Action;
@@ -35,46 +36,46 @@ public class ProfileRanksListener implements Listener {
 	public ProfileRanksListener() {
 		buyLight = new ArrayList<>();
 		buyLight.add(new TextComponent("§0"));
-		TextComponent buyLightText = new TextComponent(yLobbyPlugin.getyLobby().getzUtils().getMessageUtils().centerChatMessage("§7Clique aqui para realizar a compra do seu §a§lLIGHT§7!"));
+		TextComponent buyLightText = new TextComponent(LobbyUtils.getMessageUtils().centerChatMessage("§7Clique aqui para realizar a compra do seu §a§lLIGHT§7!"));
 		buyLightText.setClickEvent(new ClickEvent(Action.OPEN_URL, "http://loja.battlebits.com.br/checkout/cart/add?product=3"));
 		buyLight.add(buyLightText);
 		buyLight.add(new TextComponent("§0"));
 		tagLight = new ArrayList<>();
 		tagLight.add("§0");
-		tagLight.add(yLobbyPlugin.getyLobby().getzUtils().getMessageUtils().centerChatMessage("§7Você selecionou a tag §a§lLIGHT§7!"));
+		tagLight.add(LobbyUtils.getMessageUtils().centerChatMessage("§7Você selecionou a tag §a§lLIGHT§7!"));
 		tagLight.add("§0");
 
 		buyPremium = new ArrayList<>();
 		buyPremium.add(new TextComponent("§0"));
-		TextComponent buyPremiumText = new TextComponent(yLobbyPlugin.getyLobby().getzUtils().getMessageUtils().centerChatMessage("§7Clique aqui para realizar a compra do seu §6§lPREMIUM§7!"));
+		TextComponent buyPremiumText = new TextComponent(LobbyUtils.getMessageUtils().centerChatMessage("§7Clique aqui para realizar a compra do seu §6§lPREMIUM§7!"));
 		buyPremiumText.setClickEvent(new ClickEvent(Action.OPEN_URL, "http://loja.battlebits.com.br/checkout/cart/add?product=2"));
 		buyPremium.add(buyPremiumText);
 		buyPremium.add(new TextComponent("§0"));
 		tagPremium = new ArrayList<>();
 		tagPremium.add("§0");
-		tagPremium.add(yLobbyPlugin.getyLobby().getzUtils().getMessageUtils().centerChatMessage("§7Você selecionou a tag §6§lPREMIUM§7!"));
+		tagPremium.add(LobbyUtils.getMessageUtils().centerChatMessage("§7Você selecionou a tag §6§lPREMIUM§7!"));
 		tagPremium.add("§0");
 
 		buyUltimate = new ArrayList<>();
 		buyUltimate.add(new TextComponent("§0"));
-		TextComponent buyUltimateText = new TextComponent(yLobbyPlugin.getyLobby().getzUtils().getMessageUtils().centerChatMessage("§7Clique aqui para realizar a compra do seu §d§lULTIMATE§7!"));
+		TextComponent buyUltimateText = new TextComponent(LobbyUtils.getMessageUtils().centerChatMessage("§7Clique aqui para realizar a compra do seu §d§lULTIMATE§7!"));
 		buyUltimateText.setClickEvent(new ClickEvent(Action.OPEN_URL, "http://loja.battlebits.com.br/checkout/cart/add?product=3"));
 		buyUltimate.add(buyUltimateText);
 		buyUltimate.add(new TextComponent("§0"));
 		tagUltimate = new ArrayList<>();
 		tagUltimate.add("§0");
-		tagUltimate.add(yLobbyPlugin.getyLobby().getzUtils().getMessageUtils().centerChatMessage("§7Você selecionou a tag §d§lULTIMATE§7!"));
+		tagUltimate.add(LobbyUtils.getMessageUtils().centerChatMessage("§7Você selecionou a tag §d§lULTIMATE§7!"));
 		tagUltimate.add("§0");
 
 		buyYoutuber = new ArrayList<>();
 		buyYoutuber.add(new TextComponent("§0"));
-		TextComponent buyYoutuberText = new TextComponent(yLobbyPlugin.getyLobby().getzUtils().getMessageUtils().centerChatMessage("§7Saiba como ser §b§lYOUTUBER§7 em nosso Twitter!"));
+		TextComponent buyYoutuberText = new TextComponent(LobbyUtils.getMessageUtils().centerChatMessage("§7Saiba como ser §b§lYOUTUBER§7 em nosso Twitter!"));
 		buyYoutuberText.setClickEvent(new ClickEvent(Action.OPEN_URL, "http://twitter.com/BattleBitsMC"));
 		buyYoutuber.add(buyYoutuberText);
 		buyYoutuber.add(new TextComponent("§0"));
 		tagYoutuber = new ArrayList<>();
 		tagYoutuber.add("§0");
-		tagYoutuber.add(yLobbyPlugin.getyLobby().getzUtils().getMessageUtils().centerChatMessage("§7Você selecionou a tag §b§lYOUTUBER§7!"));
+		tagYoutuber.add(LobbyUtils.getMessageUtils().centerChatMessage("§7Você selecionou a tag §b§lYOUTUBER§7!"));
 		tagYoutuber.add("§0");
 
 	}

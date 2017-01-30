@@ -9,7 +9,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import com.google.common.io.ByteArrayDataInput;
 import com.google.common.io.ByteStreams;
 
-import br.com.battlebits.ycommon.bungee.servers.HungerGamesServer.HungerGamesState;
+import br.com.battlebits.commons.bungee.loadbalancer.server.HungerGamesServer.HungerGamesState;
 import br.com.battlebits.ylobby.yLobbyPlugin;
 
 public class BungeeMessageReceiver implements PluginMessageListener {

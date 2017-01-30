@@ -7,6 +7,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import br.com.battlebits.ylobby.LobbyUtils;
 import br.com.battlebits.ylobby.yLobbyPlugin;
 
 public class GroupCommand implements CommandExecutor {
@@ -16,7 +17,7 @@ public class GroupCommand implements CommandExecutor {
 	public GroupCommand() {
 		message = new ArrayList<>();
 		message.add("§0");
-		message.add(yLobbyPlugin.getyLobby().getzUtils().getMessageUtils()
+		message.add(LobbyUtils.getMessageUtils()
 				.centerChatMessage("§7Abrindo o §9§lmenu §7de informacoes do seu §9§lgrupo atual§7!"));
 		message.add("§0");
 	}

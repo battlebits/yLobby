@@ -26,19 +26,12 @@ import org.bukkit.event.weather.WeatherChangeEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import br.com.battlebits.yaddons.yAddonsPlugin;
-import br.com.battlebits.ycommon.bukkit.event.ram.RamOutOfLimitEvent;
-import br.com.battlebits.ycommon.common.BattlebitsAPI;
-import br.com.battlebits.ycommon.common.permissions.enums.Group;
+import br.com.battlebits.commons.BattlebitsAPI;
+import br.com.battlebits.commons.core.permission.Group;
 import br.com.battlebits.ylobby.yLobbyPlugin;
 
 public class MainListener implements Listener {
 
-	@EventHandler
-	public void onRam(RamOutOfLimitEvent event) {
-		Bukkit.shutdown();
-	}
-	
 	@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
 	public void onPlayerJoinListener(PlayerJoinEvent e) {
 		yLobbyPlugin.getyLobby().getLobbyItensManager().setItems(e.getPlayer());
@@ -166,11 +159,15 @@ public class MainListener implements Listener {
 				if (e.getItem().getType() == Material.ENDER_CHEST) {
 					if (e.getItem().hasItemMeta()) {
 						if (e.getItem().getItemMeta().hasDisplayName()) {
-							if (e.getItem().getItemMeta().getDisplayName().equalsIgnoreCase("§a§lCosmeticos §7(Clique)")) {
-								if (BattlebitsAPI.getAccountCommon().getBattlePlayer(e.getPlayer().getUniqueId()).hasGroupPermission(Group.LIGHT)) {
-									yAddonsPlugin.getyAddons().getSelectorInventory().open(e.getPlayer());
+							if (e.getItem().getItemMeta().getDisplayName()
+									.equalsIgnoreCase("§a§lCosmeticos §7(Clique)")) {
+								if (BattlebitsAPI.getAccountCommon().getBattlePlayer(e.getPlayer().getUniqueId())
+										.hasGroupPermission(Group.LIGHT)) {
+									// TODO
+									// yAddonsPlugin.getyAddons().getSelectorInventory().open(e.getPlayer());
 								} else {
-									e.getPlayer().sendMessage("§7Esse sistema está em fase de testes e desenvolvimento! Devido a isso, ele é apenas para jogadores com o grupo §a§lLIGHT §7ou superior!");
+									e.getPlayer().sendMessage(
+											"§7Esse sistema está em fase de testes e desenvolvimento! Devido a isso, ele é apenas para jogadores com o grupo §a§lLIGHT §7ou superior!");
 
 								}
 							}
@@ -183,9 +180,15 @@ public class MainListener implements Listener {
 
 	@EventHandler
 	public void PlayerCommandPreprocessListener(PlayerCommandPreprocessEvent e) {
-		if (e.getMessage().toLowerCase().startsWith("/ver") || e.getMessage().toLowerCase().startsWith("/version") || e.getMessage().toLowerCase().startsWith("/help") || e.getMessage().toLowerCase().startsWith("/?") || e.getMessage().toLowerCase().startsWith("/icanhasbukkit") || e.getMessage().toLowerCase().startsWith("/pl") || e.getMessage().toLowerCase().startsWith("/plugins")) {
-			e.setCancelled(true);
-			e.getPlayer().sendMessage("§7Sistema de Lobby para a §6§lBattle§r§lBits §9§lNetwork §7versão " + yLobbyPlugin.getyLobby().getDescription().getVersion() + "!");
+		if (e.getMessage().toLowerCase().startsWith("/ver") || e.getMessage().toLowerCase().startsWith("/version")
+				|| e.getMessage().toLowerCase().startsWith("/help") || e.getMessage().toLowerCase().startsWith("/?")
+				|| e.getMessage().toLowerCase().startsWith("/icanhasbukkit")
+				|| e.getMessage().toLowerCase().startsWith("/pl")
+				|| e.getMessage().toLowerCase().startsWith("/plugins")) {
+			// e.setCancelled(true);
+			// e.getPlayer().sendMessage("§7Sistema de Lobby para a
+			// §6§lBattle§r§lBits §9§lNetwork §7versão " +
+			// yLobbyPlugin.getyLobby().getDescription().getVersion() + "!");
 		}
 	}
 
@@ -193,7 +196,8 @@ public class MainListener implements Listener {
 	public void onAsyncPlayerChatListener(AsyncPlayerChatEvent e) {
 		if (!e.getMessage().startsWith("Damage Indicators")) {
 			if (yLobbyPlugin.getyLobby().getChatManager().isChatEnabled(e.getPlayer().getUniqueId())) {
-				if (!(e.getMessage().startsWith("@") && BattlebitsAPI.getAccountCommon().getBattlePlayer(e.getPlayer().getUniqueId()).hasGroupPermission(Group.MOD))) {
+				if (!(e.getMessage().startsWith("@") && BattlebitsAPI.getAccountCommon()
+						.getBattlePlayer(e.getPlayer().getUniqueId()).hasGroupPermission(Group.MOD))) {
 					for (UUID id : yLobbyPlugin.getyLobby().getChatManager().getChatDisabledPlayers()) {
 						e.getRecipients().remove(Bukkit.getPlayer(id));
 					}

@@ -7,6 +7,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import br.com.battlebits.ylobby.LobbyUtils;
 import br.com.battlebits.ylobby.yLobbyPlugin;
 
 public class SpawnCommand implements CommandExecutor {
@@ -16,7 +17,7 @@ public class SpawnCommand implements CommandExecutor {
 	public SpawnCommand() {
 		message = new ArrayList<>();
 		message.add("§0");
-		message.add(yLobbyPlugin.getyLobby().getzUtils().getMessageUtils().centerChatMessage("§7Você foi teleportado para o §e§lSPAWN§7!"));
+		message.add(LobbyUtils.getMessageUtils().centerChatMessage("§7Você foi teleportado para o §e§lSPAWN§7!"));
 		message.add("§0");
 	}
 

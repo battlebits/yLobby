@@ -7,6 +7,7 @@ import org.bukkit.GameMode;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 
+import br.com.battlebits.ylobby.LobbyUtils;
 import br.com.battlebits.ylobby.yLobbyPlugin;
 
 public class PlayerOutOfLobbyDetector extends DetectorBase {
@@ -16,7 +17,7 @@ public class PlayerOutOfLobbyDetector extends DetectorBase {
 	public PlayerOutOfLobbyDetector() {
 		message = new ArrayList<>();
 		message.add("§0");
-		message.add(yLobbyPlugin.getyLobby().getzUtils().getMessageUtils().centerChatMessage("§7Você §c§lnao§7 pode §c§lsair §7do §c§lLobby§7!"));
+		message.add(LobbyUtils.getMessageUtils().centerChatMessage("§7Você §c§lnao§7 pode §c§lsair §7do §c§lLobby§7!"));
 		message.add("§0");
 	}
 

@@ -11,8 +11,10 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import br.com.battlebits.ycommon.common.BattlebitsAPI;
-import br.com.battlebits.ycommon.common.permissions.enums.Group;
+import br.com.battlebits.commons.BattlebitsAPI;
+import br.com.battlebits.commons.api.item.ItemBuilder;
+import br.com.battlebits.commons.core.permission.Group;
+import br.com.battlebits.ylobby.LobbyUtils;
 import br.com.battlebits.ylobby.yLobbyPlugin;
 import br.com.battlebits.ylobby.bungee.BungeeMessage;
 import br.com.battlebits.ylobby.server.ServerInfo;
@@ -38,10 +40,12 @@ public abstract class MultiSelector {
 		directConnectMessage = dc;
 		directConnectItemLore = new ArrayList<>();
 		directConnectItem = new ItemStack(Material.GHAST_TEAR, 1);
-		directConnectItem = yLobbyPlugin.getyLobby().getzUtils().getItemUtils().addGlow(directConnectItem);
+		directConnectItem = ItemBuilder.glow(directConnectItem);
 		directConnectItemMeta = directConnectItem.getItemMeta();
 		directConnectItemMeta.setDisplayName("§9§l> §b§lEntre agora! §9§l<");
-		directConnectItemLore.addAll(Arrays.asList("§7Clique aqui para §b§lconectar ", "§7a um servidor §b§ldisponivel§7!", "§0", "§7No §3§ltotal §7temos §3§l0 §r§7jogadores", "§7conectados nos servidores."));
+		directConnectItemLore
+				.addAll(Arrays.asList("§7Clique aqui para §b§lconectar ", "§7a um servidor §b§ldisponivel§7!", "§0",
+						"§7No §3§ltotal §7temos §3§l0 §r§7jogadores", "§7conectados nos servidores."));
 		directConnectItemMeta.setLore(directConnectItemLore);
 		directConnectItem.setItemMeta(directConnectItemMeta);
 		backToServerMenuItem = new ItemStack(Material.ARROW, 1);
@@ -51,15 +55,20 @@ public abstract class MultiSelector {
 		backToServerMenuItem.setItemMeta(backmeta);
 		serverRestartingMessage = new ArrayList<>();
 		serverRestartingMessage.add("§0");
-		serverRestartingMessage.add(yLobbyPlugin.getyLobby().getzUtils().getMessageUtils().centerChatMessage("§7Este servidor está §8§lREINICIANDO §7aguarde para §b§lconectar§7!"));
+		serverRestartingMessage.add(LobbyUtils.getMessageUtils()
+				.centerChatMessage("§7Este servidor está §8§lREINICIANDO §7aguarde para §b§lconectar§7!"));
 		serverRestartingMessage.add("§0");
 		needToBeLightToJoinFull = new ArrayList<>();
 		needToBeLightToJoinFull.add("§0");
-		needToBeLightToJoinFull.add(yLobbyPlugin.getyLobby().getzUtils().getMessageUtils().centerChatMessage("§7Você precisa ser §a§lLIGHT§7 ou superior para"));
-		needToBeLightToJoinFull.add(yLobbyPlugin.getyLobby().getzUtils().getMessageUtils().centerChatMessage("§6§lentrar§7 com o§6§l servidor cheio§7!"));
-		needToBeLightToJoinFull.add(yLobbyPlugin.getyLobby().getzUtils().getMessageUtils().centerChatMessage("§7Compre em nosso site §6§lwww.battlebits.com.br§7!"));
+		needToBeLightToJoinFull
+				.add(LobbyUtils.getMessageUtils().centerChatMessage("§7Você precisa ser §a§lLIGHT§7 ou superior para"));
+		needToBeLightToJoinFull
+				.add(LobbyUtils.getMessageUtils().centerChatMessage("§6§lentrar§7 com o§6§l servidor cheio§7!"));
+		needToBeLightToJoinFull.add(
+				LobbyUtils.getMessageUtils().centerChatMessage("§7Compre em nosso site §6§lwww.battlebits.com.br§7!"));
 		needToBeLightToJoinFull.add("§0");
-		serverSelectorInventory = Bukkit.createInventory(null, yLobbyPlugin.getyLobby().getzUtils().getInventoryUtils().getInventorySizeForItens(selectorServers.size() + 18 + ((selectorServers.size() / 7) * 2)), inventoryTitle);
+		serverSelectorInventory = Bukkit.createInventory(null, LobbyUtils.getInventoryUtils().getInventorySizeForItens(
+				selectorServers.size() + 18 + ((selectorServers.size() / 7) * 2)), inventoryTitle);
 		serverSelectorInventory.setItem(4, directConnectItem);
 		serverSelectorInventory.setItem(serverSelectorInventory.getSize() - 5, backToServerMenuItem);
 	}
@@ -91,9 +100,11 @@ public abstract class MultiSelector {
 		if (info.getOnlinePlayers() >= 100) {
 			if (BattlebitsAPI.getAccountCommon().getBattlePlayer(p.getUniqueId()).hasGroupPermission(Group.LIGHT)) {
 				p.sendMessage("§0");
-				p.sendMessage(yLobbyPlugin.getyLobby().getzUtils().getMessageUtils().centerChatMessage("§6§lConectando§7 ao servidor §9§l" + ip + "§7!"));
+				p.sendMessage(LobbyUtils.getMessageUtils()
+						.centerChatMessage("§6§lConectando§7 ao servidor §9§l" + ip + "§7!"));
 				p.sendMessage("§0");
-				p.sendPluginMessage(yLobbyPlugin.getyLobby(), "BungeeCord", new BungeeMessage("Connect", ip).getDataOutput().toByteArray());
+				p.sendPluginMessage(yLobbyPlugin.getyLobby(), "BungeeCord",
+						new BungeeMessage("Connect", ip).getDataOutput().toByteArray());
 			} else {
 				for (String msg : needToBeLightToJoinFull) {
 					p.sendMessage(msg);
@@ -101,16 +112,19 @@ public abstract class MultiSelector {
 			}
 		} else {
 			p.sendMessage("§0");
-			p.sendMessage(yLobbyPlugin.getyLobby().getzUtils().getMessageUtils().centerChatMessage("§a§lConectando§7 ao servidor §9§l" + ip + "§7!"));
+			p.sendMessage(
+					LobbyUtils.getMessageUtils().centerChatMessage("§a§lConectando§7 ao servidor §9§l" + ip + "§7!"));
 			p.sendMessage("§0");
-			p.sendPluginMessage(yLobbyPlugin.getyLobby(), "BungeeCord", new BungeeMessage("Connect", ip).getDataOutput().toByteArray());
+			p.sendPluginMessage(yLobbyPlugin.getyLobby(), "BungeeCord",
+					new BungeeMessage("Connect", ip).getDataOutput().toByteArray());
 		}
 	}
 
 	public void update() {
 		int i = 10;
 		try {
-			directConnectItemLore.set(directConnectItemLore.size() - 2, "§7No §3§ltotal §7temos §3§l" + getMultiOnlinePlayers() + " §r§7jogadores");
+			directConnectItemLore.set(directConnectItemLore.size() - 2,
+					"§7No §3§ltotal §7temos §3§l" + getMultiOnlinePlayers() + " §r§7jogadores");
 			directConnectItemMeta.setLore(directConnectItemLore);
 			directConnectItem.setItemMeta(directConnectItemMeta);
 			serverSelectorInventory.setItem(4, directConnectItem);
@@ -139,7 +153,8 @@ public abstract class MultiSelector {
 
 			if (info.getOnlinePlayers() > 0) {
 				lore.add("§0");
-				lore.add("§3§l" + info.getOnlinePlayers() + " §7" + ((info.getOnlinePlayers() == 1) ? "jogador conectado" : "jogadores conectados"));
+				lore.add("§3§l" + info.getOnlinePlayers() + " §7"
+						+ ((info.getOnlinePlayers() == 1) ? "jogador conectado" : "jogadores conectados"));
 			}
 			lore.add("§0");
 			lore.add("§b§lClique§r§b para §r§b§lconectar§r§b.");

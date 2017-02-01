@@ -31,7 +31,7 @@ public class TabAndHeaderUpdater extends UpdaterBase {
 		headerBuilder.append("§6§lBATTLE§F§LBITS §E§LLOBBY");
 		headerBuilder.append("\n");
 		headerBuilder.append("          ");
-		headerBuilder.append("§%coins%§: §f");
+		headerBuilder.append("§e§%coins%§: §f");
 		headerBuilder.append(account.getMoney());
 		headerBuilder.append(" §1- ");
 		headerBuilder.append("§e§%tickets%§: §f");

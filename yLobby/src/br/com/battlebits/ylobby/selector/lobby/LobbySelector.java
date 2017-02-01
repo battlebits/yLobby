@@ -29,10 +29,11 @@ public class LobbySelector {
 		selectorInventory = new MenuInventory("§%choose-lobby%§",
 				LobbyUtils.getInventoryUtils().getInventorySizeForItens(size + 18 + ((size / 7) * 2)));
 
-		int id = 0;
 		for (BattleServer ip : yLobbyPlugin.getyLobby().getServerManager().getBalancer(ServerType.LOBBY).getList()) {
 			if (ip.getServerId().equals(BattlebitsAPI.getServerId())) {
-				yLobbyPlugin.getyLobby().setLobbyID("#" + id);
+				int lobbyId = Integer
+						.valueOf(ip.getServerId().replace(".lobby.battlebits.com.br", "").replace("a", ""));
+				yLobbyPlugin.getyLobby().setLobbyID("#" + lobbyId);
 			}
 		}
 		update();

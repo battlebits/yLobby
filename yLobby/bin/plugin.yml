@@ -1,8 +1,0 @@
-main: br.com.battlebits.ylobby.yLobbyPlugin
-version: 1.0
-author: zViitoor
-name: yLobby
-website: www.battlebits.com.br
-description: Plugin do Lobby da BattleBits Network.
-depend: [yCommon]
-loadbefore: [yCommon, yAddons]

@@ -35,6 +35,10 @@ public class GameModsManager {
 		return gameModeBases.values();
 	}
 
+	public boolean isGameMode(ServerType type) {
+		return gameModeBases.containsKey(type);
+	}
+
 	public GameModeBase getGameMode(ServerType type) {
 		return gameModeBases.get(type);
 	}
@@ -99,7 +103,7 @@ public class GameModsManager {
 		addGameMode(new GameModeMatch("§%hungergames-doublekit-item%§", "§%hungergames-doublekit-item-lore%§",
 				Material.RED_MUSHROOM,
 				new Location(Bukkit.getWorlds().get(0), 0, Bukkit.getWorlds().get(0).getHighestBlockYAt(0, -12), -12),
-				new BungeeMessage("DoubleKitHungergames"), ServerType.FAIRPLAY, EntityType.CREEPER) {
+				new BungeeMessage("DoubleKitHungergames"), ServerType.DOUBLEKITHG, EntityType.CREEPER) {
 			@Override
 			public int getOnlinePlayers() {
 				return yLobbyPlugin.getyLobby().getServerManager().getBalancer(getServerType()).getTotalNumber();

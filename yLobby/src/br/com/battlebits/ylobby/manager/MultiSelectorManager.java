@@ -13,6 +13,7 @@ public class MultiSelectorManager {
 
 	public MultiSelectorManager() {
 		multiSelectors = new HashMap<>();
+		loadSelectors();
 	}
 
 	public void loadSelectors() {

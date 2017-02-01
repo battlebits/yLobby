@@ -35,6 +35,7 @@ import br.com.battlebits.commons.core.server.ServerType;
 import br.com.battlebits.commons.core.server.loadbalancer.server.BattleServer;
 import br.com.battlebits.commons.core.server.loadbalancer.server.MinigameServer;
 import br.com.battlebits.ylobby.yLobbyPlugin;
+import br.com.battlebits.ylobby.updater.TabAndHeaderUpdater;
 
 public class MainListener implements Listener {
 
@@ -146,78 +147,106 @@ public class MainListener implements Listener {
 	public void onRedisMessage(RedisPubSubMessageEvent event) {
 		if (!event.getChannel().equals("server-info"))
 			return;
+		if (event.getMessage() == null || event.getMessage().isEmpty())
+			return;
 		String message = event.getMessage();
 		JsonObject jsonObject = BattlebitsAPI.getParser().parse(message).getAsJsonObject();
 		String source = jsonObject.get("source").getAsString();
 		if (source.equals(BattlebitsAPI.getServerId()))
 			return;
-		// TODO Updater de Inventários
 		ServerType sourceType = ServerType.getServerType(source);
 		DataServerMessage.Action action = DataServerMessage.Action.valueOf(jsonObject.get("action").getAsString());
 		switch (action) {
 		case JOIN: {
 			BattleServer server = yLobbyPlugin.getyLobby().getServerManager().getServer(source);
+			if (server == null) {
+				System.out.println("Servidor " + source + " do tipo " + sourceType + " está nulo no plugin do yLobby");
+				break;
+			}
 			server.setOnlinePlayers(server.getOnlinePlayers() + 1);
-			// TODO Update GameModeSelector
-			// TODO Update MatchSelector
-			// TODO Update MultiSelector
-			// TODO Update Lobby
+			if (yLobbyPlugin.getyLobby().getGameModsManager().isGameMode(sourceType))
+				yLobbyPlugin.getyLobby().getGameModsManager().getGameMode(sourceType).updateOnlinePlayersOnItem();
+			if (yLobbyPlugin.getyLobby().getMatchSelectorManager().isMatchSelector(sourceType))
+				yLobbyPlugin.getyLobby().getMatchSelectorManager().getMatchSelector(sourceType).update();
+			if (yLobbyPlugin.getyLobby().getMultiSelectorManager().isMultiSelector(sourceType))
+				yLobbyPlugin.getyLobby().getMultiSelectorManager().getMultiSelector(sourceType).update();
+			if (sourceType == ServerType.LOBBY) {
+				yLobbyPlugin.getyLobby().getLobbySelector().update();
+			} else if (sourceType == ServerType.NETWORK) {
+				for (Player p : Bukkit.getOnlinePlayers()) {
+					TabAndHeaderUpdater.send(p);
+					yLobbyPlugin.getyLobby().getScoreboardManager().updateMainScoreboard(p);
+				}
+			}
 			break;
 		}
 		case LEAVE: {
 			BattleServer server = yLobbyPlugin.getyLobby().getServerManager().getServer(source);
 			server.setOnlinePlayers(server.getOnlinePlayers() - 1);
-			// TODO Update GameModeSelector
-			// TODO Update MatchSelector
-			// TODO Update MultiSelector
-			// TODO Update Lobby
+			if (yLobbyPlugin.getyLobby().getGameModsManager().isGameMode(sourceType))
+				yLobbyPlugin.getyLobby().getGameModsManager().getGameMode(sourceType).updateOnlinePlayersOnItem();
+			if (yLobbyPlugin.getyLobby().getMatchSelectorManager().isMatchSelector(sourceType))
+				yLobbyPlugin.getyLobby().getMatchSelectorManager().getMatchSelector(sourceType).update();
+			if (yLobbyPlugin.getyLobby().getMultiSelectorManager().isMultiSelector(sourceType))
+				yLobbyPlugin.getyLobby().getMultiSelectorManager().getMultiSelector(sourceType).update();
+			if (sourceType == ServerType.LOBBY) {
+				yLobbyPlugin.getyLobby().getLobbySelector().update();
+			} else if (sourceType == ServerType.NETWORK) {
+				for (Player p : Bukkit.getOnlinePlayers()) {
+					TabAndHeaderUpdater.send(p);
+					yLobbyPlugin.getyLobby().getScoreboardManager().updateMainScoreboard(p);
+				}
+			}
 			break;
 		}
 		case START: {
 			DataServerMessage<StartPayload> payload = BattlebitsAPI.getGson().fromJson(jsonObject,
 					new TypeToken<DataServerMessage<StartPayload>>() {
 					}.getType());
-			if (sourceType == ServerType.NETWORK) {
-				break;
-			}
 			yLobbyPlugin.getyLobby().getServerManager().addActiveServer(payload.getPayload().getServerAddress(),
 					payload.getPayload().getServer().getServerId(), payload.getPayload().getServer().getMaxPlayers());
-			// TODO Update GameModeSelector
-			// TODO Update MatchSelector
-			// TODO Update MultiSelector
-			// TODO Update Lobby
+			if (yLobbyPlugin.getyLobby().getGameModsManager().isGameMode(sourceType))
+				yLobbyPlugin.getyLobby().getGameModsManager().getGameMode(sourceType).updateOnlinePlayersOnItem();
+			if (yLobbyPlugin.getyLobby().getMatchSelectorManager().isMatchSelector(sourceType))
+				yLobbyPlugin.getyLobby().getMatchSelectorManager().getMatchSelector(sourceType).update();
+			if (yLobbyPlugin.getyLobby().getMultiSelectorManager().isMultiSelector(sourceType))
+				yLobbyPlugin.getyLobby().getMultiSelectorManager().getMultiSelector(sourceType).update();
+			if (sourceType == ServerType.LOBBY)
+				yLobbyPlugin.getyLobby().getLobbySelector().update();
 			break;
 		}
 		case STOP: {
 			DataServerMessage<StopPayload> payload = BattlebitsAPI.getGson().fromJson(jsonObject,
 					new TypeToken<DataServerMessage<StopPayload>>() {
 					}.getType());
-			if (sourceType == ServerType.NETWORK) {
-				break;
-			}
 			yLobbyPlugin.getyLobby().getServerManager().removeActiveServer(payload.getPayload().getServerId());
-			// TODO Update GameModeSelector
-			// TODO Update MatchSelector
-			// TODO Update MultiSelector
-			// TODO Update Lobby
+			if (yLobbyPlugin.getyLobby().getGameModsManager().isGameMode(sourceType))
+				yLobbyPlugin.getyLobby().getGameModsManager().getGameMode(sourceType).updateOnlinePlayersOnItem();
+			if (yLobbyPlugin.getyLobby().getMatchSelectorManager().isMatchSelector(sourceType))
+				yLobbyPlugin.getyLobby().getMatchSelectorManager().getMatchSelector(sourceType).update();
+			if (yLobbyPlugin.getyLobby().getMultiSelectorManager().isMultiSelector(sourceType))
+				yLobbyPlugin.getyLobby().getMultiSelectorManager().getMultiSelector(sourceType).update();
+			if (sourceType == ServerType.LOBBY)
+				yLobbyPlugin.getyLobby().getLobbySelector().update();
 			break;
 		}
 		case UPDATE: {
 			DataServerMessage<UpdatePayload> payload = BattlebitsAPI.getGson().fromJson(jsonObject,
 					new TypeToken<DataServerMessage<UpdatePayload>>() {
 					}.getType());
-			if (sourceType == ServerType.NETWORK) {
-				break;
-			}
 			BattleServer server = yLobbyPlugin.getyLobby().getServerManager().getServer(source);
 			if (server instanceof MinigameServer) {
 				((MinigameServer) server).setState(payload.getPayload().getState());
 				((MinigameServer) server).setTime(payload.getPayload().getTime());
 			}
-			// TODO Update GameModeSelector
-			// TODO Update MatchSelector
-			// TODO Update MultiSelector
-			// TODO Update Lobby
+			if (yLobbyPlugin.getyLobby().getGameModsManager().isGameMode(sourceType))
+				yLobbyPlugin.getyLobby().getGameModsManager().getGameMode(sourceType).updateOnlinePlayersOnItem();
+			if (yLobbyPlugin.getyLobby().getMatchSelectorManager().isMatchSelector(sourceType))
+				yLobbyPlugin.getyLobby().getMatchSelectorManager().getMatchSelector(sourceType).update();
+			if (yLobbyPlugin.getyLobby().getMultiSelectorManager().isMultiSelector(sourceType))
+				yLobbyPlugin.getyLobby().getMultiSelectorManager().getMultiSelector(sourceType).update();
+			if (sourceType == ServerType.LOBBY)
+				yLobbyPlugin.getyLobby().getLobbySelector().update();
 			break;
 		}
 		default:

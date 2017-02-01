@@ -1,5 +1,8 @@
 package br.com.battlebits.ylobby;
 
+import java.util.Map;
+import java.util.Map.Entry;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Difficulty;
 import org.bukkit.entity.Player;
@@ -10,6 +13,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import br.com.battlebits.commons.bukkit.BukkitMain;
 import br.com.battlebits.commons.bukkit.command.BukkitCommandFramework;
 import br.com.battlebits.commons.core.command.CommandLoader;
+import br.com.battlebits.commons.core.data.DataServer;
 import br.com.battlebits.commons.core.server.ServerManager;
 import br.com.battlebits.commons.core.server.ServerType;
 import br.com.battlebits.commons.core.server.loadbalancer.type.RoundRobin;
@@ -138,6 +142,23 @@ public class yLobbyPlugin extends JavaPlugin {
 
 		serverManager = new ServerManager();
 		serverManager.putBalancer(ServerType.NETWORK, new RoundRobin<>());
+		for (Entry<String, Map<String, String>> entry : DataServer.getAllServers().entrySet()) {
+			try {
+				if (!entry.getValue().containsKey("type"))
+					continue;
+				if (!entry.getValue().containsKey("address"))
+					continue;
+				if (!entry.getValue().containsKey("maxplayers"))
+					continue;
+				if (!entry.getValue().containsKey("onlineplayers"))
+					continue;
+				getServerManager().addActiveServer(entry.getValue().get("address"), entry.getKey(),
+						Integer.valueOf(entry.getValue().get("maxplayers")));
+				getServerManager().getServer(entry.getKey())
+						.setOnlinePlayers(Integer.valueOf(entry.getValue().get("onlineplayers")));
+			} catch (Exception e) {
+			}
+		}
 		matchSelectorManager = new MatchSelectorManager();
 		multiSelectorManager = new MultiSelectorManager();
 		locationManager = new LocationManager();
@@ -173,9 +194,12 @@ public class yLobbyPlugin extends JavaPlugin {
 				mainListener, playerHideListener, gameModsListener);
 
 		tabAndHeaderUpdater.start();
-
+		lobbySelector.start();
+		gameModeSelector.start();
 		playerOutOfLobbyDetector.start();
-
+		// serverManager.addActiveServer(BattlebitsAPI.getServerAddress(),
+		// BattlebitsAPI.getServerId(),
+		// Bukkit.getMaxPlayers());
 		new CommandLoader(new BukkitCommandFramework(this)).loadCommandsFromPackage("br.com.battlebits.ylobby.command");
 		new BukkitRunnable() {
 			@Override

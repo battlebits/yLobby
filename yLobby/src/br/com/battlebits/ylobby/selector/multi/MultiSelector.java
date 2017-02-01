@@ -68,21 +68,7 @@ public abstract class MultiSelector {
 		int size = yLobbyPlugin.getyLobby().getServerManager().getBalancer(serverType).getList().size();
 		serverSelectorInventory = new MenuInventory(inventoryTitle,
 				LobbyUtils.getInventoryUtils().getInventorySizeForItens(size + 18 + ((size / 7) * 2)));
-		serverSelectorInventory.setItem(4, new MenuItem(directConnectItem, new MenuClickHandler() {
-
-			@Override
-			public void onClick(Player p, Inventory inv, ClickType type, ItemStack stack, int slot) {
-				directConnect(p);
-			}
-		}));
-		serverSelectorInventory.setItem(serverSelectorInventory.getInventory().getSize() - 5,
-				new MenuItem(backToServerMenuItem, new MenuClickHandler() {
-
-					@Override
-					public void onClick(Player p, Inventory inv, ClickType type, ItemStack stack, int slot) {
-						yLobbyPlugin.getyLobby().getGameModeSelector().open(p);
-					}
-				}));
+		update();
 	}
 
 	public abstract int getMultiOnlinePlayers();
@@ -119,6 +105,21 @@ public abstract class MultiSelector {
 					"§7No §3§ltotal §7temos §3§l" + getMultiOnlinePlayers() + " §r§7jogadores");
 			directConnectItemMeta.setLore(directConnectItemLore);
 			directConnectItem.setItemMeta(directConnectItemMeta);
+			serverSelectorInventory.setItem(serverSelectorInventory.getInventory().getSize() - 5,
+					new MenuItem(backToServerMenuItem, new MenuClickHandler() {
+
+						@Override
+						public void onClick(Player p, Inventory inv, ClickType type, ItemStack stack, int slot) {
+							yLobbyPlugin.getyLobby().getGameModeSelector().open(p);
+						}
+					}));
+			serverSelectorInventory.setItem(4, new MenuItem(directConnectItem, new MenuClickHandler() {
+
+				@Override
+				public void onClick(Player p, Inventory inv, ClickType type, ItemStack stack, int slot) {
+					directConnect(p);
+				}
+			}));
 		} catch (Exception e) {
 		}
 		List<BattleServer> gameServerInfos = yLobbyPlugin.getyLobby().getServerManager().getBalancer(serverType)

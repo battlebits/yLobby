@@ -13,6 +13,7 @@ public class MatchSelectorManager {
 
 	public MatchSelectorManager() {
 		matchSelectors = new HashMap<>();
+		loadSelectors();
 	}
 
 	public void loadSelectors() {
@@ -24,7 +25,7 @@ public class MatchSelectorManager {
 			}
 		});
 
-		addMacthSelector( new MatchSelector(ServerType.CUSTOMHG, "§nServidores do CustomHG",
+		addMacthSelector(new MatchSelector(ServerType.CUSTOMHG, "§nServidores do CustomHG",
 				new BungeeMessage("CustomHungergames")) {
 			@Override
 			public int getMatchsOnlinePlayers() {
@@ -32,20 +33,21 @@ public class MatchSelectorManager {
 			}
 		});
 
-		addMacthSelector( new MatchSelector(ServerType.DOUBLEKITHG, "§nServidores do DoubleKit-HG",
+		addMacthSelector(new MatchSelector(ServerType.DOUBLEKITHG, "§nServidores do DoubleKit-HG",
 				new BungeeMessage("DoubleKitHungergames")) {
 			@Override
 			public int getMatchsOnlinePlayers() {
 				return yLobbyPlugin.getyLobby().getServerManager().getBalancer(ServerType.DOUBLEKITHG).getTotalNumber();
 			}
 		});
-		addMacthSelector( new MatchSelector(ServerType.FAIRPLAY, "§nServidores do FairPlayHG",
-				new BungeeMessage("Fairplayhg")) {
-			@Override
-			public int getMatchsOnlinePlayers() {
-				return yLobbyPlugin.getyLobby().getServerManager().getBalancer(ServerType.FAIRPLAY).getTotalNumber();
-			}
-		});
+//		addMacthSelector(
+//				new MatchSelector(ServerType.FAIRPLAY, "§nServidores do FairPlayHG", new BungeeMessage("Fairplayhg")) {
+//					@Override
+//					public int getMatchsOnlinePlayers() {
+//						return yLobbyPlugin.getyLobby().getServerManager().getBalancer(ServerType.FAIRPLAY)
+//								.getTotalNumber();
+//					}
+//				});
 	}
 
 	public boolean isMatchSelector(ServerType type) {

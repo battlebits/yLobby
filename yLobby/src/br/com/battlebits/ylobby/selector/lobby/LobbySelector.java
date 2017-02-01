@@ -27,14 +27,15 @@ public class LobbySelector {
 	public void start() {
 		int size = yLobbyPlugin.getyLobby().getServerManager().getBalancer(ServerType.LOBBY).getList().size();
 		selectorInventory = new MenuInventory("§%choose-lobby%§",
-				LobbyUtils.getInventoryUtils().getInventorySizeForItensOld(size + 18 + ((size / 7) * 2)));
+				LobbyUtils.getInventoryUtils().getInventorySizeForItens(size + 18 + ((size / 7) * 2)));
 
 		int id = 0;
 		for (BattleServer ip : yLobbyPlugin.getyLobby().getServerManager().getBalancer(ServerType.LOBBY).getList()) {
-			if (ip.equals(BattlebitsAPI.getServerId())) {
+			if (ip.getServerId().equals(BattlebitsAPI.getServerId())) {
 				yLobbyPlugin.getyLobby().setLobbyID("#" + id);
 			}
 		}
+		update();
 	}
 
 	public void open(Player p) {

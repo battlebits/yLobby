@@ -1,6 +1,7 @@
 package br.com.battlebits.ylobby.selector.gamemode;
 
 import java.util.HashMap;
+import java.util.Map.Entry;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -22,19 +23,24 @@ public class GameModeSelector {
 		serverIds = new HashMap<Integer, GameModeBase>();
 	}
 
-	public void starta() {
+	public void start() {
 		selectorInventory = Bukkit.createInventory(null,
 				LobbyUtils.getInventoryUtils()
 						.getInventorySizeForItensOld(yLobbyPlugin.getyLobby().getGameModsManager().getGameModes().size()
 								+ 18 + yLobbyPlugin.getyLobby().getGameModsManager().getGameModes().size() / 7 * 2),
 				"§nEscolha o Modo de Jogo");
 		int i = 10;
+		// TODO ADD COMPARATOR
 		for (GameModeBase gameModeBase : yLobbyPlugin.getyLobby().getGameModsManager().getGameModes()) {
 			if ((i == 8) || (i == 17) || (i == 26) || (i == 35) || (i == 44)) {
 				i += 2;
 			}
 			serverIds.put(Integer.valueOf(i), gameModeBase);
 			i++;
+		}
+		for (Entry<Integer, GameModeBase> entry : serverIds.entrySet()) {
+			GameModeBase gameModeBase = (GameModeBase) entry.getValue();
+			selectorInventory.setItem(entry.getKey(), gameModeBase.getInventoryItem());
 		}
 	}
 
@@ -71,4 +77,5 @@ public class GameModeSelector {
 			}
 		}
 	}
+
 }

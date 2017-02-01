@@ -1,14 +1,19 @@
 package br.com.battlebits.ylobby.selector.gamemode;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map.Entry;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 
-import br.com.battlebits.ylobby.LobbyUtils;
+import br.com.battlebits.commons.core.server.ServerType;
 import br.com.battlebits.ylobby.LobbyMain;
+import br.com.battlebits.ylobby.LobbyUtils;
 import br.com.battlebits.ylobby.gamemode.GameModeBase;
 import br.com.battlebits.ylobby.gamemode.GameModeMatch;
 import br.com.battlebits.ylobby.gamemode.GameModeMulti;
@@ -31,7 +36,38 @@ public class GameModeSelector {
 				"§nEscolha o Modo de Jogo");
 		int i = 10;
 		// TODO ADD COMPARATOR
-		for (GameModeBase gameModeBase : LobbyMain.getInstance().getGameModsManager().getGameModes()) {
+		List<GameModeBase> bases = new ArrayList<>(LobbyMain.getInstance().getGameModsManager().getGameModes());
+		Collections.sort(bases, new Comparator<GameModeBase>() {
+			@Override
+			public int compare(GameModeBase o1, GameModeBase o2) {
+				if (o1.getServerType() == ServerType.PVP_FULLIRON)
+					return -1;
+				if (o2.getServerType() == ServerType.PVP_FULLIRON)
+					return 1;
+				if (o1.getServerType() == ServerType.PVP_SIMULATOR)
+					return -1;
+				if (o2.getServerType() == ServerType.PVP_SIMULATOR)
+					return 1;
+				if (o1.getServerType() == ServerType.HUNGERGAMES)
+					return -1;
+				if (o2.getServerType() == ServerType.HUNGERGAMES)
+					return 1;
+				if (o1.getServerType() == ServerType.CUSTOMHG)
+					return -1;
+				if (o2.getServerType() == ServerType.CUSTOMHG)
+					return 1;
+				if (o1.getServerType() == ServerType.DOUBLEKITHG)
+					return -1;
+				if (o2.getServerType() == ServerType.DOUBLEKITHG)
+					return 1;
+				if (o1.getServerType() == ServerType.RAID)
+					return -1;
+				if (o2.getServerType() == ServerType.RAID)
+					return 1;
+				return 0;
+			}
+		});
+		for (GameModeBase gameModeBase : bases) {
 			if ((i == 8) || (i == 17) || (i == 26) || (i == 35) || (i == 44)) {
 				i += 2;
 			}

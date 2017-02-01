@@ -2,6 +2,8 @@ package br.com.battlebits.ylobby.selector.match;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import org.bukkit.Material;
@@ -133,6 +135,62 @@ public abstract class MatchSelector {
 		}
 		List<BattleServer> gameServerInfos = LobbyMain.getInstance().getServerManager().getBalancer(serverType)
 				.getList();
+		Collections.sort(gameServerInfos, new Comparator<BattleServer>() {
+
+			@Override
+			public int compare(BattleServer o1, BattleServer o2) {
+				if (!(o1 instanceof MinigameServer))
+					return 999999;
+				if (!(o2 instanceof MinigameServer))
+					return 999999;
+				MinigameServer server1 = (MinigameServer) o1;
+				MinigameServer server2 = (MinigameServer) o2;
+				if (server1.getState() == MinigameState.WAITING) {
+					if (server2.getState() == MinigameState.WAITING) {
+						if (server1.getOnlinePlayers() > server2.getOnlinePlayers()) {
+							return -1;
+						} else if (server1.getOnlinePlayers() < server2.getOnlinePlayers()) {
+							return 1;
+						} else {
+							return server1.getServerId().compareTo(server2.getServerId());
+						}
+					} else if (server2.getState() == MinigameState.PREGAME) {
+						return 1;
+					} else if (server2.isInProgress()) {
+						return -1;
+					}
+				} else if (server1.getState() == MinigameState.PREGAME) {
+					if (server2.getState() == MinigameState.WAITING) {
+						return -1;
+					} else if (server2.getState() == MinigameState.PREGAME) {
+						if (server1.getOnlinePlayers() > server2.getOnlinePlayers()) {
+							return -1;
+						} else if (server1.getOnlinePlayers() < server2.getOnlinePlayers()) {
+							return 1;
+						} else {
+							return server1.getServerId().compareTo(server2.getServerId());
+						}
+					} else if (server2.isInProgress()) {
+						return -1;
+					}
+				} else if (server1.isInProgress()) {
+					if (server2.getState() == MinigameState.WAITING) {
+						return 1;
+					} else if (server2.getState() == MinigameState.PREGAME) {
+						return 1;
+					} else if (server2.isInProgress()) {
+						if (server1.getOnlinePlayers() > server2.getOnlinePlayers()) {
+							return -1;
+						} else if (server1.getOnlinePlayers() < server2.getOnlinePlayers()) {
+							return 1;
+						} else {
+							return server1.getServerId().compareTo(server2.getServerId());
+						}
+					}
+				}
+				return 0;
+			}
+		});
 		for (BattleServer mg : gameServerInfos) {
 			if (!(mg instanceof MinigameServer))
 				continue;

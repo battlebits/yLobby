@@ -3,14 +3,10 @@ package br.com.battlebits.ylobby.command;
 import java.util.ArrayList;
 
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.scoreboard.Scoreboard;
 
 import br.com.battlebits.commons.BattlebitsAPI;
-import br.com.battlebits.commons.api.input.InputAPI;
-import br.com.battlebits.commons.api.input.InputHandler;
 import br.com.battlebits.commons.bukkit.command.BukkitCommandArgs;
 import br.com.battlebits.commons.core.command.CommandClass;
 import br.com.battlebits.commons.core.command.CommandFramework.Command;
@@ -72,25 +68,6 @@ public class FlyCommand implements CommandClass {
 			Scoreboard board = p.getScoreboard();
 			p.setScoreboard(Bukkit.getScoreboardManager().getNewScoreboard());
 			p.setScoreboard(board);
-		}
-	}
-
-	@Command(name = "giveitem")
-	public void giveItem(BukkitCommandArgs args) {
-		if (args.isPlayer()) {
-			Player p = args.getPlayer();
-			InputAPI.openAnvilGui(p, "Teste", new ItemStack(Material.PAPER), new InputHandler() {
-
-				@Override
-				public void onDone(Player p, String name) {
-					p.sendMessage(name);
-				}
-
-				@Override
-				public void onClose(Player p) {
-					p.sendMessage("Close");
-				}
-			});
 		}
 	}
 

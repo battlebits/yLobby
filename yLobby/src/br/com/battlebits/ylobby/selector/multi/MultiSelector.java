@@ -2,6 +2,8 @@ package br.com.battlebits.ylobby.selector.multi;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import org.bukkit.Material;
@@ -124,6 +126,13 @@ public abstract class MultiSelector {
 		}
 		List<BattleServer> gameServerInfos = LobbyMain.getInstance().getServerManager().getBalancer(serverType)
 				.getList();
+		Collections.sort(gameServerInfos, new Comparator<BattleServer>() {
+
+			@Override
+			public int compare(BattleServer o1, BattleServer o2) {
+				return o1.getServerId().compareTo(o2.getServerId());
+			}
+		});
 		for (BattleServer info : gameServerInfos) {
 			if (i == 8 || i == 17 || i == 26 || i == 35 || i == 44) {
 				i = i + 2;

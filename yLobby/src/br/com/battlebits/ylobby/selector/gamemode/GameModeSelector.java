@@ -35,9 +35,8 @@ public class GameModeSelector {
 	public void start() {
 		selectorInventory = new MenuInventory("§n§%choose-game-mode%§",
 				LobbyUtils.getInventoryUtils()
-						.getInventorySizeForItensOld(LobbyMain.getInstance().getGameModsManager().getGameModes().size()
+						.getInventorySizeForItens(LobbyMain.getInstance().getGameModsManager().getGameModes().size()
 								+ 18 + LobbyMain.getInstance().getGameModsManager().getGameModes().size() / 7 * 2));
-		int i = 10;
 		List<GameModeBase> bases = new ArrayList<>(LobbyMain.getInstance().getGameModsManager().getGameModes());
 		Collections.sort(bases, new Comparator<GameModeBase>() {
 			@Override
@@ -69,6 +68,7 @@ public class GameModeSelector {
 				return 0;
 			}
 		});
+		int i = 10;
 		for (GameModeBase gameModeBase : bases) {
 			if ((i == 8) || (i == 17) || (i == 26) || (i == 35) || (i == 44)) {
 				i += 2;

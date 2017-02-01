@@ -5,13 +5,12 @@ import java.util.ArrayList;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
-import org.bukkit.event.block.Action;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scoreboard.Scoreboard;
 
 import br.com.battlebits.commons.BattlebitsAPI;
-import br.com.battlebits.commons.api.item.ActionItemStack;
-import br.com.battlebits.commons.api.item.ActionItemStack.InteractHandler;
+import br.com.battlebits.commons.api.input.InputAPI;
+import br.com.battlebits.commons.api.input.InputHandler;
 import br.com.battlebits.commons.bukkit.command.BukkitCommandArgs;
 import br.com.battlebits.commons.core.command.CommandClass;
 import br.com.battlebits.commons.core.command.CommandFramework.Command;
@@ -80,14 +79,18 @@ public class FlyCommand implements CommandClass {
 	public void giveItem(BukkitCommandArgs args) {
 		if (args.isPlayer()) {
 			Player p = args.getPlayer();
-			p.getInventory().addItem(new ActionItemStack(new ItemStack(Material.STONE), new InteractHandler() {
+			InputAPI.openAnvilGui(p, "Teste", new ItemStack(Material.PAPER), new InputHandler() {
 
 				@Override
-				public boolean onInteract(Player player, ItemStack item, Action action) {
-					player.sendMessage("Interact!");
-					return false;
+				public void onDone(Player p, String name) {
+					p.sendMessage(name);
 				}
-			}).getItemStack());
+
+				@Override
+				public void onClose(Player p) {
+					p.sendMessage("Close");
+				}
+			});
 		}
 	}
 

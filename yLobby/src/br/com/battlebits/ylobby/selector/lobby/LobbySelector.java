@@ -3,7 +3,6 @@ package br.com.battlebits.ylobby.selector.lobby;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -11,22 +10,24 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import br.com.battlebits.commons.BattlebitsAPI;
+import br.com.battlebits.commons.api.menu.ClickType;
+import br.com.battlebits.commons.api.menu.MenuClickHandler;
+import br.com.battlebits.commons.api.menu.MenuInventory;
+import br.com.battlebits.commons.api.menu.MenuItem;
 import br.com.battlebits.commons.core.server.ServerType;
 import br.com.battlebits.commons.core.server.loadbalancer.server.BattleServer;
 import br.com.battlebits.ylobby.LobbyUtils;
 import br.com.battlebits.ylobby.yLobbyPlugin;
 import br.com.battlebits.ylobby.bungee.BungeeMessage;
-import net.md_5.bungee.api.ChatColor;
 
 public class LobbySelector {
 
-	private Inventory selectorInventory;
+	private MenuInventory selectorInventory;
 
 	public void start() {
 		int size = yLobbyPlugin.getyLobby().getServerManager().getBalancer(ServerType.LOBBY).getList().size();
-		selectorInventory = Bukkit.createInventory(null,
-				LobbyUtils.getInventoryUtils().getInventorySizeForItens(size + 18 + ((size / 7) * 2)),
-				"§%choose-lobby%§");
+		selectorInventory = new MenuInventory("§%choose-lobby%§",
+				LobbyUtils.getInventoryUtils().getInventorySizeForItensOld(size + 18 + ((size / 7) * 2)));
 
 		int id = 0;
 		for (BattleServer ip : yLobbyPlugin.getyLobby().getServerManager().getBalancer(ServerType.LOBBY).getList()) {
@@ -38,14 +39,13 @@ public class LobbySelector {
 
 	public void open(Player p) {
 		if (selectorInventory != null) {
-			p.openInventory(selectorInventory);
+			selectorInventory.open(p);
 		}
 	}
 
 	public void tryToConnect(Player p, String id) {
-		id = ChatColor.stripColor(id).replace("> Lobby ", "").replace(" <", "");
 		p.sendPluginMessage(yLobbyPlugin.getyLobby(), "BungeeCord",
-				new BungeeMessage("Connect", "a" + id + ".lobby.battlebits.com.br").getDataOutput().toByteArray());
+				new BungeeMessage("Connect", id).getDataOutput().toByteArray());
 	}
 
 	public void update() {
@@ -79,7 +79,12 @@ public class LobbySelector {
 			}
 			meta.setLore(lore);
 			stack.setItemMeta(meta);
-			selectorInventory.setItem(i, stack);
+			selectorInventory.setItem(i, new MenuItem(stack, new MenuClickHandler() {
+				@Override
+				public void onClick(Player p, Inventory inv, ClickType type, ItemStack stack, int slot) {
+					tryToConnect(p, info.getServerId());
+				}
+			}));
 			i += 1;
 		}
 	}

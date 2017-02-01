@@ -9,6 +9,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import br.com.battlebits.commons.core.server.ServerType;
 import br.com.battlebits.commons.core.server.loadbalancer.server.BattleServer;
 import br.com.battlebits.ylobby.LobbyUtils;
 import br.com.battlebits.ylobby.yLobbyPlugin;
@@ -20,9 +21,9 @@ public class GameModeSimple extends GameModeBase {
 	private BungeeMessage connectMessage;
 
 	public GameModeSimple(final String servername, String serverdescription, Material iconmaterial,
-			String serverbungeeid, Location npclocation, EntityType type) {
+			String serverbungeeid, Location npclocation, ServerType serverType, EntityType type) {
 		super(servername, serverdescription, iconmaterial, Arrays.asList("§b§lClique §bpara §b§lconectar§b."),
-				npclocation, type);
+				npclocation, serverType, type);
 		bungeeId = serverbungeeid;
 		connectMessage = new BungeeMessage("Connect", bungeeId);
 		new BukkitRunnable() {

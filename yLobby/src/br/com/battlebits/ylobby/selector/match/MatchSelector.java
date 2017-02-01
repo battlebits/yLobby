@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -12,6 +11,10 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import br.com.battlebits.commons.api.item.ItemBuilder;
+import br.com.battlebits.commons.api.menu.ClickType;
+import br.com.battlebits.commons.api.menu.MenuClickHandler;
+import br.com.battlebits.commons.api.menu.MenuInventory;
+import br.com.battlebits.commons.api.menu.MenuItem;
 import br.com.battlebits.commons.core.server.ServerType;
 import br.com.battlebits.commons.core.server.loadbalancer.server.BattleServer;
 import br.com.battlebits.commons.core.server.loadbalancer.server.MinigameServer;
@@ -19,10 +22,11 @@ import br.com.battlebits.commons.core.server.loadbalancer.server.MinigameState;
 import br.com.battlebits.ylobby.LobbyUtils;
 import br.com.battlebits.ylobby.yLobbyPlugin;
 import br.com.battlebits.ylobby.bungee.BungeeMessage;
+import lombok.Getter;
 
 public abstract class MatchSelector {
 
-	private Inventory serverSelectorInventory;
+	private MenuInventory serverSelectorInventory;
 	private ItemStack directConnectItem;
 	private ArrayList<String> directConnectItemLore;
 	private ItemMeta directConnectItemMeta;
@@ -32,6 +36,7 @@ public abstract class MatchSelector {
 	private ArrayList<String> needToBeLightToJoinFull;
 	private String inventoryTitle;
 	private BungeeMessage directConnectMessage;
+	@Getter
 	private ServerType serverType;
 
 	public MatchSelector(ServerType serverType, String title, BungeeMessage dc) {
@@ -69,10 +74,22 @@ public abstract class MatchSelector {
 		needToBeLightToJoinFull.add("§7Compre em nosso site §6§lwww.battlebits.com.br§7!");
 		needToBeLightToJoinFull.add("§0");
 		int size = yLobbyPlugin.getyLobby().getServerManager().getBalancer(serverType).getList().size();
-		serverSelectorInventory = Bukkit.createInventory(null,
-				LobbyUtils.getInventoryUtils().getInventorySizeForItens(size + 18 + ((size / 7) * 2)), inventoryTitle);
-		serverSelectorInventory.setItem(4, directConnectItem);
-		serverSelectorInventory.setItem(serverSelectorInventory.getSize() - 5, backToServerMenuItem);
+		serverSelectorInventory = new MenuInventory(inventoryTitle,
+				LobbyUtils.getInventoryUtils().getInventorySizeForItens(size + 18 + ((size / 7) * 2)));
+		serverSelectorInventory.setItem(4, new MenuItem(directConnectItem, new MenuClickHandler() {
+			@Override
+			public void onClick(Player p, Inventory inv, ClickType type, ItemStack stack, int slot) {
+				directConnect(p);
+			}
+		}));
+		serverSelectorInventory.setItem(serverSelectorInventory.getInventory().getSize() - 5,
+				new MenuItem(backToServerMenuItem, new MenuClickHandler() {
+
+					@Override
+					public void onClick(Player p, Inventory inv, ClickType type, ItemStack stack, int slot) {
+						yLobbyPlugin.getyLobby().getGameModeSelector().open(p);
+					}
+				}));
 	}
 
 	public abstract int getMatchsOnlinePlayers();
@@ -94,7 +111,7 @@ public abstract class MatchSelector {
 
 	public void open(Player p) {
 		if (serverSelectorInventory != null) {
-			p.openInventory(serverSelectorInventory);
+			serverSelectorInventory.open(p);
 		}
 	}
 
@@ -110,7 +127,6 @@ public abstract class MatchSelector {
 					"§7No §3§ltotal §7temos §3§l" + getMatchsOnlinePlayers() + " §r§7jogadores");
 			directConnectItemMeta.setLore(directConnectItemLore);
 			directConnectItem.setItemMeta(directConnectItemMeta);
-			serverSelectorInventory.setItem(4, directConnectItem);
 		} catch (Exception e) {
 		}
 		List<BattleServer> gameServerInfos = yLobbyPlugin.getyLobby().getServerManager().getBalancer(serverType)
@@ -174,7 +190,13 @@ public abstract class MatchSelector {
 			}
 			meta.setLore(lore);
 			stack.setItemMeta(meta);
-			serverSelectorInventory.setItem(i, stack);
+			serverSelectorInventory.setItem(i, new MenuItem(stack, new MenuClickHandler() {
+
+				@Override
+				public void onClick(Player p, Inventory inv, ClickType type, ItemStack stack, int slot) {
+					tryToConnect(p, info.getServerId());
+				}
+			}));
 			i = i + 1;
 		}
 	}

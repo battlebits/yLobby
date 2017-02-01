@@ -12,6 +12,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import com.gmail.filoghost.holographicdisplays.api.Hologram;
 import com.gmail.filoghost.holographicdisplays.api.HologramsAPI;
 
+import br.com.battlebits.commons.core.server.ServerType;
 import br.com.battlebits.commons.util.string.StringLoreUtils;
 import br.com.battlebits.ylobby.LobbyUtils;
 import br.com.battlebits.ylobby.yLobbyPlugin;
@@ -31,9 +32,13 @@ public abstract class GameModeBase {
 	@Getter
 	private NPC characterNPC;
 
+	@Getter
+	private ServerType serverType;
+
 	public GameModeBase(String servername, String serverdescription, Material iconmaterial, List<String> connectLines,
-			Location npclocation, EntityType type) {
+			Location npclocation, ServerType serverType, EntityType type) {
 		name = servername;
+		this.serverType = serverType;
 		inventoryitem = new ItemStack(iconmaterial, 1);
 		inventoryItemMeta = inventoryitem.getItemMeta();
 		inventoryItemMeta.setDisplayName("§9§l" + servername);

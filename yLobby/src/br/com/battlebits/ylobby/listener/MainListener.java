@@ -22,7 +22,18 @@ import org.bukkit.event.weather.WeatherChangeEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import com.google.gson.JsonObject;
+import com.google.gson.reflect.TypeToken;
+
+import br.com.battlebits.commons.BattlebitsAPI;
 import br.com.battlebits.commons.bukkit.event.redis.RedisPubSubMessageEvent;
+import br.com.battlebits.commons.core.data.DataServer.DataServerMessage;
+import br.com.battlebits.commons.core.data.DataServer.DataServerMessage.StartPayload;
+import br.com.battlebits.commons.core.data.DataServer.DataServerMessage.StopPayload;
+import br.com.battlebits.commons.core.data.DataServer.DataServerMessage.UpdatePayload;
+import br.com.battlebits.commons.core.server.ServerType;
+import br.com.battlebits.commons.core.server.loadbalancer.server.BattleServer;
+import br.com.battlebits.commons.core.server.loadbalancer.server.MinigameServer;
 import br.com.battlebits.ylobby.yLobbyPlugin;
 
 public class MainListener implements Listener {
@@ -130,12 +141,88 @@ public class MainListener implements Listener {
 			// yLobbyPlugin.getyLobby().getDescription().getVersion() + "!");
 		}
 	}
-	
+
 	@EventHandler
 	public void onRedisMessage(RedisPubSubMessageEvent event) {
-		if(!event.getChannel().equals("server-info"))
+		if (!event.getChannel().equals("server-info"))
 			return;
-		
+		String message = event.getMessage();
+		JsonObject jsonObject = BattlebitsAPI.getParser().parse(message).getAsJsonObject();
+		String source = jsonObject.get("source").getAsString();
+		if (source.equals(BattlebitsAPI.getServerId()))
+			return;
+		// TODO Updater de Inventários
+		ServerType sourceType = ServerType.getServerType(source);
+		DataServerMessage.Action action = DataServerMessage.Action.valueOf(jsonObject.get("action").getAsString());
+		switch (action) {
+		case JOIN: {
+			BattleServer server = yLobbyPlugin.getyLobby().getServerManager().getServer(source);
+			server.setOnlinePlayers(server.getOnlinePlayers() + 1);
+			// TODO Update GameModeSelector
+			// TODO Update MatchSelector
+			// TODO Update MultiSelector
+			// TODO Update Lobby
+			break;
+		}
+		case LEAVE: {
+			BattleServer server = yLobbyPlugin.getyLobby().getServerManager().getServer(source);
+			server.setOnlinePlayers(server.getOnlinePlayers() - 1);
+			// TODO Update GameModeSelector
+			// TODO Update MatchSelector
+			// TODO Update MultiSelector
+			// TODO Update Lobby
+			break;
+		}
+		case START: {
+			DataServerMessage<StartPayload> payload = BattlebitsAPI.getGson().fromJson(jsonObject,
+					new TypeToken<DataServerMessage<StartPayload>>() {
+					}.getType());
+			if (sourceType == ServerType.NETWORK) {
+				break;
+			}
+			yLobbyPlugin.getyLobby().getServerManager().addActiveServer(payload.getPayload().getServerAddress(),
+					payload.getPayload().getServer().getServerId(), payload.getPayload().getServer().getMaxPlayers());
+			// TODO Update GameModeSelector
+			// TODO Update MatchSelector
+			// TODO Update MultiSelector
+			// TODO Update Lobby
+			break;
+		}
+		case STOP: {
+			DataServerMessage<StopPayload> payload = BattlebitsAPI.getGson().fromJson(jsonObject,
+					new TypeToken<DataServerMessage<StopPayload>>() {
+					}.getType());
+			if (sourceType == ServerType.NETWORK) {
+				break;
+			}
+			yLobbyPlugin.getyLobby().getServerManager().removeActiveServer(payload.getPayload().getServerId());
+			// TODO Update GameModeSelector
+			// TODO Update MatchSelector
+			// TODO Update MultiSelector
+			// TODO Update Lobby
+			break;
+		}
+		case UPDATE: {
+			DataServerMessage<UpdatePayload> payload = BattlebitsAPI.getGson().fromJson(jsonObject,
+					new TypeToken<DataServerMessage<UpdatePayload>>() {
+					}.getType());
+			if (sourceType == ServerType.NETWORK) {
+				break;
+			}
+			BattleServer server = yLobbyPlugin.getyLobby().getServerManager().getServer(source);
+			if (server instanceof MinigameServer) {
+				((MinigameServer) server).setState(payload.getPayload().getState());
+				((MinigameServer) server).setTime(payload.getPayload().getTime());
+			}
+			// TODO Update GameModeSelector
+			// TODO Update MatchSelector
+			// TODO Update MultiSelector
+			// TODO Update Lobby
+			break;
+		}
+		default:
+			break;
+		}
 	}
 
 }

@@ -119,6 +119,21 @@ public class LobbyUtils {
 
 		public int getInventorySizeForItens(int itens) {
 			if (itens > 45) {
+				return 6;
+			} else if (itens > 36) {
+				return 5;
+			} else if (itens > 27) {
+				return 4;
+			} else if (itens > 18) {
+				return 3;
+			} else if (itens > 9) {
+				return 2;
+			} else {
+				return 1;
+			}
+		}
+		public int getInventorySizeForItensOld(int itens) {
+			if (itens > 45) {
 				return 54;
 			} else if (itens > 36) {
 				return 45;

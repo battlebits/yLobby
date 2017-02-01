@@ -7,10 +7,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map.Entry;
 
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
 
+import br.com.battlebits.commons.api.menu.ClickType;
+import br.com.battlebits.commons.api.menu.MenuClickHandler;
+import br.com.battlebits.commons.api.menu.MenuInventory;
+import br.com.battlebits.commons.api.menu.MenuItem;
 import br.com.battlebits.commons.core.server.ServerType;
 import br.com.battlebits.ylobby.LobbyMain;
 import br.com.battlebits.ylobby.LobbyUtils;
@@ -21,7 +25,7 @@ import br.com.battlebits.ylobby.gamemode.GameModeSimple;
 import br.com.battlebits.ylobby.gamemode.GameModeType;
 
 public class GameModeSelector {
-	private Inventory selectorInventory;
+	private MenuInventory selectorInventory;
 	private HashMap<Integer, GameModeBase> serverIds;
 
 	public GameModeSelector() {
@@ -29,13 +33,11 @@ public class GameModeSelector {
 	}
 
 	public void start() {
-		selectorInventory = Bukkit.createInventory(null,
+		selectorInventory = new MenuInventory("§n§%choose-game-mode%§",
 				LobbyUtils.getInventoryUtils()
 						.getInventorySizeForItensOld(LobbyMain.getInstance().getGameModsManager().getGameModes().size()
-								+ 18 + LobbyMain.getInstance().getGameModsManager().getGameModes().size() / 7 * 2),
-				"§nEscolha o Modo de Jogo");
+								+ 18 + LobbyMain.getInstance().getGameModsManager().getGameModes().size() / 7 * 2));
 		int i = 10;
-		// TODO ADD COMPARATOR
 		List<GameModeBase> bases = new ArrayList<>(LobbyMain.getInstance().getGameModsManager().getGameModes());
 		Collections.sort(bases, new Comparator<GameModeBase>() {
 			@Override
@@ -76,7 +78,14 @@ public class GameModeSelector {
 		}
 		for (Entry<Integer, GameModeBase> entry : serverIds.entrySet()) {
 			GameModeBase gameModeBase = (GameModeBase) entry.getValue();
-			selectorInventory.setItem(entry.getKey(), gameModeBase.getInventoryItem());
+			selectorInventory.setItem(entry.getKey(),
+					new MenuItem(gameModeBase.getInventoryItem(), new MenuClickHandler() {
+
+						@Override
+						public void onClick(Player p, Inventory inv, ClickType type, ItemStack stack, int slot) {
+							tryToConnect(p, slot, type == ClickType.RIGHT);
+						}
+					}));
 		}
 	}
 
@@ -86,7 +95,7 @@ public class GameModeSelector {
 
 	public void open(Player p) {
 		if (selectorInventory != null) {
-			p.openInventory(selectorInventory);
+			selectorInventory.open(p);
 		}
 	}
 

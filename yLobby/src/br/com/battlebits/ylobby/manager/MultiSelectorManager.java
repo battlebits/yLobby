@@ -18,14 +18,14 @@ public class MultiSelectorManager {
 
 	public void loadSelectors() {
 		addMultiSelector(
-				new MultiSelector(ServerType.PVP_FULLIRON, "§nBattlecraft Fulliron", new BungeeMessage("PVPFulliron")) {
+				new MultiSelector(ServerType.PVP_FULLIRON, "§n§fulliron-servers§", new BungeeMessage("PVPFulliron")) {
 					@Override
 					public int getMultiOnlinePlayers() {
 						return LobbyMain.getInstance().getServerManager().getBalancer(ServerType.PVP_FULLIRON)
 								.getTotalNumber();
 					}
 				});
-		addMultiSelector(new MultiSelector(ServerType.PVP_SIMULATOR, "§nBattlecraft Simulator",
+		addMultiSelector(new MultiSelector(ServerType.PVP_SIMULATOR, "§n§simulator-servers§",
 				new BungeeMessage("PVPSimulator")) {
 			@Override
 			public int getMultiOnlinePlayers() {

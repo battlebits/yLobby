@@ -31,8 +31,6 @@ public abstract class MultiSelector {
 	private ArrayList<String> directConnectItemLore;
 	private ItemMeta directConnectItemMeta;
 	private ItemStack backToServerMenuItem;
-	private ArrayList<String> serverRestartingMessage;
-	private ArrayList<String> needToBeLightToJoinFull;
 	private String inventoryTitle;
 	private BungeeMessage directConnectMessage;
 	@Getter
@@ -48,25 +46,14 @@ public abstract class MultiSelector {
 		directConnectItemMeta = directConnectItem.getItemMeta();
 		directConnectItemMeta.setDisplayName("§9§l> §b§l§%join-now%§! §9§l<");
 		directConnectItemLore
-				.addAll(Arrays.asList("§7Clique aqui para §b§lconectar ", "§7a um servidor §b§ldisponivel§7!", "§0",
-						"§7No §3§ltotal §7temos §3§l0 §r§7jogadores", "§7conectados nos servidores."));
+				.addAll(Arrays.asList("§%click-here-to-connect%§!", "§%we-have%§ 0 §%players-connected%§"));
 		directConnectItemMeta.setLore(directConnectItemLore);
 		directConnectItem.setItemMeta(directConnectItemMeta);
 		backToServerMenuItem = new ItemStack(Material.ARROW, 1);
 		ItemMeta backmeta = backToServerMenuItem.getItemMeta();
-		backmeta.setDisplayName("§9§lModos de Jogo");
-		backmeta.setLore(Arrays.asList("§7Clique aqui para voltar", "§7para o menu de Modos de Jogo."));
+		backmeta.setDisplayName("§9§l§%game-modes%§");
+		backmeta.setLore(Arrays.asList("§%back-game-mode%§"));
 		backToServerMenuItem.setItemMeta(backmeta);
-		serverRestartingMessage = new ArrayList<>();
-		serverRestartingMessage.add("§0");
-		serverRestartingMessage.add("§7Este servidor está §8§lREINICIANDO §7aguarde para §b§lconectar§7!");
-		serverRestartingMessage.add("§0");
-		needToBeLightToJoinFull = new ArrayList<>();
-		needToBeLightToJoinFull.add("§0");
-		needToBeLightToJoinFull.add("§7Você precisa ser §a§lLIGHT§7 ou superior para");
-		needToBeLightToJoinFull.add("§6§lentrar§7 com o§6§l servidor cheio§7!");
-		needToBeLightToJoinFull.add("§7Compre em nosso site §6§lwww.battlebits.com.br§7!");
-		needToBeLightToJoinFull.add("§0");
 		int size = LobbyMain.getInstance().getServerManager().getBalancer(serverType).getList().size();
 		serverSelectorInventory = new MenuInventory(inventoryTitle,
 				LobbyUtils.getInventoryUtils().getInventorySizeForItens(size + 18 + ((size / 7) * 2)));
@@ -80,8 +67,6 @@ public abstract class MultiSelector {
 	}
 
 	public void stop() {
-		serverRestartingMessage.clear();
-		needToBeLightToJoinFull.clear();
 		directConnectItemLore.clear();
 	}
 
@@ -103,8 +88,7 @@ public abstract class MultiSelector {
 	public void update() {
 		int i = 10;
 		try {
-			directConnectItemLore.set(directConnectItemLore.size() - 2,
-					"§7No §3§ltotal §7temos §3§l" + getMultiOnlinePlayers() + " §r§7jogadores");
+			directConnectItemLore.set(1, "§%we-have%§ " + getMultiOnlinePlayers() + " §%players-connected%§");
 			directConnectItemMeta.setLore(directConnectItemLore);
 			directConnectItem.setItemMeta(directConnectItemMeta);
 			serverSelectorInventory.setItem(serverSelectorInventory.getInventory().getSize() - 5,
@@ -151,11 +135,10 @@ public abstract class MultiSelector {
 
 			if (info.getOnlinePlayers() > 0) {
 				lore.add("§0");
-				lore.add("§3§l" + info.getOnlinePlayers() + " §7"
-						+ ((info.getOnlinePlayers() == 1) ? "jogador conectado" : "jogadores conectados"));
+				lore.add("§3§l" + info.getOnlinePlayers() + " §7§%players-connected%§");
 			}
 			lore.add("§0");
-			lore.add("§b§lClique§r§b para §r§b§lconectar§r§b.");
+			lore.add("§%click-to-connect%§.");
 
 			meta.setLore(lore);
 			stack.setItemMeta(meta);

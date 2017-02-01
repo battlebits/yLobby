@@ -98,7 +98,7 @@ public class LobbyItensManager {
 						return false;
 					}
 				}).getItemStack();
-		parkourItem = new ActionItemStack(new ItemBuilder().type(Material.FEATHER).name("§%fun-item%§ §7(Em Breve)")
+		parkourItem = new ActionItemStack(new ItemBuilder().type(Material.FEATHER).name("§%fun-item%§ §7(§%soon%§)")
 				.lore("§%fun-item-lore%§").build(), new InteractHandler() {
 					@Override
 					public boolean onInteract(Player player, ItemStack item, Action action) {
@@ -116,7 +116,7 @@ public class LobbyItensManager {
 				}).getItemStack();
 		profileMeta = (SkullMeta) profileItem.getItemMeta();
 		cosmeticsItem = new ActionItemStack(new ItemBuilder().type(Material.ENDER_CHEST)
-				.name("§%cosmetics-item%§ §7(Clique)").lore("§%cosmetics-item-lore%§").build(), new InteractHandler() {
+				.name("§%cosmetics-item%§ §7(§%click%§)").lore("§%cosmetics-item-lore%§").build(), new InteractHandler() {
 
 					@Override
 					public boolean onInteract(Player player, ItemStack item, Action action) {

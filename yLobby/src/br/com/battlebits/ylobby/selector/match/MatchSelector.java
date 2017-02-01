@@ -33,9 +33,6 @@ public abstract class MatchSelector {
 	private ArrayList<String> directConnectItemLore;
 	private ItemMeta directConnectItemMeta;
 	private ItemStack backToServerMenuItem;
-	private ArrayList<String> serverRestartingMessage;
-	private ArrayList<String> needToBeUltimateToSpectate;
-	private ArrayList<String> needToBeLightToJoinFull;
 	private String inventoryTitle;
 	private BungeeMessage directConnectMessage;
 	@Getter
@@ -49,32 +46,16 @@ public abstract class MatchSelector {
 		directConnectItem = new ItemStack(Material.GHAST_TEAR, 1);
 		directConnectItem = ItemBuilder.glow(directConnectItem);
 		directConnectItemMeta = directConnectItem.getItemMeta();
-		directConnectItemMeta.setDisplayName("§9§l> §b§lPartida rapida §9§l<");
+		directConnectItemMeta.setDisplayName("§9§l> §b§l§%fast-match%§ §9§l<");
 		directConnectItemLore
-				.addAll(Arrays.asList("§7Clique aqui para §b§lconectar ", "§7a um servidor §b§ldisponivel§7!", "§0",
-						"§7No §3§ltotal §7temos §3§l0 §r§7jogadores", "§7conectados nos servidores."));
+				.addAll(Arrays.asList("§%click-here-to-connect%§!", "§%we-have%§ 0 §%players-connected%§"));
 		directConnectItemMeta.setLore(directConnectItemLore);
 		directConnectItem.setItemMeta(directConnectItemMeta);
 		backToServerMenuItem = new ItemStack(Material.ARROW, 1);
 		ItemMeta backmeta = backToServerMenuItem.getItemMeta();
-		backmeta.setDisplayName("§9§lModos de Jogo");
-		backmeta.setLore(Arrays.asList("§7Clique aqui para voltar", "§7para o menu de Modos de Jogo."));
+		backmeta.setDisplayName("§9§l§%game-modes%§");
+		backmeta.setLore(Arrays.asList("§%back-game-mode%§"));
 		backToServerMenuItem.setItemMeta(backmeta);
-		serverRestartingMessage = new ArrayList<>();
-		serverRestartingMessage.add("§0");
-		serverRestartingMessage.add("§7Este servidor está §8§lREINICIANDO §7aguarde para §b§lconectar§7!");
-		serverRestartingMessage.add("§0");
-		needToBeUltimateToSpectate = new ArrayList<>();
-		needToBeUltimateToSpectate.add("§0");
-		needToBeUltimateToSpectate.add("§7Você precisa ser §D§LULTIMATE§7 ou superior para §b§lespectar§7!");
-		needToBeUltimateToSpectate.add("§7Compre em nosso site §6§lwww.battlebits.com.br§7!");
-		needToBeUltimateToSpectate.add("§0");
-		needToBeLightToJoinFull = new ArrayList<>();
-		needToBeLightToJoinFull.add("§0");
-		needToBeLightToJoinFull.add("§7Você precisa ser §a§lLIGHT§7 ou superior para");
-		needToBeLightToJoinFull.add("§6§lentrar§7 com o§6§l servidor cheio§7!");
-		needToBeLightToJoinFull.add("§7Compre em nosso site §6§lwww.battlebits.com.br§7!");
-		needToBeLightToJoinFull.add("§0");
 		int size = LobbyMain.getInstance().getServerManager().getBalancer(serverType).getList().size();
 		serverSelectorInventory = new MenuInventory(inventoryTitle,
 				LobbyUtils.getInventoryUtils().getInventorySizeForItens(size + 18 + ((size / 7) * 2)));
@@ -89,9 +70,6 @@ public abstract class MatchSelector {
 	}
 
 	public void stop() {
-		serverRestartingMessage.clear();
-		needToBeLightToJoinFull.clear();
-		needToBeUltimateToSpectate.clear();
 		directConnectItemLore.clear();
 	}
 
@@ -113,8 +91,7 @@ public abstract class MatchSelector {
 	public void update() {
 		int i = 10;
 		try {
-			directConnectItemLore.set(directConnectItemLore.size() - 2,
-					"§7No §3§ltotal §7temos §3§l" + getMatchsOnlinePlayers() + " §r§7jogadores");
+			directConnectItemLore.set(1, "§%we-have%§ " + getMatchsOnlinePlayers() + " §%players-connected%§");
 			directConnectItemMeta.setLore(directConnectItemLore);
 			directConnectItem.setItemMeta(directConnectItemMeta);
 			serverSelectorInventory.setItem(4, new MenuItem(directConnectItem, new MenuClickHandler() {

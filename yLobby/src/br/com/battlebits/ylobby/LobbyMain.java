@@ -46,7 +46,6 @@ import br.com.battlebits.ylobby.profile.ProfileRanksListener;
 import br.com.battlebits.ylobby.profile.YourProfileInventory;
 import br.com.battlebits.ylobby.profile.YourProfileListener;
 import br.com.battlebits.ylobby.selector.gamemode.GameModeSelector;
-import br.com.battlebits.ylobby.selector.gamemode.GameModeSelectorListener;
 import br.com.battlebits.ylobby.selector.lobby.LobbySelector;
 import br.com.battlebits.ylobby.updater.TabAndHeaderUpdater;
 import lombok.Getter;
@@ -77,7 +76,6 @@ public class LobbyMain extends JavaPlugin {
 
 	private LobbySelector lobbySelector;
 	private GameModeSelector gameModeSelector;
-	private GameModeSelectorListener gameModeSelectorListener;
 
 	private TabAndHeaderUpdater tabAndHeaderUpdater;
 
@@ -101,11 +99,11 @@ public class LobbyMain extends JavaPlugin {
 		getLogger().info("Habilitando plugin, por favor aguarde!");
 
 		mongo = new MongoBackend();
-		
+
 		for (Language lang : Language.values()) {
 			Translate.loadTranslations("yLobby", lang, loadTranslation(lang));
 		}
-		
+
 		instance = this;
 
 		CitizensAPI.createNamedNPCRegistry("lobby", new NPCDataStore() {
@@ -181,7 +179,6 @@ public class LobbyMain extends JavaPlugin {
 
 		lobbySelector = new LobbySelector();
 		gameModeSelector = new GameModeSelector();
-		gameModeSelectorListener = new GameModeSelectorListener();
 		lobbyItensManager = new LobbyItensManager();
 
 		tabAndHeaderUpdater = new TabAndHeaderUpdater();
@@ -200,9 +197,8 @@ public class LobbyMain extends JavaPlugin {
 		playerHideListener = new PlayerHideListener();
 		gameModsListener = new GameModsListener();
 
-		LobbyUtils.getListenerUtils().registerListeners(this, gameModeSelectorListener,
-				yourProfileListener, profileRanksListener, profileConfigurationListener, bountifulListener,
-				mainListener, playerHideListener, gameModsListener);
+		LobbyUtils.getListenerUtils().registerListeners(this, yourProfileListener, profileRanksListener,
+				profileConfigurationListener, bountifulListener, mainListener, playerHideListener, gameModsListener);
 
 		tabAndHeaderUpdater.start();
 		lobbySelector.start();
@@ -294,7 +290,7 @@ public class LobbyMain extends JavaPlugin {
 	public ProfileConfigurationInventory getProfileConfigurationInventory() {
 		return profileConfigurationInventory;
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	private Map<String, String> loadTranslation(Language language) {
 		MongoDatabase database = BattlebitsAPI.getMongo().getClient().getDatabase("lobby");

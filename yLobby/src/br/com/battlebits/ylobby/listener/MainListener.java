@@ -160,7 +160,6 @@ public class MainListener implements Listener {
 		case JOIN: {
 			BattleServer server = LobbyMain.getInstance().getServerManager().getServer(source);
 			if (server == null) {
-				System.out.println("Servidor " + source + " do tipo " + sourceType + " está nulo no plugin do yLobby");
 				break;
 			}
 			server.setOnlinePlayers(server.getOnlinePlayers() + 1);

@@ -17,7 +17,7 @@ public class MatchSelectorManager {
 	}
 
 	public void loadSelectors() {
-		addMacthSelector(new MatchSelector(ServerType.HUNGERGAMES, "§nServidores do Battle-HG",
+		addMacthSelector(new MatchSelector(ServerType.HUNGERGAMES, "§n§battle-hg-servers§",
 				new BungeeMessage("HungerGames")) {
 			@Override
 			public int getMatchsOnlinePlayers() {
@@ -25,7 +25,7 @@ public class MatchSelectorManager {
 			}
 		});
 
-		addMacthSelector(new MatchSelector(ServerType.CUSTOMHG, "§nServidores do CustomHG",
+		addMacthSelector(new MatchSelector(ServerType.CUSTOMHG, "§n§custom-hg-servers§",
 				new BungeeMessage("CustomHungergames")) {
 			@Override
 			public int getMatchsOnlinePlayers() {
@@ -33,7 +33,7 @@ public class MatchSelectorManager {
 			}
 		});
 
-		addMacthSelector(new MatchSelector(ServerType.DOUBLEKITHG, "§nServidores do DoubleKit-HG",
+		addMacthSelector(new MatchSelector(ServerType.DOUBLEKITHG, "§n§doublekit-hg-servers§",
 				new BungeeMessage("DoubleKitHungergames")) {
 			@Override
 			public int getMatchsOnlinePlayers() {

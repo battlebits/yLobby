@@ -45,7 +45,7 @@ public abstract class GameModeBase {
 		inventoryItemLore = new ArrayList<>();
 		inventoryItemLore.addAll(StringLoreUtils.formatForLore(ChatColor.GRAY + serverdescription));
 		inventoryItemLore.add("§0");
-		inventoryItemLore.add("§b§30 §7jogadores online.");
+		inventoryItemLore.add("§b§30 §7§%players-online%§.");
 		inventoryItemLore.add("§0");
 		for (String s : connectLines) {
 			inventoryItemLore.add(s);
@@ -71,7 +71,7 @@ public abstract class GameModeBase {
 		Hologram holo = HologramsAPI.createHologram(LobbyMain.getInstance(),
 				LobbyUtils.getLocationUtils().getCenter(npclocation.clone().add(0, 2.54, 0), false));
 		holo.appendTextLine("§9§l" + servername.toUpperCase());
-		holo.appendTextLine("§b§lClique para conectar!");
+		holo.appendTextLine("§b§l§%click-to-connect%§!");
 		if (!npclocation.getChunk().isLoaded()) {
 			npclocation.getChunk().load();
 		}
@@ -87,7 +87,7 @@ public abstract class GameModeBase {
 
 	public void updateOnlinePlayersOnItem() {
 		inventoryItemLore.set(inventoryItemLore.size() - (2 + substractLines),
-				"§3§l" + getOnlinePlayers() + " §7jogadores online.");
+				"§3§l" + getOnlinePlayers() + " §7§%players-online%§.");
 		inventoryItemMeta.setLore(inventoryItemLore);
 		inventoryitem.setItemMeta(inventoryItemMeta);
 	}

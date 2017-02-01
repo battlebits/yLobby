@@ -22,8 +22,8 @@ public class GameModeSimple extends GameModeBase {
 
 	public GameModeSimple(final String servername, String serverdescription, Material iconmaterial,
 			String serverbungeeid, Location npclocation, ServerType serverType, EntityType type) {
-		super(servername, serverdescription, iconmaterial, Arrays.asList("§b§lClique §bpara §b§lconectar§b."),
-				npclocation, serverType, type);
+		super(servername, serverdescription, iconmaterial, Arrays.asList("§b§l§%click-to-connect%§"), npclocation,
+				serverType, type);
 		bungeeId = serverbungeeid;
 		connectMessage = new BungeeMessage("Connect", bungeeId);
 		new BukkitRunnable() {

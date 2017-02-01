@@ -48,7 +48,7 @@ public abstract class MatchSelector {
 		directConnectItemMeta = directConnectItem.getItemMeta();
 		directConnectItemMeta.setDisplayName("§9§l> §b§l§%fast-match%§ §9§l<");
 		directConnectItemLore
-				.addAll(Arrays.asList("§%click-here-to-connect%§!", "§%we-have%§ 0 §%players-connected%§"));
+				.addAll(Arrays.asList("§7§%click-here-to-connect%§!", "§7§%we-have%§ §3§l0 §7§%players-connected%§"));
 		directConnectItemMeta.setLore(directConnectItemLore);
 		directConnectItem.setItemMeta(directConnectItemMeta);
 		backToServerMenuItem = new ItemStack(Material.ARROW, 1);
@@ -91,7 +91,7 @@ public abstract class MatchSelector {
 	public void update() {
 		int i = 10;
 		try {
-			directConnectItemLore.set(1, "§%we-have%§ " + getMatchsOnlinePlayers() + " §%players-connected%§");
+			directConnectItemLore.set(1, "§7§%we-have%§ §3§l" + getMatchsOnlinePlayers() + " §7§%players-connected%§");
 			directConnectItemMeta.setLore(directConnectItemLore);
 			directConnectItem.setItemMeta(directConnectItemMeta);
 			serverSelectorInventory.setItem(4, new MenuItem(directConnectItem, new MenuClickHandler() {

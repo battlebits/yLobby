@@ -181,6 +181,9 @@ public class MainListener implements Listener {
 		}
 		case LEAVE: {
 			BattleServer server = LobbyMain.getInstance().getServerManager().getServer(source);
+			if (server == null) {
+				break;
+			}
 			server.setOnlinePlayers(server.getOnlinePlayers() - 1);
 			if (LobbyMain.getInstance().getGameModsManager().isGameMode(sourceType))
 				LobbyMain.getInstance().getGameModsManager().getGameMode(sourceType).updateOnlinePlayersOnItem();

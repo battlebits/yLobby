@@ -43,9 +43,7 @@ public class LobbyItensManager {
 										.get(player.getUniqueId())) {
 							if (LobbyMain.getInstance().getPlayerHideManager().isHiding(player)) {
 								LobbyMain.getInstance().getPlayerHideManager().showAllPlayers(player);
-								player.sendMessage("§0");
 								player.sendMessage("§%players-showed%§");
-								player.sendMessage("§0");
 								ItemMeta meta = item.getItemMeta();
 								meta.setDisplayName("§%hide-players-item%§ §7(§%click%§)");
 								meta.setLore(StringLoreUtils.formatForLore("§%hide-players-item-lore%§"));
@@ -54,9 +52,7 @@ public class LobbyItensManager {
 								player.setItemInHand(item);
 							} else {
 								LobbyMain.getInstance().getPlayerHideManager().hideAllPlayers(player);
-								player.sendMessage("§0");
 								player.sendMessage("§%players-hided%§");
-								player.sendMessage("§0");
 								item.getItemMeta().setDisplayName("§%show-players-item%§ §7(§%click%§)");
 								ItemMeta meta = item.getItemMeta();
 								meta.setDisplayName("§%show-players-item%§ §7(§%click%§)");
@@ -71,10 +67,8 @@ public class LobbyItensManager {
 							String replace = LobbyUtils.getTimeUtils()
 									.formatTime((int) (((PlayerHideListener.getUuidCooldown().get(player.getUniqueId())
 											- System.currentTimeMillis()) / 1000)) + 1);
-							player.sendMessage("§0");
 							player.sendMessage(T.t(BattlePlayer.getLanguage(player.getUniqueId()), "cooldown-wait",
 									new String[] { "%time%", replace }));
-							player.sendMessage("§0");
 						}
 						return false;
 					}
@@ -116,7 +110,8 @@ public class LobbyItensManager {
 				}).getItemStack();
 		profileMeta = (SkullMeta) profileItem.getItemMeta();
 		cosmeticsItem = new ActionItemStack(new ItemBuilder().type(Material.ENDER_CHEST)
-				.name("§%cosmetics-item%§ §7(§%click%§)").lore("§%cosmetics-item-lore%§").build(), new InteractHandler() {
+				.name("§%cosmetics-item%§ §7(§%click%§)").lore("§%cosmetics-item-lore%§").build(),
+				new InteractHandler() {
 
 					@Override
 					public boolean onInteract(Player player, ItemStack item, Action action) {

@@ -3,7 +3,7 @@ package br.com.battlebits.ylobby.manager;
 import java.util.HashMap;
 
 import br.com.battlebits.commons.core.server.ServerType;
-import br.com.battlebits.ylobby.yLobbyPlugin;
+import br.com.battlebits.ylobby.LobbyMain;
 import br.com.battlebits.ylobby.bungee.BungeeMessage;
 import br.com.battlebits.ylobby.selector.match.MatchSelector;
 
@@ -21,7 +21,7 @@ public class MatchSelectorManager {
 				new BungeeMessage("HungerGames")) {
 			@Override
 			public int getMatchsOnlinePlayers() {
-				return yLobbyPlugin.getyLobby().getServerManager().getBalancer(ServerType.HUNGERGAMES).getTotalNumber();
+				return LobbyMain.getInstance().getServerManager().getBalancer(ServerType.HUNGERGAMES).getTotalNumber();
 			}
 		});
 
@@ -29,7 +29,7 @@ public class MatchSelectorManager {
 				new BungeeMessage("CustomHungergames")) {
 			@Override
 			public int getMatchsOnlinePlayers() {
-				return yLobbyPlugin.getyLobby().getServerManager().getBalancer(ServerType.CUSTOMHG).getTotalNumber();
+				return LobbyMain.getInstance().getServerManager().getBalancer(ServerType.CUSTOMHG).getTotalNumber();
 			}
 		});
 
@@ -37,14 +37,14 @@ public class MatchSelectorManager {
 				new BungeeMessage("DoubleKitHungergames")) {
 			@Override
 			public int getMatchsOnlinePlayers() {
-				return yLobbyPlugin.getyLobby().getServerManager().getBalancer(ServerType.DOUBLEKITHG).getTotalNumber();
+				return LobbyMain.getInstance().getServerManager().getBalancer(ServerType.DOUBLEKITHG).getTotalNumber();
 			}
 		});
 //		addMacthSelector(
 //				new MatchSelector(ServerType.FAIRPLAY, "§nServidores do FairPlayHG", new BungeeMessage("Fairplayhg")) {
 //					@Override
 //					public int getMatchsOnlinePlayers() {
-//						return yLobbyPlugin.getyLobby().getServerManager().getBalancer(ServerType.FAIRPLAY)
+//						return yLobbyPlugin.getInstance().getServerManager().getBalancer(ServerType.FAIRPLAY)
 //								.getTotalNumber();
 //					}
 //				});

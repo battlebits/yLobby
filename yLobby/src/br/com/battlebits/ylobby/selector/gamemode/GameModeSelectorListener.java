@@ -8,7 +8,7 @@ import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
 
-import br.com.battlebits.ylobby.yLobbyPlugin;
+import br.com.battlebits.ylobby.LobbyMain;
 
 public class GameModeSelectorListener implements Listener {
 
@@ -20,7 +20,7 @@ public class GameModeSelectorListener implements Listener {
 					if (e.getInventory().getTitle().equalsIgnoreCase("§nEscolha o Modo de Jogo")) {
 						if (e.getClickedInventory() == e.getInventory()) {
 							Player p = (Player) e.getWhoClicked();
-							yLobbyPlugin.getyLobby().getGameModeSelector().tryToConnect(p, e.getSlot(),
+							LobbyMain.getInstance().getGameModeSelector().tryToConnect(p, e.getSlot(),
 									(e.getAction() == InventoryAction.PICKUP_HALF));
 						}
 						e.setCancelled(true);

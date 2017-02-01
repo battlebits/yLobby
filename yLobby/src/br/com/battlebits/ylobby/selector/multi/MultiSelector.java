@@ -18,7 +18,7 @@ import br.com.battlebits.commons.api.menu.MenuItem;
 import br.com.battlebits.commons.core.server.ServerType;
 import br.com.battlebits.commons.core.server.loadbalancer.server.BattleServer;
 import br.com.battlebits.ylobby.LobbyUtils;
-import br.com.battlebits.ylobby.yLobbyPlugin;
+import br.com.battlebits.ylobby.LobbyMain;
 import br.com.battlebits.ylobby.bungee.BungeeMessage;
 import lombok.Getter;
 
@@ -65,7 +65,7 @@ public abstract class MultiSelector {
 		needToBeLightToJoinFull.add("§6§lentrar§7 com o§6§l servidor cheio§7!");
 		needToBeLightToJoinFull.add("§7Compre em nosso site §6§lwww.battlebits.com.br§7!");
 		needToBeLightToJoinFull.add("§0");
-		int size = yLobbyPlugin.getyLobby().getServerManager().getBalancer(serverType).getList().size();
+		int size = LobbyMain.getInstance().getServerManager().getBalancer(serverType).getList().size();
 		serverSelectorInventory = new MenuInventory(inventoryTitle,
 				LobbyUtils.getInventoryUtils().getInventorySizeForItens(size + 18 + ((size / 7) * 2)));
 		update();
@@ -74,7 +74,7 @@ public abstract class MultiSelector {
 	public abstract int getMultiOnlinePlayers();
 
 	public void directConnect(Player p) {
-		p.sendPluginMessage(yLobbyPlugin.getyLobby(), "BungeeCord", directConnectMessage.getDataOutput().toByteArray());
+		p.sendPluginMessage(LobbyMain.getInstance(), "BungeeCord", directConnectMessage.getDataOutput().toByteArray());
 	}
 
 	public void stop() {
@@ -94,7 +94,7 @@ public abstract class MultiSelector {
 	}
 
 	public void tryToConnect(Player p, String ip) {
-		p.sendPluginMessage(yLobbyPlugin.getyLobby(), "BungeeCord",
+		p.sendPluginMessage(LobbyMain.getInstance(), "BungeeCord",
 				new BungeeMessage("Connect", ip).getDataOutput().toByteArray());
 	}
 
@@ -110,7 +110,7 @@ public abstract class MultiSelector {
 
 						@Override
 						public void onClick(Player p, Inventory inv, ClickType type, ItemStack stack, int slot) {
-							yLobbyPlugin.getyLobby().getGameModeSelector().open(p);
+							LobbyMain.getInstance().getGameModeSelector().open(p);
 						}
 					}));
 			serverSelectorInventory.setItem(4, new MenuItem(directConnectItem, new MenuClickHandler() {
@@ -122,7 +122,7 @@ public abstract class MultiSelector {
 			}));
 		} catch (Exception e) {
 		}
-		List<BattleServer> gameServerInfos = yLobbyPlugin.getyLobby().getServerManager().getBalancer(serverType)
+		List<BattleServer> gameServerInfos = LobbyMain.getInstance().getServerManager().getBalancer(serverType)
 				.getList();
 		for (BattleServer info : gameServerInfos) {
 			if (i == 8 || i == 17 || i == 26 || i == 35 || i == 44) {

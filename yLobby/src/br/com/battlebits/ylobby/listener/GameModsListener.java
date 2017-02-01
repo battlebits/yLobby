@@ -8,7 +8,7 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import br.com.battlebits.ylobby.yLobbyPlugin;
+import br.com.battlebits.ylobby.LobbyMain;
 import br.com.battlebits.ylobby.bungee.BungeeMessage;
 
 public class GameModsListener implements Listener {
@@ -21,16 +21,16 @@ public class GameModsListener implements Listener {
 				public void run() {
 					String type = (String) e.getRightClicked().getMetadata("GM_TYPE").get(0).value();
 					if (type.equalsIgnoreCase("SIMPLE")) {
-						e.getPlayer().sendPluginMessage(yLobbyPlugin.getyLobby(), "BungeeCord", new BungeeMessage(
+						e.getPlayer().sendPluginMessage(LobbyMain.getInstance(), "BungeeCord", new BungeeMessage(
 								((String) e.getRightClicked().getMetadata("GM_CONNECT").get(0).value()).split("#"))
 										.getDataOutput().toByteArray());
 					} else if (type.equalsIgnoreCase("MATCH") || type.equalsIgnoreCase("MULTI")) {
-						e.getPlayer().sendPluginMessage(yLobbyPlugin.getyLobby(), "BungeeCord", new BungeeMessage(
+						e.getPlayer().sendPluginMessage(LobbyMain.getInstance(), "BungeeCord", new BungeeMessage(
 								((String) e.getRightClicked().getMetadata("GM_CONNECT").get(0).value()).split("#"))
 										.getDataOutput().toByteArray());
 					}
 				}
-			}.runTaskAsynchronously(yLobbyPlugin.getyLobby());
+			}.runTaskAsynchronously(LobbyMain.getInstance());
 		}
 	}
 
@@ -44,16 +44,16 @@ public class GameModsListener implements Listener {
 						Player p = (Player) e.getDamager();
 						String type = (String) e.getEntity().getMetadata("GM_TYPE").get(0).value();
 						if (type.equalsIgnoreCase("SIMPLE")) {
-							p.sendPluginMessage(yLobbyPlugin.getyLobby(), "BungeeCord", new BungeeMessage(
+							p.sendPluginMessage(LobbyMain.getInstance(), "BungeeCord", new BungeeMessage(
 									((String) e.getEntity().getMetadata("GM_CONNECT").get(0).value()).split("#"))
 											.getDataOutput().toByteArray());
 						} else if (type.equalsIgnoreCase("MATCH") || type.equalsIgnoreCase("MULTI")) {
-							p.sendPluginMessage(yLobbyPlugin.getyLobby(), "BungeeCord", new BungeeMessage(
+							p.sendPluginMessage(LobbyMain.getInstance(), "BungeeCord", new BungeeMessage(
 									((String) e.getEntity().getMetadata("GM_CONNECT").get(0).value()).split("#"))
 											.getDataOutput().toByteArray());
 						}
 					}
-				}.runTaskAsynchronously(yLobbyPlugin.getyLobby());
+				}.runTaskAsynchronously(LobbyMain.getInstance());
 			}
 		}
 	}

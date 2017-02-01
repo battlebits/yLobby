@@ -11,7 +11,7 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 
 import br.com.battlebits.commons.core.server.ServerType;
-import br.com.battlebits.ylobby.yLobbyPlugin;
+import br.com.battlebits.ylobby.LobbyMain;
 import br.com.battlebits.ylobby.bungee.BungeeMessage;
 import br.com.battlebits.ylobby.gamemode.GameModeBase;
 import br.com.battlebits.ylobby.gamemode.GameModeMatch;
@@ -50,12 +50,12 @@ public class GameModsManager {
 				new BungeeMessage("PVPFulliron"), ServerType.PVP_FULLIRON, EntityType.SKELETON) {
 			@Override
 			public int getOnlinePlayers() {
-				return yLobbyPlugin.getyLobby().getServerManager().getBalancer(getServerType()).getTotalNumber();
+				return LobbyMain.getInstance().getServerManager().getBalancer(getServerType()).getTotalNumber();
 			}
 
 			@Override
 			public void onRightClick(Player p) {
-				yLobbyPlugin.getyLobby().getMultiSelectorManager().getMultiSelector(getServerType()).open(p);
+				LobbyMain.getInstance().getMultiSelectorManager().getMultiSelector(getServerType()).open(p);
 			}
 		});
 
@@ -64,12 +64,12 @@ public class GameModsManager {
 				new BungeeMessage("PVPSimulator"), ServerType.PVP_SIMULATOR, EntityType.SKELETON) {
 			@Override
 			public int getOnlinePlayers() {
-				return yLobbyPlugin.getyLobby().getServerManager().getBalancer(getServerType()).getTotalNumber();
+				return LobbyMain.getInstance().getServerManager().getBalancer(getServerType()).getTotalNumber();
 			}
 
 			@Override
 			public void onRightClick(Player p) {
-				yLobbyPlugin.getyLobby().getMultiSelectorManager().getMultiSelector(getServerType()).open(p);
+				LobbyMain.getInstance().getMultiSelectorManager().getMultiSelector(getServerType()).open(p);
 			}
 		});
 		addGameMode(new GameModeMatch("§%hungergames-item%§", "§%hungergames-item-lore%§", Material.MUSHROOM_SOUP,
@@ -77,12 +77,12 @@ public class GameModsManager {
 				new BungeeMessage("Hungergames"), ServerType.HUNGERGAMES, EntityType.BLAZE) {
 			@Override
 			public int getOnlinePlayers() {
-				return yLobbyPlugin.getyLobby().getServerManager().getBalancer(getServerType()).getTotalNumber();
+				return LobbyMain.getInstance().getServerManager().getBalancer(getServerType()).getTotalNumber();
 			}
 
 			@Override
 			public void onRightClick(Player p) {
-				yLobbyPlugin.getyLobby().getMatchSelectorManager().getMatchSelector(getServerType()).open(p);
+				LobbyMain.getInstance().getMatchSelectorManager().getMatchSelector(getServerType()).open(p);
 			}
 		});
 
@@ -91,12 +91,12 @@ public class GameModsManager {
 				new BungeeMessage("CustomHungergames"), ServerType.CUSTOMHG, EntityType.WITCH) {
 			@Override
 			public int getOnlinePlayers() {
-				return yLobbyPlugin.getyLobby().getServerManager().getBalancer(getServerType()).getTotalNumber();
+				return LobbyMain.getInstance().getServerManager().getBalancer(getServerType()).getTotalNumber();
 			}
 
 			@Override
 			public void onRightClick(Player p) {
-				yLobbyPlugin.getyLobby().getMatchSelectorManager().getMatchSelector(getServerType()).open(p);
+				LobbyMain.getInstance().getMatchSelectorManager().getMatchSelector(getServerType()).open(p);
 			}
 		});
 
@@ -106,12 +106,12 @@ public class GameModsManager {
 				new BungeeMessage("DoubleKitHungergames"), ServerType.DOUBLEKITHG, EntityType.CREEPER) {
 			@Override
 			public int getOnlinePlayers() {
-				return yLobbyPlugin.getyLobby().getServerManager().getBalancer(getServerType()).getTotalNumber();
+				return LobbyMain.getInstance().getServerManager().getBalancer(getServerType()).getTotalNumber();
 			}
 
 			@Override
 			public void onRightClick(Player p) {
-				yLobbyPlugin.getyLobby().getMatchSelectorManager().getMatchSelector(getServerType()).open(p);
+				LobbyMain.getInstance().getMatchSelectorManager().getMatchSelector(getServerType()).open(p);
 			}
 		});
 		addGameMode(

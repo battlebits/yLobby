@@ -2,7 +2,7 @@ package br.com.battlebits.ylobby.updater;
 
 import org.bukkit.scheduler.BukkitRunnable;
 
-import br.com.battlebits.ylobby.yLobbyPlugin;
+import br.com.battlebits.ylobby.LobbyMain;
 
 public abstract class UpdaterBase {
 
@@ -23,9 +23,9 @@ public abstract class UpdaterBase {
 
 	public void start() {
 		if (sync) {
-			updaterRunnable.runTaskTimer(yLobbyPlugin.getyLobby(), delay, delay);
+			updaterRunnable.runTaskTimer(LobbyMain.getInstance(), delay, delay);
 		} else {
-			updaterRunnable.runTaskTimerAsynchronously(yLobbyPlugin.getyLobby(), delay, delay);
+			updaterRunnable.runTaskTimerAsynchronously(LobbyMain.getInstance(), delay, delay);
 		}
 	}
 

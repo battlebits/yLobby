@@ -17,7 +17,7 @@ import br.com.battlebits.commons.api.menu.MenuItem;
 import br.com.battlebits.commons.core.server.ServerType;
 import br.com.battlebits.commons.core.server.loadbalancer.server.BattleServer;
 import br.com.battlebits.ylobby.LobbyUtils;
-import br.com.battlebits.ylobby.yLobbyPlugin;
+import br.com.battlebits.ylobby.LobbyMain;
 import br.com.battlebits.ylobby.bungee.BungeeMessage;
 
 public class LobbySelector {
@@ -25,15 +25,15 @@ public class LobbySelector {
 	private MenuInventory selectorInventory;
 
 	public void start() {
-		int size = yLobbyPlugin.getyLobby().getServerManager().getBalancer(ServerType.LOBBY).getList().size();
+		int size = LobbyMain.getInstance().getServerManager().getBalancer(ServerType.LOBBY).getList().size();
 		selectorInventory = new MenuInventory("§%choose-lobby%§",
 				LobbyUtils.getInventoryUtils().getInventorySizeForItens(size + 18 + ((size / 7) * 2)));
 
-		for (BattleServer ip : yLobbyPlugin.getyLobby().getServerManager().getBalancer(ServerType.LOBBY).getList()) {
+		for (BattleServer ip : LobbyMain.getInstance().getServerManager().getBalancer(ServerType.LOBBY).getList()) {
 			if (ip.getServerId().equals(BattlebitsAPI.getServerId())) {
 				int lobbyId = Integer
 						.valueOf(ip.getServerId().replace(".lobby.battlebits.com.br", "").replace("a", ""));
-				yLobbyPlugin.getyLobby().setLobbyID("#" + lobbyId);
+				LobbyMain.getInstance().setLobbyID("#" + lobbyId);
 			}
 		}
 		update();
@@ -46,13 +46,13 @@ public class LobbySelector {
 	}
 
 	public void tryToConnect(Player p, String id) {
-		p.sendPluginMessage(yLobbyPlugin.getyLobby(), "BungeeCord",
+		p.sendPluginMessage(LobbyMain.getInstance(), "BungeeCord",
 				new BungeeMessage("Connect", id).getDataOutput().toByteArray());
 	}
 
 	public void update() {
 		int i = 10;
-		List<BattleServer> gameServerInfos = yLobbyPlugin.getyLobby().getServerManager().getBalancer(ServerType.LOBBY)
+		List<BattleServer> gameServerInfos = LobbyMain.getInstance().getServerManager().getBalancer(ServerType.LOBBY)
 				.getList();
 		for (BattleServer info : gameServerInfos) {
 			if (i == 8 || i == 17 || i == 26 || i == 35 || i == 44) {

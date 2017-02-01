@@ -16,7 +16,7 @@ import br.com.battlebits.commons.BattlebitsAPI;
 import br.com.battlebits.commons.core.account.BattlePlayer;
 import br.com.battlebits.commons.core.account.Tag;
 import br.com.battlebits.commons.core.permission.Group;
-import br.com.battlebits.ylobby.yLobbyPlugin;
+import br.com.battlebits.ylobby.LobbyMain;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.ClickEvent.Action;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -91,7 +91,7 @@ public class ProfileRanksListener implements Listener {
 					if (e.getItem().hasItemMeta()) {
 						if (e.getItem().getItemMeta().hasDisplayName()) {
 							if (e.getItem().getItemMeta().getDisplayName().equalsIgnoreCase("§6§lPerfil §7(Clique)")) {
-								yLobbyPlugin.getyLobby().getYourProfileInventory().open(e.getPlayer());
+								LobbyMain.getInstance().getYourProfileInventory().open(e.getPlayer());
 								e.setCancelled(true);
 							}
 						}
@@ -223,7 +223,7 @@ public class ProfileRanksListener implements Listener {
 									}
 								}
 							} else if (e.getSlot() == 22) {
-								yLobbyPlugin.getyLobby().getYourProfileInventory().open(p);
+								LobbyMain.getInstance().getYourProfileInventory().open(p);
 							}
 						}
 					}

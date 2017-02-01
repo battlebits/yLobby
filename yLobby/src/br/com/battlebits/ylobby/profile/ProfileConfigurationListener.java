@@ -11,7 +11,7 @@ import org.bukkit.event.inventory.InventoryType;
 
 import br.com.battlebits.commons.BattlebitsAPI;
 import br.com.battlebits.commons.core.permission.Group;
-import br.com.battlebits.ylobby.yLobbyPlugin;
+import br.com.battlebits.ylobby.LobbyMain;
 
 public class ProfileConfigurationListener implements Listener {
 
@@ -75,18 +75,18 @@ public class ProfileConfigurationListener implements Listener {
 						Player p = (Player) e.getWhoClicked();
 						if (e.getClickedInventory() == e.getInventory()) {
 							if (e.getSlot() == 10 || e.getSlot() == 19) {
-								if (yLobbyPlugin.getyLobby().getPlayerHideManager().isHiding(p)) {
-									yLobbyPlugin.getyLobby().getPlayerHideManager().showAllPlayers(p);
+								if (LobbyMain.getInstance().getPlayerHideManager().isHiding(p)) {
+									LobbyMain.getInstance().getPlayerHideManager().showAllPlayers(p);
 									for (String msg : showMessage) {
 										p.sendMessage(msg);
 									}
 								} else {
-									yLobbyPlugin.getyLobby().getPlayerHideManager().hideAllPlayers(p);
+									LobbyMain.getInstance().getPlayerHideManager().hideAllPlayers(p);
 									for (String msg : hideMessage) {
 										p.sendMessage(msg);
 									}
 								}
-								yLobbyPlugin.getyLobby().getProfileConfigurationInventory()
+								LobbyMain.getInstance().getProfileConfigurationInventory()
 										.setHideItens(e.getInventory(), p);
 							} else if (e.getSlot() == 12 || e.getSlot() == 21) {
 								if (p.getAllowFlight()) {
@@ -109,12 +109,12 @@ public class ProfileConfigurationListener implements Listener {
 										}
 									}
 								}
-								yLobbyPlugin.getyLobby().getProfileConfigurationInventory()
+								LobbyMain.getInstance().getProfileConfigurationInventory()
 										.setFlyItens(e.getInventory(), p);
 							} else if (e.getSlot() == 14 || e.getSlot() == 23) {
 							} else if (e.getSlot() == 16 || e.getSlot() == 25) {
 							} else if (e.getSlot() == 31) {
-								yLobbyPlugin.getyLobby().getYourProfileInventory().open(p);
+								LobbyMain.getInstance().getYourProfileInventory().open(p);
 							}
 						}
 					}

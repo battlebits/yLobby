@@ -7,7 +7,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
 
-import br.com.battlebits.ylobby.yLobbyPlugin;
+import br.com.battlebits.ylobby.LobbyMain;
 
 public class YourProfileListener implements Listener {
 
@@ -19,9 +19,9 @@ public class YourProfileListener implements Listener {
 					if (e.getInventory().getTitle().equalsIgnoreCase("              §nSeu Perfil")) {
 						if (e.getClickedInventory() == e.getInventory()) {
 							if (e.getSlot() == 11) {
-								yLobbyPlugin.getyLobby().getProfileRanksInventory().open((Player) e.getWhoClicked());
+								LobbyMain.getInstance().getProfileRanksInventory().open((Player) e.getWhoClicked());
 							} else if (e.getSlot() == 15) {
-								yLobbyPlugin.getyLobby().getProfileConfigurationInventory()
+								LobbyMain.getInstance().getProfileConfigurationInventory()
 										.open((Player) e.getWhoClicked());
 							}
 						}

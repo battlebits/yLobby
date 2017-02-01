@@ -11,7 +11,7 @@ import br.com.battlebits.commons.BattlebitsAPI;
 import br.com.battlebits.commons.api.item.ItemBuilder;
 import br.com.battlebits.commons.core.permission.Group;
 import br.com.battlebits.commons.util.string.StringLoreUtils;
-import br.com.battlebits.ylobby.yLobbyPlugin;
+import br.com.battlebits.ylobby.LobbyMain;
 
 public class ProfileConfigurationInventory {
 
@@ -55,10 +55,10 @@ public class ProfileConfigurationInventory {
 	}
 
 	public void setHideItens(Inventory inv, Player p) {
-		if (yLobbyPlugin.getyLobby().getPlayerHideManager().isHiding(p)) {
+		if (LobbyMain.getInstance().getPlayerHideManager().isHiding(p)) {
 			inv.setItem(10, hideDisabledIcon);
 			inv.setItem(19, hideDisabledItem);
-			ItemStack item = yLobbyPlugin.getyLobby().getLobbyItensManager().getHideItem();
+			ItemStack item = LobbyMain.getInstance().getLobbyItensManager().getHideItem();
 			ItemMeta meta = item.getItemMeta();
 			meta.setDisplayName("§%hide-players-item%§ §7(§%click%§)");
 			meta.setLore(StringLoreUtils.formatForLore("§%hide-players-item-lore%§"));
@@ -68,7 +68,7 @@ public class ProfileConfigurationInventory {
 		} else {
 			inv.setItem(10, hideEnabledIcon);
 			inv.setItem(19, hideEnabledItem);
-			ItemStack item = yLobbyPlugin.getyLobby().getLobbyItensManager().getHideItem();
+			ItemStack item = LobbyMain.getInstance().getLobbyItensManager().getHideItem();
 			ItemMeta meta = item.getItemMeta();
 			meta.setDisplayName("§%show-players-item%§ §7(§%click%§)");
 			meta.setLore(StringLoreUtils.formatForLore("§%show-players-item-lore%§"));

@@ -20,7 +20,7 @@ import br.com.battlebits.commons.core.server.loadbalancer.server.BattleServer;
 import br.com.battlebits.commons.core.server.loadbalancer.server.MinigameServer;
 import br.com.battlebits.commons.core.server.loadbalancer.server.MinigameState;
 import br.com.battlebits.ylobby.LobbyUtils;
-import br.com.battlebits.ylobby.yLobbyPlugin;
+import br.com.battlebits.ylobby.LobbyMain;
 import br.com.battlebits.ylobby.bungee.BungeeMessage;
 import lombok.Getter;
 
@@ -73,7 +73,7 @@ public abstract class MatchSelector {
 		needToBeLightToJoinFull.add("§6§lentrar§7 com o§6§l servidor cheio§7!");
 		needToBeLightToJoinFull.add("§7Compre em nosso site §6§lwww.battlebits.com.br§7!");
 		needToBeLightToJoinFull.add("§0");
-		int size = yLobbyPlugin.getyLobby().getServerManager().getBalancer(serverType).getList().size();
+		int size = LobbyMain.getInstance().getServerManager().getBalancer(serverType).getList().size();
 		serverSelectorInventory = new MenuInventory(inventoryTitle,
 				LobbyUtils.getInventoryUtils().getInventorySizeForItens(size + 18 + ((size / 7) * 2)));
 
@@ -83,7 +83,7 @@ public abstract class MatchSelector {
 	public abstract int getMatchsOnlinePlayers();
 
 	public void directConnect(Player p) {
-		p.sendPluginMessage(yLobbyPlugin.getyLobby(), "BungeeCord", directConnectMessage.getDataOutput().toByteArray());
+		p.sendPluginMessage(LobbyMain.getInstance(), "BungeeCord", directConnectMessage.getDataOutput().toByteArray());
 	}
 
 	public void stop() {
@@ -104,7 +104,7 @@ public abstract class MatchSelector {
 	}
 
 	public void tryToConnect(Player p, String ip) {
-		p.sendPluginMessage(yLobbyPlugin.getyLobby(), "BungeeCord",
+		p.sendPluginMessage(LobbyMain.getInstance(), "BungeeCord",
 				new BungeeMessage("Connect", ip).getDataOutput().toByteArray());
 	}
 
@@ -126,12 +126,12 @@ public abstract class MatchSelector {
 
 						@Override
 						public void onClick(Player p, Inventory inv, ClickType type, ItemStack stack, int slot) {
-							yLobbyPlugin.getyLobby().getGameModeSelector().open(p);
+							LobbyMain.getInstance().getGameModeSelector().open(p);
 						}
 					}));
 		} catch (Exception e) {
 		}
-		List<BattleServer> gameServerInfos = yLobbyPlugin.getyLobby().getServerManager().getBalancer(serverType)
+		List<BattleServer> gameServerInfos = LobbyMain.getInstance().getServerManager().getBalancer(serverType)
 				.getList();
 		for (BattleServer mg : gameServerInfos) {
 			if (!(mg instanceof MinigameServer))

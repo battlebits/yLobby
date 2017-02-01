@@ -8,7 +8,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 
 import br.com.battlebits.ylobby.LobbyUtils;
-import br.com.battlebits.ylobby.yLobbyPlugin;
+import br.com.battlebits.ylobby.LobbyMain;
 import br.com.battlebits.ylobby.gamemode.GameModeBase;
 import br.com.battlebits.ylobby.gamemode.GameModeMatch;
 import br.com.battlebits.ylobby.gamemode.GameModeMulti;
@@ -26,12 +26,12 @@ public class GameModeSelector {
 	public void start() {
 		selectorInventory = Bukkit.createInventory(null,
 				LobbyUtils.getInventoryUtils()
-						.getInventorySizeForItensOld(yLobbyPlugin.getyLobby().getGameModsManager().getGameModes().size()
-								+ 18 + yLobbyPlugin.getyLobby().getGameModsManager().getGameModes().size() / 7 * 2),
+						.getInventorySizeForItensOld(LobbyMain.getInstance().getGameModsManager().getGameModes().size()
+								+ 18 + LobbyMain.getInstance().getGameModsManager().getGameModes().size() / 7 * 2),
 				"§nEscolha o Modo de Jogo");
 		int i = 10;
 		// TODO ADD COMPARATOR
-		for (GameModeBase gameModeBase : yLobbyPlugin.getyLobby().getGameModsManager().getGameModes()) {
+		for (GameModeBase gameModeBase : LobbyMain.getInstance().getGameModsManager().getGameModes()) {
 			if ((i == 8) || (i == 17) || (i == 26) || (i == 35) || (i == 44)) {
 				i += 2;
 			}

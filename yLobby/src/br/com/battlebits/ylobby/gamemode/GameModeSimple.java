@@ -12,7 +12,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import br.com.battlebits.commons.core.server.ServerType;
 import br.com.battlebits.commons.core.server.loadbalancer.server.BattleServer;
 import br.com.battlebits.ylobby.LobbyUtils;
-import br.com.battlebits.ylobby.yLobbyPlugin;
+import br.com.battlebits.ylobby.LobbyMain;
 import br.com.battlebits.ylobby.bungee.BungeeMessage;
 
 public class GameModeSimple extends GameModeBase {
@@ -34,13 +34,13 @@ public class GameModeSimple extends GameModeBase {
 					return;
 				}
 				getCharacterNPC().getEntity().setMetadata("GM_CONNECT",
-						new FixedMetadataValue(yLobbyPlugin.getyLobby(), connectMessage.getMessageArgs()));
+						new FixedMetadataValue(LobbyMain.getInstance(), connectMessage.getMessageArgs()));
 				getCharacterNPC().getEntity().setMetadata("GM_TYPE",
-						new FixedMetadataValue(yLobbyPlugin.getyLobby(), "SIMPLE"));
+						new FixedMetadataValue(LobbyMain.getInstance(), "SIMPLE"));
 				getCharacterNPC().getEntity().setMetadata("GM_NAME",
-						new FixedMetadataValue(yLobbyPlugin.getyLobby(), servername));
+						new FixedMetadataValue(LobbyMain.getInstance(), servername));
 			}
-		}.runTask(yLobbyPlugin.getyLobby());
+		}.runTask(LobbyMain.getInstance());
 	}
 
 	@Override
@@ -54,11 +54,11 @@ public class GameModeSimple extends GameModeBase {
 	}
 
 	public void connect(Player p) {
-		p.sendPluginMessage(yLobbyPlugin.getyLobby(), "BungeeCord", connectMessage.getDataOutput().toByteArray());
+		p.sendPluginMessage(LobbyMain.getInstance(), "BungeeCord", connectMessage.getDataOutput().toByteArray());
 	}
 
 	public BattleServer getServerInfo() {
-		return yLobbyPlugin.getyLobby().getServerManager().getServer(bungeeId);
+		return LobbyMain.getInstance().getServerManager().getServer(bungeeId);
 	}
 
 }

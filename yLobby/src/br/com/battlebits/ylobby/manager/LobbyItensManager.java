@@ -16,7 +16,7 @@ import br.com.battlebits.commons.core.permission.Group;
 import br.com.battlebits.commons.core.translate.T;
 import br.com.battlebits.commons.util.string.StringLoreUtils;
 import br.com.battlebits.ylobby.LobbyUtils;
-import br.com.battlebits.ylobby.yLobbyPlugin;
+import br.com.battlebits.ylobby.LobbyMain;
 import br.com.battlebits.ylobby.listener.PlayerHideListener;
 import lombok.Getter;
 
@@ -41,8 +41,8 @@ public class LobbyItensManager {
 						if (!PlayerHideListener.getUuidCooldown().containsKey(player.getUniqueId())
 								|| System.currentTimeMillis() >= PlayerHideListener.getUuidCooldown()
 										.get(player.getUniqueId())) {
-							if (yLobbyPlugin.getyLobby().getPlayerHideManager().isHiding(player)) {
-								yLobbyPlugin.getyLobby().getPlayerHideManager().showAllPlayers(player);
+							if (LobbyMain.getInstance().getPlayerHideManager().isHiding(player)) {
+								LobbyMain.getInstance().getPlayerHideManager().showAllPlayers(player);
 								player.sendMessage("§0");
 								player.sendMessage("§%players-showed%§");
 								player.sendMessage("§0");
@@ -53,7 +53,7 @@ public class LobbyItensManager {
 								item.setDurability((short) 10);
 								player.setItemInHand(item);
 							} else {
-								yLobbyPlugin.getyLobby().getPlayerHideManager().hideAllPlayers(player);
+								LobbyMain.getInstance().getPlayerHideManager().hideAllPlayers(player);
 								player.sendMessage("§0");
 								player.sendMessage("§%players-hided%§");
 								player.sendMessage("§0");
@@ -84,7 +84,7 @@ public class LobbyItensManager {
 
 					@Override
 					public boolean onInteract(Player player, ItemStack item, Action action) {
-						yLobbyPlugin.getyLobby().getLobbySelector().open(player);
+						LobbyMain.getInstance().getLobbySelector().open(player);
 						return false;
 					}
 				}).getItemStack();
@@ -94,7 +94,7 @@ public class LobbyItensManager {
 
 					@Override
 					public boolean onInteract(Player player, ItemStack item, Action action) {
-						yLobbyPlugin.getyLobby().getGameModeSelector().open(player);
+						LobbyMain.getInstance().getGameModeSelector().open(player);
 						return false;
 					}
 				}).getItemStack();
@@ -110,7 +110,7 @@ public class LobbyItensManager {
 
 					@Override
 					public boolean onInteract(Player player, ItemStack item, Action action) {
-						yLobbyPlugin.getyLobby().getYourProfileInventory().open(player);
+						LobbyMain.getInstance().getYourProfileInventory().open(player);
 						return false;
 					}
 				}).getItemStack();

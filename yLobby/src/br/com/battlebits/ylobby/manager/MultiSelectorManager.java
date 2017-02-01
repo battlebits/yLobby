@@ -3,7 +3,7 @@ package br.com.battlebits.ylobby.manager;
 import java.util.HashMap;
 
 import br.com.battlebits.commons.core.server.ServerType;
-import br.com.battlebits.ylobby.yLobbyPlugin;
+import br.com.battlebits.ylobby.LobbyMain;
 import br.com.battlebits.ylobby.bungee.BungeeMessage;
 import br.com.battlebits.ylobby.selector.multi.MultiSelector;
 
@@ -21,7 +21,7 @@ public class MultiSelectorManager {
 				new MultiSelector(ServerType.PVP_FULLIRON, "§nBattlecraft Fulliron", new BungeeMessage("PVPFulliron")) {
 					@Override
 					public int getMultiOnlinePlayers() {
-						return yLobbyPlugin.getyLobby().getServerManager().getBalancer(ServerType.PVP_FULLIRON)
+						return LobbyMain.getInstance().getServerManager().getBalancer(ServerType.PVP_FULLIRON)
 								.getTotalNumber();
 					}
 				});
@@ -29,7 +29,7 @@ public class MultiSelectorManager {
 				new BungeeMessage("PVPSimulator")) {
 			@Override
 			public int getMultiOnlinePlayers() {
-				return yLobbyPlugin.getyLobby().getServerManager().getBalancer(ServerType.PVP_SIMULATOR)
+				return LobbyMain.getInstance().getServerManager().getBalancer(ServerType.PVP_SIMULATOR)
 						.getTotalNumber();
 			}
 		});

@@ -1,8 +1,10 @@
 package br.com.battlebits.ylobby;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.bson.Document;
 import org.bukkit.Bukkit;
 import org.bukkit.Difficulty;
 import org.bukkit.entity.Player;
@@ -10,13 +12,21 @@ import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.model.Filters;
+
+import br.com.battlebits.commons.BattlebitsAPI;
 import br.com.battlebits.commons.bukkit.BukkitMain;
 import br.com.battlebits.commons.bukkit.command.BukkitCommandFramework;
+import br.com.battlebits.commons.core.backend.mongodb.MongoBackend;
 import br.com.battlebits.commons.core.command.CommandLoader;
 import br.com.battlebits.commons.core.data.DataServer;
 import br.com.battlebits.commons.core.server.ServerManager;
 import br.com.battlebits.commons.core.server.ServerType;
 import br.com.battlebits.commons.core.server.loadbalancer.type.RoundRobin;
+import br.com.battlebits.commons.core.translate.Language;
+import br.com.battlebits.commons.core.translate.Translate;
 import br.com.battlebits.ylobby.detector.PlayerOutOfLobbyDetector;
 import br.com.battlebits.ylobby.listener.BountifulListener;
 import br.com.battlebits.ylobby.listener.GameModsListener;
@@ -38,7 +48,6 @@ import br.com.battlebits.ylobby.profile.YourProfileListener;
 import br.com.battlebits.ylobby.selector.gamemode.GameModeSelector;
 import br.com.battlebits.ylobby.selector.gamemode.GameModeSelectorListener;
 import br.com.battlebits.ylobby.selector.lobby.LobbySelector;
-import br.com.battlebits.ylobby.selector.lobby.LobbySelectorListener;
 import br.com.battlebits.ylobby.updater.TabAndHeaderUpdater;
 import lombok.Getter;
 import lombok.Setter;
@@ -47,14 +56,16 @@ import net.citizensnpcs.api.npc.NPC;
 import net.citizensnpcs.api.npc.NPCDataStore;
 import net.citizensnpcs.api.npc.NPCRegistry;
 
-public class yLobbyPlugin extends JavaPlugin {
+public class LobbyMain extends JavaPlugin {
 
-	private static yLobbyPlugin yLobby;
-
-	// private MySQLConnection mySQLConnection;
+	@Getter
+	private static LobbyMain instance;
 
 	@Getter
 	private ServerManager serverManager;
+
+	@Getter
+	private MongoBackend mongo;
 
 	private MatchSelectorManager matchSelectorManager;
 	private MultiSelectorManager multiSelectorManager;
@@ -65,7 +76,6 @@ public class yLobbyPlugin extends JavaPlugin {
 	private ScoreboardManager scoreboardManager;
 
 	private LobbySelector lobbySelector;
-	private LobbySelectorListener lobbySelectorListener;
 	private GameModeSelector gameModeSelector;
 	private GameModeSelectorListener gameModeSelectorListener;
 
@@ -90,7 +100,13 @@ public class yLobbyPlugin extends JavaPlugin {
 
 		getLogger().info("Habilitando plugin, por favor aguarde!");
 
-		yLobby = this;
+		mongo = new MongoBackend();
+		
+		for (Language lang : Language.values()) {
+			Translate.loadTranslations("yLobby", lang, loadTranslation(lang));
+		}
+		
+		instance = this;
 
 		CitizensAPI.createNamedNPCRegistry("lobby", new NPCDataStore() {
 
@@ -134,11 +150,7 @@ public class yLobbyPlugin extends JavaPlugin {
 
 		LobbyUtils.registerListener(this);
 
-		// mySQLConnection = new MySQLConnection();
-		// mySQLConnection.tryToConnect();
-		// mySQLConnection.createTables();
-
-		Bukkit.getMessenger().registerOutgoingPluginChannel(yLobby, "BungeeCord");
+		Bukkit.getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
 
 		serverManager = new ServerManager();
 		serverManager.putBalancer(ServerType.NETWORK, new RoundRobin<>());
@@ -168,7 +180,6 @@ public class yLobbyPlugin extends JavaPlugin {
 		scoreboardManager = new ScoreboardManager();
 
 		lobbySelector = new LobbySelector();
-		lobbySelectorListener = new LobbySelectorListener();
 		gameModeSelector = new GameModeSelector();
 		gameModeSelectorListener = new GameModeSelectorListener();
 		lobbyItensManager = new LobbyItensManager();
@@ -189,7 +200,7 @@ public class yLobbyPlugin extends JavaPlugin {
 		playerHideListener = new PlayerHideListener();
 		gameModsListener = new GameModsListener();
 
-		LobbyUtils.getListenerUtils().registerListeners(this, gameModeSelectorListener, lobbySelectorListener,
+		LobbyUtils.getListenerUtils().registerListeners(this, gameModeSelectorListener,
 				yourProfileListener, profileRanksListener, profileConfigurationListener, bountifulListener,
 				mainListener, playerHideListener, gameModsListener);
 
@@ -197,9 +208,6 @@ public class yLobbyPlugin extends JavaPlugin {
 		lobbySelector.start();
 		gameModeSelector.start();
 		playerOutOfLobbyDetector.start();
-		// serverManager.addActiveServer(BattlebitsAPI.getServerAddress(),
-		// BattlebitsAPI.getServerId(),
-		// Bukkit.getMaxPlayers());
 		new CommandLoader(new BukkitCommandFramework(this)).loadCommandsFromPackage("br.com.battlebits.ylobby.command");
 		new BukkitRunnable() {
 			@Override
@@ -224,21 +232,13 @@ public class yLobbyPlugin extends JavaPlugin {
 				p.kickPlayer("§cO servidor está reiniciando!");
 			}
 		}
-
-		// mySQLConnection.stop();
-
 		playerOutOfLobbyDetector.stop();
-
 		tabAndHeaderUpdater.stop();
-
 		matchSelectorManager.stop();
 		multiSelectorManager.stop();
-
 		gameModsManager.stop();
-
 		gameModeSelector.stop();
-
-		HandlerList.unregisterAll(yLobby);
+		HandlerList.unregisterAll(this);
 
 		getLogger().info("Plugin finalizado!");
 		getLogger().warning("Reiniciando servidor!");
@@ -246,14 +246,6 @@ public class yLobbyPlugin extends JavaPlugin {
 		Bukkit.shutdown();
 
 	}
-
-	public static yLobbyPlugin getyLobby() {
-		return yLobby;
-	}
-
-	// public MySQLConnection getMySQLConnection() {
-	// return mySQLConnection;
-	// }
 
 	public LobbySelector getLobbySelector() {
 		return lobbySelector;
@@ -301,6 +293,18 @@ public class yLobbyPlugin extends JavaPlugin {
 
 	public ProfileConfigurationInventory getProfileConfigurationInventory() {
 		return profileConfigurationInventory;
+	}
+	
+	@SuppressWarnings("unchecked")
+	private Map<String, String> loadTranslation(Language language) {
+		MongoDatabase database = BattlebitsAPI.getMongo().getClient().getDatabase("lobby");
+		MongoCollection<Document> collection = database.getCollection("translation");
+		Document found = collection.find(Filters.eq("language", language.toString())).first();
+		if (found != null) {
+			return (Map<String, String>) found.get("map");
+		}
+		collection.insertOne(new Document("language", language.toString()).append("map", new HashMap<>()));
+		return new HashMap<>();
 	}
 
 	@Getter

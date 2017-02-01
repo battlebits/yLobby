@@ -11,7 +11,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import br.com.battlebits.commons.core.server.ServerType;
 import br.com.battlebits.ylobby.LobbyUtils;
-import br.com.battlebits.ylobby.yLobbyPlugin;
+import br.com.battlebits.ylobby.LobbyMain;
 import br.com.battlebits.ylobby.bungee.BungeeMessage;
 
 public abstract class GameModeMulti extends GameModeBase {
@@ -33,13 +33,13 @@ public abstract class GameModeMulti extends GameModeBase {
 					return;
 				}
 				getCharacterNPC().getEntity().setMetadata("GM_CONNECT",
-						new FixedMetadataValue(yLobbyPlugin.getyLobby(), connectMessage.getMessageArgs()));
+						new FixedMetadataValue(LobbyMain.getInstance(), connectMessage.getMessageArgs()));
 				getCharacterNPC().getEntity().setMetadata("GM_TYPE",
-						new FixedMetadataValue(yLobbyPlugin.getyLobby(), "MULTI"));
+						new FixedMetadataValue(LobbyMain.getInstance(), "MULTI"));
 				getCharacterNPC().getEntity().setMetadata("GM_NAME",
-						new FixedMetadataValue(yLobbyPlugin.getyLobby(), servername));
+						new FixedMetadataValue(LobbyMain.getInstance(), servername));
 			}
-		}.runTask(yLobbyPlugin.getyLobby());
+		}.runTask(LobbyMain.getInstance());
 	}
 
 	@Override
@@ -48,7 +48,7 @@ public abstract class GameModeMulti extends GameModeBase {
 	public abstract void onRightClick(Player p);
 
 	public void onLeftClick(Player p) {
-		p.sendPluginMessage(yLobbyPlugin.getyLobby(), "BungeeCord", connectBungeeMessage.getDataOutput().toByteArray());
+		p.sendPluginMessage(LobbyMain.getInstance(), "BungeeCord", connectBungeeMessage.getDataOutput().toByteArray());
 	}
 
 }

@@ -15,7 +15,7 @@ import com.gmail.filoghost.holographicdisplays.api.HologramsAPI;
 import br.com.battlebits.commons.core.server.ServerType;
 import br.com.battlebits.commons.util.string.StringLoreUtils;
 import br.com.battlebits.ylobby.LobbyUtils;
-import br.com.battlebits.ylobby.yLobbyPlugin;
+import br.com.battlebits.ylobby.LobbyMain;
 import lombok.Getter;
 import net.citizensnpcs.api.CitizensAPI;
 import net.citizensnpcs.api.npc.NPC;
@@ -67,8 +67,8 @@ public abstract class GameModeBase {
 		}
 		characterNPC.spawn(LobbyUtils.getLocationUtils().lookAt(
 				LobbyUtils.getLocationUtils().getCenter(npclocation.clone(), false),
-				yLobbyPlugin.getyLobby().getLocationManager().getSpawnLocation()));
-		Hologram holo = HologramsAPI.createHologram(yLobbyPlugin.getyLobby(),
+				LobbyMain.getInstance().getLocationManager().getSpawnLocation()));
+		Hologram holo = HologramsAPI.createHologram(LobbyMain.getInstance(),
 				LobbyUtils.getLocationUtils().getCenter(npclocation.clone().add(0, 2.54, 0), false));
 		holo.appendTextLine("§9§l" + servername.toUpperCase());
 		holo.appendTextLine("§b§lClique para conectar!");

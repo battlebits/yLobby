@@ -34,14 +34,14 @@ import br.com.battlebits.commons.core.data.DataServer.DataServerMessage.UpdatePa
 import br.com.battlebits.commons.core.server.ServerType;
 import br.com.battlebits.commons.core.server.loadbalancer.server.BattleServer;
 import br.com.battlebits.commons.core.server.loadbalancer.server.MinigameServer;
-import br.com.battlebits.ylobby.yLobbyPlugin;
+import br.com.battlebits.ylobby.LobbyMain;
 import br.com.battlebits.ylobby.updater.TabAndHeaderUpdater;
 
 public class MainListener implements Listener {
 
 	@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
 	public void onPlayerJoinListener(PlayerJoinEvent e) {
-		yLobbyPlugin.getyLobby().getLobbyItensManager().setItems(e.getPlayer());
+		LobbyMain.getInstance().getLobbyItensManager().setItems(e.getPlayer());
 		if (e.getPlayer().getGameMode() != GameMode.ADVENTURE) {
 			e.getPlayer().setGameMode(GameMode.ADVENTURE);
 		}
@@ -64,10 +64,10 @@ public class MainListener implements Listener {
 					e.getPlayer().setExp(-100F);
 				}
 			}
-		}.runTaskLater(yLobbyPlugin.getyLobby(), 20L);
-		e.getPlayer().teleport(yLobbyPlugin.getyLobby().getLocationManager().getSpawnLocation());
+		}.runTaskLater(LobbyMain.getInstance(), 20L);
+		e.getPlayer().teleport(LobbyMain.getInstance().getLocationManager().getSpawnLocation());
 		e.setJoinMessage("");
-		yLobbyPlugin.getyLobby().getScoreboardManager().setupMainScoreboard(e.getPlayer());
+		LobbyMain.getInstance().getScoreboardManager().setupMainScoreboard(e.getPlayer());
 		for (PotionEffect pot : e.getPlayer().getActivePotionEffects()) {
 			e.getPlayer().removePotionEffect(pot.getType());
 		}
@@ -81,7 +81,7 @@ public class MainListener implements Listener {
 	@EventHandler(priority = EventPriority.MONITOR)
 	public void onEntityDamageListener(EntityDamageEvent e) {
 		if (e.getEntity() instanceof Player && e.getCause() == DamageCause.VOID) {
-			((Player) e.getEntity()).teleport(yLobbyPlugin.getyLobby().getLocationManager().getSpawnLocation());
+			((Player) e.getEntity()).teleport(LobbyMain.getInstance().getLocationManager().getSpawnLocation());
 		}
 		e.setCancelled(true);
 	}
@@ -139,7 +139,7 @@ public class MainListener implements Listener {
 			// e.setCancelled(true);
 			// e.getPlayer().sendMessage("§7Sistema de Lobby para a
 			// §6§lBattle§r§lBits §9§lNetwork §7versão " +
-			// yLobbyPlugin.getyLobby().getDescription().getVersion() + "!");
+			// yLobbyPlugin.getInstance().getDescription().getVersion() + "!");
 		}
 	}
 
@@ -158,43 +158,43 @@ public class MainListener implements Listener {
 		DataServerMessage.Action action = DataServerMessage.Action.valueOf(jsonObject.get("action").getAsString());
 		switch (action) {
 		case JOIN: {
-			BattleServer server = yLobbyPlugin.getyLobby().getServerManager().getServer(source);
+			BattleServer server = LobbyMain.getInstance().getServerManager().getServer(source);
 			if (server == null) {
 				System.out.println("Servidor " + source + " do tipo " + sourceType + " está nulo no plugin do yLobby");
 				break;
 			}
 			server.setOnlinePlayers(server.getOnlinePlayers() + 1);
-			if (yLobbyPlugin.getyLobby().getGameModsManager().isGameMode(sourceType))
-				yLobbyPlugin.getyLobby().getGameModsManager().getGameMode(sourceType).updateOnlinePlayersOnItem();
-			if (yLobbyPlugin.getyLobby().getMatchSelectorManager().isMatchSelector(sourceType))
-				yLobbyPlugin.getyLobby().getMatchSelectorManager().getMatchSelector(sourceType).update();
-			if (yLobbyPlugin.getyLobby().getMultiSelectorManager().isMultiSelector(sourceType))
-				yLobbyPlugin.getyLobby().getMultiSelectorManager().getMultiSelector(sourceType).update();
+			if (LobbyMain.getInstance().getGameModsManager().isGameMode(sourceType))
+				LobbyMain.getInstance().getGameModsManager().getGameMode(sourceType).updateOnlinePlayersOnItem();
+			if (LobbyMain.getInstance().getMatchSelectorManager().isMatchSelector(sourceType))
+				LobbyMain.getInstance().getMatchSelectorManager().getMatchSelector(sourceType).update();
+			if (LobbyMain.getInstance().getMultiSelectorManager().isMultiSelector(sourceType))
+				LobbyMain.getInstance().getMultiSelectorManager().getMultiSelector(sourceType).update();
 			if (sourceType == ServerType.LOBBY) {
-				yLobbyPlugin.getyLobby().getLobbySelector().update();
+				LobbyMain.getInstance().getLobbySelector().update();
 			} else if (sourceType == ServerType.NETWORK) {
 				for (Player p : Bukkit.getOnlinePlayers()) {
 					TabAndHeaderUpdater.send(p);
-					yLobbyPlugin.getyLobby().getScoreboardManager().updateMainScoreboard(p);
+					LobbyMain.getInstance().getScoreboardManager().updateMainScoreboard(p);
 				}
 			}
 			break;
 		}
 		case LEAVE: {
-			BattleServer server = yLobbyPlugin.getyLobby().getServerManager().getServer(source);
+			BattleServer server = LobbyMain.getInstance().getServerManager().getServer(source);
 			server.setOnlinePlayers(server.getOnlinePlayers() - 1);
-			if (yLobbyPlugin.getyLobby().getGameModsManager().isGameMode(sourceType))
-				yLobbyPlugin.getyLobby().getGameModsManager().getGameMode(sourceType).updateOnlinePlayersOnItem();
-			if (yLobbyPlugin.getyLobby().getMatchSelectorManager().isMatchSelector(sourceType))
-				yLobbyPlugin.getyLobby().getMatchSelectorManager().getMatchSelector(sourceType).update();
-			if (yLobbyPlugin.getyLobby().getMultiSelectorManager().isMultiSelector(sourceType))
-				yLobbyPlugin.getyLobby().getMultiSelectorManager().getMultiSelector(sourceType).update();
+			if (LobbyMain.getInstance().getGameModsManager().isGameMode(sourceType))
+				LobbyMain.getInstance().getGameModsManager().getGameMode(sourceType).updateOnlinePlayersOnItem();
+			if (LobbyMain.getInstance().getMatchSelectorManager().isMatchSelector(sourceType))
+				LobbyMain.getInstance().getMatchSelectorManager().getMatchSelector(sourceType).update();
+			if (LobbyMain.getInstance().getMultiSelectorManager().isMultiSelector(sourceType))
+				LobbyMain.getInstance().getMultiSelectorManager().getMultiSelector(sourceType).update();
 			if (sourceType == ServerType.LOBBY) {
-				yLobbyPlugin.getyLobby().getLobbySelector().update();
+				LobbyMain.getInstance().getLobbySelector().update();
 			} else if (sourceType == ServerType.NETWORK) {
 				for (Player p : Bukkit.getOnlinePlayers()) {
 					TabAndHeaderUpdater.send(p);
-					yLobbyPlugin.getyLobby().getScoreboardManager().updateMainScoreboard(p);
+					LobbyMain.getInstance().getScoreboardManager().updateMainScoreboard(p);
 				}
 			}
 			break;
@@ -203,50 +203,50 @@ public class MainListener implements Listener {
 			DataServerMessage<StartPayload> payload = BattlebitsAPI.getGson().fromJson(jsonObject,
 					new TypeToken<DataServerMessage<StartPayload>>() {
 					}.getType());
-			yLobbyPlugin.getyLobby().getServerManager().addActiveServer(payload.getPayload().getServerAddress(),
+			LobbyMain.getInstance().getServerManager().addActiveServer(payload.getPayload().getServerAddress(),
 					payload.getPayload().getServer().getServerId(), payload.getPayload().getServer().getMaxPlayers());
-			if (yLobbyPlugin.getyLobby().getGameModsManager().isGameMode(sourceType))
-				yLobbyPlugin.getyLobby().getGameModsManager().getGameMode(sourceType).updateOnlinePlayersOnItem();
-			if (yLobbyPlugin.getyLobby().getMatchSelectorManager().isMatchSelector(sourceType))
-				yLobbyPlugin.getyLobby().getMatchSelectorManager().getMatchSelector(sourceType).update();
-			if (yLobbyPlugin.getyLobby().getMultiSelectorManager().isMultiSelector(sourceType))
-				yLobbyPlugin.getyLobby().getMultiSelectorManager().getMultiSelector(sourceType).update();
+			if (LobbyMain.getInstance().getGameModsManager().isGameMode(sourceType))
+				LobbyMain.getInstance().getGameModsManager().getGameMode(sourceType).updateOnlinePlayersOnItem();
+			if (LobbyMain.getInstance().getMatchSelectorManager().isMatchSelector(sourceType))
+				LobbyMain.getInstance().getMatchSelectorManager().getMatchSelector(sourceType).update();
+			if (LobbyMain.getInstance().getMultiSelectorManager().isMultiSelector(sourceType))
+				LobbyMain.getInstance().getMultiSelectorManager().getMultiSelector(sourceType).update();
 			if (sourceType == ServerType.LOBBY)
-				yLobbyPlugin.getyLobby().getLobbySelector().update();
+				LobbyMain.getInstance().getLobbySelector().update();
 			break;
 		}
 		case STOP: {
 			DataServerMessage<StopPayload> payload = BattlebitsAPI.getGson().fromJson(jsonObject,
 					new TypeToken<DataServerMessage<StopPayload>>() {
 					}.getType());
-			yLobbyPlugin.getyLobby().getServerManager().removeActiveServer(payload.getPayload().getServerId());
-			if (yLobbyPlugin.getyLobby().getGameModsManager().isGameMode(sourceType))
-				yLobbyPlugin.getyLobby().getGameModsManager().getGameMode(sourceType).updateOnlinePlayersOnItem();
-			if (yLobbyPlugin.getyLobby().getMatchSelectorManager().isMatchSelector(sourceType))
-				yLobbyPlugin.getyLobby().getMatchSelectorManager().getMatchSelector(sourceType).update();
-			if (yLobbyPlugin.getyLobby().getMultiSelectorManager().isMultiSelector(sourceType))
-				yLobbyPlugin.getyLobby().getMultiSelectorManager().getMultiSelector(sourceType).update();
+			LobbyMain.getInstance().getServerManager().removeActiveServer(payload.getPayload().getServerId());
+			if (LobbyMain.getInstance().getGameModsManager().isGameMode(sourceType))
+				LobbyMain.getInstance().getGameModsManager().getGameMode(sourceType).updateOnlinePlayersOnItem();
+			if (LobbyMain.getInstance().getMatchSelectorManager().isMatchSelector(sourceType))
+				LobbyMain.getInstance().getMatchSelectorManager().getMatchSelector(sourceType).update();
+			if (LobbyMain.getInstance().getMultiSelectorManager().isMultiSelector(sourceType))
+				LobbyMain.getInstance().getMultiSelectorManager().getMultiSelector(sourceType).update();
 			if (sourceType == ServerType.LOBBY)
-				yLobbyPlugin.getyLobby().getLobbySelector().update();
+				LobbyMain.getInstance().getLobbySelector().update();
 			break;
 		}
 		case UPDATE: {
 			DataServerMessage<UpdatePayload> payload = BattlebitsAPI.getGson().fromJson(jsonObject,
 					new TypeToken<DataServerMessage<UpdatePayload>>() {
 					}.getType());
-			BattleServer server = yLobbyPlugin.getyLobby().getServerManager().getServer(source);
+			BattleServer server = LobbyMain.getInstance().getServerManager().getServer(source);
 			if (server instanceof MinigameServer) {
 				((MinigameServer) server).setState(payload.getPayload().getState());
 				((MinigameServer) server).setTime(payload.getPayload().getTime());
 			}
-			if (yLobbyPlugin.getyLobby().getGameModsManager().isGameMode(sourceType))
-				yLobbyPlugin.getyLobby().getGameModsManager().getGameMode(sourceType).updateOnlinePlayersOnItem();
-			if (yLobbyPlugin.getyLobby().getMatchSelectorManager().isMatchSelector(sourceType))
-				yLobbyPlugin.getyLobby().getMatchSelectorManager().getMatchSelector(sourceType).update();
-			if (yLobbyPlugin.getyLobby().getMultiSelectorManager().isMultiSelector(sourceType))
-				yLobbyPlugin.getyLobby().getMultiSelectorManager().getMultiSelector(sourceType).update();
+			if (LobbyMain.getInstance().getGameModsManager().isGameMode(sourceType))
+				LobbyMain.getInstance().getGameModsManager().getGameMode(sourceType).updateOnlinePlayersOnItem();
+			if (LobbyMain.getInstance().getMatchSelectorManager().isMatchSelector(sourceType))
+				LobbyMain.getInstance().getMatchSelectorManager().getMatchSelector(sourceType).update();
+			if (LobbyMain.getInstance().getMultiSelectorManager().isMultiSelector(sourceType))
+				LobbyMain.getInstance().getMultiSelectorManager().getMultiSelector(sourceType).update();
 			if (sourceType == ServerType.LOBBY)
-				yLobbyPlugin.getyLobby().getLobbySelector().update();
+				LobbyMain.getInstance().getLobbySelector().update();
 			break;
 		}
 		default:

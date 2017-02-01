@@ -9,7 +9,7 @@ import br.com.battlebits.commons.BattlebitsAPI;
 import br.com.battlebits.commons.core.account.BattlePlayer;
 import br.com.battlebits.commons.core.account.Tag;
 import br.com.battlebits.commons.core.server.ServerType;
-import br.com.battlebits.ylobby.yLobbyPlugin;
+import br.com.battlebits.ylobby.LobbyMain;
 
 public class ScoreboardManager {
 
@@ -55,13 +55,13 @@ public class ScoreboardManager {
 		board.getTeam("onlineteam").setPrefix("§7Online: ");
 		board.getTeam("onlineteam")
 				.setSuffix("§e"
-						+ yLobbyPlugin.getyLobby().getServerManager().getBalancer(ServerType.NETWORK).getTotalNumber()
+						+ LobbyMain.getInstance().getServerManager().getBalancer(ServerType.NETWORK).getTotalNumber()
 						+ " §%players%§");
 
 		obj.getScore("§2").setScore(3);
 		board.registerNewTeam("lobbyidteam").addEntry("§2");
 		board.getTeam("lobbyidteam").setPrefix("§7Lobby: ");
-		board.getTeam("lobbyidteam").setSuffix("§e" + yLobbyPlugin.getyLobby().getLobbyID());
+		board.getTeam("lobbyidteam").setSuffix("§e" + LobbyMain.getInstance().getLobbyID());
 
 		obj.getScore("§1").setScore(2);
 
@@ -78,7 +78,7 @@ public class ScoreboardManager {
 
 		board.getTeam("onlineteam")
 				.setSuffix("§e"
-						+ yLobbyPlugin.getyLobby().getServerManager().getBalancer(ServerType.NETWORK).getTotalNumber()
+						+ LobbyMain.getInstance().getServerManager().getBalancer(ServerType.NETWORK).getTotalNumber()
 						+ " §%players%§");
 	}
 

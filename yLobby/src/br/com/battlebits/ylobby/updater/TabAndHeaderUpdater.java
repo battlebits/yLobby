@@ -8,7 +8,7 @@ import br.com.battlebits.commons.api.player.PingAPI;
 import br.com.battlebits.commons.api.tablist.TabListAPI;
 import br.com.battlebits.commons.core.account.BattlePlayer;
 import br.com.battlebits.commons.core.server.ServerType;
-import br.com.battlebits.ylobby.yLobbyPlugin;
+import br.com.battlebits.ylobby.LobbyMain;
 
 public class TabAndHeaderUpdater extends UpdaterBase {
 
@@ -42,7 +42,7 @@ public class TabAndHeaderUpdater extends UpdaterBase {
 		headerBuilder.append("\n");
 		headerBuilder.append("§e§%we-have%§ §f");
 		headerBuilder
-				.append(yLobbyPlugin.getyLobby().getServerManager().getBalancer(ServerType.NETWORK).getTotalNumber());
+				.append(LobbyMain.getInstance().getServerManager().getBalancer(ServerType.NETWORK).getTotalNumber());
 		headerBuilder.append(" §e§%players-online%§!");
 		StringBuilder footerBuilder = new StringBuilder();
 		footerBuilder.append("§bNick: §f");

@@ -1,7 +1,7 @@
-main: br.com.battlebits.ylobby.yLobbyPlugin
+main: br.com.battlebits.ylobby.LobbyMain
 version: 1.0
-author: zViitoor
-name: yLobby
+authors: [zViitoor, GustavoInacio]
+name: Lobby
 website: www.battlebits.com.br
 description: Plugin do Lobby da BattleBits Network.
 depend: [Commons, HolographicDisplays, Citizens]

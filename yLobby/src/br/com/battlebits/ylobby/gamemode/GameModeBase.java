@@ -72,8 +72,8 @@ public abstract class GameModeBase {
 				LobbyMain.getInstance().getLocationManager().getSpawnLocation()));
 		holo = HologramsAPI.createHologram(LobbyMain.getInstance(),
 				LobbyUtils.getLocationUtils().getCenter(npclocation.clone().add(0, 2.54, 0), false));
-		holo.appendTextLine("§9§l" + servername.toUpperCase());
-		holo.appendTextLine("§b§l§%click-to-connect%§!");
+		holo.appendTextLine("§b§l" + servername.toUpperCase());
+		holo.appendTextLine("§e§l0 §e§%players-online%§.");
 		if (!npclocation.getChunk().isLoaded()) {
 			npclocation.getChunk().load();
 		}

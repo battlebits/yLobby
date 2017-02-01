@@ -35,6 +35,8 @@ public abstract class GameModeBase {
 	@Getter
 	private ServerType serverType;
 
+	private Hologram holo;
+
 	public GameModeBase(String servername, String serverdescription, Material iconmaterial, List<String> connectLines,
 			Location npclocation, ServerType serverType, EntityType type) {
 		name = servername;
@@ -68,7 +70,7 @@ public abstract class GameModeBase {
 		characterNPC.spawn(LobbyUtils.getLocationUtils().lookAt(
 				LobbyUtils.getLocationUtils().getCenter(npclocation.clone(), false),
 				LobbyMain.getInstance().getLocationManager().getSpawnLocation()));
-		Hologram holo = HologramsAPI.createHologram(LobbyMain.getInstance(),
+		holo = HologramsAPI.createHologram(LobbyMain.getInstance(),
 				LobbyUtils.getLocationUtils().getCenter(npclocation.clone().add(0, 2.54, 0), false));
 		holo.appendTextLine("§9§l" + servername.toUpperCase());
 		holo.appendTextLine("§b§l§%click-to-connect%§!");
@@ -90,6 +92,8 @@ public abstract class GameModeBase {
 				"§3§l" + getOnlinePlayers() + " §7§%players-online%§.");
 		inventoryItemMeta.setLore(inventoryItemLore);
 		inventoryitem.setItemMeta(inventoryItemMeta);
+		holo.getLine(holo.size()).removeLine();
+		holo.appendTextLine("§e§l" + getOnlinePlayers() + " §e§%players-online%§.");
 	}
 
 	public abstract int getOnlinePlayers();

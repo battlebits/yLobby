@@ -11,13 +11,12 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import br.com.battlebits.commons.BattlebitsAPI;
 import br.com.battlebits.commons.api.item.ItemBuilder;
-import br.com.battlebits.commons.core.permission.Group;
+import br.com.battlebits.commons.core.server.ServerType;
+import br.com.battlebits.commons.core.server.loadbalancer.server.BattleServer;
 import br.com.battlebits.ylobby.LobbyUtils;
 import br.com.battlebits.ylobby.yLobbyPlugin;
 import br.com.battlebits.ylobby.bungee.BungeeMessage;
-import br.com.battlebits.ylobby.server.ServerInfo;
 
 public abstract class MultiSelector {
 
@@ -28,14 +27,12 @@ public abstract class MultiSelector {
 	private ItemStack backToServerMenuItem;
 	private ArrayList<String> serverRestartingMessage;
 	private ArrayList<String> needToBeLightToJoinFull;
-	private ArrayList<String> selectorServers;
-	private int maxPlayersServer;
 	private String inventoryTitle;
 	private BungeeMessage directConnectMessage;
+	private ServerType serverType;
 
-	public MultiSelector(List<String> servers, int maxPlayersPerServer, String title, BungeeMessage dc) {
-		selectorServers = new ArrayList<>(servers);
-		maxPlayersServer = maxPlayersPerServer;
+	public MultiSelector(ServerType serverType, String title, BungeeMessage dc) {
+		this.serverType = serverType;
 		inventoryTitle = title;
 		directConnectMessage = dc;
 		directConnectItemLore = new ArrayList<>();
@@ -63,8 +60,9 @@ public abstract class MultiSelector {
 		needToBeLightToJoinFull.add("§6§lentrar§7 com o§6§l servidor cheio§7!");
 		needToBeLightToJoinFull.add("§7Compre em nosso site §6§lwww.battlebits.com.br§7!");
 		needToBeLightToJoinFull.add("§0");
-		serverSelectorInventory = Bukkit.createInventory(null, LobbyUtils.getInventoryUtils().getInventorySizeForItens(
-				selectorServers.size() + 18 + ((selectorServers.size() / 7) * 2)), inventoryTitle);
+		int size = yLobbyPlugin.getyLobby().getServerManager().getBalancer(serverType).getList().size();
+		serverSelectorInventory = Bukkit.createInventory(null,
+				LobbyUtils.getInventoryUtils().getInventorySizeForItens(size + 18 + ((size / 7) * 2)), inventoryTitle);
 		serverSelectorInventory.setItem(4, directConnectItem);
 		serverSelectorInventory.setItem(serverSelectorInventory.getSize() - 5, backToServerMenuItem);
 	}
@@ -92,26 +90,8 @@ public abstract class MultiSelector {
 	}
 
 	public void tryToConnect(Player p, String ip) {
-		ServerInfo info = yLobbyPlugin.getyLobby().getServerInfoManager().get(ip);
-		if (info.getOnlinePlayers() >= 100) {
-			if (BattlebitsAPI.getAccountCommon().getBattlePlayer(p.getUniqueId()).hasGroupPermission(Group.LIGHT)) {
-				p.sendMessage("§0");
-				p.sendMessage("§6§lConectando§7 ao servidor §9§l" + ip + "§7!");
-				p.sendMessage("§0");
-				p.sendPluginMessage(yLobbyPlugin.getyLobby(), "BungeeCord",
-						new BungeeMessage("Connect", ip).getDataOutput().toByteArray());
-			} else {
-				for (String msg : needToBeLightToJoinFull) {
-					p.sendMessage(msg);
-				}
-			}
-		} else {
-			p.sendMessage("§0");
-			p.sendMessage("§a§lConectando§7 ao servidor §9§l" + ip + "§7!");
-			p.sendMessage("§0");
-			p.sendPluginMessage(yLobbyPlugin.getyLobby(), "BungeeCord",
-					new BungeeMessage("Connect", ip).getDataOutput().toByteArray());
-		}
+		p.sendPluginMessage(yLobbyPlugin.getyLobby(), "BungeeCord",
+				new BungeeMessage("Connect", ip).getDataOutput().toByteArray());
 	}
 
 	public void update() {
@@ -124,12 +104,9 @@ public abstract class MultiSelector {
 			serverSelectorInventory.setItem(4, directConnectItem);
 		} catch (Exception e) {
 		}
-		ArrayList<ServerInfo> gameServerInfos = new ArrayList<>();
-		for (String ip : selectorServers) {
-			ServerInfo info = yLobbyPlugin.getyLobby().getServerInfoManager().get(ip);
-			gameServerInfos.add(info);
-		}
-		for (ServerInfo info : gameServerInfos) {
+		List<BattleServer> gameServerInfos = yLobbyPlugin.getyLobby().getServerManager().getBalancer(serverType)
+				.getList();
+		for (BattleServer info : gameServerInfos) {
 			if (i == 8 || i == 17 || i == 26 || i == 35 || i == 44) {
 				i = i + 2;
 			}
@@ -137,12 +114,12 @@ public abstract class MultiSelector {
 			ItemMeta meta = stack.getItemMeta();
 			ArrayList<String> lore = new ArrayList<>();
 
-			if (info.getOnlinePlayers() >= maxPlayersServer) {
+			if (info.getOnlinePlayers() >= info.getMaxPlayers()) {
 				stack.setDurability((short) 14);
-				meta.setDisplayName("§9§l> §6§l" + info.getIp() + " §9§l<");
+				meta.setDisplayName("§9§l> §6§l" + info.getServerId() + " §9§l<");
 			} else {
 				stack.setDurability((short) 10);
-				meta.setDisplayName("§9§l> §a§l" + info.getIp() + " §9§l<");
+				meta.setDisplayName("§9§l> §a§l" + info.getServerId() + " §9§l<");
 			}
 
 			if (info.getOnlinePlayers() > 0) {

@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 import org.bukkit.scheduler.BukkitRunnable;
 
+import br.com.battlebits.commons.core.server.ServerType;
 import br.com.battlebits.ylobby.yLobbyPlugin;
 import br.com.battlebits.ylobby.bungee.BungeeMessage;
 import br.com.battlebits.ylobby.selector.match.MatchSelector;
@@ -22,33 +23,37 @@ public class MatchSelectorManager {
 	}
 
 	public void loadSelectors() {
-		hardcoreGamesSelector = new MatchSelector(yLobbyPlugin.getyLobby().getBungeeManager().getHGServers(), 100, "     §nServidores do Battle-HG", new BungeeMessage("HungerGames")) {
+		hardcoreGamesSelector = new MatchSelector(ServerType.HUNGERGAMES, "     §nServidores do Battle-HG",
+				new BungeeMessage("HungerGames")) {
 			@Override
 			public int getMatchsOnlinePlayers() {
-				return yLobbyPlugin.getyLobby().getPlayerCountManager().getHgOnlinePlayers();
+				return yLobbyPlugin.getyLobby().getServerManager().getBalancer(ServerType.HUNGERGAMES).getTotalNumber();
 			}
 		};
 		addMacthSelector(hardcoreGamesSelector);
-		
-		customHGSelector = new MatchSelector(yLobbyPlugin.getyLobby().getBungeeManager().getCustomHGServers(), 100, "     §nServidores do CustomHG", new BungeeMessage("CustomHungergames")) {
+
+		customHGSelector = new MatchSelector(ServerType.CUSTOMHG, "     §nServidores do CustomHG",
+				new BungeeMessage("CustomHungergames")) {
 			@Override
 			public int getMatchsOnlinePlayers() {
-				return yLobbyPlugin.getyLobby().getPlayerCountManager().getCustomHgOnlinePlayers();
+				return yLobbyPlugin.getyLobby().getServerManager().getBalancer(ServerType.CUSTOMHG).getTotalNumber();
 			}
 		};
 		addMacthSelector(customHGSelector);
-		
-		doubleKitHGSelector = new MatchSelector(yLobbyPlugin.getyLobby().getBungeeManager().getDoubleKitServers(), 100, "    §nServidores do DoubleKit-HG", new BungeeMessage("DoubleKitHungergames")) {
+
+		doubleKitHGSelector = new MatchSelector(ServerType.DOUBLEKITHG, "    §nServidores do DoubleKit-HG",
+				new BungeeMessage("DoubleKitHungergames")) {
 			@Override
 			public int getMatchsOnlinePlayers() {
-				return yLobbyPlugin.getyLobby().getPlayerCountManager().getDoubleKitOnlinePlayers();
+				return yLobbyPlugin.getyLobby().getServerManager().getBalancer(ServerType.DOUBLEKITHG).getTotalNumber();
 			}
 		};
 		addMacthSelector(doubleKitHGSelector);
-		fairPlaySelector = new MatchSelector(yLobbyPlugin.getyLobby().getBungeeManager().getFairPlayServers(), 100, "    §nServidores do FairPlayHG", new BungeeMessage("Fairplayhg")) {
+		fairPlaySelector = new MatchSelector(ServerType.FAIRPLAY, "    §nServidores do FairPlayHG",
+				new BungeeMessage("Fairplayhg")) {
 			@Override
 			public int getMatchsOnlinePlayers() {
-				return yLobbyPlugin.getyLobby().getPlayerCountManager().getFpOnlinePlayers();
+				return yLobbyPlugin.getyLobby().getServerManager().getBalancer(ServerType.FAIRPLAY).getTotalNumber();
 			}
 		};
 		addMacthSelector(fairPlaySelector);
@@ -60,7 +65,7 @@ public class MatchSelectorManager {
 				}
 			}
 		};
-		updaterRunnable.runTaskTimerAsynchronously(yLobbyPlugin.getyLobby(), 15l, 30L);
+		updaterRunnable.runTaskTimer(yLobbyPlugin.getyLobby(), 15l, 30L);
 	}
 
 	public boolean isMatchSelector(String title) {
@@ -82,7 +87,7 @@ public class MatchSelectorManager {
 	public MatchSelector getHardcoreGamesSelector() {
 		return hardcoreGamesSelector;
 	}
-	
+
 	public MatchSelector getCustomHGSelector() {
 		return customHGSelector;
 	}

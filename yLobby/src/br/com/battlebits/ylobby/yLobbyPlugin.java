@@ -5,27 +5,24 @@ import org.bukkit.Difficulty;
 import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scheduler.BukkitRunnable;
 
+import br.com.battlebits.commons.bukkit.BukkitMain;
 import br.com.battlebits.commons.bukkit.command.BukkitCommandFramework;
 import br.com.battlebits.commons.core.command.CommandLoader;
-import br.com.battlebits.ylobby.bungee.BungeeMessageReceiver;
-import br.com.battlebits.ylobby.bungee.BungeeMessageSender;
+import br.com.battlebits.commons.core.server.ServerManager;
 import br.com.battlebits.ylobby.detector.PlayerOutOfLobbyDetector;
 import br.com.battlebits.ylobby.listener.BountifulListener;
 import br.com.battlebits.ylobby.listener.GameModsListener;
 import br.com.battlebits.ylobby.listener.MainListener;
 import br.com.battlebits.ylobby.listener.PlayerHideListener;
-import br.com.battlebits.ylobby.manager.BungeeManager;
 import br.com.battlebits.ylobby.manager.GameModsManager;
-import br.com.battlebits.ylobby.manager.GameServerInfoManager;
 import br.com.battlebits.ylobby.manager.LobbyItensManager;
 import br.com.battlebits.ylobby.manager.LocationManager;
 import br.com.battlebits.ylobby.manager.MatchSelectorManager;
 import br.com.battlebits.ylobby.manager.MultiSelectorManager;
-import br.com.battlebits.ylobby.manager.PlayerCountManager;
 import br.com.battlebits.ylobby.manager.PlayerHideManager;
 import br.com.battlebits.ylobby.manager.ScoreboardManager;
-import br.com.battlebits.ylobby.manager.ServerInfoManager;
 import br.com.battlebits.ylobby.profile.ProfileConfigurationInventory;
 import br.com.battlebits.ylobby.profile.ProfileConfigurationListener;
 import br.com.battlebits.ylobby.profile.ProfileRanksInventory;
@@ -39,6 +36,12 @@ import br.com.battlebits.ylobby.selector.lobby.LobbySelectorListener;
 import br.com.battlebits.ylobby.selector.match.MatchSelectorListener;
 import br.com.battlebits.ylobby.selector.multi.MultiSelectorListener;
 import br.com.battlebits.ylobby.updater.TabAndHeaderUpdater;
+import lombok.Getter;
+import lombok.Setter;
+import net.citizensnpcs.api.CitizensAPI;
+import net.citizensnpcs.api.npc.NPC;
+import net.citizensnpcs.api.npc.NPCDataStore;
+import net.citizensnpcs.api.npc.NPCRegistry;
 
 public class yLobbyPlugin extends JavaPlugin {
 
@@ -46,15 +49,11 @@ public class yLobbyPlugin extends JavaPlugin {
 
 	// private MySQLConnection mySQLConnection;
 
-	private BungeeMessageReceiver bungeeMessageReceiver;
-	private BungeeMessageSender bungeeMessageSender;
+	@Getter
+	private ServerManager serverManager;
 
 	private MatchSelectorManager matchSelectorManager;
 	private MultiSelectorManager multiSelectorManager;
-	private BungeeManager bungeeManager;
-	private GameServerInfoManager gameServerInfoManager;
-	private ServerInfoManager serverInfoManager;
-	private PlayerCountManager playerCountManager;
 	private GameModsManager gameModsManager;
 	private PlayerHideManager playerHideManager;
 	private LobbyItensManager lobbyItensManager;
@@ -91,6 +90,43 @@ public class yLobbyPlugin extends JavaPlugin {
 
 		yLobby = this;
 
+		CitizensAPI.createNamedNPCRegistry("lobby", new NPCDataStore() {
+
+			@Override
+			public void storeAll(NPCRegistry arg0) {
+
+			}
+
+			@Override
+			public void store(NPC arg0) {
+
+			}
+
+			@Override
+			public void saveToDiskImmediate() {
+
+			}
+
+			@Override
+			public void saveToDisk() {
+
+			}
+
+			@Override
+			public void loadInto(NPCRegistry arg0) {
+
+			}
+
+			@Override
+			public int createUniqueNPCId(NPCRegistry arg0) {
+				return 0;
+			}
+
+			@Override
+			public void clearData(NPC arg0) {
+
+			}
+		});
 		Bukkit.getWorlds().get(0).setAutoSave(false);
 		Bukkit.getWorlds().get(0).setDifficulty(Difficulty.EASY);
 
@@ -100,18 +136,12 @@ public class yLobbyPlugin extends JavaPlugin {
 		// mySQLConnection.tryToConnect();
 		// mySQLConnection.createTables();
 
-		bungeeMessageReceiver = new BungeeMessageReceiver();
-		bungeeMessageSender = new BungeeMessageSender();
-
-		Bukkit.getMessenger().registerIncomingPluginChannel(yLobby, "BungeeCord", bungeeMessageReceiver);
 		Bukkit.getMessenger().registerOutgoingPluginChannel(yLobby, "BungeeCord");
+
+		serverManager = new ServerManager();
 
 		matchSelectorManager = new MatchSelectorManager();
 		multiSelectorManager = new MultiSelectorManager();
-		bungeeManager = new BungeeManager();
-		gameServerInfoManager = new GameServerInfoManager();
-		serverInfoManager = new ServerInfoManager();
-		playerCountManager = new PlayerCountManager();
 		locationManager = new LocationManager();
 		gameModsManager = new GameModsManager();
 		playerHideManager = new PlayerHideManager();
@@ -151,7 +181,16 @@ public class yLobbyPlugin extends JavaPlugin {
 		playerOutOfLobbyDetector.start();
 
 		new CommandLoader(new BukkitCommandFramework(this)).loadCommandsFromPackage("br.com.battlebits.ylobby.command");
-
+		new BukkitRunnable() {
+			@Override
+			public void run() {
+				try {
+					BukkitMain.getPlugin().getPubSubListener().addChannel("server-info");
+				} catch (Exception e) {
+					run();
+				}
+			}
+		}.runTaskAsynchronously(this);
 		getLogger().info("Plugin habilitado com sucesso!");
 	}
 
@@ -168,21 +207,16 @@ public class yLobbyPlugin extends JavaPlugin {
 
 		// mySQLConnection.stop();
 
-		bungeeMessageReceiver.stop();
-
 		playerOutOfLobbyDetector.stop();
 
 		tabAndHeaderUpdater.stop();
 
 		matchSelectorManager.stop();
 		multiSelectorManager.stop();
-		gameServerInfoManager.stop();
-		serverInfoManager.stop();
 
 		gameModsManager.stop();
 
 		gameModeSelector.stop();
-		lobbySelector.stop();
 
 		HandlerList.unregisterAll(yLobby);
 
@@ -197,29 +231,9 @@ public class yLobbyPlugin extends JavaPlugin {
 		return yLobby;
 	}
 
-	public BungeeMessageSender getBungeeMessageSender() {
-		return bungeeMessageSender;
-	}
-
 	// public MySQLConnection getMySQLConnection() {
 	// return mySQLConnection;
 	// }
-
-	public BungeeManager getBungeeManager() {
-		return bungeeManager;
-	}
-
-	public PlayerCountManager getPlayerCountManager() {
-		return playerCountManager;
-	}
-
-	public GameServerInfoManager getGameServerInfoManager() {
-		return gameServerInfoManager;
-	}
-
-	public ServerInfoManager getServerInfoManager() {
-		return serverInfoManager;
-	}
 
 	public LobbySelector getLobbySelector() {
 		return lobbySelector;
@@ -268,5 +282,9 @@ public class yLobbyPlugin extends JavaPlugin {
 	public ProfileConfigurationInventory getProfileConfigurationInventory() {
 		return profileConfigurationInventory;
 	}
+
+	@Getter
+	@Setter
+	private String lobbyID;
 
 }

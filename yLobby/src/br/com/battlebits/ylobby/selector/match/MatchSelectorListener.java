@@ -1,7 +1,5 @@
 package br.com.battlebits.ylobby.selector.match;
 
-import java.util.ArrayList;
-
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -15,15 +13,6 @@ import net.md_5.bungee.api.ChatColor;
 
 public class MatchSelectorListener implements Listener {
 
-	private ArrayList<String> connectingDirect;
-
-	public MatchSelectorListener() {
-		connectingDirect = new ArrayList<>();
-		connectingDirect.add("§0");
-		connectingDirect.add("§7Tentando conectar a um servidor §a§ldisponivel§7!");
-		connectingDirect.add("§0");
-	}
-
 	@EventHandler(priority = EventPriority.MONITOR)
 	public void onInventoryClickListener(InventoryClickEvent e) {
 		if (e.getInventory() != null) {
@@ -36,9 +25,6 @@ public class MatchSelectorListener implements Listener {
 							MatchSelector matchSelector = yLobbyPlugin.getyLobby().getMatchSelectorManager()
 									.getMatchSelector(e.getInventory().getTitle());
 							if (e.getSlot() == 4) {
-								for (String msg : connectingDirect) {
-									p.sendMessage(msg);
-								}
 								matchSelector.directConnect(p);
 							} else if (e.getSlot() == e.getInventory().getSize() - 5) {
 								yLobbyPlugin.getyLobby().getGameModeSelector().open(p);

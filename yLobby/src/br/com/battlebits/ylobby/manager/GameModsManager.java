@@ -8,6 +8,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 
+import br.com.battlebits.commons.core.server.ServerType;
 import br.com.battlebits.ylobby.yLobbyPlugin;
 import br.com.battlebits.ylobby.bungee.BungeeMessage;
 import br.com.battlebits.ylobby.gamemode.GameModeBase;
@@ -39,7 +40,8 @@ public class GameModsManager {
 				new BungeeMessage("PVPFulliron"), EntityType.SKELETON) {
 			@Override
 			public int getOnlinePlayers() {
-				return yLobbyPlugin.getyLobby().getPlayerCountManager().getFullIronOnlinePlayers();
+				return yLobbyPlugin.getyLobby().getServerManager().getBalancer(ServerType.PVP_FULLIRON)
+						.getTotalNumber();
 			}
 
 			@Override
@@ -53,7 +55,8 @@ public class GameModsManager {
 				new BungeeMessage("PVPSimulator"), EntityType.SKELETON) {
 			@Override
 			public int getOnlinePlayers() {
-				return yLobbyPlugin.getyLobby().getPlayerCountManager().getSimulatorOnlinePlayers();
+				return yLobbyPlugin.getyLobby().getServerManager().getBalancer(ServerType.PVP_SIMULATOR)
+						.getTotalNumber();
 			}
 
 			@Override
@@ -66,7 +69,7 @@ public class GameModsManager {
 				new BungeeMessage("Hungergames"), EntityType.BLAZE) {
 			@Override
 			public int getOnlinePlayers() {
-				return yLobbyPlugin.getyLobby().getPlayerCountManager().getHgOnlinePlayers();
+				return yLobbyPlugin.getyLobby().getServerManager().getBalancer(ServerType.HUNGERGAMES).getTotalNumber();
 			}
 
 			@Override
@@ -80,7 +83,7 @@ public class GameModsManager {
 				new BungeeMessage("CustomHungergames"), EntityType.WITCH) {
 			@Override
 			public int getOnlinePlayers() {
-				return yLobbyPlugin.getyLobby().getPlayerCountManager().getCustomHgOnlinePlayers();
+				return yLobbyPlugin.getyLobby().getServerManager().getBalancer(ServerType.CUSTOMHG).getTotalNumber();
 			}
 
 			@Override
@@ -96,7 +99,8 @@ public class GameModsManager {
 						new BungeeMessage("DoubleKitHungergames"), EntityType.CREEPER) {
 					@Override
 					public int getOnlinePlayers() {
-						return yLobbyPlugin.getyLobby().getPlayerCountManager().getDoubleKitOnlinePlayers();
+						return yLobbyPlugin.getyLobby().getServerManager().getBalancer(ServerType.DOUBLEKITHG)
+								.getTotalNumber();
 					}
 
 					@Override

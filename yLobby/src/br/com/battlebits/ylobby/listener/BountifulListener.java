@@ -21,7 +21,7 @@ public class BountifulListener implements Listener {
 		playerJoinMessage.add("§0");
 		playerJoinMessage.add("§6§lBATTLE§F§LBITS");
 		playerJoinMessage.add("§0");
-		playerJoinMessage.add("§%welcom-lobby-message%§");
+		playerJoinMessage.add("§%welcome-lobby-message%§");
 		playerJoinMessage.add("§0");
 		playerJoinMessage.add("§6§lwww.battlebits.com.br");
 		playerJoinMessage.add("§0");

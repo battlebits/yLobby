@@ -2,7 +2,6 @@ package br.com.battlebits.ylobby.selector.match;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 import org.bukkit.Bukkit;
@@ -12,14 +11,14 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import br.com.battlebits.commons.BattlebitsAPI;
 import br.com.battlebits.commons.api.item.ItemBuilder;
-import br.com.battlebits.commons.bungee.loadbalancer.server.HungerGamesServer.HungerGamesState;
-import br.com.battlebits.commons.core.permission.Group;
+import br.com.battlebits.commons.core.server.ServerType;
+import br.com.battlebits.commons.core.server.loadbalancer.server.BattleServer;
+import br.com.battlebits.commons.core.server.loadbalancer.server.MinigameServer;
+import br.com.battlebits.commons.core.server.loadbalancer.server.MinigameState;
 import br.com.battlebits.ylobby.LobbyUtils;
 import br.com.battlebits.ylobby.yLobbyPlugin;
 import br.com.battlebits.ylobby.bungee.BungeeMessage;
-import br.com.battlebits.ylobby.server.GameServerInfo;
 
 public abstract class MatchSelector {
 
@@ -31,14 +30,12 @@ public abstract class MatchSelector {
 	private ArrayList<String> serverRestartingMessage;
 	private ArrayList<String> needToBeUltimateToSpectate;
 	private ArrayList<String> needToBeLightToJoinFull;
-	private ArrayList<String> selectorServers;
-	private int maxPlayersServer;
 	private String inventoryTitle;
 	private BungeeMessage directConnectMessage;
+	private ServerType serverType;
 
-	public MatchSelector(List<String> servers, int maxPlayersPerServer, String title, BungeeMessage dc) {
-		selectorServers = new ArrayList<>(servers);
-		maxPlayersServer = maxPlayersPerServer;
+	public MatchSelector(ServerType serverType, String title, BungeeMessage dc) {
+		this.serverType = serverType;
 		inventoryTitle = title;
 		directConnectMessage = dc;
 		directConnectItemLore = new ArrayList<>();
@@ -71,8 +68,9 @@ public abstract class MatchSelector {
 		needToBeLightToJoinFull.add("§6§lentrar§7 com o§6§l servidor cheio§7!");
 		needToBeLightToJoinFull.add("§7Compre em nosso site §6§lwww.battlebits.com.br§7!");
 		needToBeLightToJoinFull.add("§0");
-		serverSelectorInventory = Bukkit.createInventory(null, LobbyUtils.getInventoryUtils().getInventorySizeForItens(
-				selectorServers.size() + 18 + ((selectorServers.size() / 7) * 2)), inventoryTitle);
+		int size = yLobbyPlugin.getyLobby().getServerManager().getBalancer(serverType).getList().size();
+		serverSelectorInventory = Bukkit.createInventory(null,
+				LobbyUtils.getInventoryUtils().getInventorySizeForItens(size + 18 + ((size / 7) * 2)), inventoryTitle);
 		serverSelectorInventory.setItem(4, directConnectItem);
 		serverSelectorInventory.setItem(serverSelectorInventory.getSize() - 5, backToServerMenuItem);
 	}
@@ -101,42 +99,8 @@ public abstract class MatchSelector {
 	}
 
 	public void tryToConnect(Player p, String ip) {
-		GameServerInfo info = yLobbyPlugin.getyLobby().getGameServerInfoManager().get(ip);
-		if (info.isInProgress()) {
-			if (BattlebitsAPI.getAccountCommon().getBattlePlayer(p.getUniqueId()).hasGroupPermission(Group.ULTIMATE)) {
-				p.sendMessage("§0");
-				p.sendMessage("§b§lConectando§7 ao servidor §9§l" + ip + "§7!");
-				p.sendMessage("§0");
-				p.sendPluginMessage(yLobbyPlugin.getyLobby(), "BungeeCord",
-						new BungeeMessage("Connect", ip).getDataOutput().toByteArray());
-			} else {
-				for (String msg : needToBeUltimateToSpectate) {
-					p.sendMessage(msg);
-				}
-			}
-
-		} else {
-			if (info.getOnlinePlayers() >= 100) {
-				if (BattlebitsAPI.getAccountCommon().getBattlePlayer(p.getUniqueId()).hasGroupPermission(Group.LIGHT)) {
-					p.sendMessage("§0");
-					p.sendMessage("§6§lConectando§7 ao servidor §9§l" + ip + "§7!");
-					p.sendMessage("§0");
-					p.sendPluginMessage(yLobbyPlugin.getyLobby(), "BungeeCord",
-							new BungeeMessage("Connect", ip).getDataOutput().toByteArray());
-				} else {
-					for (String msg : needToBeLightToJoinFull) {
-						p.sendMessage(msg);
-					}
-				}
-			} else {
-				p.sendMessage("§0");
-				p.sendMessage("§a§lConectando§7 ao servidor §9§l" + ip + "§7!");
-				p.sendMessage("§0");
-				p.sendPluginMessage(yLobbyPlugin.getyLobby(), "BungeeCord",
-						new BungeeMessage("Connect", ip).getDataOutput().toByteArray());
-			}
-		}
-
+		p.sendPluginMessage(yLobbyPlugin.getyLobby(), "BungeeCord",
+				new BungeeMessage("Connect", ip).getDataOutput().toByteArray());
 	}
 
 	public void update() {
@@ -149,25 +113,23 @@ public abstract class MatchSelector {
 			serverSelectorInventory.setItem(4, directConnectItem);
 		} catch (Exception e) {
 		}
-		ArrayList<GameServerInfo> gameServerInfos = new ArrayList<>();
-		for (String ip : selectorServers) {
-			GameServerInfo info = yLobbyPlugin.getyLobby().getGameServerInfoManager().get(ip);
-			gameServerInfos.add(info);
-		}
-		Collections.sort(gameServerInfos);
-		for (GameServerInfo info : gameServerInfos) {
+		List<BattleServer> gameServerInfos = yLobbyPlugin.getyLobby().getServerManager().getBalancer(serverType)
+				.getList();
+		for (BattleServer mg : gameServerInfos) {
+			if (!(mg instanceof MinigameServer))
+				continue;
+			MinigameServer info = (MinigameServer) mg;
 			if (i == 8 || i == 17 || i == 26 || i == 35 || i == 44) {
 				i = i + 2;
 			}
 			ItemStack stack = new ItemStack(Material.INK_SACK, 1);
 			ItemMeta meta = stack.getItemMeta();
 			ArrayList<String> lore = new ArrayList<>();
-			if (info.getState() == HungerGamesState.WAITING) {
+			if (info.getState() == MinigameState.WAITING) {
 				stack.setAmount(LobbyUtils.getItemAmount(info.getOnlinePlayers()));
 				stack.setDurability((short) 11);
-				meta.setDisplayName("§9§l> §e§l" + info.getIp() + " §9§l<");
+				meta.setDisplayName("§9§l> §e§l" + info.getServerId() + " §9§l<");
 				lore.add("§7Aguardando §e§ljogadores §7para iniciar!");
-				lore.add("§7Precisa-se de mais §e§l" + (5 - info.getOnlinePlayers()) + "§7 jogadores!");
 				if (info.getOnlinePlayers() > 0) {
 					lore.add("§0");
 					lore.add("§3§l" + info.getOnlinePlayers() + " §7"
@@ -176,51 +138,29 @@ public abstract class MatchSelector {
 				lore.add("§0");
 				lore.add("§b§lClique§r§b para §r§b§lconectar§r§b.");
 			} else if (info.isInProgress()) {
-				if (info.isInProgress()) {
-					if (info.getOnlinePlayers() > 1) {
-						stack.setAmount(LobbyUtils.getItemAmount(info.getOnlinePlayers()));
-						stack.setDurability((short) 1);
-						meta.setDisplayName("§9§l> §c§l" + info.getIp() + " §9§l<");
-						lore.add("§7A partida está em §c§lprogresso§7!");
-						lore.add("§7A partida iniciou com §c§l" + info.getMaxPlayers() + " §7jogadores.");
-						lore.add("§0");
-						lore.add("§3§l" + info.getOnlinePlayers() + " §7"
-								+ ((info.getOnlinePlayers() == 1) ? "jogador conectado" : "jogadores conectados"));
-						lore.add("§0");
-						lore.add("§b§lClique§r§b para §r§b§lespectar§r§b.");
-					} else {
-						stack.setAmount(1);
-						stack.setDurability((short) 5);
-						meta.setDisplayName("§9§l> §5§l" + info.getIp() + " §9§l<");
-						lore.add("§7A partida ja §5§lacabou§7!");
-						lore.add("§7O servidor irá §8§lreiniciar§7!");
-						lore.add("§0");
-						lore.add("§b§lAguarde§r§b reiniciar para §r§b§lconectar§r§b.");
-					}
-				} else {
-					stack.setAmount(1);
-					stack.setDurability((short) 8);
-					meta.setDisplayName("§9§l> §8§l" + info.getIp() + " §9§l<");
-					lore.add("§7O servidor está §8§lreiniciando§7!");
-					lore.add("§0");
-					lore.add("§b§lAguarde§r§b para se §r§b§lconectar§r§b!");
-				}
+				stack.setAmount(LobbyUtils.getItemAmount(info.getOnlinePlayers()));
+				stack.setDurability((short) 1);
+				meta.setDisplayName("§9§l> §c§l" + info.getServerId() + " §9§l<");
+				lore.add("§7A partida está em §c§lprogresso§7!");
+				lore.add("§0");
+				lore.add("§3§l" + info.getOnlinePlayers() + " §7"
+						+ ((info.getOnlinePlayers() == 1) ? "jogador conectado" : "jogadores conectados"));
+				lore.add("§0");
+				lore.add("§b§lClique§r§b para §r§b§lespectar§r§b.");
 			} else {
-				if (info.getTime() >= 120) {
+				if (info.getTime() >= 60) {
 					stack.setAmount(info.getTime() / 60);
-				} else if (info.getTime() >= 60) {
-					stack.setAmount(1);
 				} else {
 					stack.setAmount(info.getTime());
 				}
-				if (info.getOnlinePlayers() >= maxPlayersServer) {
+				if (info.getOnlinePlayers() >= info.getMaxPlayers()) {
 					stack.setDurability((short) 14);
-					meta.setDisplayName("§9§l> §6§l" + info.getIp() + " §9§l<");
+					meta.setDisplayName("§9§l> §6§l" + info.getServerId() + " §9§l<");
 					lore.add("§7A partida §6§linicia §r§7em §6§l" + LobbyUtils.getTimeUtils().formatTime(info.getTime())
 							+ "§r§7.");
 				} else {
 					stack.setDurability((short) 10);
-					meta.setDisplayName("§9§l> §a§l" + info.getIp() + " §9§l<");
+					meta.setDisplayName("§9§l> §a§l" + info.getServerId() + " §9§l<");
 					lore.add("§7A partida §a§linicia §r§7em §a§l" + LobbyUtils.getTimeUtils().formatTime(info.getTime())
 							+ "§r§7.");
 				}

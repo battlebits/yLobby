@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 import org.bukkit.scheduler.BukkitRunnable;
 
+import br.com.battlebits.commons.core.server.ServerType;
 import br.com.battlebits.ylobby.yLobbyPlugin;
 import br.com.battlebits.ylobby.bungee.BungeeMessage;
 import br.com.battlebits.ylobby.selector.multi.MultiSelector;
@@ -20,18 +21,22 @@ public class MultiSelectorManager {
 	}
 
 	public void loadSelectors() {
-		pvpFullironSelector = new MultiSelector(yLobbyPlugin.getyLobby().getBungeeManager().getFullIronServers(), 100, "     §nBattlecraft Fulliron", new BungeeMessage("PVPFulliron")) {
+		pvpFullironSelector = new MultiSelector(ServerType.PVP_FULLIRON, "§nBattlecraft Fulliron",
+				new BungeeMessage("PVPFulliron")) {
 			@Override
 			public int getMultiOnlinePlayers() {
-				return yLobbyPlugin.getyLobby().getPlayerCountManager().getFullIronOnlinePlayers();
+				return yLobbyPlugin.getyLobby().getServerManager().getBalancer(ServerType.PVP_FULLIRON)
+						.getTotalNumber();
 			}
 		};
 		addMultiSelector(pvpFullironSelector);
 
-		pvpSimultorSelector = new MultiSelector(yLobbyPlugin.getyLobby().getBungeeManager().getSimulatorServers(), 100, "     §nBattlecraft Simulator", new BungeeMessage("PVPSimulator")) {
+		pvpSimultorSelector = new MultiSelector(ServerType.PVP_SIMULATOR, "§nBattlecraft Simulator",
+				new BungeeMessage("PVPSimulator")) {
 			@Override
 			public int getMultiOnlinePlayers() {
-				return yLobbyPlugin.getyLobby().getPlayerCountManager().getSimulatorOnlinePlayers();
+				return yLobbyPlugin.getyLobby().getServerManager().getBalancer(ServerType.PVP_SIMULATOR)
+						.getTotalNumber();
 			}
 		};
 		addMultiSelector(pvpSimultorSelector);
@@ -44,7 +49,7 @@ public class MultiSelectorManager {
 				}
 			}
 		};
-		updaterRunnable.runTaskTimerAsynchronously(yLobbyPlugin.getyLobby(), 15l, 30L);
+		updaterRunnable.runTaskTimer(yLobbyPlugin.getyLobby(), 15l, 30L);
 	}
 
 	public boolean isMultiSelector(String title) {

@@ -9,10 +9,10 @@ import org.bukkit.entity.Player;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import br.com.battlebits.commons.core.server.loadbalancer.server.BattleServer;
 import br.com.battlebits.ylobby.LobbyUtils;
 import br.com.battlebits.ylobby.yLobbyPlugin;
 import br.com.battlebits.ylobby.bungee.BungeeMessage;
-import br.com.battlebits.ylobby.server.ServerInfo;
 
 public class GameModeSimple extends GameModeBase {
 
@@ -24,9 +24,6 @@ public class GameModeSimple extends GameModeBase {
 		super(servername, serverdescription, iconmaterial, Arrays.asList("§b§lClique §bpara §b§lconectar§b."),
 				npclocation, type);
 		bungeeId = serverbungeeid;
-		if (!yLobbyPlugin.getyLobby().getServerInfoManager().isRegistred(bungeeId)) {
-			yLobbyPlugin.getyLobby().getServerInfoManager().addServer(bungeeId);
-		}
 		connectMessage = new BungeeMessage("Connect", bungeeId);
 		new BukkitRunnable() {
 			@Override
@@ -59,8 +56,8 @@ public class GameModeSimple extends GameModeBase {
 		p.sendPluginMessage(yLobbyPlugin.getyLobby(), "BungeeCord", connectMessage.getDataOutput().toByteArray());
 	}
 
-	public ServerInfo getServerInfo() {
-		return yLobbyPlugin.getyLobby().getServerInfoManager().get(bungeeId);
+	public BattleServer getServerInfo() {
+		return yLobbyPlugin.getyLobby().getServerManager().getServer(bungeeId);
 	}
 
 }

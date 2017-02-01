@@ -19,7 +19,8 @@ public class LobbySelectorListener implements Listener {
 					if (e.getInventory().getTitle().equalsIgnoreCase("          §nEscolha o Lobby")) {
 						if (e.getClickedInventory() == e.getInventory()) {
 							Player p = (Player) e.getWhoClicked();
-							yLobbyPlugin.getyLobby().getLobbySelector().tryToConnect(p, e.getSlot());
+							yLobbyPlugin.getyLobby().getLobbySelector().tryToConnect(p,
+									e.getCurrentItem().getItemMeta().getDisplayName());
 						}
 						e.setCancelled(true);
 					}

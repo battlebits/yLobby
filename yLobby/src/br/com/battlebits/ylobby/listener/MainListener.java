@@ -22,6 +22,7 @@ import org.bukkit.event.weather.WeatherChangeEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import br.com.battlebits.commons.bukkit.event.redis.RedisPubSubMessageEvent;
 import br.com.battlebits.ylobby.yLobbyPlugin;
 
 public class MainListener implements Listener {
@@ -128,6 +129,13 @@ public class MainListener implements Listener {
 			// §6§lBattle§r§lBits §9§lNetwork §7versão " +
 			// yLobbyPlugin.getyLobby().getDescription().getVersion() + "!");
 		}
+	}
+	
+	@EventHandler
+	public void onRedisMessage(RedisPubSubMessageEvent event) {
+		if(!event.getChannel().equals("server-info"))
+			return;
+		
 	}
 
 }

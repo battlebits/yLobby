@@ -48,7 +48,7 @@ public abstract class GameModeBase {
 		inventoryItemMeta.setLore(inventoryItemLore);
 		inventoryitem.setItemMeta(inventoryItemMeta);
 		substractLines = connectLines.size();
-		characterNPC = CitizensAPI.getNPCRegistry().createNPC(type, servername);
+		characterNPC = CitizensAPI.getNamedNPCRegistry("lobby").createNPC(type, servername);
 		characterNPC.data().set(NPC.NAMEPLATE_VISIBLE_METADATA, false);
 		characterNPC.data().set(NPC.AMBIENT_SOUND_METADATA, "");
 		characterNPC.data().set(NPC.HURT_SOUND_METADATA, "");

@@ -9,8 +9,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import br.com.battlebits.commons.BattlebitsAPI;
-import br.com.battlebits.commons.core.permission.Group;
 import br.com.battlebits.ylobby.LobbyUtils;
 import br.com.battlebits.ylobby.yLobbyPlugin;
 import br.com.battlebits.ylobby.gamemode.GameModeBase;
@@ -40,7 +38,7 @@ public class GameModeSelector {
 		needToBeLightToJoinFull.add("§0");
 	}
 
-	public void start() {
+	public void starta() {
 		selectorInventory = Bukkit.createInventory(null,
 				LobbyUtils.getInventoryUtils()
 						.getInventorySizeForItens(yLobbyPlugin.getyLobby().getGameModsManager().getGameMods().size()
@@ -77,32 +75,12 @@ public class GameModeSelector {
 			GameModeBase gm = serverIds.get(i);
 			if (gm.getGameModeType() == GameModeType.SIMPLE) {
 				GameModeSimple gamemmode = (GameModeSimple) gm;
-				if (gamemmode.getOnlinePlayers() >= gamemmode.getServerInfo().getMaxPlayers()) {
-					if (BattlebitsAPI.getAccountCommon().getBattlePlayer(p.getUniqueId())
-							.hasGroupPermission(Group.LIGHT)) {
-						p.sendMessage("§0");
-						p.sendMessage("§9§lConectando §7ao §9§l" + gamemmode.getServerName() + "§7!");
-						p.sendMessage("§0");
-						gamemmode.connect(p);
-					} else {
-						for (String msg : needToBeLightToJoinFull) {
-							p.sendMessage(msg);
-						}
-					}
-				} else {
-					p.sendMessage("§0");
-					p.sendMessage("§9§lConectando §7ao servidor §9§l" + gamemmode.getServerName() + "§7!");
-					p.sendMessage("§0");
-					gamemmode.connect(p);
-				}
+				gamemmode.connect(p);
 			} else if (gm.getGameModeType() == GameModeType.MATCH) {
 				GameModeMatch server = (GameModeMatch) gm;
 				if (right) {
 					server.onRightClick(p);
 				} else {
-					p.sendMessage("§0");
-					p.sendMessage("§9§lConectando §7ao servidor §9§l" + server.getServerName() + "§7!");
-					p.sendMessage("§0");
 					server.onLeftClick(p);
 				}
 			} else if (gm.getGameModeType() == GameModeType.MULTI) {
@@ -110,9 +88,6 @@ public class GameModeSelector {
 				if (right) {
 					server.onRightClick(p);
 				} else {
-					p.sendMessage("§0");
-					p.sendMessage("§9§lConectando §7ao servidor §9§l" + server.getServerName() + "§7!");
-					p.sendMessage("§0");
 					server.onLeftClick(p);
 				}
 			}
@@ -129,6 +104,6 @@ public class GameModeSelector {
 				}
 			}
 		};
-		updaterRunnable.runTaskTimerAsynchronously(yLobbyPlugin.getyLobby(), 1L, 30L);
+		updaterRunnable.runTaskTimer(yLobbyPlugin.getyLobby(), 1L, 30L);
 	}
 }

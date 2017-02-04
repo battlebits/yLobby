@@ -18,14 +18,16 @@ import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
-import org.bukkit.event.weather.WeatherChangeEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import com.gmail.filoghost.holographicdisplays.api.Hologram;
+import com.gmail.filoghost.holographicdisplays.api.HologramsAPI;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 
 import br.com.battlebits.commons.BattlebitsAPI;
+import br.com.battlebits.commons.bukkit.event.account.PlayerLanguageEvent;
 import br.com.battlebits.commons.bukkit.event.redis.RedisPubSubMessageEvent;
 import br.com.battlebits.commons.core.data.DataServer.DataServerMessage;
 import br.com.battlebits.commons.core.data.DataServer.DataServerMessage.StartPayload;
@@ -115,12 +117,6 @@ public class MainListener implements Listener {
 	}
 
 	@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-	public void onWeatherChangeListener(WeatherChangeEvent e) {
-		e.setCancelled(true);
-		Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "weather clear 1000000");
-	}
-
-	@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
 	public void onPlayerInteractListener(PlayerInteractEvent e) {
 		if ((e.getAction() == Action.PHYSICAL || e.getAction() == Action.RIGHT_CLICK_BLOCK)) {
 			if (e.getPlayer().getGameMode() != GameMode.CREATIVE) {
@@ -140,6 +136,15 @@ public class MainListener implements Listener {
 			// e.getPlayer().sendMessage("§7Sistema de Lobby para a
 			// §6§lBattle§r§lBits §9§lNetwork §7versão " +
 			// yLobbyPlugin.getInstance().getDescription().getVersion() + "!");
+		}
+	}
+
+	@EventHandler
+	public void onTranslate(PlayerLanguageEvent event) {
+		TabAndHeaderUpdater.send(event.getPlayer());
+		for (Hologram hologram : HologramsAPI.getHolograms(LobbyMain.getInstance())) {
+			hologram.getVisibilityManager().hideTo(event.getPlayer());
+			hologram.getVisibilityManager().showTo(event.getPlayer());
 		}
 	}
 

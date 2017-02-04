@@ -7,6 +7,7 @@ import java.util.Map.Entry;
 import org.bson.Document;
 import org.bukkit.Bukkit;
 import org.bukkit.Difficulty;
+import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -19,7 +20,6 @@ import com.mongodb.client.model.Filters;
 import br.com.battlebits.commons.BattlebitsAPI;
 import br.com.battlebits.commons.bukkit.BukkitMain;
 import br.com.battlebits.commons.bukkit.command.BukkitCommandFramework;
-import br.com.battlebits.commons.core.backend.mongodb.MongoBackend;
 import br.com.battlebits.commons.core.command.CommandLoader;
 import br.com.battlebits.commons.core.data.DataServer;
 import br.com.battlebits.commons.core.server.ServerManager;
@@ -63,9 +63,6 @@ public class LobbyMain extends JavaPlugin {
 	@Getter
 	private ServerManager serverManager;
 
-	@Getter
-	private MongoBackend mongo;
-
 	private MatchSelectorManager matchSelectorManager;
 	private MultiSelectorManager multiSelectorManager;
 	private GameModsManager gameModsManager;
@@ -97,8 +94,6 @@ public class LobbyMain extends JavaPlugin {
 	public void onEnable() {
 
 		getLogger().info("Habilitando plugin, por favor aguarde!");
-
-		mongo = new MongoBackend();
 
 		for (Language lang : Language.values()) {
 			Translate.loadTranslations("yLobby", lang, loadTranslation(lang));
@@ -215,6 +210,19 @@ public class LobbyMain extends JavaPlugin {
 				}
 			}
 		}.runTaskAsynchronously(this);
+		new BukkitRunnable() {
+			@Override
+			public void run() {
+				World world = getServer().getWorlds().get(0);
+				world.setWeatherDuration(10000000);
+				world.setThundering(false);
+				world.setStorm(false);
+				world.setGameRuleValue("doMobSpawning", "false");
+				world.setGameRuleValue("mobGriefing", "false");
+				world.setGameRuleValue("doDaylightCycle", "false");
+				world.setTime(0);
+			}
+		}.runTaskLater(this, 1);
 		getLogger().info("Plugin habilitado com sucesso!");
 	}
 
@@ -225,7 +233,7 @@ public class LobbyMain extends JavaPlugin {
 
 		if (Bukkit.getOnlinePlayers().size() > 0) {
 			for (Player p : Bukkit.getOnlinePlayers()) {
-				p.kickPlayer("§cO servidor está reiniciando!");
+				p.kickPlayer("§cServer Restarting!");
 			}
 		}
 		playerOutOfLobbyDetector.stop();

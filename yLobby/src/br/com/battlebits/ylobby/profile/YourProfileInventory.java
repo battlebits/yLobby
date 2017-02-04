@@ -53,7 +53,7 @@ public class YourProfileInventory {
 		mainMeta.setDisplayName("§9§l" + name);
 
 		mainMeta.setLore(Arrays.asList("§0", //
-				"§7Rank: " + account.getTag().getPrefix(account.getLanguage()), //
+				"§7Rank: " + account.getTag().getPrefix(), //
 				"§7Liga: " + account.getLeague().getSymbol() + " " + account.getLeague().toString(), //
 				"§7XP: §b" + account.getXp(), //
 				"§7Moedas: §b" + account.getMoney(), //

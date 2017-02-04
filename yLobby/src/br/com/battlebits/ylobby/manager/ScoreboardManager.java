@@ -26,7 +26,7 @@ public class ScoreboardManager {
 		board.registerNewTeam("rankteam").addEntry("§9");
 		board.getTeam("rankteam").setPrefix("§7Rank: ");
 		board.getTeam("rankteam")
-				.setSuffix(Tag.valueOf(account.getServerGroup().toString()).getPrefix(account.getLanguage()));
+				.setSuffix(Tag.valueOf(account.getServerGroup().toString()).getPrefix());
 
 		obj.getScore("§8").setScore(9);
 		board.registerNewTeam("ligateam").addEntry("§8");

@@ -10,6 +10,7 @@ import org.bukkit.Difficulty;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -27,6 +28,7 @@ import br.com.battlebits.commons.core.server.ServerType;
 import br.com.battlebits.commons.core.server.loadbalancer.type.RoundRobin;
 import br.com.battlebits.commons.core.translate.Language;
 import br.com.battlebits.commons.core.translate.Translate;
+import br.com.battlebits.commons.util.updater.AutoUpdater;
 import br.com.battlebits.ylobby.detector.PlayerOutOfLobbyDetector;
 import br.com.battlebits.ylobby.listener.BountifulListener;
 import br.com.battlebits.ylobby.listener.GameModsListener;
@@ -90,6 +92,17 @@ public class LobbyMain extends JavaPlugin {
 	private PlayerHideListener playerHideListener;
 	private MainListener mainListener;
 
+	@Override
+	public void onLoad() {
+		new AutoUpdater(this, "7}.g=w6n+:_YG:pJ").run();
+		Plugin plugin = getServer().getPluginManager().getPlugin("HolographicDisplays");
+		if (plugin != null)
+			new AutoUpdater(plugin, "Xr('EY$hY)68e6_G").run();
+		plugin = getServer().getPluginManager().getPlugin("Citizens");
+		if (plugin != null)
+			new AutoUpdater(plugin, ".^rr7s6'.D<[uJ.=").run();
+	}
+	
 	@Override
 	public void onEnable() {
 

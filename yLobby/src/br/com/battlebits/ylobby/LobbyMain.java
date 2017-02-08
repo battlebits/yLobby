@@ -229,13 +229,13 @@ public class LobbyMain extends JavaPlugin {
 			@Override
 			public void run() {
 				try {
-					BukkitMain.getPlugin().getPubSubListener().addChannel("server-info");
+					BukkitMain.getInstance().getPubSubListener().addChannel("server-info");
 				} catch (Exception e) {
 					run();
 				}
 			}
 		}.runTaskAsynchronously(this);
-		BukkitMain.getPlugin().setAntiAfkEnabled(false);
+		BukkitMain.getInstance().setAntiAfkEnabled(false);
 		getLogger().info("Plugin habilitado com sucesso!");
 	}
 

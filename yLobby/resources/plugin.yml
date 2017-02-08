@@ -5,4 +5,3 @@ name: Lobby
 website: www.battlebits.com.br
 description: Plugin do Lobby da BattleBits Network.
 depend: [Commons, HolographicDisplays, Citizens]
-loadbefore: [Commons, HolographicDisplays, Citizens]

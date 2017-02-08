@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.bukkit.Material;
+import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -88,6 +89,10 @@ public class LobbySelector {
 				}
 			}));
 			i += 1;
+		}
+		for (HumanEntity entity : new ArrayList<>(selectorInventory.getInventory().getViewers())) {
+			if (entity instanceof Player)
+				selectorInventory.open((Player) entity);
 		}
 	}
 

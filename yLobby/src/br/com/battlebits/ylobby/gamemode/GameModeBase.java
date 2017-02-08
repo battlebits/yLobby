@@ -77,6 +77,7 @@ public abstract class GameModeBase {
 		if (!npclocation.getChunk().isLoaded()) {
 			npclocation.getChunk().load();
 		}
+		updateOnlinePlayersOnItem();
 	}
 
 	public String getServerName() {
@@ -92,7 +93,7 @@ public abstract class GameModeBase {
 				"§3§l" + getOnlinePlayers() + " §7§%players-online%§.");
 		inventoryItemMeta.setLore(inventoryItemLore);
 		inventoryitem.setItemMeta(inventoryItemMeta);
-		holo.getLine(holo.size()).removeLine();
+		holo.getLine(holo.size() - 1).removeLine();
 		holo.appendTextLine("§e§l" + getOnlinePlayers() + " §e§%players-online%§.");
 	}
 

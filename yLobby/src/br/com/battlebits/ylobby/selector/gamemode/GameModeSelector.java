@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map.Entry;
 
+import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -76,6 +77,10 @@ public class GameModeSelector {
 			serverIds.put(Integer.valueOf(i), gameModeBase);
 			i++;
 		}
+		update();
+	}
+
+	public void update() {
 		for (Entry<Integer, GameModeBase> entry : serverIds.entrySet()) {
 			GameModeBase gameModeBase = (GameModeBase) entry.getValue();
 			selectorInventory.setItem(entry.getKey(),
@@ -86,6 +91,10 @@ public class GameModeSelector {
 							tryToConnect(p, slot, type == ClickType.RIGHT);
 						}
 					}));
+		}
+		for (HumanEntity entity : new ArrayList<>(selectorInventory.getInventory().getViewers())) {
+			if (entity instanceof Player)
+				selectorInventory.open((Player) entity);
 		}
 	}
 

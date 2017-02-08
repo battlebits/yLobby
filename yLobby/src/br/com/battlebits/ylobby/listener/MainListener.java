@@ -168,20 +168,27 @@ public class MainListener implements Listener {
 				break;
 			}
 			server.setOnlinePlayers(server.getOnlinePlayers() + 1);
-			if (LobbyMain.getInstance().getGameModsManager().isGameMode(sourceType))
-				LobbyMain.getInstance().getGameModsManager().getGameMode(sourceType).updateOnlinePlayersOnItem();
-			if (LobbyMain.getInstance().getMatchSelectorManager().isMatchSelector(sourceType))
-				LobbyMain.getInstance().getMatchSelectorManager().getMatchSelector(sourceType).update();
-			if (LobbyMain.getInstance().getMultiSelectorManager().isMultiSelector(sourceType))
-				LobbyMain.getInstance().getMultiSelectorManager().getMultiSelector(sourceType).update();
-			if (sourceType == ServerType.LOBBY) {
-				LobbyMain.getInstance().getLobbySelector().update();
-			} else if (sourceType == ServerType.NETWORK) {
-				for (Player p : Bukkit.getOnlinePlayers()) {
-					TabAndHeaderUpdater.send(p);
-					LobbyMain.getInstance().getScoreboardManager().updateMainScoreboard(p);
+			new BukkitRunnable() {
+				@Override
+				public void run() {
+					if (LobbyMain.getInstance().getGameModsManager().isGameMode(sourceType))
+						LobbyMain.getInstance().getGameModsManager().getGameMode(sourceType)
+								.updateOnlinePlayersOnItem();
+					if (LobbyMain.getInstance().getMatchSelectorManager().isMatchSelector(sourceType))
+						LobbyMain.getInstance().getMatchSelectorManager().getMatchSelector(sourceType).update();
+					if (LobbyMain.getInstance().getMultiSelectorManager().isMultiSelector(sourceType))
+						LobbyMain.getInstance().getMultiSelectorManager().getMultiSelector(sourceType).update();
+					LobbyMain.getInstance().getGameModeSelector().update();
+					if (sourceType == ServerType.LOBBY) {
+						LobbyMain.getInstance().getLobbySelector().update();
+					} else if (sourceType == ServerType.NETWORK) {
+						for (Player p : Bukkit.getOnlinePlayers()) {
+							TabAndHeaderUpdater.send(p);
+							LobbyMain.getInstance().getScoreboardManager().updateMainScoreboard(p);
+						}
+					}
 				}
-			}
+			}.runTask(LobbyMain.getInstance());
 			break;
 		}
 		case LEAVE: {
@@ -190,20 +197,27 @@ public class MainListener implements Listener {
 				break;
 			}
 			server.setOnlinePlayers(server.getOnlinePlayers() - 1);
-			if (LobbyMain.getInstance().getGameModsManager().isGameMode(sourceType))
-				LobbyMain.getInstance().getGameModsManager().getGameMode(sourceType).updateOnlinePlayersOnItem();
-			if (LobbyMain.getInstance().getMatchSelectorManager().isMatchSelector(sourceType))
-				LobbyMain.getInstance().getMatchSelectorManager().getMatchSelector(sourceType).update();
-			if (LobbyMain.getInstance().getMultiSelectorManager().isMultiSelector(sourceType))
-				LobbyMain.getInstance().getMultiSelectorManager().getMultiSelector(sourceType).update();
-			if (sourceType == ServerType.LOBBY) {
-				LobbyMain.getInstance().getLobbySelector().update();
-			} else if (sourceType == ServerType.NETWORK) {
-				for (Player p : Bukkit.getOnlinePlayers()) {
-					TabAndHeaderUpdater.send(p);
-					LobbyMain.getInstance().getScoreboardManager().updateMainScoreboard(p);
+			new BukkitRunnable() {
+				@Override
+				public void run() {
+					if (LobbyMain.getInstance().getGameModsManager().isGameMode(sourceType))
+						LobbyMain.getInstance().getGameModsManager().getGameMode(sourceType)
+								.updateOnlinePlayersOnItem();
+					if (LobbyMain.getInstance().getMatchSelectorManager().isMatchSelector(sourceType))
+						LobbyMain.getInstance().getMatchSelectorManager().getMatchSelector(sourceType).update();
+					if (LobbyMain.getInstance().getMultiSelectorManager().isMultiSelector(sourceType))
+						LobbyMain.getInstance().getMultiSelectorManager().getMultiSelector(sourceType).update();
+					LobbyMain.getInstance().getGameModeSelector().update();
+					if (sourceType == ServerType.LOBBY) {
+						LobbyMain.getInstance().getLobbySelector().update();
+					} else if (sourceType == ServerType.NETWORK) {
+						for (Player p : Bukkit.getOnlinePlayers()) {
+							TabAndHeaderUpdater.send(p);
+							LobbyMain.getInstance().getScoreboardManager().updateMainScoreboard(p);
+						}
+					}
 				}
-			}
+			}.runTask(LobbyMain.getInstance());
 			break;
 		}
 		case START: {
@@ -212,14 +226,21 @@ public class MainListener implements Listener {
 					}.getType());
 			LobbyMain.getInstance().getServerManager().addActiveServer(payload.getPayload().getServerAddress(),
 					payload.getPayload().getServer().getServerId(), payload.getPayload().getServer().getMaxPlayers());
-			if (LobbyMain.getInstance().getGameModsManager().isGameMode(sourceType))
-				LobbyMain.getInstance().getGameModsManager().getGameMode(sourceType).updateOnlinePlayersOnItem();
-			if (LobbyMain.getInstance().getMatchSelectorManager().isMatchSelector(sourceType))
-				LobbyMain.getInstance().getMatchSelectorManager().getMatchSelector(sourceType).update();
-			if (LobbyMain.getInstance().getMultiSelectorManager().isMultiSelector(sourceType))
-				LobbyMain.getInstance().getMultiSelectorManager().getMultiSelector(sourceType).update();
-			if (sourceType == ServerType.LOBBY)
-				LobbyMain.getInstance().getLobbySelector().update();
+			new BukkitRunnable() {
+				@Override
+				public void run() {
+					if (LobbyMain.getInstance().getGameModsManager().isGameMode(sourceType)) {
+						LobbyMain.getInstance().getGameModsManager().getGameMode(sourceType)
+								.updateOnlinePlayersOnItem();
+					}
+					if (LobbyMain.getInstance().getMatchSelectorManager().isMatchSelector(sourceType))
+						LobbyMain.getInstance().getMatchSelectorManager().getMatchSelector(sourceType).update();
+					if (LobbyMain.getInstance().getMultiSelectorManager().isMultiSelector(sourceType))
+						LobbyMain.getInstance().getMultiSelectorManager().getMultiSelector(sourceType).update();
+					if (sourceType == ServerType.LOBBY)
+						LobbyMain.getInstance().getLobbySelector().update();
+				}
+			}.runTask(LobbyMain.getInstance());
 			break;
 		}
 		case STOP: {
@@ -227,14 +248,21 @@ public class MainListener implements Listener {
 					new TypeToken<DataServerMessage<StopPayload>>() {
 					}.getType());
 			LobbyMain.getInstance().getServerManager().removeActiveServer(payload.getPayload().getServerId());
-			if (LobbyMain.getInstance().getGameModsManager().isGameMode(sourceType))
-				LobbyMain.getInstance().getGameModsManager().getGameMode(sourceType).updateOnlinePlayersOnItem();
-			if (LobbyMain.getInstance().getMatchSelectorManager().isMatchSelector(sourceType))
-				LobbyMain.getInstance().getMatchSelectorManager().getMatchSelector(sourceType).update();
-			if (LobbyMain.getInstance().getMultiSelectorManager().isMultiSelector(sourceType))
-				LobbyMain.getInstance().getMultiSelectorManager().getMultiSelector(sourceType).update();
-			if (sourceType == ServerType.LOBBY)
-				LobbyMain.getInstance().getLobbySelector().update();
+			new BukkitRunnable() {
+				@Override
+				public void run() {
+					if (LobbyMain.getInstance().getGameModsManager().isGameMode(sourceType))
+						LobbyMain.getInstance().getGameModsManager().getGameMode(sourceType)
+								.updateOnlinePlayersOnItem();
+					if (LobbyMain.getInstance().getMatchSelectorManager().isMatchSelector(sourceType))
+						LobbyMain.getInstance().getMatchSelectorManager().getMatchSelector(sourceType).update();
+					if (LobbyMain.getInstance().getMultiSelectorManager().isMultiSelector(sourceType))
+						LobbyMain.getInstance().getMultiSelectorManager().getMultiSelector(sourceType).update();
+					LobbyMain.getInstance().getGameModeSelector().update();
+					if (sourceType == ServerType.LOBBY)
+						LobbyMain.getInstance().getLobbySelector().update();
+				}
+			}.runTask(LobbyMain.getInstance());
 			break;
 		}
 		case UPDATE: {
@@ -246,14 +274,21 @@ public class MainListener implements Listener {
 				((MinigameServer) server).setState(payload.getPayload().getState());
 				((MinigameServer) server).setTime(payload.getPayload().getTime());
 			}
-			if (LobbyMain.getInstance().getGameModsManager().isGameMode(sourceType))
-				LobbyMain.getInstance().getGameModsManager().getGameMode(sourceType).updateOnlinePlayersOnItem();
-			if (LobbyMain.getInstance().getMatchSelectorManager().isMatchSelector(sourceType))
-				LobbyMain.getInstance().getMatchSelectorManager().getMatchSelector(sourceType).update();
-			if (LobbyMain.getInstance().getMultiSelectorManager().isMultiSelector(sourceType))
-				LobbyMain.getInstance().getMultiSelectorManager().getMultiSelector(sourceType).update();
-			if (sourceType == ServerType.LOBBY)
-				LobbyMain.getInstance().getLobbySelector().update();
+			new BukkitRunnable() {
+				@Override
+				public void run() {
+					if (LobbyMain.getInstance().getGameModsManager().isGameMode(sourceType))
+						LobbyMain.getInstance().getGameModsManager().getGameMode(sourceType)
+								.updateOnlinePlayersOnItem();
+					if (LobbyMain.getInstance().getMatchSelectorManager().isMatchSelector(sourceType))
+						LobbyMain.getInstance().getMatchSelectorManager().getMatchSelector(sourceType).update();
+					if (LobbyMain.getInstance().getMultiSelectorManager().isMultiSelector(sourceType))
+						LobbyMain.getInstance().getMultiSelectorManager().getMultiSelector(sourceType).update();
+					LobbyMain.getInstance().getGameModeSelector().update();
+					if (sourceType == ServerType.LOBBY)
+						LobbyMain.getInstance().getLobbySelector().update();
+				}
+			}.runTask(LobbyMain.getInstance());
 			break;
 		}
 		default:

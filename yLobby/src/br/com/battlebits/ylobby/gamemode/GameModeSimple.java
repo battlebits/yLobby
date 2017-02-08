@@ -45,7 +45,7 @@ public class GameModeSimple extends GameModeBase {
 
 	@Override
 	public int getOnlinePlayers() {
-		return getServerInfo().getOnlinePlayers();
+		return getServerInfo() != null ? getServerInfo().getOnlinePlayers() : 0;
 	}
 
 	@Override
@@ -58,6 +58,13 @@ public class GameModeSimple extends GameModeBase {
 	}
 
 	public BattleServer getServerInfo() {
+		System.out.println(bungeeId);
+		if (bungeeId == null)
+			return null;
+		if (LobbyMain.getInstance().getServerManager() == null)
+			return null;
+		if (LobbyMain.getInstance().getServerManager().getServer(bungeeId) == null)
+			return null;
 		return LobbyMain.getInstance().getServerManager().getServer(bungeeId);
 	}
 

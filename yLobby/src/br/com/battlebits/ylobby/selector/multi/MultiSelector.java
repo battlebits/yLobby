@@ -7,6 +7,7 @@ import java.util.Comparator;
 import java.util.List;
 
 import org.bukkit.Material;
+import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -150,6 +151,10 @@ public abstract class MultiSelector {
 				}
 			}));
 			i = i + 1;
+		}
+		for (HumanEntity entity : new ArrayList<>(serverSelectorInventory.getInventory().getViewers())) {
+			if (entity instanceof Player)
+				serverSelectorInventory.open((Player) entity);
 		}
 	}
 

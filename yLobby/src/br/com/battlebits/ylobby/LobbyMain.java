@@ -186,12 +186,11 @@ public class LobbyMain extends JavaPlugin {
 		profileRanksListener = new ProfileRanksListener();
 		profileConfigurationInventory = new ProfileConfigurationInventory();
 		profileConfigurationListener = new ProfileConfigurationListener();
+		gameModsListener = new GameModsListener();
 
 		bountifulListener = new BountifulListener();
 		mainListener = new MainListener();
 		playerHideListener = new PlayerHideListener();
-		gameModsListener = new GameModsListener();
-
 		LobbyUtils.getListenerUtils().registerListeners(this, yourProfileListener, profileRanksListener,
 				profileConfigurationListener, bountifulListener, mainListener, playerHideListener, gameModsListener);
 
@@ -200,16 +199,6 @@ public class LobbyMain extends JavaPlugin {
 		gameModeSelector.start();
 		playerOutOfLobbyDetector.start();
 		new CommandLoader(new BukkitCommandFramework(this)).loadCommandsFromPackage("br.com.battlebits.ylobby.command");
-		new BukkitRunnable() {
-			@Override
-			public void run() {
-				try {
-					BukkitMain.getPlugin().getPubSubListener().addChannel("server-info");
-				} catch (Exception e) {
-					run();
-				}
-			}
-		}.runTaskAsynchronously(this);
 		new BukkitRunnable() {
 			@Override
 			public void run() {
@@ -223,6 +212,17 @@ public class LobbyMain extends JavaPlugin {
 				world.setTime(0);
 			}
 		}.runTaskLater(this, 1);
+		new BukkitRunnable() {
+			@Override
+			public void run() {
+				try {
+					BukkitMain.getPlugin().getPubSubListener().addChannel("server-info");
+				} catch (Exception e) {
+					run();
+				}
+			}
+		}.runTaskAsynchronously(this);
+		BukkitMain.getPlugin().setAntiAfkEnabled(false);
 		getLogger().info("Plugin habilitado com sucesso!");
 	}
 

@@ -25,8 +25,9 @@ public class ScoreboardManager {
 		obj.getScore("§9").setScore(10);
 		board.registerNewTeam("rankteam").addEntry("§9");
 		board.getTeam("rankteam").setPrefix("§7Rank: ");
-		board.getTeam("rankteam")
-				.setSuffix(Tag.valueOf(account.getServerGroup().toString()).getPrefix());
+		Tag t = Tag.valueOf(account.getServerGroup().toString());
+
+		board.getTeam("rankteam").setSuffix((t == Tag.NORMAL) ? "§7§lNORMAL" : t.getPrefix());
 
 		obj.getScore("§8").setScore(9);
 		board.registerNewTeam("ligateam").addEntry("§8");
@@ -67,8 +68,7 @@ public class ScoreboardManager {
 
 		obj.getScore("§0").setScore(1);
 		board.registerNewTeam("siteteam").addEntry("§0");
-		board.getTeam("siteteam").setPrefix("§6www.battle");
-		board.getTeam("siteteam").setSuffix("§6bits.com.br");
+		board.getTeam("siteteam").setPrefix("§6battlebits.net");
 
 		obj.setDisplaySlot(DisplaySlot.SIDEBAR);
 	}

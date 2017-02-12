@@ -57,7 +57,9 @@ public abstract class MatchSelector {
 		backmeta.setDisplayName("§9§l§%game-modes%§");
 		backmeta.setLore(Arrays.asList("§%back-game-mode%§"));
 		backToServerMenuItem.setItemMeta(backmeta);
-
+		int size = LobbyMain.getInstance().getServerManager().getBalancer(serverType).getList().size();
+		serverSelectorInventory = new MenuInventory(inventoryTitle,
+				LobbyUtils.getInventoryUtils().getInventorySizeForItens(size + 18 + ((size / 7) * 2)));
 		update();
 	}
 
@@ -87,9 +89,6 @@ public abstract class MatchSelector {
 	}
 
 	public void update() {
-		int size = LobbyMain.getInstance().getServerManager().getBalancer(serverType).getList().size();
-		serverSelectorInventory = new MenuInventory(inventoryTitle,
-				LobbyUtils.getInventoryUtils().getInventorySizeForItens(size + 18 + ((size / 7) * 2)));
 		int i = 10;
 		try {
 			directConnectItemLore.set(1, "§7§%we-have%§ §3§l" + getMatchsOnlinePlayers() + " §7§%players-connected%§");

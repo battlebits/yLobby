@@ -87,6 +87,9 @@ public abstract class MultiSelector {
 	}
 
 	public void update() {
+		int size = LobbyMain.getInstance().getServerManager().getBalancer(serverType).getList().size();
+		MenuInventory serverSelectorInventory = new MenuInventory(inventoryTitle,
+				LobbyUtils.getInventoryUtils().getInventorySizeForItens(size + 18 + ((size / 7) * 2)));
 		int i = 10;
 		try {
 			directConnectItemLore.set(1, "§7§%we-have%§ §3§l" + getMultiOnlinePlayers() + " §7§%players-connected%§");
@@ -152,10 +155,11 @@ public abstract class MultiSelector {
 			}));
 			i = i + 1;
 		}
-		for (HumanEntity entity : new ArrayList<>(serverSelectorInventory.getInventory().getViewers())) {
+		for (HumanEntity entity : new ArrayList<>(this.serverSelectorInventory.getInventory().getViewers())) {
 			if (entity instanceof Player)
 				serverSelectorInventory.open((Player) entity);
 		}
+		this.serverSelectorInventory = serverSelectorInventory;
 	}
 
 }

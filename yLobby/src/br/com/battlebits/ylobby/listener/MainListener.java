@@ -31,6 +31,8 @@ import br.com.battlebits.commons.BattlebitsAPI;
 import br.com.battlebits.commons.bukkit.event.account.PlayerLanguageEvent;
 import br.com.battlebits.commons.bukkit.event.redis.RedisPubSubMessageEvent;
 import br.com.battlebits.commons.core.data.DataServer.DataServerMessage;
+import br.com.battlebits.commons.core.data.DataServer.DataServerMessage.JoinPayload;
+import br.com.battlebits.commons.core.data.DataServer.DataServerMessage.LeavePayload;
 import br.com.battlebits.commons.core.data.DataServer.DataServerMessage.StartPayload;
 import br.com.battlebits.commons.core.data.DataServer.DataServerMessage.StopPayload;
 import br.com.battlebits.commons.core.data.DataServer.DataServerMessage.UpdatePayload;
@@ -169,11 +171,14 @@ public class MainListener implements Listener {
 		DataServerMessage.Action action = DataServerMessage.Action.valueOf(jsonObject.get("action").getAsString());
 		switch (action) {
 		case JOIN: {
+			DataServerMessage<JoinPayload> payload = BattlebitsAPI.getGson().fromJson(jsonObject,
+					new TypeToken<DataServerMessage<JoinPayload>>() {
+					}.getType());
 			BattleServer server = LobbyMain.getInstance().getServerManager().getServer(source);
 			if (server == null) {
 				break;
 			}
-			server.setOnlinePlayers(server.getOnlinePlayers() + 1);
+			server.joinPlayer(payload.getPayload().getUniqueId());
 			new BukkitRunnable() {
 				@Override
 				public void run() {
@@ -198,11 +203,14 @@ public class MainListener implements Listener {
 			break;
 		}
 		case LEAVE: {
+			DataServerMessage<LeavePayload> payload = BattlebitsAPI.getGson().fromJson(jsonObject,
+					new TypeToken<DataServerMessage<LeavePayload>>() {
+					}.getType());
 			BattleServer server = LobbyMain.getInstance().getServerManager().getServer(source);
 			if (server == null) {
 				break;
 			}
-			server.setOnlinePlayers(server.getOnlinePlayers() - 1);
+			server.leavePlayer(payload.getPayload().getUniqueId());
 			new BukkitRunnable() {
 				@Override
 				public void run() {

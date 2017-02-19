@@ -173,7 +173,7 @@ public class LobbyMain extends JavaPlugin {
 				getServerManager().addActiveServer(entry.getValue().get("address"), entry.getKey(),
 						Integer.valueOf(entry.getValue().get("maxplayers")));
 				getServerManager().getServer(entry.getKey())
-						.setOnlinePlayers(Integer.valueOf(entry.getValue().get("onlineplayers")));
+						.setOnlinePlayers(DataServer.getPlayers(entry.getKey()));
 			} catch (Exception e) {
 			}
 		}

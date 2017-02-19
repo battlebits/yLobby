@@ -27,6 +27,8 @@ public class TabAndHeaderUpdater extends UpdaterBase {
 
 	public static void send(Player p) {
 		BattlePlayer account = BattlebitsAPI.getAccountCommon().getBattlePlayer(p.getUniqueId());
+		if (account == null)
+			return;
 		StringBuilder headerBuilder = new StringBuilder();
 		headerBuilder.append("§6§lBATTLE§F§LBITS §E§LLOBBY");
 		headerBuilder.append("\n");

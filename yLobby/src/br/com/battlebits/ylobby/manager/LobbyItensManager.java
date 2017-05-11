@@ -33,7 +33,7 @@ public class LobbyItensManager {
 
 	public LobbyItensManager() {
 		hideItem = new ActionItemStack(new ItemBuilder().type(Material.INK_SACK).durability(10)
-				.name("ง%hide-players-item%ง ง7(ง%click%ง)").lore("ง%hide-players-item-lore%ง").build(),
+				.name("ยง%hide-players-item%ยง ยง7(ยง%click%ยง)").lore("ยง%hide-players-item-lore%ยง").build(),
 				new InteractHandler() {
 
 					@Override
@@ -43,20 +43,20 @@ public class LobbyItensManager {
 										.get(player.getUniqueId())) {
 							if (LobbyMain.getInstance().getPlayerHideManager().isHiding(player)) {
 								LobbyMain.getInstance().getPlayerHideManager().showAllPlayers(player);
-								player.sendMessage("ง%players-showed%ง");
+								player.sendMessage("ยง%players-showed%ยง");
 								ItemMeta meta = item.getItemMeta();
-								meta.setDisplayName("ง%hide-players-item%ง ง7(ง%click%ง)");
-								meta.setLore(StringLoreUtils.formatForLore("ง%hide-players-item-lore%ง"));
+								meta.setDisplayName("ยง%hide-players-item%ยง ยง7(ยง%click%ยง)");
+								meta.setLore(StringLoreUtils.formatForLore("ยง%hide-players-item-lore%ยง"));
 								item.setItemMeta(meta);
 								item.setDurability((short) 10);
 								player.setItemInHand(item);
 							} else {
 								LobbyMain.getInstance().getPlayerHideManager().hideAllPlayers(player);
-								player.sendMessage("ง%players-hided%ง");
-								item.getItemMeta().setDisplayName("ง%show-players-item%ง ง7(ง%click%ง)");
+								player.sendMessage("ยง%players-hided%ยง");
+								item.getItemMeta().setDisplayName("ยง%show-players-item%ยง ยง7(ยง%click%ยง)");
 								ItemMeta meta = item.getItemMeta();
-								meta.setDisplayName("ง%show-players-item%ง ง7(ง%click%ง)");
-								meta.setLore(StringLoreUtils.formatForLore("ง%show-players-item-lore%ง"));
+								meta.setDisplayName("ยง%show-players-item%ยง ยง7(ยง%click%ยง)");
+								meta.setLore(StringLoreUtils.formatForLore("ยง%show-players-item-lore%ยง"));
 								item.setItemMeta(meta);
 								item.setDurability((short) 8);
 								player.setItemInHand(item);
@@ -73,8 +73,8 @@ public class LobbyItensManager {
 						return false;
 					}
 				}).getItemStack();
-		lobbyItem = new ActionItemStack(new ItemBuilder().type(Material.NETHER_STAR).name("ง5งlLobbys ง7(ง%click%ง)")
-				.lore("ง%lobbys-item-lore%ง").build(), new InteractHandler() {
+		lobbyItem = new ActionItemStack(new ItemBuilder().type(Material.NETHER_STAR).name("ยง5ยงlLobbys ยง7(ยง%click%ยง)")
+				.lore("ยง%lobbys-item-lore%ยง").build(), new InteractHandler() {
 
 					@Override
 					public boolean onInteract(Player player, ItemStack item, Action action) {
@@ -83,7 +83,7 @@ public class LobbyItensManager {
 					}
 				}).getItemStack();
 		gameModeItem = new ActionItemStack(new ItemBuilder().type(Material.COMPASS)
-				.name("ง%gamemode-item%ง ง7(ง%click%ง)").lore("ง%gamemode-item-lore%ง").glow().build(),
+				.name("ยง%gamemode-item%ยง ยง7(ยง%click%ยง)").lore("ยง%gamemode-item-lore%ยง").glow().build(),
 				new InteractHandler() {
 
 					@Override
@@ -92,15 +92,15 @@ public class LobbyItensManager {
 						return false;
 					}
 				}).getItemStack();
-		parkourItem = new ActionItemStack(new ItemBuilder().type(Material.FEATHER).name("ง%fun-item%ง ง7(ง%soon%ง)")
-				.lore("ง%fun-item-lore%ง").build(), new InteractHandler() {
+		parkourItem = new ActionItemStack(new ItemBuilder().type(Material.FEATHER).name("ยง%fun-item%ยง ยง7(ยง%soon%ยง)")
+				.lore("ยง%fun-item-lore%ยง").build(), new InteractHandler() {
 					@Override
 					public boolean onInteract(Player player, ItemStack item, Action action) {
 						return false;
 					}
 				}).getItemStack();
 		profileItem = new ActionItemStack(new ItemBuilder().type(Material.SKULL_ITEM).durability(3)
-				.name("ง%prefile-item%ง ง7(ง%click%ง)").lore("ง%prefile-item-lore%ง").build(), new InteractHandler() {
+				.name("ยง%prefile-item%ยง ยง7(ยง%click%ยง)").lore("ยง%prefile-item-lore%ยง").build(), new InteractHandler() {
 
 					@Override
 					public boolean onInteract(Player player, ItemStack item, Action action) {
@@ -110,7 +110,7 @@ public class LobbyItensManager {
 				}).getItemStack();
 		profileMeta = (SkullMeta) profileItem.getItemMeta();
 		cosmeticsItem = new ActionItemStack(new ItemBuilder().type(Material.ENDER_CHEST)
-				.name("ง%cosmetics-item%ง ง7(ง%click%ง)").lore("ง%cosmetics-item-lore%ง").build(),
+				.name("ยง%cosmetics-item%ยง ยง7(ยง%click%ยง)").lore("ยง%cosmetics-item-lore%ยง").build(),
 				new InteractHandler() {
 
 					@Override
@@ -120,7 +120,7 @@ public class LobbyItensManager {
 							// TODO
 							// yAddonsPlugin.getyAddons().getSelectorInventory().open(e.getPlayer());
 						} else {
-							player.sendMessage("ง%system-not-online%ง");
+							player.sendMessage("ยง%system-not-online%ยง");
 						}
 						return false;
 					}

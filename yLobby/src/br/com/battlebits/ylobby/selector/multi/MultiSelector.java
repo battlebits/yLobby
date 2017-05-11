@@ -45,15 +45,15 @@ public abstract class MultiSelector {
 		directConnectItem = new ItemStack(Material.GHAST_TEAR, 1);
 		directConnectItem = ItemBuilder.glow(directConnectItem);
 		directConnectItemMeta = directConnectItem.getItemMeta();
-		directConnectItemMeta.setDisplayName("ง9งl> งbงlง%join-now%ง! ง9งl<");
+		directConnectItemMeta.setDisplayName("ยง9ยงl> ยงbยงlยง%join-now%ยง! ยง9ยงl<");
 		directConnectItemLore
-				.addAll(Arrays.asList("ง7ง%click-here-to-connect%ง!", "ง7ง%we-have%ง ง3งl0 ง7ง%players-connected%ง"));
+				.addAll(Arrays.asList("ยง7ยง%click-here-to-connect%ยง!", "ยง7ยง%we-have%ยง ยง3ยงl0 ยง7ยง%players-connected%ยง"));
 		directConnectItemMeta.setLore(directConnectItemLore);
 		directConnectItem.setItemMeta(directConnectItemMeta);
 		backToServerMenuItem = new ItemStack(Material.ARROW, 1);
 		ItemMeta backmeta = backToServerMenuItem.getItemMeta();
-		backmeta.setDisplayName("ง9งlง%game-modes%ง");
-		backmeta.setLore(Arrays.asList("ง%back-game-mode%ง"));
+		backmeta.setDisplayName("ยง9ยงlยง%game-modes%ยง");
+		backmeta.setLore(Arrays.asList("ยง%back-game-mode%ยง"));
 		backToServerMenuItem.setItemMeta(backmeta);
 		int size = LobbyMain.getInstance().getServerManager().getBalancer(serverType).getList().size();
 		serverSelectorInventory = new MenuInventory(inventoryTitle,
@@ -92,7 +92,7 @@ public abstract class MultiSelector {
 				LobbyUtils.getInventoryUtils().getInventorySizeForItens(size + 18 + ((size / 7) * 2)));
 		int i = 10;
 		try {
-			directConnectItemLore.set(1, "ง7ง%we-have%ง ง3งl" + getMultiOnlinePlayers() + " ง7ง%players-connected%ง");
+			directConnectItemLore.set(1, "ยง7ยง%we-have%ยง ยง3ยงl" + getMultiOnlinePlayers() + " ยง7ยง%players-connected%ยง");
 			directConnectItemMeta.setLore(directConnectItemLore);
 			directConnectItem.setItemMeta(directConnectItemMeta);
 			serverSelectorInventory.setItem(serverSelectorInventory.getInventory().getSize() - 5,
@@ -131,18 +131,18 @@ public abstract class MultiSelector {
 
 			if (info.getOnlinePlayers() >= info.getMaxPlayers()) {
 				stack.setDurability((short) 14);
-				meta.setDisplayName("ง9งl> ง6งl" + info.getServerId() + " ง9งl<");
+				meta.setDisplayName("ยง9ยงl> ยง6ยงl" + info.getServerId() + " ยง9ยงl<");
 			} else {
 				stack.setDurability((short) 10);
-				meta.setDisplayName("ง9งl> งaงl" + info.getServerId() + " ง9งl<");
+				meta.setDisplayName("ยง9ยงl> ยงaยงl" + info.getServerId() + " ยง9ยงl<");
 			}
 
 			if (info.getOnlinePlayers() > 0) {
-				lore.add("ง0");
-				lore.add("ง3งl" + info.getOnlinePlayers() + " ง7ง%players-connected%ง");
+				lore.add("ยง0");
+				lore.add("ยง3ยงl" + info.getOnlinePlayers() + " ยง7ยง%players-connected%ยง");
 			}
-			lore.add("ง0");
-			lore.add("ง%click-to-connect%ง.");
+			lore.add("ยง0");
+			lore.add("ยง%click-to-connect%ยง.");
 
 			meta.setLore(lore);
 			stack.setItemMeta(meta);

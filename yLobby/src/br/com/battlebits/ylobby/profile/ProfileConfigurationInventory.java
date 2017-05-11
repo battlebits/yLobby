@@ -42,12 +42,12 @@ public class ProfileConfigurationInventory {
 		hideDisabledItem = createDisabledItem("Mostrar jogadores");
 		chatEnabledIcon = createEnabledIconItem(Material.PAPER, "Chat geral");
 		chatEnabledIcon = ItemBuilder.glow(chatEnabledIcon);
-		backToProfile = new ItemBuilder().type(Material.ARROW).name("§5§lPerfil")
+		backToProfile = new ItemBuilder().type(Material.ARROW).name("Â§5Â§lPerfil")
 				.lore("Clique aqui para voltar ao seu perfil.").build();
 	}
 
 	public void open(Player p) {
-		Inventory inv = Bukkit.createInventory(null, 36, "        §nSuas preferencias");
+		Inventory inv = Bukkit.createInventory(null, 36, "        Â§nSuas preferencias");
 		setHideItens(inv, p);
 		setFlyItens(inv, p);
 		inv.setItem(31, backToProfile);
@@ -60,8 +60,8 @@ public class ProfileConfigurationInventory {
 			inv.setItem(19, hideDisabledItem);
 			ItemStack item = LobbyMain.getInstance().getLobbyItensManager().getHideItem();
 			ItemMeta meta = item.getItemMeta();
-			meta.setDisplayName("§%hide-players-item%§ §7(§%click%§)");
-			meta.setLore(StringLoreUtils.formatForLore("§%hide-players-item-lore%§"));
+			meta.setDisplayName("Â§%hide-players-item%Â§ Â§7(Â§%click%Â§)");
+			meta.setLore(StringLoreUtils.formatForLore("Â§%hide-players-item-lore%Â§"));
 			item.setItemMeta(meta);
 			p.getInventory().setItem(6, item);
 			item.setDurability((short) 10);
@@ -70,8 +70,8 @@ public class ProfileConfigurationInventory {
 			inv.setItem(19, hideEnabledItem);
 			ItemStack item = LobbyMain.getInstance().getLobbyItensManager().getHideItem();
 			ItemMeta meta = item.getItemMeta();
-			meta.setDisplayName("§%show-players-item%§ §7(§%click%§)");
-			meta.setLore(StringLoreUtils.formatForLore("§%show-players-item-lore%§"));
+			meta.setDisplayName("Â§%show-players-item%Â§ Â§7(Â§%click%Â§)");
+			meta.setLore(StringLoreUtils.formatForLore("Â§%show-players-item-lore%Â§"));
 			item.setItemMeta(meta);
 			p.getInventory().setItem(6, item);
 			item.setDurability((short) 8);
@@ -96,9 +96,9 @@ public class ProfileConfigurationInventory {
 	public ItemStack createEnabledIconItem(Material mat, String name) {
 		ItemStack stack = new ItemStack(mat, 1);
 		ItemMeta meta = stack.getItemMeta();
-		meta.setDisplayName("§a§l" + name);
+		meta.setDisplayName("Â§aÂ§l" + name);
 		meta.setLore(
-				StringLoreUtils.getLore(30, "§7Está atualmente §a§lativado.\\n§7Clique aqui para §e§ldesativar§7."));
+				StringLoreUtils.getLore(30, "Â§7EstÂ§ atualmente Â§aÂ§lativado.\\nÂ§7Clique aqui para Â§eÂ§ldesativarÂ§7."));
 		stack.setItemMeta(meta);
 		return stack;
 	}
@@ -106,9 +106,9 @@ public class ProfileConfigurationInventory {
 	public ItemStack createDisabledIconItem(Material mat, String name) {
 		ItemStack stack = new ItemStack(mat, 1);
 		ItemMeta meta = stack.getItemMeta();
-		meta.setDisplayName("§c§l" + name);
+		meta.setDisplayName("Â§cÂ§l" + name);
 		meta.setLore(
-				StringLoreUtils.getLore(30, "§7Está atualmente §e§ldesativado.\\n§7Clique aqui para §a§lativar§7."));
+				StringLoreUtils.getLore(30, "Â§7EstÂ§ atualmente Â§eÂ§ldesativado.\\nÂ§7Clique aqui para Â§aÂ§lativarÂ§7."));
 		stack.setItemMeta(meta);
 		return stack;
 	}
@@ -116,9 +116,9 @@ public class ProfileConfigurationInventory {
 	public ItemStack createForLightIconItem(Material mat, String name) {
 		ItemStack stack = new ItemStack(mat, 1);
 		ItemMeta meta = stack.getItemMeta();
-		meta.setDisplayName("§e§l" + name);
+		meta.setDisplayName("Â§eÂ§l" + name);
 		meta.setLore(
-				StringLoreUtils.getLore(30, "§7Para §a§lativar §7e necessario que voce seja §a§lLIGHT§7 ou superior!"));
+				StringLoreUtils.getLore(30, "Â§7Para Â§aÂ§lativar Â§7e necessario que voce seja Â§aÂ§lLIGHTÂ§7 ou superior!"));
 		stack.setItemMeta(meta);
 		return stack;
 	}
@@ -126,9 +126,9 @@ public class ProfileConfigurationInventory {
 	public ItemStack createEnabledItem(String name) {
 		ItemStack stack = new ItemStack(Material.STAINED_GLASS_PANE, 1, (short) 5);
 		ItemMeta meta = stack.getItemMeta();
-		meta.setDisplayName("§a§l" + name);
+		meta.setDisplayName("Â§aÂ§l" + name);
 		meta.setLore(
-				StringLoreUtils.getLore(30, "§7Está atualmente §a§lativado.\\n§7Clique aqui para §e§ldesativar§7."));
+				StringLoreUtils.getLore(30, "Â§7EstÂ§ atualmente Â§aÂ§lativado.\\nÂ§7Clique aqui para Â§eÂ§ldesativarÂ§7."));
 		stack.setItemMeta(meta);
 		return stack;
 	}
@@ -136,9 +136,9 @@ public class ProfileConfigurationInventory {
 	public ItemStack createDisabledItem(String name) {
 		ItemStack stack = new ItemStack(Material.STAINED_GLASS_PANE, 1, (short) 8);
 		ItemMeta meta = stack.getItemMeta();
-		meta.setDisplayName("§c§l" + name);
+		meta.setDisplayName("Â§cÂ§l" + name);
 		meta.setLore(
-				StringLoreUtils.getLore(30, "§7Está atualmente §e§ldesativado.\\n§7Clique aqui para §a§lativar§7."));
+				StringLoreUtils.getLore(30, "Â§7EstÂ§ atualmente Â§eÂ§ldesativado.\\nÂ§7Clique aqui para Â§aÂ§lativarÂ§7."));
 		stack.setItemMeta(meta);
 		return stack;
 	}
@@ -146,9 +146,9 @@ public class ProfileConfigurationInventory {
 	public ItemStack createForLightItem(String name) {
 		ItemStack stack = new ItemStack(Material.STAINED_GLASS_PANE, 1, (short) 4);
 		ItemMeta meta = stack.getItemMeta();
-		meta.setDisplayName("§e§l" + name);
+		meta.setDisplayName("Â§eÂ§l" + name);
 		meta.setLore(
-				StringLoreUtils.getLore(30, "§7Para §a§lativar §7e necessario que voce seja §a§lLIGHT§7 ou superior!"));
+				StringLoreUtils.getLore(30, "Â§7Para Â§aÂ§lativar Â§7e necessario que voce seja Â§aÂ§lLIGHTÂ§7 ou superior!"));
 		stack.setItemMeta(meta);
 		return stack;
 	}

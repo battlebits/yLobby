@@ -228,6 +228,7 @@ public class LobbyMain extends JavaPlugin {
 			@Override
 			public void run() {
 				World world = getServer().getWorlds().get(0);
+				world.setSpawnLocation(0, 100, 0);
 				world.setWeatherDuration(10000000);
 				world.setThundering(false);
 				world.setStorm(false);
@@ -260,7 +261,7 @@ public class LobbyMain extends JavaPlugin {
 
 		if (Bukkit.getOnlinePlayers().size() > 0) {
 			for (Player p : Bukkit.getOnlinePlayers()) {
-				p.kickPlayer("�cServer Restarting!");
+				p.kickPlayer("§cServer Restarting!");
 			}
 		}
 		playerOutOfLobbyDetector.stop();

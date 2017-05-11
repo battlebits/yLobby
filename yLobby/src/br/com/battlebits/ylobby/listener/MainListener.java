@@ -141,8 +141,8 @@ public class MainListener implements Listener {
 				|| e.getMessage().toLowerCase().startsWith("/pl")
 				|| e.getMessage().toLowerCase().startsWith("/plugins")) {
 			// e.setCancelled(true);
-			// e.getPlayer().sendMessage("§7Sistema de Lobby para a
-			// §6§lBattle§r§lBits §9§lNetwork §7versão " +
+			// e.getPlayer().sendMessage("Â§7Sistema de Lobby para a
+			// Â§6Â§lBattleÂ§rÂ§lBits Â§9Â§lNetwork Â§7versÂ§o " +
 			// yLobbyPlugin.getInstance().getDescription().getVersion() + "!");
 		}
 	}

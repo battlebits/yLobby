@@ -18,57 +18,57 @@ public class ScoreboardManager {
 		BattlePlayer account = BattlebitsAPI.getAccountCommon().getBattlePlayer(p.getUniqueId());
 		Objective obj = board.registerNewObjective("mainScoreboard", "dummy");
 
-		obj.setDisplayName("ง6งLBATTLEงRงLBITS");
+		obj.setDisplayName("ยง6ยงLBATTLEยงRยงLBITS");
 
-		obj.getScore("งa").setScore(11);
+		obj.getScore("ยงa").setScore(11);
 
-		obj.getScore("ง9").setScore(10);
-		board.registerNewTeam("rankteam").addEntry("ง9");
-		board.getTeam("rankteam").setPrefix("ง7Rank: ");
+		obj.getScore("ยง9").setScore(10);
+		board.registerNewTeam("rankteam").addEntry("ยง9");
+		board.getTeam("rankteam").setPrefix("ยง7Rank: ");
 		Tag t = Tag.valueOf(account.getServerGroup().toString());
 
-		board.getTeam("rankteam").setSuffix((t == Tag.NORMAL) ? "ง7งlNORMAL" : t.getPrefix());
+		board.getTeam("rankteam").setSuffix((t == Tag.NORMAL) ? "ยง7ยงlNORMAL" : t.getPrefix());
 
-		obj.getScore("ง8").setScore(9);
-		board.registerNewTeam("ligateam").addEntry("ง8");
-		board.getTeam("ligateam").setPrefix("ง7ง%league%ง: ");
+		obj.getScore("ยง8").setScore(9);
+		board.registerNewTeam("ligateam").addEntry("ยง8");
+		board.getTeam("ligateam").setPrefix("ยง7ยง%league%ยง: ");
 		board.getTeam("ligateam").setSuffix(account.getLeague().getSymbol() + " " + account.getLeague().toString());
 
-		obj.getScore("ง7").setScore(8);
-		board.registerNewTeam("xpteam").addEntry("ง7");
-		board.getTeam("xpteam").setPrefix("ง7XP: ");
-		board.getTeam("xpteam").setSuffix("งb" + account.getXp());
+		obj.getScore("ยง7").setScore(8);
+		board.registerNewTeam("xpteam").addEntry("ยง7");
+		board.getTeam("xpteam").setPrefix("ยง7XP: ");
+		board.getTeam("xpteam").setSuffix("ยงb" + account.getXp());
 
-		obj.getScore("ง6").setScore(7);
-		board.registerNewTeam("moedasteam").addEntry("ง6");
-		board.getTeam("moedasteam").setPrefix("ง7ง%coins%ง: ");
-		board.getTeam("moedasteam").setSuffix("งb" + account.getMoney());
+		obj.getScore("ยง6").setScore(7);
+		board.registerNewTeam("moedasteam").addEntry("ยง6");
+		board.getTeam("moedasteam").setPrefix("ยง7ยง%coins%ยง: ");
+		board.getTeam("moedasteam").setSuffix("ยงb" + account.getMoney());
 
-		obj.getScore("ง5").setScore(6);
-		board.registerNewTeam("fichasteam").addEntry("ง5");
-		board.getTeam("fichasteam").setPrefix("ง7ง%tickets%ง: ");
-		board.getTeam("fichasteam").setSuffix("งb" + account.getFichas());
+		obj.getScore("ยง5").setScore(6);
+		board.registerNewTeam("fichasteam").addEntry("ยง5");
+		board.getTeam("fichasteam").setPrefix("ยง7ยง%tickets%ยง: ");
+		board.getTeam("fichasteam").setSuffix("ยงb" + account.getFichas());
 
-		obj.getScore("ง4").setScore(5);
+		obj.getScore("ยง4").setScore(5);
 
-		obj.getScore("ง3").setScore(4);
-		board.registerNewTeam("onlineteam").addEntry("ง3");
-		board.getTeam("onlineteam").setPrefix("ง7Online: ");
+		obj.getScore("ยง3").setScore(4);
+		board.registerNewTeam("onlineteam").addEntry("ยง3");
+		board.getTeam("onlineteam").setPrefix("ยง7Online: ");
 		board.getTeam("onlineteam")
-				.setSuffix("งe"
+				.setSuffix("ยงe"
 						+ LobbyMain.getInstance().getServerManager().getBalancer(ServerType.NETWORK).getTotalNumber()
-						+ " ง%players%ง");
+						+ " ยง%players%ยง");
 
-		obj.getScore("ง2").setScore(3);
-		board.registerNewTeam("lobbyidteam").addEntry("ง2");
-		board.getTeam("lobbyidteam").setPrefix("ง7Lobby: ");
-		board.getTeam("lobbyidteam").setSuffix("งe" + LobbyMain.getInstance().getLobbyID());
+		obj.getScore("ยง2").setScore(3);
+		board.registerNewTeam("lobbyidteam").addEntry("ยง2");
+		board.getTeam("lobbyidteam").setPrefix("ยง7Lobby: ");
+		board.getTeam("lobbyidteam").setSuffix("ยงe" + LobbyMain.getInstance().getLobbyID());
 
-		obj.getScore("ง1").setScore(2);
+		obj.getScore("ยง1").setScore(2);
 
-		obj.getScore("ง0").setScore(1);
-		board.registerNewTeam("siteteam").addEntry("ง0");
-		board.getTeam("siteteam").setPrefix("ง6battlebits.net");
+		obj.getScore("ยง0").setScore(1);
+		board.registerNewTeam("siteteam").addEntry("ยง0");
+		board.getTeam("siteteam").setPrefix("ยง6battlebits.net");
 
 		obj.setDisplaySlot(DisplaySlot.SIDEBAR);
 	}
@@ -77,9 +77,9 @@ public class ScoreboardManager {
 		Scoreboard board = p.getScoreboard();
 
 		board.getTeam("onlineteam")
-				.setSuffix("งe"
+				.setSuffix("ยงe"
 						+ LobbyMain.getInstance().getServerManager().getBalancer(ServerType.NETWORK).getTotalNumber()
-						+ " ง%players%ง");
+						+ " ยง%players%ยง");
 	}
 
 }

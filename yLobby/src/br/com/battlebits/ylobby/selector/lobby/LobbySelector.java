@@ -27,7 +27,7 @@ public class LobbySelector {
 
 	public void start() {
 		int size = LobbyMain.getInstance().getServerManager().getBalancer(ServerType.LOBBY).getList().size();
-		selectorInventory = new MenuInventory("ง%choose-lobby%ง",
+		selectorInventory = new MenuInventory("ยง%choose-lobby%ยง",
 				LobbyUtils.getInventoryUtils().getInventorySizeForItens(size + 18 + ((size / 7) * 2)));
 
 		for (BattleServer ip : LobbyMain.getInstance().getServerManager().getBalancer(ServerType.LOBBY).getList()) {
@@ -66,19 +66,19 @@ public class LobbySelector {
 			stack.setAmount(lobbyId);
 			if (info.getServerId().equalsIgnoreCase(BattlebitsAPI.getServerId())) {
 				stack.setDurability((short) 10);
-				meta.setDisplayName("ง9งl> งaงlLobby " + lobbyId + " ง9งl<");
-				lore.add("ง%already-connected%ง");
+				meta.setDisplayName("ยง9ยงl> ยงaยงlLobby " + lobbyId + " ยง9ยงl<");
+				lore.add("ยง%already-connected%ยง");
 			} else {
 				if (info.getOnlinePlayers() >= info.getMaxPlayers()) {
 					stack.setDurability((short) 14);
-					meta.setDisplayName("ง9งl> ง6งlLobby " + lobbyId + " ง9งl<");
-					lore.add("ง%lobby-server-full%ง");
-					lore.add("ง0");
+					meta.setDisplayName("ยง9ยงl> ยง6ยงlLobby " + lobbyId + " ยง9ยงl<");
+					lore.add("ยง%lobby-server-full%ยง");
+					lore.add("ยง0");
 				} else {
 					stack.setDurability((short) 6);
-					meta.setDisplayName("ง9งl> งaงlLobby " + lobbyId + " ง9งl<");
+					meta.setDisplayName("ยง9ยงl> ยงaยงlLobby " + lobbyId + " ยง9ยงl<");
 				}
-				lore.add("ง%click-to-connect%ง");
+				lore.add("ยง%click-to-connect%ยง");
 			}
 			meta.setLore(lore);
 			stack.setItemMeta(meta);

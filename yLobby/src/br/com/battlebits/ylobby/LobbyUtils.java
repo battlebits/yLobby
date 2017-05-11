@@ -102,7 +102,7 @@ public class LobbyUtils {
 					return timeUtils.formatTime(i);
 				}
 			}
-			return "1 ง%second%ง";
+			return "1 ยง%second%ยง";
 		}
 
 		private Long getLongTime(UUID id, String key) {
@@ -152,7 +152,7 @@ public class LobbyUtils {
 			if (str.length() > 30) {
 				str.substring(0, 30);
 			}
-			str = "งn" + str;
+			str = "ยงn" + str;
 			while (str.length() < 32) {
 				str = " " + str;
 			}
@@ -185,7 +185,7 @@ public class LobbyUtils {
 
 		private double getRelativeCoord(int i) {
 			double d = i;
-			d = d < 0 ? d - 0.5 : d + 0.5;
+			d = d + 0.5;
 			return d;
 		}
 
@@ -248,28 +248,28 @@ public class LobbyUtils {
 				int s = i % 60;
 				if (m > 0) {
 					if (m == 1) {
-						str = "1 ง%minute%ง";
+						str = "1 ยง%minute%ยง";
 					} else {
-						str = m + " ง%minute%งs";
+						str = m + " ยง%minute%ยงs";
 					}
 				}
 				if (s > 0) {
 					if (s == 1) {
 						if (str.isEmpty()) {
-							str = "1 ง%second%ง";
+							str = "1 ยง%second%ยง";
 						} else {
-							str = str + " ง%and%ง 1 ง%second%ง";
+							str = str + " ยง%and%ยง 1 ยง%second%ยง";
 						}
 					} else if (str.isEmpty()) {
-						str = s + " ง%second%งs";
+						str = s + " ยง%second%ยงs";
 					} else {
-						str = str + " ง%and%ง " + s + " ง%second%งs";
+						str = str + " ยง%and%ยง " + s + " ยง%second%ยงs";
 					}
 				}
 			} else if (i == 1) {
-				str = "1 ง%second%ง";
+				str = "1 ยง%second%ยง";
 			} else {
-				str = i + " ง%second%งs";
+				str = i + " ยง%second%ยงs";
 			}
 			return str;
 		}

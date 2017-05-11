@@ -17,15 +17,15 @@ public class BountifulListener implements Listener {
 
 	public BountifulListener() {
 		playerJoinMessage = new ArrayList<>();
-		playerJoinMessage.add("§0");
-		playerJoinMessage.add("§0");
-		playerJoinMessage.add("§6§lBATTLE§F§LBITS");
-		playerJoinMessage.add("§0");
-		playerJoinMessage.add("§%welcome-lobby-message%§");
-		playerJoinMessage.add("§0");
-		playerJoinMessage.add("§6§lwww.battlebits.com.br");
-		playerJoinMessage.add("§0");
-		playerJoinMessage.add("§0");
+		playerJoinMessage.add("Â§0");
+		playerJoinMessage.add("Â§0");
+		playerJoinMessage.add("Â§6Â§lBATTLEÂ§FÂ§LBITS");
+		playerJoinMessage.add("Â§0");
+		playerJoinMessage.add("Â§%welcome-lobby-message%Â§");
+		playerJoinMessage.add("Â§0");
+		playerJoinMessage.add("Â§6Â§lwww.battlebits.com.br");
+		playerJoinMessage.add("Â§0");
+		playerJoinMessage.add("Â§0");
 	}
 
 	@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
@@ -33,8 +33,8 @@ public class BountifulListener implements Listener {
 		for (String msg : playerJoinMessage) {
 			e.getPlayer().sendMessage(msg);
 		}
-		TitleAPI.setTitle(e.getPlayer(), "§6§lBattle§f§lBits", "§e§lMinecraft Network");
-		ActionBarAPI.send(e.getPlayer(), "§%welcome-lobby-title%§");
+		TitleAPI.setTitle(e.getPlayer(), "Â§6Â§lBattleÂ§fÂ§lBits", "Â§eÂ§lMinecraft Network");
+		ActionBarAPI.send(e.getPlayer(), "Â§%welcome-lobby-title%Â§");
 		TabAndHeaderUpdater.send(e.getPlayer());
 	}
 

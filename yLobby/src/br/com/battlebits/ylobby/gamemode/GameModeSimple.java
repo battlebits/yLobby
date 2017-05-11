@@ -22,7 +22,7 @@ public class GameModeSimple extends GameModeBase {
 
 	public GameModeSimple(final String servername, String serverdescription, Material iconmaterial,
 			String serverbungeeid, Location npclocation, ServerType serverType, EntityType type) {
-		super(servername, serverdescription, iconmaterial, Arrays.asList("งbงlง%click-to-connect%ง"), npclocation,
+		super(servername, serverdescription, iconmaterial, Arrays.asList("ยงbยงlยง%click-to-connect%ยง"), npclocation,
 				serverType, type);
 		bungeeId = serverbungeeid;
 		connectMessage = new BungeeMessage("Connect", bungeeId);
@@ -30,7 +30,7 @@ public class GameModeSimple extends GameModeBase {
 			@Override
 			public void run() {
 				if (!getCharacterNPC().isSpawned()) {
-					getCharacterNPC().spawn(LobbyUtils.getLocationUtils().getCenter(npclocation, true));
+					getCharacterNPC().spawn(LobbyUtils.getLocationUtils().getCenter(npclocation.clone().add(0.5, 0, 0.5), true));
 					return;
 				}
 				getCharacterNPC().getEntity().setMetadata("GM_CONNECT",

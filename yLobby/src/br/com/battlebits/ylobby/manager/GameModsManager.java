@@ -54,7 +54,7 @@ public class GameModsManager {
 	public void loadGameMods() {
 
 		addGameMode(new GameModeMulti("§%pvpfulliron-item%§", "§%pvpfulliron-item-lore%§", Material.DIAMOND_SWORD,
-				new Location(Bukkit.getWorlds().get(0), 4, 67, 26), new BungeeMessage("PVPFulliron"),
+				new Location(Bukkit.getWorlds().get(0), 19, 100, 19), new BungeeMessage("PVPFulliron"),
 				ServerType.PVP_FULLIRON, EntityType.SKELETON) {
 			@Override
 			public int getOnlinePlayers() {
@@ -68,7 +68,7 @@ public class GameModsManager {
 		});
 
 		addGameMode(new GameModeMulti("§%pvpsimulator-item%§", "§%pvpsimulator-item-lore%§", Material.WOOD_SWORD,
-				new Location(Bukkit.getWorlds().get(0), 8, 67, 25), new BungeeMessage("PVPSimulator"),
+				new Location(Bukkit.getWorlds().get(0), 27, 100, 0), new BungeeMessage("PVPSimulator"),
 				ServerType.PVP_SIMULATOR, EntityType.SKELETON) {
 			@Override
 			public int getOnlinePlayers() {
@@ -81,7 +81,7 @@ public class GameModsManager {
 			}
 		});
 		addGameMode(new GameModeMatch("§%hungergames-item%§", "§%hungergames-item-lore%§", Material.MUSHROOM_SOUP,
-				new Location(Bukkit.getWorlds().get(0), -7, 67, 25), new BungeeMessage("Hungergames"),
+				new Location(Bukkit.getWorlds().get(0), -27, 100, 0), new BungeeMessage("Hungergames"),
 				ServerType.HUNGERGAMES, EntityType.BLAZE) {
 			@Override
 			public int getOnlinePlayers() {
@@ -95,7 +95,7 @@ public class GameModsManager {
 		});
 
 		addGameMode(new GameModeMatch("§%hungergames-custom-item%§", "§%hungergames-custom-item-lore%§",
-				Material.WORKBENCH, new Location(Bukkit.getWorlds().get(0), 0, 67, 27),
+				Material.WORKBENCH, new Location(Bukkit.getWorlds().get(0), 0, 100, 27),
 				new BungeeMessage("CustomHungergames"), ServerType.CUSTOMHG, EntityType.WITCH) {
 			@Override
 			public int getOnlinePlayers() {
@@ -109,7 +109,7 @@ public class GameModsManager {
 		});
 
 		addGameMode(new GameModeMatch("§%hungergames-doublekit-item%§", "§%hungergames-doublekit-item-lore%§",
-				Material.RED_MUSHROOM, new Location(Bukkit.getWorlds().get(0), -11, 67, 23),
+				Material.RED_MUSHROOM, new Location(Bukkit.getWorlds().get(0), -19, 100, 19),
 				new BungeeMessage("DoubleKitHungergames"), ServerType.DOUBLEKITHG, EntityType.CREEPER) {
 			@Override
 			public int getOnlinePlayers() {
@@ -122,10 +122,10 @@ public class GameModsManager {
 			}
 		});
 		addGameMode(new GameModeSimple("§%raid-item%§", "§%raid-item-lore%§", Material.DIAMOND_PICKAXE,
-				"raid.battlebits.com.br", new Location(Bukkit.getWorlds().get(0), 12, 67, 23), ServerType.RAID,
+				"raid.battlebits.com.br", new Location(Bukkit.getWorlds().get(0), -19, 100, -19), ServerType.RAID,
 				EntityType.ZOMBIE));
 
-		Location npclocation = new Location(Bukkit.getWorlds().get(0), -3, 67, 26);
+		Location npclocation = new Location(Bukkit.getWorlds().get(0), 0, 100, -26.5);
 		NPC characterNPC = CitizensAPI.getNamedNPCRegistry("lobby").createNPC(EntityType.PLAYER, " ");
 		characterNPC.data().set(NPC.NAMEPLATE_VISIBLE_METADATA, true);
 		characterNPC.data().set(NPC.AMBIENT_SOUND_METADATA, "");

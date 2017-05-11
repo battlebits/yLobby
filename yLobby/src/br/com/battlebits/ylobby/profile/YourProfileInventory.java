@@ -23,44 +23,44 @@ public class YourProfileInventory {
 	public YourProfileInventory() {
 		ranksItem = new ItemStack(Material.ENCHANTED_BOOK, 1);
 		ItemMeta ranksMeta = ranksItem.getItemMeta();
-		ranksMeta.setDisplayName("§e§lInformacoes do seu Grupo");
+		ranksMeta.setDisplayName("Â§eÂ§lInformacoes do seu Grupo");
 		ranksMeta.setLore(StringLoreUtils.getLore(30,
-				"§7Clique aqui para saber mais informacoes sobre o seu e os demais grupos do servidor!"));
+				"Â§7Clique aqui para saber mais informacoes sobre o seu e os demais grupos do servidor!"));
 		ranksItem.setItemMeta(ranksMeta);
 
 		tagsItem = new ItemStack(Material.NAME_TAG, 1);
 		ItemMeta tagsMeta = tagsItem.getItemMeta();
-		tagsMeta.setDisplayName("§5§lTags disponiveis no servidor");
+		tagsMeta.setDisplayName("Â§5Â§lTags disponiveis no servidor");
 		tagsMeta.setLore(StringLoreUtils.getLore(30,
-				"§7Clique aqui para saber mais informacoes sobre todas as Tags existentes no servidor!"));
+				"Â§7Clique aqui para saber mais informacoes sobre todas as Tags existentes no servidor!"));
 		tagsItem.setItemMeta(tagsMeta);
 
 		configItem = new ItemStack(Material.REDSTONE_COMPARATOR, 1);
 		ItemMeta configMeta = configItem.getItemMeta();
-		configMeta.setDisplayName("§c§lPreferencias");
-		configMeta.setLore(StringLoreUtils.getLore(30, "§7Clique aqui para editar suas preferencias no servidor!"));
+		configMeta.setDisplayName("Â§cÂ§lPreferencias");
+		configMeta.setLore(StringLoreUtils.getLore(30, "Â§7Clique aqui para editar suas preferencias no servidor!"));
 		configItem.setItemMeta(configMeta);
 	}
 
 	public void open(Player p) {
 		String name = p.getName();
 		BattlePlayer account = BattlebitsAPI.getAccountCommon().getBattlePlayer(p.getUniqueId());
-		Inventory inv = Bukkit.createInventory(null, 27, "              §nSeu Perfil");
+		Inventory inv = Bukkit.createInventory(null, 27, "              Â§nSeu Perfil");
 
 		ItemStack mainItem = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
 		SkullMeta mainMeta = (SkullMeta) mainItem.getItemMeta();
 		mainMeta.setOwner(name);
-		mainMeta.setDisplayName("§9§l" + name);
+		mainMeta.setDisplayName("Â§9Â§l" + name);
 
-		mainMeta.setLore(Arrays.asList("§0", //
-				"§7Rank: " + account.getTag().getPrefix(), //
-				"§7Liga: " + account.getLeague().getSymbol() + " " + account.getLeague().toString(), //
-				"§7XP: §b" + account.getXp(), //
-				"§7Moedas: §b" + account.getMoney(), //
-				"§7Fichas: §b" + account.getFichas(), //
-				"§0"));
+		mainMeta.setLore(Arrays.asList("Â§0", //
+				"Â§7Rank: " + account.getTag().getPrefix(), //
+				"Â§7Liga: " + account.getLeague().getSymbol() + " " + account.getLeague().toString(), //
+				"Â§7XP: Â§b" + account.getXp(), //
+				"Â§7Moedas: Â§b" + account.getMoney(), //
+				"Â§7Fichas: Â§b" + account.getFichas(), //
+				"Â§0"));
 		/**
-		 * "§b§lClique §bpara ver", "§bmais §b§lestatisticas§b." , "§0"));
+		 * "Â§bÂ§lClique Â§bpara ver", "Â§bmais Â§bÂ§lestatisticasÂ§b." , "Â§0"));
 		 */
 
 		mainItem.setItemMeta(mainMeta);

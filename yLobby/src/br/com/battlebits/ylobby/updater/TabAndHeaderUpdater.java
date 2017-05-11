@@ -30,33 +30,33 @@ public class TabAndHeaderUpdater extends UpdaterBase {
 		if (account == null)
 			return;
 		StringBuilder headerBuilder = new StringBuilder();
-		headerBuilder.append("§6§lBATTLE§F§LBITS §E§LLOBBY");
+		headerBuilder.append("Â§6Â§lBATTLEÂ§FÂ§LBITS Â§EÂ§LLOBBY");
 		headerBuilder.append("\n");
 		headerBuilder.append("          ");
-		headerBuilder.append("§e§%coins%§: §f");
+		headerBuilder.append("Â§eÂ§%coins%Â§: Â§f");
 		headerBuilder.append(account.getMoney());
-		headerBuilder.append(" §1- ");
-		headerBuilder.append("§e§%tickets%§: §f");
+		headerBuilder.append(" Â§1- ");
+		headerBuilder.append("Â§eÂ§%tickets%Â§: Â§f");
 		headerBuilder.append(account.getFichas());
-		headerBuilder.append(" §1- ");
-		headerBuilder.append("§ePing: §f");
+		headerBuilder.append(" Â§1- ");
+		headerBuilder.append("Â§ePing: Â§f");
 		headerBuilder.append(PingAPI.getPing(p));
 		headerBuilder.append("\n");
-		headerBuilder.append("§e§%we-have%§ §f");
+		headerBuilder.append("Â§eÂ§%we-have%Â§ Â§f");
 		headerBuilder
 				.append(LobbyMain.getInstance().getServerManager().getBalancer(ServerType.NETWORK).getTotalNumber());
-		headerBuilder.append(" §e§%players-online%§!");
+		headerBuilder.append(" Â§eÂ§%players-online%Â§!");
 		StringBuilder footerBuilder = new StringBuilder();
-		footerBuilder.append("§bNick: §f");
+		footerBuilder.append("Â§bNick: Â§f");
 		footerBuilder.append(p.getName());
-		footerBuilder.append(" §1- ");
-		footerBuilder.append("§b§%league%§: §F");
+		footerBuilder.append(" Â§1- ");
+		footerBuilder.append("Â§bÂ§%league%Â§: Â§F");
 		footerBuilder.append(account.getLeague());
-		footerBuilder.append(" §1- ");
-		footerBuilder.append("§bXP: §f");
+		footerBuilder.append(" Â§1- ");
+		footerBuilder.append("Â§bXP: Â§f");
 		footerBuilder.append(account.getXp());
 		footerBuilder.append("\n");
-		footerBuilder.append("§b§%more-information%§: §f");
+		footerBuilder.append("Â§bÂ§%more-information%Â§: Â§f");
 		footerBuilder.append(BattlebitsAPI.WEBSITE);
 		TabListAPI.setHeaderAndFooter(p, headerBuilder.toString(), footerBuilder.toString());
 	}

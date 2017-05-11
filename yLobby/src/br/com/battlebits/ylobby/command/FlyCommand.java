@@ -18,17 +18,17 @@ public class FlyCommand implements CommandClass {
 				if (p.getAllowFlight()) {
 					p.setAllowFlight(false);
 					p.setFlying(false);
-					p.sendMessage("§%command-fly-disabled%§");
+					p.sendMessage("Â§%command-fly-disabled%Â§");
 				} else {
 					p.setAllowFlight(true);
 					p.setFlying(true);
-					p.sendMessage("§%command-fly-enabled%§");
+					p.sendMessage("Â§%command-fly-enabled%Â§");
 				}
 			} else {
-				p.sendMessage("§%command-fly-vip%§");
+				p.sendMessage("Â§%command-fly-vip%Â§");
 			}
 		} else {
-			cmdArgs.getSender().sendMessage("§c§lComando apenas para jogadores.");
+			cmdArgs.getSender().sendMessage("Â§cÂ§lComando apenas para jogadores.");
 		}
 	}
 

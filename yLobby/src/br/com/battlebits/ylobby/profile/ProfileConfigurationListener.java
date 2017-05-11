@@ -27,42 +27,42 @@ public class ProfileConfigurationListener implements Listener {
 
 	public ProfileConfigurationListener() {
 		hideMessage = new ArrayList<>();
-		hideMessage.add("§0");
-		hideMessage.add("§7Você §e§lescondeu §7todos os §e§ljogadores§7!");
-		hideMessage.add("§0");
+		hideMessage.add("Â§0");
+		hideMessage.add("Â§7VocÂ§ Â§eÂ§lescondeu Â§7todos os Â§eÂ§ljogadoresÂ§7!");
+		hideMessage.add("Â§0");
 		showMessage = new ArrayList<>();
-		showMessage.add("§0");
-		showMessage.add("§7Você deixou todos os §a§ljogadores visiveis§7!");
-		showMessage.add("§0");
+		showMessage.add("Â§0");
+		showMessage.add("Â§7VocÂ§ deixou todos os Â§aÂ§ljogadores visiveisÂ§7!");
+		showMessage.add("Â§0");
 		flyForLights = new ArrayList<>();
-		flyForLights.add("§0");
-		flyForLights.add("§7O modo §e§lvoar §7so pode ser usado por um");
-		flyForLights.add("§7jogador com o grupo §a§lLIGHT §7ou superior!");
-		flyForLights.add("§0");
+		flyForLights.add("Â§0");
+		flyForLights.add("Â§7O modo Â§eÂ§lvoar Â§7so pode ser usado por um");
+		flyForLights.add("Â§7jogador com o grupo Â§aÂ§lLIGHT Â§7ou superior!");
+		flyForLights.add("Â§0");
 		flyEnable = new ArrayList<>();
-		flyEnable.add("§0");
-		flyEnable.add("§7Seu §a§lfly §7foi §a§lativado§7!");
-		flyEnable.add("§0");
+		flyEnable.add("Â§0");
+		flyEnable.add("Â§7Seu Â§aÂ§lfly Â§7foi Â§aÂ§lativadoÂ§7!");
+		flyEnable.add("Â§0");
 		flyDisable = new ArrayList<>();
-		flyDisable.add("§0");
-		flyDisable.add("§7Seu §e§lfly §7foi §e§ldesativado§7!");
-		flyDisable.add("§0");
+		flyDisable.add("Â§0");
+		flyDisable.add("Â§7Seu Â§eÂ§lfly Â§7foi Â§eÂ§ldesativadoÂ§7!");
+		flyDisable.add("Â§0");
 		tellEnable = new ArrayList<>();
-		tellEnable.add("§0");
-		tellEnable.add("§7Voce §a§lativou §7as §a§lmensagens privadas§7!");
-		tellEnable.add("§0");
+		tellEnable.add("Â§0");
+		tellEnable.add("Â§7Voce Â§aÂ§lativou Â§7as Â§aÂ§lmensagens privadasÂ§7!");
+		tellEnable.add("Â§0");
 		tellDisable = new ArrayList<>();
-		tellDisable.add("§0");
-		tellDisable.add("§7Voce §e§ldesativou §7as §e§lmensagens privadas§7!");
-		tellDisable.add("§0");
+		tellDisable.add("Â§0");
+		tellDisable.add("Â§7Voce Â§eÂ§ldesativou Â§7as Â§eÂ§lmensagens privadasÂ§7!");
+		tellDisable.add("Â§0");
 		chatEnable = new ArrayList<>();
-		chatEnable.add("§0");
-		chatEnable.add("§7Voce §a§lativou §7o §a§lchat geral§7!");
-		chatEnable.add("§0");
+		chatEnable.add("Â§0");
+		chatEnable.add("Â§7Voce Â§aÂ§lativou Â§7o Â§aÂ§lchat geralÂ§7!");
+		chatEnable.add("Â§0");
 		chatDisable = new ArrayList<>();
-		chatDisable.add("§0");
-		chatDisable.add("§7Voce §e§ldesativou §7o §e§lchat geral§7!");
-		chatDisable.add("§0");
+		chatDisable.add("Â§0");
+		chatDisable.add("Â§7Voce Â§eÂ§ldesativou Â§7o Â§eÂ§lchat geralÂ§7!");
+		chatDisable.add("Â§0");
 	}
 
 	@EventHandler(priority = EventPriority.MONITOR)
@@ -70,7 +70,7 @@ public class ProfileConfigurationListener implements Listener {
 		if (e.getInventory() != null) {
 			if (e.getInventory().getType() == InventoryType.CHEST) {
 				if (e.getCurrentItem() != null) {
-					if (e.getInventory().getTitle().equalsIgnoreCase("        §nSuas preferencias")) {
+					if (e.getInventory().getTitle().equalsIgnoreCase("        Â§nSuas preferencias")) {
 						e.setCancelled(true);
 						Player p = (Player) e.getWhoClicked();
 						if (e.getClickedInventory() == e.getInventory()) {

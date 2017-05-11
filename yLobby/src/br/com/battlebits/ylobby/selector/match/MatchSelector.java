@@ -47,15 +47,15 @@ public abstract class MatchSelector {
 		directConnectItem = new ItemStack(Material.GHAST_TEAR, 1);
 		directConnectItem = ItemBuilder.glow(directConnectItem);
 		directConnectItemMeta = directConnectItem.getItemMeta();
-		directConnectItemMeta.setDisplayName("ง9งl> งbงlง%fast-match%ง ง9งl<");
+		directConnectItemMeta.setDisplayName("ยง9ยงl> ยงbยงlยง%fast-match%ยง ยง9ยงl<");
 		directConnectItemLore
-				.addAll(Arrays.asList("ง7ง%click-here-to-connect%ง!", "ง7ง%we-have%ง ง3งl0 ง7ง%players-connected%ง"));
+				.addAll(Arrays.asList("ยง7ยง%click-here-to-connect%ยง!", "ยง7ยง%we-have%ยง ยง3ยงl0 ยง7ยง%players-connected%ยง"));
 		directConnectItemMeta.setLore(directConnectItemLore);
 		directConnectItem.setItemMeta(directConnectItemMeta);
 		backToServerMenuItem = new ItemStack(Material.ARROW, 1);
 		ItemMeta backmeta = backToServerMenuItem.getItemMeta();
-		backmeta.setDisplayName("ง9งlง%game-modes%ง");
-		backmeta.setLore(Arrays.asList("ง%back-game-mode%ง"));
+		backmeta.setDisplayName("ยง9ยงlยง%game-modes%ยง");
+		backmeta.setLore(Arrays.asList("ยง%back-game-mode%ยง"));
 		backToServerMenuItem.setItemMeta(backmeta);
 		int size = LobbyMain.getInstance().getServerManager().getBalancer(serverType).getList().size();
 		serverSelectorInventory = new MenuInventory(inventoryTitle,
@@ -91,7 +91,7 @@ public abstract class MatchSelector {
 	public void update() {
 		int i = 10;
 		try {
-			directConnectItemLore.set(1, "ง7ง%we-have%ง ง3งl" + getMatchsOnlinePlayers() + " ง7ง%players-connected%ง");
+			directConnectItemLore.set(1, "ยง7ยง%we-have%ยง ยง3ยงl" + getMatchsOnlinePlayers() + " ยง7ยง%players-connected%ยง");
 			directConnectItemMeta.setLore(directConnectItemLore);
 			directConnectItem.setItemMeta(directConnectItemMeta);
 			serverSelectorInventory.setItem(4, new MenuItem(directConnectItem, new MenuClickHandler() {
@@ -181,25 +181,25 @@ public abstract class MatchSelector {
 			if (info.getState() == MinigameState.WAITING) {
 				stack.setAmount(LobbyUtils.getItemAmount(info.getOnlinePlayers()));
 				stack.setDurability((short) 11);
-				meta.setDisplayName("ง9งl> งeงl" + info.getServerId() + " ง9งl<");
-				lore.add("ง7Aguardando งeงljogadores ง7para iniciar!");
+				meta.setDisplayName("ยง9ยงl> ยงeยงl" + info.getServerId() + " ยง9ยงl<");
+				lore.add("ยง7Aguardando ยงeยงljogadores ยง7para iniciar!");
 				if (info.getOnlinePlayers() > 0) {
-					lore.add("ง0");
-					lore.add("ง3งl" + info.getOnlinePlayers() + " ง7"
+					lore.add("ยง0");
+					lore.add("ยง3ยงl" + info.getOnlinePlayers() + " ยง7"
 							+ ((info.getOnlinePlayers() == 1) ? "jogador conectado" : "jogadores conectados"));
 				}
-				lore.add("ง0");
-				lore.add("งbงlCliqueงrงb para งrงbงlconectarงrงb.");
+				lore.add("ยง0");
+				lore.add("ยงbยงlCliqueยงrยงb para ยงrยงbยงlconectarยงrยงb.");
 			} else if (info.isInProgress()) {
 				stack.setAmount(LobbyUtils.getItemAmount(info.getOnlinePlayers()));
 				stack.setDurability((short) 1);
-				meta.setDisplayName("ง9งl> งcงl" + info.getServerId() + " ง9งl<");
-				lore.add("ง7A partida estแ em งcงlprogressoง7!");
-				lore.add("ง0");
-				lore.add("ง3งl" + info.getOnlinePlayers() + " ง7"
+				meta.setDisplayName("ยง9ยงl> ยงcยงl" + info.getServerId() + " ยง9ยงl<");
+				lore.add("ยง7A partida estยง em ยงcยงlprogressoยง7!");
+				lore.add("ยง0");
+				lore.add("ยง3ยงl" + info.getOnlinePlayers() + " ยง7"
 						+ ((info.getOnlinePlayers() == 1) ? "jogador conectado" : "jogadores conectados"));
-				lore.add("ง0");
-				lore.add("งbงlCliqueงrงb para งrงbงlespectarงrงb.");
+				lore.add("ยง0");
+				lore.add("ยงbยงlCliqueยงrยงb para ยงrยงbยงlespectarยงrยงb.");
 			} else {
 				if (info.getTime() >= 60) {
 					stack.setAmount(info.getTime() / 60);
@@ -208,22 +208,22 @@ public abstract class MatchSelector {
 				}
 				if (info.getOnlinePlayers() >= info.getMaxPlayers()) {
 					stack.setDurability((short) 14);
-					meta.setDisplayName("ง9งl> ง6งl" + info.getServerId() + " ง9งl<");
-					lore.add("ง7A partida ง6งlinicia งrง7em ง6งl" + LobbyUtils.getTimeUtils().formatTime(info.getTime())
-							+ "งrง7.");
+					meta.setDisplayName("ยง9ยงl> ยง6ยงl" + info.getServerId() + " ยง9ยงl<");
+					lore.add("ยง7A partida ยง6ยงlinicia ยงrยง7em ยง6ยงl" + LobbyUtils.getTimeUtils().formatTime(info.getTime())
+							+ "ยงrยง7.");
 				} else {
 					stack.setDurability((short) 10);
-					meta.setDisplayName("ง9งl> งaงl" + info.getServerId() + " ง9งl<");
-					lore.add("ง7A partida งaงlinicia งrง7em งaงl" + LobbyUtils.getTimeUtils().formatTime(info.getTime())
-							+ "งrง7.");
+					meta.setDisplayName("ยง9ยงl> ยงaยงl" + info.getServerId() + " ยง9ยงl<");
+					lore.add("ยง7A partida ยงaยงlinicia ยงrยง7em ยงaยงl" + LobbyUtils.getTimeUtils().formatTime(info.getTime())
+							+ "ยงrยง7.");
 				}
 				if (info.getOnlinePlayers() > 0) {
-					lore.add("ง0");
-					lore.add("ง3งl" + info.getOnlinePlayers() + " ง7"
+					lore.add("ยง0");
+					lore.add("ยง3ยงl" + info.getOnlinePlayers() + " ยง7"
 							+ ((info.getOnlinePlayers() == 1) ? "jogador conectado" : "jogadores conectados"));
 				}
-				lore.add("ง0");
-				lore.add("งbงlCliqueงrงb para งrงbงlconectarงrงb.");
+				lore.add("ยง0");
+				lore.add("ยงbยงlCliqueยงrยงb para ยงrยงbยงlconectarยงrยงb.");
 			}
 			meta.setLore(lore);
 			stack.setItemMeta(meta);

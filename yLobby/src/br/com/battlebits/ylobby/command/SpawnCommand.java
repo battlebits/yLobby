@@ -15,9 +15,9 @@ public class SpawnCommand implements CommandClass {
 
 	public SpawnCommand() {
 		message = new ArrayList<>();
-		message.add("§0");
-		message.add("§%command-spawn-teleported%§");
-		message.add("§0");
+		message.add("Â§0");
+		message.add("Â§%command-spawn-teleported%Â§");
+		message.add("Â§0");
 	}
 
 	@Command(name = "spawn")
@@ -29,7 +29,7 @@ public class SpawnCommand implements CommandClass {
 				p.sendMessage(msg);
 			}
 		} else {
-			args.getSender().sendMessage("§c§lComando apenas para jogadores.");
+			args.getSender().sendMessage("Â§cÂ§lComando apenas para jogadores.");
 		}
 		return true;
 	}

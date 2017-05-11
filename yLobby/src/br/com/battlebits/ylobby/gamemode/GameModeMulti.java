@@ -21,7 +21,7 @@ public abstract class GameModeMulti extends GameModeBase {
 	public GameModeMulti(final String servername, String serverdescription, Material iconmaterial, Location npclocation,
 			final BungeeMessage connectMessage, ServerType serverType, EntityType type) {
 		super(servername, serverdescription, iconmaterial,
-				Arrays.asList("งbงlง%left-click-to-connect%ง.", "ง0", "งeงlง%right-click-to-see%ง."), npclocation,
+				Arrays.asList("ยงbยงlยง%left-click-to-connect%ยง.", "ยง0", "ยงeยงlยง%right-click-to-see%ยง."), npclocation,
 				serverType, type);
 		connectBungeeMessage = connectMessage;
 		new BukkitRunnable() {

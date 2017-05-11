@@ -16,7 +16,7 @@ public class YourProfileListener implements Listener {
 		if (e.getInventory() != null) {
 			if (e.getInventory().getType() == InventoryType.CHEST) {
 				if (e.getCurrentItem() != null) {
-					if (e.getInventory().getTitle().equalsIgnoreCase("              §nSeu Perfil")) {
+					if (e.getInventory().getTitle().equalsIgnoreCase("              Â§nSeu Perfil")) {
 						if (e.getClickedInventory() == e.getInventory()) {
 							if (e.getSlot() == 11) {
 								LobbyMain.getInstance().getProfileRanksInventory().open((Player) e.getWhoClicked());

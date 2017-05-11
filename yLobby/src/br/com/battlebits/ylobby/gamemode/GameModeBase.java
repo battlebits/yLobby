@@ -43,12 +43,12 @@ public abstract class GameModeBase {
 		this.serverType = serverType;
 		inventoryitem = new ItemStack(iconmaterial, 1);
 		inventoryItemMeta = inventoryitem.getItemMeta();
-		inventoryItemMeta.setDisplayName("ง9งl" + servername);
+		inventoryItemMeta.setDisplayName("ยง9ยงl" + servername);
 		inventoryItemLore = new ArrayList<>();
 		inventoryItemLore.addAll(StringLoreUtils.formatForLore(ChatColor.GRAY + serverdescription));
-		inventoryItemLore.add("ง0");
-		inventoryItemLore.add("งbง30 ง7ง%players-online%ง.");
-		inventoryItemLore.add("ง0");
+		inventoryItemLore.add("ยง0");
+		inventoryItemLore.add("ยงbยง30 ยง7ยง%players-online%ยง.");
+		inventoryItemLore.add("ยง0");
 		for (String s : connectLines) {
 			inventoryItemLore.add(s);
 		}
@@ -68,12 +68,12 @@ public abstract class GameModeBase {
 			npclocation.getChunk().load();
 		}
 		characterNPC.spawn(LobbyUtils.getLocationUtils().lookAt(
-				LobbyUtils.getLocationUtils().getCenter(npclocation.clone(), false),
+				LobbyUtils.getLocationUtils().getCenter(npclocation.clone().add(0.5, 0, 0.5), false),
 				LobbyMain.getInstance().getLocationManager().getSpawnLocation()));
 		holo = HologramsAPI.createHologram(LobbyMain.getInstance(),
 				LobbyUtils.getLocationUtils().getCenter(npclocation.clone().add(0, 2.54, 0), false));
-		holo.appendTextLine("งbงl" + servername.toUpperCase());
-		holo.appendTextLine("งeงl0 งeง%players-online%ง.");
+		holo.appendTextLine("ยงbยงl" + servername.toUpperCase());
+		holo.appendTextLine("ยงeยงl0 ยงeยง%players-online%ยง.");
 		if (!npclocation.getChunk().isLoaded()) {
 			npclocation.getChunk().load();
 		}
@@ -90,11 +90,11 @@ public abstract class GameModeBase {
 
 	public void updateOnlinePlayersOnItem() {
 		inventoryItemLore.set(inventoryItemLore.size() - (2 + substractLines),
-				"ง3งl" + getOnlinePlayers() + " ง7ง%players-online%ง.");
+				"ยง3ยงl" + getOnlinePlayers() + " ยง7ยง%players-online%ยง.");
 		inventoryItemMeta.setLore(inventoryItemLore);
 		inventoryitem.setItemMeta(inventoryItemMeta);
 		holo.getLine(holo.size() - 1).removeLine();
-		holo.appendTextLine("งeงl" + getOnlinePlayers() + " งeง%players-online%ง.");
+		holo.appendTextLine("ยงeยงl" + getOnlinePlayers() + " ยงeยง%players-online%ยง.");
 	}
 
 	public abstract int getOnlinePlayers();

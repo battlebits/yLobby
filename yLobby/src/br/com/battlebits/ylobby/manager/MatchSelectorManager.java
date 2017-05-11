@@ -17,7 +17,7 @@ public class MatchSelectorManager {
 	}
 
 	public void loadSelectors() {
-		addMacthSelector(new MatchSelector(ServerType.HUNGERGAMES, "§n§%battle-hg-servers%§",
+		addMacthSelector(new MatchSelector(ServerType.HUNGERGAMES, "Â§nÂ§%battle-hg-servers%Â§",
 				new BungeeMessage("HungerGames")) {
 			@Override
 			public int getMatchsOnlinePlayers() {
@@ -25,7 +25,7 @@ public class MatchSelectorManager {
 			}
 		});
 
-		addMacthSelector(new MatchSelector(ServerType.CUSTOMHG, "§n§%custom-hg-servers%§",
+		addMacthSelector(new MatchSelector(ServerType.CUSTOMHG, "Â§nÂ§%custom-hg-servers%Â§",
 				new BungeeMessage("CustomHungergames")) {
 			@Override
 			public int getMatchsOnlinePlayers() {
@@ -33,7 +33,7 @@ public class MatchSelectorManager {
 			}
 		});
 
-		addMacthSelector(new MatchSelector(ServerType.DOUBLEKITHG, "§n§%doublekit-hg-servers%§",
+		addMacthSelector(new MatchSelector(ServerType.DOUBLEKITHG, "Â§nÂ§%doublekit-hg-servers%Â§",
 				new BungeeMessage("DoubleKitHungergames")) {
 			@Override
 			public int getMatchsOnlinePlayers() {
@@ -41,7 +41,7 @@ public class MatchSelectorManager {
 			}
 		});
 //		addMacthSelector(
-//				new MatchSelector(ServerType.FAIRPLAY, "§nServidores do FairPlayHG", new BungeeMessage("Fairplayhg")) {
+//				new MatchSelector(ServerType.FAIRPLAY, "Â§nServidores do FairPlayHG", new BungeeMessage("Fairplayhg")) {
 //					@Override
 //					public int getMatchsOnlinePlayers() {
 //						return yLobbyPlugin.getInstance().getServerManager().getBalancer(ServerType.FAIRPLAY)

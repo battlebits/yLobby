@@ -34,7 +34,7 @@ public class GameModeSelector {
 	}
 
 	public void start() {
-		selectorInventory = new MenuInventory("งnง%choose-game-mode%ง",
+		selectorInventory = new MenuInventory("ยงnยง%choose-game-mode%ยง",
 				LobbyUtils.getInventoryUtils()
 						.getInventorySizeForItens(LobbyMain.getInstance().getGameModsManager().getGameModes().size()
 								+ 18 + LobbyMain.getInstance().getGameModsManager().getGameModes().size() / 7 * 2));

@@ -18,9 +18,9 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
 
-import br.com.battlebits.commons.BattlebitsAPI;
 import br.com.battlebits.commons.bukkit.BukkitMain;
 import br.com.battlebits.commons.bukkit.command.BukkitCommandFramework;
+import br.com.battlebits.commons.core.backend.mongodb.MongoBackend;
 import br.com.battlebits.commons.core.command.CommandLoader;
 import br.com.battlebits.commons.core.data.DataServer;
 import br.com.battlebits.commons.core.server.ServerManager;
@@ -92,6 +92,13 @@ public class LobbyMain extends JavaPlugin {
 	private PlayerHideListener playerHideListener;
 	private MainListener mainListener;
 
+	private MongoBackend mongoBackend;
+	private String mongoHostname;
+	private String mongoDatabase;
+	private String mongoUsername;
+	private String mongoPassword;
+	private int mongoPort = 27017;
+
 	@Override
 	public void onLoad() {
 		new AutoUpdater(this, "7}.g=w6n+:_YG:pJ").run();
@@ -102,10 +109,16 @@ public class LobbyMain extends JavaPlugin {
 		if (plugin != null)
 			new AutoUpdater(plugin, ".^rr7s6'.D<[uJ.=").run();
 	}
-	
+
 	@Override
 	public void onEnable() {
-
+		loadConfiguration();
+		try {
+			mongoBackend = new MongoBackend(mongoHostname, mongoDatabase, mongoUsername, mongoPassword, mongoPort);
+			mongoBackend.startConnection();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		getLogger().info("Habilitando plugin, por favor aguarde!");
 
 		for (Language lang : Language.values()) {
@@ -172,8 +185,7 @@ public class LobbyMain extends JavaPlugin {
 					continue;
 				getServerManager().addActiveServer(entry.getValue().get("address"), entry.getKey(),
 						Integer.valueOf(entry.getValue().get("maxplayers")));
-				getServerManager().getServer(entry.getKey())
-						.setOnlinePlayers(DataServer.getPlayers(entry.getKey()));
+				getServerManager().getServer(entry.getKey()).setOnlinePlayers(DataServer.getPlayers(entry.getKey()));
 			} catch (Exception e) {
 			}
 		}
@@ -242,11 +254,13 @@ public class LobbyMain extends JavaPlugin {
 	@Override
 	public void onDisable() {
 
+		mongoBackend.closeConnection();
+
 		getLogger().info("Finalizando plugin...");
 
 		if (Bukkit.getOnlinePlayers().size() > 0) {
 			for (Player p : Bukkit.getOnlinePlayers()) {
-				p.kickPlayer("§cServer Restarting!");
+				p.kickPlayer("ï¿½cServer Restarting!");
 			}
 		}
 		playerOutOfLobbyDetector.stop();
@@ -262,6 +276,16 @@ public class LobbyMain extends JavaPlugin {
 
 		Bukkit.shutdown();
 
+	}
+
+	private void loadConfiguration() {
+		saveDefaultConfig();
+
+		mongoHostname = getConfig().getString("mongo.hostname", "localhost");
+		mongoPort = getConfig().getInt("mongo.port", 27017);
+		mongoDatabase = getConfig().getString("mongo.database", "");
+		mongoUsername = getConfig().getString("mongo.username", "");
+		mongoPassword = getConfig().getString("mongo.password", "");
 	}
 
 	public LobbySelector getLobbySelector() {
@@ -314,7 +338,7 @@ public class LobbyMain extends JavaPlugin {
 
 	@SuppressWarnings("unchecked")
 	private Map<String, String> loadTranslation(Language language) {
-		MongoDatabase database = BattlebitsAPI.getMongo().getClient().getDatabase("lobby");
+		MongoDatabase database = mongoBackend.getClient().getDatabase("lobby");
 		MongoCollection<Document> collection = database.getCollection("translation");
 		Document found = collection.find(Filters.eq("language", language.toString())).first();
 		if (found != null) {

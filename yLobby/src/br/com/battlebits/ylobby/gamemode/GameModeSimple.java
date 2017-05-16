@@ -58,7 +58,6 @@ public class GameModeSimple extends GameModeBase {
 	}
 
 	public BattleServer getServerInfo() {
-		System.out.println(bungeeId);
 		if (bungeeId == null)
 			return null;
 		if (LobbyMain.getInstance().getServerManager() == null)

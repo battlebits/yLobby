@@ -175,9 +175,9 @@ public class LobbyMain extends JavaPlugin {
 					continue;
 				if (!entry.getValue().containsKey("onlineplayers"))
 					continue;
-				if (!entry.getValue().containsKey("serverType"))
+				if (!entry.getValue().containsKey("type"))
 					continue;
-				getServerManager().addActiveServer(entry.getValue().get("address"), entry.getKey(), ServerType.valueOf(entry.getValue().get("serverType")), Integer.valueOf(entry.getValue().get("maxplayers")));
+				getServerManager().addActiveServer(entry.getValue().get("address"), entry.getKey(), ServerType.valueOf(entry.getValue().get("type").toUpperCase()), Integer.valueOf(entry.getValue().get("maxplayers")));
 				getServerManager().getServer(entry.getKey()).setOnlinePlayers(DataServer.getPlayers(entry.getKey()));
 			} catch (Exception e) {
 			}
@@ -187,9 +187,7 @@ public class LobbyMain extends JavaPlugin {
 		locationManager = new LocationManager();
 		gameModsManager = new GameModsManager();
 		playerHideManager = new PlayerHideManager();
-		locationManager = new LocationManager();
 		scoreboardManager = new ScoreboardManager();
-
 		lobbySelector = new LobbySelector();
 		gameModeSelector = new GameModeSelector();
 		lobbyItensManager = new LobbyItensManager();
@@ -197,7 +195,6 @@ public class LobbyMain extends JavaPlugin {
 		tabAndHeaderUpdater = new TabAndHeaderUpdater();
 
 		playerOutOfLobbyDetector = new PlayerOutOfLobbyDetector();
-
 		yourProfileInventory = new YourProfileInventory();
 		yourProfileListener = new YourProfileListener();
 		profileRanksInventory = new ProfileRanksInventory();

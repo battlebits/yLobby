@@ -31,9 +31,9 @@ public class LobbySelector {
 				LobbyUtils.getInventoryUtils().getInventorySizeForItens(size + 18 + ((size / 7) * 2)));
 
 		for (BattleServer ip : LobbyMain.getInstance().getServerManager().getBalancer(ServerType.LOBBY).getList()) {
-			if (ip.getServerId().equals(BattlebitsAPI.getServerId())) {
+			if (ip.getServerId().equalsIgnoreCase(BattlebitsAPI.getServerId())) {
 				int lobbyId = Integer
-						.valueOf(ip.getServerId().replace(".lobby.battlebits.com.br", "").replace("a", ""));
+						.valueOf(ip.getServerId().replaceAll("[\\D]", ""));
 				LobbyMain.getInstance().setLobbyID("#" + lobbyId);
 			}
 		}
@@ -62,7 +62,7 @@ public class LobbySelector {
 			ItemStack stack = new ItemStack(Material.INK_SACK, 1);
 			ItemMeta meta = stack.getItemMeta();
 			ArrayList<String> lore = new ArrayList<>();
-			int lobbyId = Integer.valueOf(info.getServerId().replace(".lobby.battlebits.com.br", "").replace("a", ""));
+			int lobbyId = Integer.valueOf(info.getServerId().replaceAll("[\\D]", ""));
 			stack.setAmount(lobbyId);
 			if (info.getServerId().equalsIgnoreCase(BattlebitsAPI.getServerId())) {
 				stack.setDurability((short) 10);

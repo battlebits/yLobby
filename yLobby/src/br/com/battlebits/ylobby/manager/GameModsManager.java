@@ -52,10 +52,7 @@ public class GameModsManager {
 	}
 
 	public void loadGameMods() {
-
-		addGameMode(new GameModeMulti("§%pvpfulliron-item%§", "§%pvpfulliron-item-lore%§", Material.DIAMOND_SWORD,
-				new Location(Bukkit.getWorlds().get(0), 19, 100, 19), new BungeeMessage("PVPFulliron"),
-				ServerType.PVP_FULLIRON, EntityType.SKELETON) {
+		addGameMode(new GameModeMulti("§%pvpfulliron-item%§", "§%pvpfulliron-item-lore%§", Material.DIAMOND_SWORD, new Location(Bukkit.getWorlds().get(0), 19, 100, 19), new BungeeMessage("PVPFulliron"), ServerType.PVP_FULLIRON, EntityType.SKELETON) {
 			@Override
 			public int getOnlinePlayers() {
 				return LobbyMain.getInstance().getServerManager().getBalancer(getServerType()).getTotalNumber();
@@ -66,10 +63,7 @@ public class GameModsManager {
 				LobbyMain.getInstance().getMultiSelectorManager().getMultiSelector(getServerType()).open(p);
 			}
 		});
-
-		addGameMode(new GameModeMulti("§%pvpsimulator-item%§", "§%pvpsimulator-item-lore%§", Material.WOOD_SWORD,
-				new Location(Bukkit.getWorlds().get(0), 27, 100, 0), new BungeeMessage("PVPSimulator"),
-				ServerType.PVP_SIMULATOR, EntityType.SKELETON) {
+		addGameMode(new GameModeMulti("§%pvpsimulator-item%§", "§%pvpsimulator-item-lore%§", Material.WOOD_SWORD, new Location(Bukkit.getWorlds().get(0), 27, 100, 0), new BungeeMessage("PVPSimulator"), ServerType.PVP_SIMULATOR, EntityType.SKELETON) {
 			@Override
 			public int getOnlinePlayers() {
 				return LobbyMain.getInstance().getServerManager().getBalancer(getServerType()).getTotalNumber();
@@ -80,9 +74,7 @@ public class GameModsManager {
 				LobbyMain.getInstance().getMultiSelectorManager().getMultiSelector(getServerType()).open(p);
 			}
 		});
-		addGameMode(new GameModeMatch("§%hungergames-item%§", "§%hungergames-item-lore%§", Material.MUSHROOM_SOUP,
-				new Location(Bukkit.getWorlds().get(0), -27, 100, 0), new BungeeMessage("Hungergames"),
-				ServerType.HUNGERGAMES, EntityType.BLAZE) {
+		addGameMode(new GameModeMatch("§%hungergames-item%§", "§%hungergames-item-lore%§", Material.MUSHROOM_SOUP, new Location(Bukkit.getWorlds().get(0), -27, 100, 0), new BungeeMessage("Hungergames"), ServerType.HUNGERGAMES, EntityType.BLAZE) {
 			@Override
 			public int getOnlinePlayers() {
 				return LobbyMain.getInstance().getServerManager().getBalancer(getServerType()).getTotalNumber();
@@ -93,10 +85,7 @@ public class GameModsManager {
 				LobbyMain.getInstance().getMatchSelectorManager().getMatchSelector(getServerType()).open(p);
 			}
 		});
-
-		addGameMode(new GameModeMatch("§%hungergames-custom-item%§", "§%hungergames-custom-item-lore%§",
-				Material.WORKBENCH, new Location(Bukkit.getWorlds().get(0), 0, 100, 27),
-				new BungeeMessage("CustomHungergames"), ServerType.CUSTOMHG, EntityType.WITCH) {
+		addGameMode(new GameModeMatch("§%hungergames-custom-item%§", "§%hungergames-custom-item-lore%§", Material.WORKBENCH, new Location(Bukkit.getWorlds().get(0), 0, 100, 27), new BungeeMessage("CustomHungergames"), ServerType.CUSTOMHG, EntityType.WITCH) {
 			@Override
 			public int getOnlinePlayers() {
 				return LobbyMain.getInstance().getServerManager().getBalancer(getServerType()).getTotalNumber();
@@ -107,10 +96,7 @@ public class GameModsManager {
 				LobbyMain.getInstance().getMatchSelectorManager().getMatchSelector(getServerType()).open(p);
 			}
 		});
-
-		addGameMode(new GameModeMatch("§%hungergames-doublekit-item%§", "§%hungergames-doublekit-item-lore%§",
-				Material.RED_MUSHROOM, new Location(Bukkit.getWorlds().get(0), -19, 100, 19),
-				new BungeeMessage("DoubleKitHungergames"), ServerType.DOUBLEKITHG, EntityType.CREEPER) {
+		addGameMode(new GameModeMatch("§%hungergames-doublekit-item%§", "§%hungergames-doublekit-item-lore%§", Material.RED_MUSHROOM, new Location(Bukkit.getWorlds().get(0), -19, 100, 19), new BungeeMessage("DoubleKitHungergames"), ServerType.DOUBLEKITHG, EntityType.CREEPER) {
 			@Override
 			public int getOnlinePlayers() {
 				return LobbyMain.getInstance().getServerManager().getBalancer(getServerType()).getTotalNumber();
@@ -121,10 +107,7 @@ public class GameModsManager {
 				LobbyMain.getInstance().getMatchSelectorManager().getMatchSelector(getServerType()).open(p);
 			}
 		});
-		addGameMode(new GameModeSimple("§%raid-item%§", "§%raid-item-lore%§", Material.DIAMOND_PICKAXE,
-				"raid.battlebits.com.br", new Location(Bukkit.getWorlds().get(0), -19, 100, -19), ServerType.RAID,
-				EntityType.ZOMBIE));
-
+		addGameMode(new GameModeSimple("§%raid-item%§", "§%raid-item-lore%§", Material.DIAMOND_PICKAXE, "raid.battlebits.com.br", new Location(Bukkit.getWorlds().get(0), -19, 100, -19), ServerType.RAID, EntityType.ZOMBIE));
 		Location npclocation = new Location(Bukkit.getWorlds().get(0), 0, 100, -26.5);
 		NPC characterNPC = CitizensAPI.getNamedNPCRegistry("lobby").createNPC(EntityType.PLAYER, " ");
 		characterNPC.data().set(NPC.NAMEPLATE_VISIBLE_METADATA, true);
@@ -138,16 +121,12 @@ public class GameModsManager {
 		if (!npclocation.getChunk().isLoaded()) {
 			npclocation.getChunk().load();
 		}
-		characterNPC.spawn(LobbyUtils.getLocationUtils().lookAt(
-				LobbyUtils.getLocationUtils().getCenter(npclocation.clone(), false),
-				LobbyMain.getInstance().getLocationManager().getSpawnLocation()));
-		SkinnableEntity skinnable = characterNPC.getEntity() instanceof SkinnableEntity
-				? (SkinnableEntity) characterNPC.getEntity() : null;
+		characterNPC.spawn(LobbyUtils.getLocationUtils().lookAt(LobbyUtils.getLocationUtils().getCenter(npclocation.clone(), false), LobbyMain.getInstance().getLocationManager().getSpawnLocation()));
+		SkinnableEntity skinnable = characterNPC.getEntity() instanceof SkinnableEntity ? (SkinnableEntity) characterNPC.getEntity() : null;
 		if (skinnable != null) {
 			skinnable.setSkinName("Hypixel");
 		}
-		Hologram holo = HologramsAPI.createHologram(LobbyMain.getInstance(),
-				LobbyUtils.getLocationUtils().getCenter(npclocation.clone().add(0, 2.54, 0), false));
+		Hologram holo = HologramsAPI.createHologram(LobbyMain.getInstance(), LobbyUtils.getLocationUtils().getCenter(npclocation.clone().add(0, 2.54, 0), false));
 		holo.appendTextLine("§b§l§%soon%§");
 		holo.appendTextLine("§e§lNEW MINIGAME.");
 	}

@@ -1,10 +1,8 @@
 package br.com.battlebits.ylobby;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import org.bson.Document;
 import org.bukkit.Bukkit;
 import org.bukkit.Difficulty;
 import org.bukkit.World;
@@ -14,10 +12,6 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoDatabase;
-import com.mongodb.client.model.Filters;
-
 import br.com.battlebits.commons.bukkit.BukkitMain;
 import br.com.battlebits.commons.bukkit.command.BukkitCommandFramework;
 import br.com.battlebits.commons.core.backend.mongodb.MongoBackend;
@@ -26,7 +20,7 @@ import br.com.battlebits.commons.core.data.DataServer;
 import br.com.battlebits.commons.core.server.ServerManager;
 import br.com.battlebits.commons.core.server.ServerType;
 import br.com.battlebits.commons.core.server.loadbalancer.type.RoundRobin;
-import br.com.battlebits.commons.core.translate.Language;
+import br.com.battlebits.commons.core.translate.T;
 import br.com.battlebits.commons.core.translate.Translate;
 import br.com.battlebits.commons.util.updater.AutoUpdater;
 import br.com.battlebits.ylobby.detector.PlayerOutOfLobbyDetector;
@@ -121,9 +115,7 @@ public class LobbyMain extends JavaPlugin {
 		}
 		getLogger().info("Habilitando plugin, por favor aguarde!");
 
-		for (Language lang : Language.values()) {
-			Translate.loadTranslations("yLobby", lang, loadTranslation(lang));
-		}
+		T.loadTranslate(this, new Translate("lobby", mongoBackend));
 
 		instance = this;
 
@@ -183,8 +175,9 @@ public class LobbyMain extends JavaPlugin {
 					continue;
 				if (!entry.getValue().containsKey("onlineplayers"))
 					continue;
-				getServerManager().addActiveServer(entry.getValue().get("address"), entry.getKey(),
-						Integer.valueOf(entry.getValue().get("maxplayers")));
+				if (!entry.getValue().containsKey("serverType"))
+					continue;
+				getServerManager().addActiveServer(entry.getValue().get("address"), entry.getKey(), ServerType.valueOf(entry.getValue().get("serverType")), Integer.valueOf(entry.getValue().get("maxplayers")));
 				getServerManager().getServer(entry.getKey()).setOnlinePlayers(DataServer.getPlayers(entry.getKey()));
 			} catch (Exception e) {
 			}
@@ -216,8 +209,7 @@ public class LobbyMain extends JavaPlugin {
 		bountifulListener = new BountifulListener();
 		mainListener = new MainListener();
 		playerHideListener = new PlayerHideListener();
-		LobbyUtils.getListenerUtils().registerListeners(this, yourProfileListener, profileRanksListener,
-				profileConfigurationListener, bountifulListener, mainListener, playerHideListener, gameModsListener);
+		LobbyUtils.getListenerUtils().registerListeners(this, yourProfileListener, profileRanksListener, profileConfigurationListener, bountifulListener, mainListener, playerHideListener, gameModsListener);
 
 		tabAndHeaderUpdater.start();
 		lobbySelector.start();
@@ -335,18 +327,6 @@ public class LobbyMain extends JavaPlugin {
 
 	public ProfileConfigurationInventory getProfileConfigurationInventory() {
 		return profileConfigurationInventory;
-	}
-
-	@SuppressWarnings("unchecked")
-	private Map<String, String> loadTranslation(Language language) {
-		MongoDatabase database = mongoBackend.getClient().getDatabase("lobby");
-		MongoCollection<Document> collection = database.getCollection("translation");
-		Document found = collection.find(Filters.eq("language", language.toString())).first();
-		if (found != null) {
-			return (Map<String, String>) found.get("map");
-		}
-		collection.insertOne(new Document("language", language.toString()).append("map", new HashMap<>()));
-		return new HashMap<>();
 	}
 
 	@Getter

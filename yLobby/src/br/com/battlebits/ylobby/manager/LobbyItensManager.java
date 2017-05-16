@@ -67,7 +67,7 @@ public class LobbyItensManager {
 							String replace = LobbyUtils.getTimeUtils()
 									.formatTime((int) (((PlayerHideListener.getUuidCooldown().get(player.getUniqueId())
 											- System.currentTimeMillis()) / 1000)) + 1);
-							player.sendMessage(T.t(BattlePlayer.getLanguage(player.getUniqueId()), "cooldown-wait",
+							player.sendMessage(T.t(LobbyMain.getInstance(), BattlePlayer.getLanguage(player.getUniqueId()), "cooldown-wait",
 									new String[] { "%time%", replace }));
 						}
 						return false;

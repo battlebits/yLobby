@@ -167,7 +167,7 @@ public class MainListener implements Listener {
 		String source = jsonObject.get("source").getAsString();
 		if (source.equals(BattlebitsAPI.getServerId()))
 			return;
-		ServerType sourceType = ServerType.getServerType(source);
+		ServerType sourceType = ServerType.valueOf(jsonObject.get("serverType").getAsString());
 		DataServerMessage.Action action = DataServerMessage.Action.valueOf(jsonObject.get("action").getAsString());
 		switch (action) {
 		case JOIN: {
@@ -239,7 +239,7 @@ public class MainListener implements Listener {
 					new TypeToken<DataServerMessage<StartPayload>>() {
 					}.getType());
 			LobbyMain.getInstance().getServerManager().addActiveServer(payload.getPayload().getServerAddress(),
-					payload.getPayload().getServer().getServerId(), payload.getPayload().getServer().getMaxPlayers());
+					payload.getPayload().getServer().getServerId(), sourceType, payload.getPayload().getServer().getMaxPlayers());
 			new BukkitRunnable() {
 				@Override
 				public void run() {

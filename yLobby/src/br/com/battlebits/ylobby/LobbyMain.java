@@ -114,8 +114,10 @@ public class LobbyMain extends JavaPlugin {
 			e.printStackTrace();
 		}
 		getLogger().info("Habilitando plugin, por favor aguarde!");
-
-		T.loadTranslate(this, new Translate("lobby", mongoBackend));
+		
+		Translate t = new Translate("lobby", mongoBackend);
+		t.loadTranslations();
+		T.loadTranslate(this, t);
 
 		instance = this;
 
